@@ -1829,7 +1829,7 @@ ${cards}
         </div>
         <div class="dock-title">${escapeHtml(lesson.title)}</div>
       </div>
-      <audio id="lesson-audio" preload="metadata" src="${escapeHtml(audioSrc)}"></audio>
+      <audio id="lesson-audio" preload="auto" src="${escapeHtml(audioSrc)}"></audio>
     </div>
   </div>
   <script>
@@ -1873,19 +1873,29 @@ ${cards}
       updateProgress(time);
     }
 
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
       setActiveSentence(item);
-      const startPlayback = () => {
+      whenAudioReady(() => {
         seekTo(item.start);
-        audio.play();
-      };
-      if (audio.readyState >= 1) {
-        startPlayback();
-      } else {
-        audio.addEventListener("loadedmetadata", startPlayback, { once: true });
-      }
+        audio.play().catch(() => {});
+      });
     }
 
     document.querySelectorAll(".sentence-play").forEach((button) => {
@@ -1921,7 +1931,6 @@ ${cards}
       updateProgress(audio.currentTime);
     });
 
-    audio.load();
   </script>
 </body>
 </html>

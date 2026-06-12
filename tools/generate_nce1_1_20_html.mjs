@@ -896,10 +896,9 @@ function liaisonFor(line, ipa) {
   const pairs = linkingPairsFor(line, ipa);
   if (ipa.includes('‿')) {
     points.push(pairs.length > 0
-      ? `${pairs.join('、')} 发生连读，IPA 中用 \`‿\` 标出。`
-      : '句中 `‿` 标出自然连读，前一词收尾直接接后一词开头。');
+      ? `${pairs.join('、')} 连读。`
+      : '有自然跨词连读，前一词收尾直接接后一词开头。');
   }
-  if (/\b(a|an|and|to|the|are|you|your|it|is|we|they)\b/i.test(line)) points.push('功能词按美式口语弱读处理，如 a/an、and、to、are、you。');
   if (/ɾ/.test(ipa)) points.push('两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。');
   if (points.length === 0) {
     const focus = contentWords(line).slice(0, 3).join(' / ');

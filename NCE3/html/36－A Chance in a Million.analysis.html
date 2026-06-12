@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 36 - A Chance in a Million</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 36 - A Chance in a Million</h1>
+      <p class="meta">Generated from 36－A Chance in a Million.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="13.45" data-end="17.13">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">We <span class="weak">are</span> less credulous <span class="weak">than</span> we used <span class="weak">to</span> <span class="weak">be</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi <span class="weak">ɑr</span> lɛs ˈkrɛdʒələs ðæn wi just <span class="weak">tə</span> bi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɑr、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>less...than... 比较结构；used to be 表过去状态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + used to 表过去习惯/状态。</p></div>
+    <div class="field cn"><span>中</span><p>我们不像过去那样轻信了。</p></div>
+    <div class="field words"><span>词</span><p>credulous 轻信的； used to be 过去是；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="17.13" data-end="30.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> nineteenth <span class="linking">century</span>, <span class="weak">a</span> novelist <span class="weak">would</span> bring <span class="weak">his</span> story <span class="weak">to</span> <span class="weak">a</span> conclusion by presenting <span class="weak">his</span> readers <span class="linking">with</span> <span class="weak">a</span> <span class="linking">series</span> <span class="weak">of</span> coincidences--<span class="linking">most</span> <span class="weak">of</span> them <span class="linking">wildly</span> improbable.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> ˌnaɪnˈtinθ ˈsɛntʃəri <span class="weak">ə</span> ˈnɑvəlɪst wʊd brɪŋ <span class="weak">hɪz</span> ˈstɔri <span class="weak">tə</span> <span class="weak">ə</span> kənˈkluʒən baɪ prɪˈzɛntɪŋ <span class="weak">hɪz</span> ˈridɚz wɪð<span class="linking">‿</span><span class="weak">ə</span> ˈsɪriz<span class="linking">‿</span><span class="weak">əv</span> koʊˈɪnsɪdənsɪz moʊst<span class="linking">‿</span><span class="weak">əv</span> ðɛm ˈwaɪldli ɪmˈprɑbəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɪð‿ə、ˈsɪriz‿əv、moʊst‿əv 连读；ɪn、ðə、ə、hɪz、tə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>would 表过去常见做法；by presenting... 表方式；破折号后为独立补充。</p></div>
+    <div class="field tense"><span>时态</span><p>过去将来/过去习惯用法。</p></div>
+    <div class="field cn"><span>中</span><p>在 19 世纪，小说家常常通过给读者安排一连串巧合来结束故事，其中大多数都极不可能。</p></div>
+    <div class="field words"><span>词</span><p>novelist 小说家； bring...to a conclusion 使……结束； present sb with sth 向某人呈现； coincidence 巧合； wildly improbable 极不可能的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.29" data-end="37.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Readers <span class="linking">happily</span> accepted <span class="weak">the</span> fact <span class="weak linking">that</span> <span class="weak linking">an</span> obscure maidservant <span class="weak">was</span> really <span class="weak">the</span> hero's mother.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈridɚz ˈhæpəli əkˈsɛptɪd <span class="weak">ðə</span> fækt ðæɾ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əbˈskjʊr ˈmeɪdˌsɝvənt <span class="weak">wəz</span> ˈriəli <span class="weak">ðə</span> ˈhɪroʊz ˈmʌðɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ən‿əbˈskjʊr 连读；ðə、ən、wəz 弱读/弱化；ðæɾ‿ən‿əbˈskjʊr 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导同位语从句解释 fact。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>读者会欣然接受这样一个事实：一个默默无闻的女仆其实是男主人公的母亲。</p></div>
+    <div class="field words"><span>词</span><p>accept 接受； obscure 默默无闻的； maidservant 女仆； hero 男主人公；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="37.78" data-end="49.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">A</span> long-lost brother, who <span class="weak">was</span> presumed dead, <span class="weak">was</span> <span class="linking">really</span> alive all <span class="weak">the</span> time <span class="weak">and</span> wickedly plotting <span class="weak">to</span> <span class="linking">bring</span> about <span class="weak">the</span> hero's downfall.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> lɔŋ lɔst ˈbrʌðɚ hu <span class="weak">wəz</span> prɪˈzumd dɛd <span class="weak">wəz</span> ˈriəli əˈlaɪv<span class="linking">‿</span>ɔl <span class="weak">ðə</span> taɪm<span class="linking">‿</span><span class="weak">ən</span> ˈwɪkɪdli ˈplɑɾɪŋ <span class="weak">tə</span> brɪŋ<span class="linking">‿</span>əˈbaʊt <span class="weak">ðə</span> ˈhɪroʊz ˈdaʊnˌfɔl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈlaɪv‿ɔl、taɪm‿ən、brɪŋ‿əˈbaʊt 连读；ə、wəz、ðə、ən、tə 弱读/弱化；ˈplɑɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导非限制性定语从句；was alive 和 was plotting 并列，第二个 was 省略。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；plotting 为过去进行意义。</p></div>
+    <div class="field cn"><span>中</span><p>一个长期失散、被认为已经死去的兄弟，其实一直活着，并邪恶地策划让主人公垮台。</p></div>
+    <div class="field words"><span>词</span><p>long-lost 长期失散的； presume 认为/假定； wickedly 邪恶地； plot 策划； bring about 导致； downfall 垮台；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.25" data-end="50.02">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">And</span> so on.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span> soʊ ɑn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>固定省略表达，表示同类内容继续。</p></div>
+    <div class="field tense"><span>时态</span><p>非完整句。</p></div>
+    <div class="field cn"><span>中</span><p>诸如此类。</p></div>
+    <div class="field words"><span>词</span><p>and so on 等等；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="50.02" data-end="56.13">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Modern readers <span class="weak">would</span> find such naive solutions totally unacceptable.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɑdɚn ˈridɚz wʊd faɪnd sʌtʃ naɪˈiv səˈluʃənz ˈtoʊɾəli ˌʌnəkˈsɛptəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtoʊɾəli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>find + 宾语 + 宾补；would 表假设判断。</p></div>
+    <div class="field tense"><span>时态</span><p>would + do 表现在假设。</p></div>
+    <div class="field cn"><span>中</span><p>现代读者会觉得这种幼稚的解决办法完全无法接受。</p></div>
+    <div class="field words"><span>词</span><p>naive 幼稚的； solution 解决办法； totally 完全地； unacceptable 不能接受的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="56.13" data-end="69.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Yet</span>, <span class="weak">in</span> real life, circumstances do sometimes conspire <span class="weak">to</span> <span class="linking">bring</span> about coincidences <span class="linking">which</span> anyone <span class="linking">but</span> <span class="weak">a</span> nineteenth century novelist <span class="weak">would</span> <span class="linking">find</span> incredible.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/jɛɾ<span class="linking">‿</span><span class="weak">ɪn</span> ril laɪf ˈsɝkəmˌstænsɪz du ˈsʌmˌtaɪmz kənˈspaɪr <span class="weak">tə</span> brɪŋ<span class="linking">‿</span>əˈbaʊt koʊˈɪnsɪdənsɪz wɪtʃ<span class="linking">‿</span>ˈɛniwʌn bəɾ<span class="linking">‿</span><span class="weak">ə</span> ˌnaɪnˈtinθ ˈsɛntʃəri ˈnɑvəlɪst wʊd faɪnd<span class="linking">‿</span>ɪnˈkrɛdəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɛɾ‿ɪn、brɪŋ‿əˈbaʊt、wɪtʃ‿ˈɛniwʌn、bəɾ‿ə、faɪnd‿ɪnˈkrɛdəbəl 连读；ɪn、tə、ə 弱读/弱化；jɛɾ‿ɪn、bəɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>do 强调谓语 conspire；which 引导定语从句修饰 coincidences；anyone but... 表“除了……之外任何人”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；would find 表假设判断。</p></div>
+    <div class="field cn"><span>中</span><p>然而在现实生活中，各种情况有时确实会共同造成一些巧合，除了 19 世纪小说家以外，任何人都会觉得难以置信。</p></div>
+    <div class="field words"><span>词</span><p>yet 然而； circumstance 情况； conspire 共同促成； coincidence 巧合； anyone but 除了……以外任何人； incredible 难以置信的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="69.39" data-end="81.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">When</span> I <span class="weak linking">was</span> <span class="weak">a</span> boy, my grandfather told me <span class="linking">how</span> <span class="weak">a</span> German taxi driver, Franz Bussman, <span class="linking">found</span> <span class="weak">a</span> brother who <span class="weak">was</span> thought <span class="weak">to</span> <span class="weak">have</span> <span class="weak">been</span> killed twenty years before.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn aɪ <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> bɔɪ maɪ ˈɡrændˌfɑðɚ toʊld mi haʊ <span class="weak">ə</span> ˈdʒɝmən ˈtæksi ˈdraɪvɚ frɑnts ˈbʊsmən faʊnd<span class="linking">‿</span><span class="weak">ə</span> ˈbrʌðɚ hu <span class="weak">wəz</span> θɔt <span class="weak">tə</span> hæv bɪn kɪld ˈtwɛnti jɪrz bɪˈfɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə、faʊnd‿ə 连读；wəz、ə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；how 引导宾语从句；Franz Bussman 为同位语；who 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；to have been killed 表早于 was thought。</p></div>
+    <div class="field cn"><span>中</span><p>我小时候，祖父告诉我一个德国出租车司机弗朗茨・布斯曼怎样找到了一个被认为二十年前已经死去的兄弟。</p></div>
+    <div class="field words"><span>词</span><p>taxi driver 出租车司机； be thought to have been killed 被认为已经遇害；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="81.39" data-end="87.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">While <span class="linking">on</span> <span class="weak">a</span> walking tour with <span class="weak">his</span> wife, he stopped <span class="weak">to</span> talk <span class="weak">to</span> <span class="weak">a</span> workman.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/waɪl<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> ˈwɔkɪŋ tʊr wɪð <span class="weak">hɪz</span> waɪf hi stɑpt <span class="weak">tə</span> tɔk <span class="weak">tə</span> <span class="weak">ə</span> ˈwɝkmən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>waɪl‿ɑn‿ə 连读；ə、hɪz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>While on... 为省略结构，相当于 while he was on...；to talk 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他和妻子徒步旅行时，停下来和一个工人说话。</p></div>
+    <div class="field words"><span>词</span><p>walking tour 徒步旅行； workman 工人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="87.1" data-end="98.71">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">After they <span class="weak">had</span> gone on, Mrs. Bussman <span class="linking">commented</span> on <span class="weak">the</span> workman's close resemblance <span class="weak">to</span> <span class="weak">her</span> <span class="linking">husband</span> <span class="weak linking">and</span> even suggested <span class="weak">that</span> he might <span class="weak">be</span> <span class="weak">his</span> brother.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ðeɪ hæd ɡɔn<span class="linking">‿</span>ɑn ˈmɪsɪz ˈbʊsmən ˈkɑmɛntɪd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈwɝkmənz kloʊs rɪˈzɛmbləns <span class="weak">tə</span> <span class="weak">hɚ</span> ˈhʌzbənd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈivən səˈdʒɛstɪd ðæt hi maɪt bi <span class="weak">hɪz</span> ˈbrʌðɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɔn‿ɑn、ˈkɑmɛntɪd‿ɑn、ˈhʌzbənd‿ən‿ˈivən 连读；ðə、tə、hɚ、ən、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>After 引导时间状语从句；comment on 表评论；suggested 后接 that 宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去完成时；主句一般过去时；might 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>他们继续走后，布斯曼太太评论说那个工人和她丈夫长得很像，甚至提出他也许就是他兄弟。</p></div>
+    <div class="field words"><span>词</span><p>go on 继续前进； comment on 评论； close resemblance 酷似； suggest 提出；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="98.71" data-end="107.35">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Franz poured <span class="linking">scorn</span> on <span class="weak">the</span> idea, <span class="linking">pointing</span> out <span class="weak">that</span> <span class="weak">his</span> brother <span class="weak">had</span> <span class="weak">been</span> <span class="linking">killed</span> <span class="weak linking">in</span> action during <span class="weak">the</span> war.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/frɑnts pɔrd skɔrn<span class="linking">‿</span>ɑn <span class="weak">ði</span> aɪˈdiə ˈpɔɪntɪŋ aʊt ðæt <span class="weak">hɪz</span> ˈbrʌðɚ hæd bɪn kɪld<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ˈækʃən ˈdʊrɪŋ <span class="weak">ðə</span> wɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>skɔrn‿ɑn、kɪld‿ɪn‿ˈækʃən 连读；ði、hɪz、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>pointing out... 为现在分词短语作伴随状语；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had been killed 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>弗朗茨对这个想法嗤之以鼻，指出他的兄弟已经在战争中阵亡了。</p></div>
+    <div class="field words"><span>词</span><p>pour scorn on 对……嗤之以鼻； point out 指出； be killed in action 阵亡；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="107.35" data-end="117.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Though Mrs. Bussman <span class="weak">was</span> <span class="linking">fully</span> acquainted with this story, she thought <span class="weak">that</span> <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> chance <span class="weak linking">in</span> <span class="weak">a</span> million <span class="weak">that</span> she might <span class="weak">be</span> right.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ ˈmɪsɪz ˈbʊsmən <span class="weak">wəz</span> ˈfʊli əˈkweɪntɪd wɪð ðɪs ˈstɔri ʃi θɔt ðæt ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> tʃæns<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈmɪljən ðæt ʃi maɪt bi raɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə、tʃæns‿ɪn‿ə 连读；wəz、ə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；thought 后接 that 宾语从句；第二个 that 引导同位语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；might 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>尽管布斯曼太太完全熟悉这个说法，她仍认为自己也许有百万分之一的机会是对的。</p></div>
+    <div class="field words"><span>词</span><p>be acquainted with 熟悉； a chance in a million 百万分之一的机会；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="117.09" data-end="125.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">A</span> few days later, she <span class="linking">sent</span> <span class="weak">a</span> boy <span class="weak">to</span> <span class="weak">the</span> workman <span class="weak">to</span> ask <span class="weak linking">him</span> if <span class="weak">his</span> name <span class="weak">was</span> Hans Bussman.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> fju deɪz ˈleɪɾɚ ʃi sɛnt<span class="linking">‿</span><span class="weak">ə</span> bɔɪ <span class="weak">tə</span> <span class="weak">ðə</span> ˈwɝkmən <span class="weak">tə</span> æsk <span class="weak">hɪm</span><span class="linking">‿</span>ɪf <span class="weak">hɪz</span> neɪm <span class="weak">wəz</span> hɑns ˈbʊsmən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɛnt‿ə、hɪm‿ɪf 连读；ə、tə、ðə、hɪm、hɪz、wəz 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>sent a boy to...；to ask... 表目的；if 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>几天后，她派一个男孩去问那个工人是否叫汉斯・布斯曼。</p></div>
+    <div class="field words"><span>词</span><p>send sb to 派某人去； ask if 问是否；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="125.01" data-end="133.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">Needless <span class="weak">to</span> say, <span class="weak">the</span> man's name <span class="weak">was</span> Hans <span class="linking">Bussman</span> <span class="weak">and</span> he really <span class="weak">was</span> Franz's long-lost brother.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈnidləs <span class="weak">tə</span> seɪ <span class="weak">ðə</span> mænz neɪm <span class="weak">wəz</span> hɑns ˈbʊsmən<span class="linking">‿</span><span class="weak">ən</span> hi ˈriəli <span class="weak">wəz</span> frɑntsɪz lɔŋ lɔst ˈbrʌðɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈbʊsmən‿ən 连读；tə、ðə、wəz、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Needless to say 作插入语；and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>不用说，那人的名字正是汉斯・布斯曼，他确实就是弗朗茨失散多年的兄弟。</p></div>
+    <div class="field words"><span>词</span><p>needless to say 不用说； long-lost 长期失散的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="133.94" data-end="140.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">When <span class="weak">the</span> brothers <span class="weak">were</span> reunited, <span class="linking">Hans</span> explained <span class="linking">how</span> <span class="weak">it</span> <span class="weak">was</span> <span class="weak">that</span> he <span class="weak">was</span> <span class="linking">still</span> alive.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn <span class="weak">ðə</span> ˈbrʌðɚz <span class="weak">wɚ</span> ˌrijuˈnaɪɾɪd hɑns<span class="linking">‿</span>ɪkˈspleɪnd haʊ ɪt <span class="weak">wəz</span> ðæt hi <span class="weak">wəz</span> stɪl<span class="linking">‿</span>əˈlaɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɑns‿ɪkˈspleɪnd、stɪl‿əˈlaɪv 连读；ðə、wɚ、wəz 弱读/弱化；ˌrijuˈnaɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；were reunited 为被动；how it was that... 为强调式间接问句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>兄弟重逢后，汉斯解释了他为何还活着。</p></div>
+    <div class="field words"><span>词</span><p>reunite 重聚； explain 解释； alive 活着的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="140.36" data-end="149.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">After having <span class="weak">been</span> wounded towards <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> war, he <span class="weak">had</span> <span class="weak">been</span> sent <span class="weak">to</span> <span class="linking">hospital</span> <span class="weak">and</span> <span class="weak">was</span> separated <span class="weak">from</span> <span class="weak linking">his</span> unit.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈhævɪŋ bɪn ˈwundɪd təˈwɔrdz <span class="weak">ði</span> ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> wɔr hi hæd bɪn sɛnt <span class="weak">tə</span> ˈhɑˌspɪɾəl<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">wəz</span> ˈsɛpəˌreɪɾɪd <span class="weak">frəm</span> <span class="weak">hɪz</span> ˈjunɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɛnd‿əv、ˈhɑˌspɪɾəl‿ən 连读；ði、əv、ðə、tə、ən、wəz 弱读/弱化；ˈhɑˌspɪɾəl‿ən、ˈsɛpəˌreɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After having been wounded 为完成被动动名词短语；had been sent 和 was separated 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动 + 一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>战争快结束时他受伤后，被送进医院，并与部队失散了。</p></div>
+    <div class="field words"><span>词</span><p>be wounded 受伤； towards the end of 快结束时； be separated from 与……分离； unit 部队；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="149.84" data-end="157.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> hospital <span class="weak">had</span> <span class="weak">been</span> <span class="linking">bombed</span> <span class="weak">and</span> Hans <span class="weak">had</span> made <span class="weak">his</span> way <span class="linking">back</span> into Western <span class="linking">Germany</span> on foot.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈhɑˌspɪɾəl hæd bɪn bɑmd<span class="linking">‿</span><span class="weak">ən</span> hɑns hæd meɪd <span class="weak">hɪz</span> weɪ bæk<span class="linking">‿</span>ˈɪntu ˈwɛstɚn ˈdʒɝməni ɑn fʊt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɑmd‿ən、bæk‿ˈɪntu 连读；ðə、ən、hɪz 弱读/弱化；ˈhɑˌspɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；make one's way back 表返回。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时；had been bombed 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>医院遭到轰炸，汉斯便徒步回到了西德。</p></div>
+    <div class="field words"><span>词</span><p>bomb 轰炸； make one's way back 返回； Western Germany 西德； on foot 徒步；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="157.64" data-end="163.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Meanwhile, <span class="weak linking">his</span> unit <span class="weak">was</span> <span class="linking">lost</span> <span class="weak linking">and</span> all <span class="linking">records</span> <span class="weak">of</span> <span class="weak">him</span> <span class="weak">had</span> <span class="weak">been</span> destroyed.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl <span class="weak">hɪz</span> ˈjunɪt <span class="weak">wəz</span> lɔst<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɔl ˈrɛkɚdz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪm</span> hæd bɪn dɪˈstrɔɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɔst‿ən‿ɔl、ˈrɛkɚdz‿əv 连读；hɪz、wəz、ən、əv、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；records of him 作主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had been destroyed 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>与此同时，他的部队失踪了，所有关于他的记录也被销毁了。</p></div>
+    <div class="field words"><span>词</span><p>meanwhile 与此同时； unit 部队； record 记录； destroy 销毁；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="163.74" data-end="173.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">Hans returned <span class="weak">to</span> <span class="weak">his</span> family home, but <span class="weak">the</span> house <span class="weak">had</span> <span class="weak">been</span> <span class="linking">bombed</span> <span class="weak">and</span> no one <span class="weak">in</span> <span class="weak">the</span> neighbourhood knew what <span class="weak">had</span> become <span class="weak">of</span> <span class="weak">the</span> inhabitants.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hɑns rɪˈtɝnd <span class="weak">tə</span> <span class="weak">hɪz</span> ˈfæməli hoʊm bət <span class="weak">ðə</span> haʊs hæd bɪn bɑmd<span class="linking">‿</span><span class="weak">ən</span> noʊ wʌn<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈneɪbɚˌhʊd nu wʌt hæd bɪˈkʌm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span> ɪnˈhæbəɾənts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɑmd‿ən、wʌn‿ɪn、bɪˈkʌm‿əv 连读；tə、hɪz、ðə、ən、ɪn、əv 弱读/弱化；ɪnˈhæbəɾənts 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；what had become of... 为宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；过去完成时被动；what 从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>汉斯回到家中，但房子已被炸毁，邻里没人知道住户后来怎么样了。</p></div>
+    <div class="field words"><span>词</span><p>family home 老家； neighbourhood 邻里； what became of ……后来怎样； inhabitant 居民；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="173.03" data-end="182.08">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">Assuming <span class="weak">that</span> <span class="weak">his</span> family <span class="weak">had</span> <span class="weak">been</span> killed <span class="linking">during</span> <span class="weak linking">an</span> air raid, Hans settled <span class="linking">down</span> <span class="weak linking">in</span> <span class="weak">a</span> village fifty <span class="linking">miles</span> away where he <span class="weak">had</span> <span class="linking">remained</span> ever since.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈsumɪŋ ðæt <span class="weak">hɪz</span> ˈfæməli hæd bɪn kɪld ˈdʊrɪŋ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɛr reɪd hɑns ˈsɛɾəld daʊn<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈvɪlɪdʒ ˈfɪfti maɪlz<span class="linking">‿</span>əˈweɪ wɛr hi hæd rɪˈmeɪnd<span class="linking">‿</span>ˈɛvɚ sɪns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdʊrɪŋ‿ən‿ɛr、daʊn‿ɪn‿ə、maɪlz‿əˈweɪ、rɪˈmeɪnd‿ˈɛvɚ 连读；hɪz、ən、ɪn、ə 弱读/弱化；ˈsɛɾəld 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Assuming that... 为现在分词短语作原因/前提状语；where 引导定语从句修饰 village。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had been killed 和 had remained 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>汉斯以为家人在空袭中丧生，于是在五十英里外的一个村子安顿下来，并从那时起一直留在那里。</p></div>
+    <div class="field words"><span>词</span><p>assume 以为/假定； air raid 空袭； settle down 定居； ever since 从那以后一直；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>巧合与小说: credulous 轻信的； coincidence 巧合； improbable 不大可能的； naive 幼稚的； incredible 难以置信的； circumstance 情况；</p>
+    <p>亲属与身份: long-lost brother 失散多年的兄弟； maidservant 女仆； resemblance 相似； be presumed dead 被认为已死； reunite 重逢；</p>
+    <p>战争经历: be killed in action 阵亡； be wounded 受伤； be separated from 与……分离； unit 部队； air raid 空袭； record 记录；</p>
+    <p>动作短语: bring about 导致； pour scorn on 嘲笑/嗤之以鼻； be acquainted with 熟悉； make one's way back 返回； settle down 定居；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>less...than we used to be</code>: 与过去状态比较。</p>
+    <p><code>would bring...</code>: would 表过去习惯。</p>
+    <p><code>anyone but...would find...</code>: 除了……以外任何人都会觉得……。</p>
+    <p><code>be thought to have been killed</code>: 被认为已经遇害，不定式完成被动。</p>
+    <p><code>Assuming that...</code>: 分词短语作假设/原因状语。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于开头议论现代读者：<code>are less credulous</code>, <code>conspire</code>。</p>
+    <p>一般过去时用于祖父讲述的故事：<code>told</code>, <code>found</code>, <code>stopped</code>, <code>commented</code>, <code>sent</code>。</p>
+    <p>过去完成时用于汉斯先前遭遇：<code>had been killed</code>, <code>had gone on</code>, <code>had been sent</code>, <code>had been bombed</code>, <code>had remained</code>。</p>
+    <p>过去完成时被动很多，突出战争中身份记录被动消失：<code>had been destroyed</code>, <code>had been killed</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>would find</code> 表现代读者的假设反应。</p>
+    <p><code>might be his brother</code> 和 <code>might be right</code> 表布斯曼太太谨慎的可能性判断。</p>
+    <p><code>was thought to have been killed</code> 表外界误判。</p>
+    <p>标题 <code>A Chance in a Million</code> 强调极小概率的真实巧合。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>bring about</code> -&gt; /brɪŋ‿əˈbaʊt/；<code>poured scorn on</code> -&gt; /pɔrd skɔrn‿ɑn/；<code>pointing out</code> -&gt; /ˈpɔɪntɪŋ‿aʊt/；<code>gone on</code> -&gt; /ɡɔn‿ɑn/。</p>
+    <p>弱读词: <code>to</code>, <code>of</code>, <code>and</code>, <code>that</code>, <code>as</code> 多弱读，如 <code>a series of coincidences</code>。</p>
+    <p>意群停顿: 第 20 句按 <code>Assuming that... / Hans settled down... / where he had remained...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 36 - A Chance in a Million</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../36－A Chance in a Million.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":13.45,"end":17.13,"text":"We are less credulous than we used to be."},{"index":2,"start":17.13,"end":30.29,"text":"In the nineteenth century, a novelist would bring his story to a conclusion by presenting his readers with a series of coincidences--most of them wildly improbable."},{"index":3,"start":30.29,"end":37.78,"text":"Readers happily accepted the fact that an obscure maidservant was really the hero's mother."},{"index":4,"start":37.78,"end":49.25,"text":"A long-lost brother, who was presumed dead, was really alive all the time and wickedly plotting to bring about the hero's downfall."},{"index":5,"start":49.25,"end":50.02,"text":"And so on."},{"index":6,"start":50.02,"end":56.13,"text":"Modern readers would find such naive solutions totally unacceptable."},{"index":7,"start":56.13,"end":69.39,"text":"Yet, in real life, circumstances do sometimes conspire to bring about coincidences which anyone but a nineteenth century novelist would find incredible."},{"index":8,"start":69.39,"end":81.39,"text":"When I was a boy, my grandfather told me how a German taxi driver, Franz Bussman, found a brother who was thought to have been killed twenty years before."},{"index":9,"start":81.39,"end":87.1,"text":"While on a walking tour with his wife, he stopped to talk to a workman."},{"index":10,"start":87.1,"end":98.71,"text":"After they had gone on, Mrs. Bussman commented on the workman's close resemblance to her husband and even suggested that he might be his brother."},{"index":11,"start":98.71,"end":107.35,"text":"Franz poured scorn on the idea, pointing out that his brother had been killed in action during the war."},{"index":12,"start":107.35,"end":117.09,"text":"Though Mrs. Bussman was fully acquainted with this story, she thought that there was a chance in a million that she might be right."},{"index":13,"start":117.09,"end":125.01,"text":"A few days later, she sent a boy to the workman to ask him if his name was Hans Bussman."},{"index":14,"start":125.01,"end":133.94,"text":"Needless to say, the man's name was Hans Bussman and he really was Franz's long-lost brother."},{"index":15,"start":133.94,"end":140.36,"text":"When the brothers were reunited, Hans explained how it was that he was still alive."},{"index":16,"start":140.36,"end":149.84,"text":"After having been wounded towards the end of the war, he had been sent to hospital and was separated from his unit."},{"index":17,"start":149.84,"end":157.64,"text":"The hospital had been bombed and Hans had made his way back into Western Germany on foot."},{"index":18,"start":157.64,"end":163.74,"text":"Meanwhile, his unit was lost and all records of him had been destroyed."},{"index":19,"start":163.74,"end":173.03,"text":"Hans returned to his family home, but the house had been bombed and no one in the neighbourhood knew what had become of the inhabitants."},{"index":20,"start":173.03,"end":182.08,"text":"Assuming that his family had been killed during an air raid, Hans settled down in a village fifty miles away where he had remained ever since."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

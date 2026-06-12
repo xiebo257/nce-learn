@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 17 - The Longest Suspension Bridge in the World</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main { padding: 22px 0 40px; }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p { color: #581c87; }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 17 - The Longest Suspension Bridge in the World</h1>
+      <p class="meta">Generated from 17－The Longest Suspension Bridge in the World.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.67" data-end="28.43">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Verrazano, <span class="weak linking">an</span> <span class="linking">Italian</span> about whom little <span class="weak">is</span> known, <span class="linking">sailed</span> into New York <span class="linking">Harbour</span> <span class="weak linking">in</span> 1524 <span class="weak">and</span> <span class="linking">named</span> <span class="weak linking">it</span> Angouleme.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˌvɛrəˈzɑnoʊ <span class="weak">ən</span><span class="linking">‿</span>ɪˈtæljən<span class="linking">‿</span>əˈbaʊt hum ˈlɪɾəl<span class="linking">‿</span><span class="weak">ɪz</span> noʊn seɪld ˈɪntu nuˈjɔrk ˈhɑrbɚ<span class="linking">‿</span><span class="weak">ɪn</span> ˌfɪfˈtin ˌtwɛnti fɔr<span class="linking">‿</span><span class="weak">ən</span> neɪmd<span class="linking">‿</span>ɪt ɑŋɡuˈlɛm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿ɪˈtæljən‿əˈbaʊt、ˈlɪɾəl‿ɪz、ˈhɑrbɚ‿ɪn、fɔr‿ən、neɪmd‿ɪt 连读；ən、ɪz、ɪn 弱读/弱化；ˈlɪɾəl‿ɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>an Italian... 为同位语；about whom 引导定语从句；sailed 和 named 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；定语从句一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>维拉扎诺是一位鲜为人知的意大利人，他于 1524 年驶入纽约港，并把它命名为昂古莱姆。</p></div>
+    <div class="field words"><span>词</span><p>harbour 港口； name 命名； little is known 鲜为人知；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="28.43" data-end="39.43">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">He <span class="linking">described</span> <span class="weak linking">it</span> <span class="weak linking">as</span> '<span class="weak">a</span> <span class="linking">very</span> agreeable situation located within two small <span class="linking">hills</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">midst</span> <span class="weak">of</span> which <span class="linking">flowed</span> <span class="weak">a</span> great river.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi dɪˈskraɪbd<span class="linking">‿</span>ɪt<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ˈvɛri əˈɡriəbəl ˌsɪtʃuˈeɪʃən loʊˈkeɪɾɪd wɪˈðɪn <span class="weak">tu</span> smɔl hɪlz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> mɪdst<span class="linking">‿</span><span class="weak">əv</span> wɪtʃ floʊd<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt ˈrɪvɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪˈskraɪbd‿ɪt‿æz‿ə、hɪlz‿ɪn、mɪdst‿əv、floʊd‿ə 连读；ə、tu、ɪn、ðə、əv 弱读/弱化；loʊˈkeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>describe...as...；located... 为过去分词短语；in the midst of which 引导定语从句倒装。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他把它描述为“一个非常宜人的地方，位于两座小山之间，其间流淌着一条大河。”</p></div>
+    <div class="field words"><span>词</span><p>describe as 描述为； agreeable 宜人的； located 位于； in the midst of 在……中间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="39.43" data-end="59.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Though Verrazano <span class="weak">is</span> by no means considered <span class="weak">to</span> <span class="weak">be</span> <span class="weak">a</span> <span class="linking">great</span> explorer, <span class="weak">his</span> name will probably <span class="linking">remain</span> immortal, <span class="weak linking">for</span> on November 21st, 1964, <span class="weak">the</span> longest suspension bridge <span class="weak">in</span> <span class="weak">the</span> world <span class="weak">was</span> <span class="linking">named</span> after <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ ˌvɛrəˈzɑnoʊ<span class="linking">‿</span><span class="weak">ɪz</span> baɪ noʊ minz kənˈsɪdɚd <span class="weak">tə</span> bi<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt<span class="linking">‿</span>ɪkˈsplɔrɚ <span class="weak">hɪz</span> neɪm wɪl ˈprɑbəbli rɪˈmeɪn<span class="linking">‿</span>ɪˈmɔrtəl <span class="weak">fɚ</span><span class="linking">‿</span>ɑn noʊˈvɛmbɚ ˌtwɛnti fɝst ˌnaɪnˈtin ˈsɪksti fɔr <span class="weak">ðə</span> ˈlɔŋɡəst səˈspɛnʃən brɪdʒ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> wɝld <span class="weak">wəz</span> neɪmd<span class="linking">‿</span>ˈæftɚ <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌvɛrəˈzɑnoʊ‿ɪz、bi‿ə、ɡreɪt‿ɪkˈsplɔrɚ、rɪˈmeɪn‿ɪˈmɔrtəl、fɚ‿ɑn 连读；ɪz、tə、ə、hɪz、fɚ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步从句；for 引导原因分句；was named after 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>从句一般现在时被动；主句一般将来时；原因分句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>虽然维拉扎诺绝不被认为是伟大的探险家，但他的名字很可能会永垂不朽，因为 1964 年 11 月 21 日，世界上最长的悬索桥以他的名字命名。</p></div>
+    <div class="field words"><span>词</span><p>by no means 绝不； explorer 探险家； immortal 不朽的； suspension bridge 悬索桥； be named after 以……命名；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="59.32" data-end="67.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> Verrazano Bridge, which <span class="weak">was</span> designed by Othmar Ammann, joins Brooklyn <span class="weak">to</span> Staten Island.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˌvɛrəˈzɑnoʊ brɪdʒ wɪtʃ <span class="weak">wəz</span> dɪˈzaɪnd baɪ ˈɑtmɑr ˈɑmən dʒɔɪnz ˈbrʊklɪn <span class="weak">tə</span> ˈstætən ˈaɪlənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wəz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导非限制性定语从句；join...to... 表连接。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般现在时；定语从句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>维拉扎诺大桥由奥斯马·阿曼设计，连接布鲁克林和斯塔滕岛。</p></div>
+    <div class="field words"><span>词</span><p>design 设计； join...to 连接……和……；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="67.72" data-end="72.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">has</span> <span class="weak">a</span> <span class="linking">span</span> <span class="weak">of</span> 4,260 feet.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt hæz<span class="linking">‿</span><span class="weak">ə</span> spæn<span class="linking">‿</span><span class="weak">əv</span> fɔr ˈθaʊzənd <span class="weak">tu</span> ˈhʌndrəd ˈsɪksti fit/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæz‿ə、spæn‿əv 连读；ə、əv、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；of... 表跨度长度。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它的跨度为 4260 英尺。</p></div>
+    <div class="field words"><span>词</span><p>span 跨度； foot 英尺；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="72.52" data-end="79.92">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> bridge <span class="weak">is</span> so long <span class="weak">that</span> <span class="weak">the</span> shape <span class="weak">of</span> <span class="weak">the</span> earth <span class="weak">had</span> <span class="weak">to</span> <span class="weak">be</span> <span class="linking">taken</span> into account <span class="linking">by</span> <span class="weak">its</span> designer.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> brɪdʒ<span class="linking">‿</span><span class="weak">ɪz</span> soʊ lɔŋ ðæt <span class="weak">ðə</span> ʃeɪp<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span> ɝθ hæd <span class="weak">tə</span> bi ˈteɪkən ˈɪntu<span class="linking">‿</span>əˈkaʊnt baɪ<span class="linking">‿</span>ɪts dɪˈzaɪnɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>brɪdʒ‿ɪz、ʃeɪp‿əv、ˈɪntu‿əˈkaʊnt、baɪ‿ɪts 连读；ðə、ɪz、əv、ði、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that... 结果状语从句；take...into account 被动。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般现在时；从句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>这座桥太长了，以至于设计者不得不把地球的形状考虑进去。</p></div>
+    <div class="field words"><span>词</span><p>shape 形状； take into account 考虑； designer 设计者；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="79.92" data-end="85.53">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Two great towers support four huge cables.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tu</span> ɡreɪt ˈtaʊɚz səˈpɔrt fɔr hjudʒ ˈkeɪbəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>两座巨塔支撑着四根巨大的缆索。</p></div>
+    <div class="field words"><span>词</span><p>tower 塔； support 支撑； cable 缆索；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="85.53" data-end="92.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> <span class="linking">towers</span> <span class="weak">are</span> <span class="linking">built</span> <span class="linking">on</span> immense underwater platforms made <span class="weak">of</span> <span class="linking">steel</span> <span class="weak">and</span> concrete.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈtaʊɚz<span class="linking">‿</span><span class="weak">ɑr</span> bɪlt<span class="linking">‿</span>ɑn<span class="linking">‿</span>ɪˈmɛns ˌʌndɚˈwɔɾɚ ˈplætˌfɔrmz meɪd<span class="linking">‿</span><span class="weak">əv</span> stil<span class="linking">‿</span><span class="weak">ən</span> kənˈkrit/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtaʊɚz‿ɑr、bɪlt‿ɑn‿ɪˈmɛns、meɪd‿əv、stil‿ən 连读；ðə、ɑr、əv、ən 弱读/弱化；ˌʌndɚˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句被动；made of... 为过去分词短语作定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>桥塔建在巨大的水下平台上，这些平台由钢筋和混凝土制成。</p></div>
+    <div class="field words"><span>词</span><p>immense 巨大的； underwater 水下的； platform 平台； steel 钢； concrete 混凝土；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="92.28" data-end="97.65">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> <span class="linking">platforms</span> extend <span class="weak">to</span> <span class="weak">a</span> <span class="linking">depth</span> <span class="weak linking">of</span> over 100 <span class="linking">feet</span> under <span class="weak">the</span> sea.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈplætˌfɔrmz<span class="linking">‿</span>ɪkˈstɛnd <span class="weak">tʊ</span><span class="linking">‿</span><span class="weak">ə</span> dɛpθ<span class="linking">‿</span><span class="weak">əv</span> ˈoʊvɚ wʌn ˈhʌndrəd fit ˈʌndɚ <span class="weak">ðə</span> si/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈplætˌfɔrmz‿ɪkˈstɛnd、tʊ‿ə、dɛpθ‿əv 连读；ðə、tʊ、ə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；to a depth of... 作程度状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这些平台延伸到海面以下 100 多英尺的深处。</p></div>
+    <div class="field words"><span>词</span><p>extend 延伸； depth 深度；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="97.65" data-end="101.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">These alone took sixteen months <span class="weak">to</span> build.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðiz<span class="linking">‿</span>əˈloʊn tʊk sɪkˈstin mʌnθs <span class="weak">tə</span> bɪld/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðiz‿əˈloʊn 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>take time to do 句型；these 指 platforms。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>仅这些平台就花了 16 个月建成。</p></div>
+    <div class="field words"><span>词</span><p>alone 单是/仅仅； take time to do 花时间做；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="101.48" data-end="108.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Above <span class="weak">the</span> surface <span class="weak">of</span> <span class="weak">the</span> water, <span class="weak">the</span> towers rise <span class="weak">to</span> <span class="weak">a</span> <span class="linking">height</span> <span class="weak">of</span> nearly 700 feet.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈbʌv <span class="weak">ðə</span> ˈsɝfəs<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈwɔɾɚ <span class="weak">ðə</span> ˈtaʊɚz raɪz <span class="weak">tʊ</span><span class="linking">‿</span><span class="weak">ə</span> haɪt<span class="linking">‿</span><span class="weak">əv</span> ˈnɪrli ˈsɛvən ˈhʌndrəd fit/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsɝfəs‿əv、tʊ‿ə、haɪt‿əv 连读；ðə、əv、tʊ、ə 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Above... 作地点状语；rise to a height of... 表高度。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>在水面以上，桥塔高达近 700 英尺。</p></div>
+    <div class="field words"><span>词</span><p>surface 表面； rise to a height of 高达； nearly 几乎；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="108.25" data-end="112.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">They support <span class="weak">the</span> cables <span class="weak">from</span> which <span class="weak">the</span> bridge <span class="weak">has</span> <span class="weak">been</span> suspended.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ səˈpɔrt <span class="weak">ðə</span> ˈkeɪbəlz <span class="weak">frəm</span> wɪtʃ <span class="weak">ðə</span> brɪdʒ <span class="weak">həz</span> bɪn səˈspɛndɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、frəm、həz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>from which 引导定语从句；has been suspended 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般现在时；定语从句现在完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>它们支撑着悬挂大桥的缆索。</p></div>
+    <div class="field words"><span>词</span><p>suspend 悬挂； cable 缆索；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="112.62" data-end="119.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">Each</span> <span class="weak">of</span> <span class="weak">the</span> four cables contains 26,108 <span class="linking">lengths</span> <span class="weak">of</span> wire.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/itʃ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> fɔr ˈkeɪbəlz kənˈteɪnz ˈtwɛnti sɪks ˈθaʊzənd wʌn ˈhʌndrəd eɪt lɛŋkθs<span class="linking">‿</span><span class="weak">əv</span> waɪr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>itʃ‿əv、lɛŋkθs‿əv 连读；əv、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Each of... 作主语；contains 为谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>四根缆索中的每一根都含有 26108 股钢丝。</p></div>
+    <div class="field words"><span>词</span><p>contain 包含； length of wire 一股钢丝；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="119.62" data-end="129.73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> <span class="weak">has</span> <span class="weak linking">been</span> estimated <span class="weak linking">that</span> if <span class="weak">the</span> bridge <span class="weak">were</span> packed with <span class="linking">cars</span>, <span class="weak">it</span> <span class="weak">would</span> <span class="linking">still</span> only <span class="weak">be</span> <span class="linking">carrying</span> <span class="weak">a</span> <span class="linking">third</span> <span class="weak linking">of</span> <span class="weak">its</span> total capacity.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">həz</span> bɪn ˈɛstəˌmeɪɾɪd ðæt<span class="linking">‿</span>ɪf <span class="weak">ðə</span> brɪdʒ <span class="weak">wɚ</span> pækt wɪð kɑrz<span class="linking">‿</span>ɪt wʊd stɪl ˈoʊnli bi ˈkæriɪŋ<span class="linking">‿</span><span class="weak">ə</span> θɝd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪts ˈtoʊtəl kəˈpæsəti/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪf、kɑrz‿ɪt、ˈkæriɪŋ‿ə、θɝd‿əv‿ɪts 连读；həz、ðə、wɚ、ə、əv 弱读/弱化；ˈɛstəˌmeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It has been estimated that...；if 引导虚拟条件从句。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时被动；虚拟语气 were + would be doing。</p></div>
+    <div class="field cn"><span>中</span><p>据估计，即使桥上挤满汽车，也只会承载其总容量的三分之一。</p></div>
+    <div class="field words"><span>词</span><p>estimate 估计； be packed with 挤满； capacity 容量；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="129.73" data-end="135.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">However, size <span class="weak">and</span> <span class="linking">strength</span> <span class="weak">are</span> not <span class="weak">the</span> <span class="linking">only</span> important <span class="linking">things</span> about this bridge.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ saɪz<span class="linking">‿</span><span class="weak">ən</span> strɛŋθ<span class="linking">‿</span><span class="weak">ɑr</span> nɑt <span class="weak">ði</span> ˈoʊnli ɪmˈpɔrtənt θɪŋz<span class="linking">‿</span>əˈbaʊt ðɪs brɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>saɪz‿ən、strɛŋθ‿ɑr、θɪŋz‿əˈbaʊt 连读；ən、ɑr、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>However 表转折；主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，规模和强度并不是这座桥唯一重要的方面。</p></div>
+    <div class="field words"><span>词</span><p>size 规模； strength 强度；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="135.93" data-end="147.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Despite <span class="weak linking">its</span> <span class="linking">immensity</span>, <span class="weak linking">it</span> <span class="weak">is</span> both simple <span class="weak linking">and</span> elegant, <span class="linking">fulfilling</span> <span class="weak">its</span> designer's dream <span class="weak">to</span> create '<span class="weak linking">an</span> <span class="linking">enormous</span> object <span class="linking">drawn</span> <span class="weak">as</span> <span class="linking">faintly</span> <span class="weak">as</span> possible'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈspaɪt<span class="linking">‿</span>ɪts<span class="linking">‿</span>ɪˈmɛnsəti ɪt<span class="linking">‿</span><span class="weak">ɪz</span> boʊθ ˈsɪmpəl<span class="linking">‿</span><span class="weak">ən</span> ˈɛləɡənt fʊlˈfɪlɪŋ<span class="linking">‿</span>ɪts dɪˈzaɪnɚz drim <span class="weak">tə</span> kriˈeɪt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪˈnɔrməs ˈɑbdʒɪkt drɔn<span class="linking">‿</span>æz ˈfeɪntli<span class="linking">‿</span>æz ˈpɑsəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪˈspaɪt‿ɪts‿ɪˈmɛnsəti、ɪt‿ɪz、ˈsɪmpəl‿ən、fʊlˈfɪlɪŋ‿ɪts、kriˈeɪt‿ən‿ɪˈnɔrməs 连读；ɪz、ən、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Despite... 作让步状语；both...and... 并列表语；fulfilling... 为现在分词短语作结果状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管它极其庞大，却既简单又优雅，实现了设计者“尽可能轻描淡写地画出一个巨大物体”的梦想。</p></div>
+    <div class="field words"><span>词</span><p>despite 尽管； immensity 巨大； elegant 优雅的； fulfill 实现； enormous 巨大的； as faintly as possible 尽可能淡地；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>桥梁结构: suspension bridge 悬索桥； tower 桥塔； cable 缆索； platform 平台； span 跨度； capacity 容量；</p>
+      <p>材料与规模: steel 钢； concrete 混凝土； immense 巨大的； underwater 水下的； enormous 巨大的；</p>
+      <p>评价: agreeable 宜人的； immortal 不朽的； elegant 优雅的； faintly 淡淡地；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>about whom little is known</code> 介词 + 关系代词结构。</p>
+      <p><code>so...that...</code> 表结果。</p>
+      <p><code>It has been estimated that...</code> 表“据估计……”。</p>
+      <p><code>if...were..., it would...</code> 虚拟条件句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时讲述 Verrazano 的历史行为。</p>
+      <p>一般现在时说明桥梁事实：<code>joins</code>, <code>has</code>, <code>support</code>。</p>
+      <p>被动语态突出建造和命名：<code>was designed</code>, <code>was named</code>, <code>are built</code>, <code>has been suspended</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>will probably remain immortal</code> 表推测和将来影响。</p>
+      <p>虚拟句 <code>if the bridge were packed..., it would...</code> 表假设。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>little is known</code> /ˈlɪɾəl‿ɪz noʊn/、<code>named after</code> /neɪmd‿ˈæftɚ/。</p>
+      <p>美式闪音: <code>water</code> /ˈwɔɾɚ/、<code>created</code> /kriˈeɪɾɪd/ 类似词。</p>
+      <p>数字较多，读时可单独成意群。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 17 - The Longest Suspension Bridge in the World</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../17－The Longest Suspension Bridge in the World.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.67,"end":28.43,"text":"Verrazano, an Italian about whom little is known, sailed into New York Harbour in 1524 and named it Angouleme."},{"index":2,"start":28.43,"end":39.43,"text":"He described it as 'a very agreeable situation located within two small hills in the midst of which flowed a great river.'"},{"index":3,"start":39.43,"end":59.32,"text":"Though Verrazano is by no means considered to be a great explorer, his name will probably remain immortal, for on November 21st, 1964, the longest suspension bridge in the world was named after him."},{"index":4,"start":59.32,"end":67.72,"text":"The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."},{"index":5,"start":67.72,"end":72.52,"text":"It has a span of 4,260 feet."},{"index":6,"start":72.52,"end":79.92,"text":"The bridge is so long that the shape of the earth had to be taken into account by its designer."},{"index":7,"start":79.92,"end":85.53,"text":"Two great towers support four huge cables."},{"index":8,"start":85.53,"end":92.28,"text":"The towers are built on immense underwater platforms made of steel and concrete."},{"index":9,"start":92.28,"end":97.65,"text":"The platforms extend to a depth of over 100 feet under the sea."},{"index":10,"start":97.65,"end":101.48,"text":"These alone took sixteen months to build."},{"index":11,"start":101.48,"end":108.25,"text":"Above the surface of the water, the towers rise to a height of nearly 700 feet."},{"index":12,"start":108.25,"end":112.62,"text":"They support the cables from which the bridge has been suspended."},{"index":13,"start":112.62,"end":119.62,"text":"Each of the four cables contains 26,108 lengths of wire."},{"index":14,"start":119.62,"end":129.73,"text":"It has been estimated that if the bridge were packed with cars, it would still only be carrying a third of its total capacity."},{"index":15,"start":129.73,"end":135.93,"text":"However, size and strength are not the only important things about this bridge."},{"index":16,"start":135.93,"end":147.18,"text":"Despite its immensity, it is both simple and elegant, fulfilling its designer's dream to create 'an enormous object drawn as faintly as possible'."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

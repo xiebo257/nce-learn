@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 42 - Modern Cavemen</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 42 - Modern Cavemen</h1>
+      <p class="meta">Generated from 42－Modern Cavemen.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.31" data-end="23.34">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Cave <span class="linking">exploration</span>, or <span class="linking">pot-holing</span>, <span class="weak linking">as</span> <span class="weak">it</span> <span class="weak">has</span> come <span class="weak">to</span> <span class="weak">be</span> <span class="linking">known</span>, <span class="weak linking">is</span> <span class="weak">a</span> relatively new sport.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/keɪv<span class="linking">‿</span>ˌɛkspləˈreɪʃən<span class="linking">‿</span>ɔr ˈpɑtˌhoʊlɪŋ<span class="linking">‿</span>æz<span class="linking">‿</span>ɪt hæz kʌm <span class="weak">tə</span> bi noʊn<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈrɛləɾɪvli nu spɔrt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪv‿ˌɛkspləˈreɪʃən‿ɔr、ˈpɑtˌhoʊlɪŋ‿æz‿ɪt、noʊn‿ɪz‿ə 连读；tə、ɪz、ə 弱读/弱化；ˈrɛləɾɪvli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主语 Cave exploration, or pot-holing；as it has come to be known 为插入性状语从句；主句为主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；has come to be known 为现在完成时被动含义。</p></div>
+    <div class="field cn"><span>中</span><p>洞穴探险，或者说如今所谓的洞穴探险运动，是一项相对较新的运动。</p></div>
+    <div class="field words"><span>词</span><p>cave exploration 洞穴探险； pot-holing 洞穴探险； come to be known 被称为； relatively 相对地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.34" data-end="34.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Perhaps</span> <span class="weak linking">it</span> <span class="weak">is</span> <span class="weak">the</span> desire <span class="weak">for</span> solitude or <span class="weak">the</span> chance <span class="weak">of</span> <span class="linking">making</span> <span class="weak linking">an</span> unexpected discovery <span class="weak">that</span> lures people down <span class="weak">to</span> <span class="weak">the</span> <span class="linking">depths</span> <span class="weak">of</span> <span class="weak">the</span> earth.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/pɚˈhæps<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> dɪˈzaɪɚ <span class="weak">fɚ</span> ˈsɑləˌtud<span class="linking">‿</span>ɔr <span class="weak">ðə</span> tʃæns<span class="linking">‿</span><span class="weak">əv</span> ˈmeɪkɪŋ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌʌnɪkˈspɛktɪd dɪˈskʌvəri ðæt lʊrz ˈpipəl daʊn <span class="weak">tə</span> <span class="weak">ðə</span> dɛpθs<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ɝθ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pɚˈhæps‿ɪɾ‿ɪz、ˈsɑləˌtud‿ɔr、tʃæns‿əv、ˈmeɪkɪŋ‿ən‿ˌʌnɪkˈspɛktɪd、dɛpθs‿əv 连读；ɪz、ðə、fɚ、əv、ən、tə 弱读/弱化；pɚˈhæps‿ɪɾ‿ɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>强调句 <code>it is...that...</code>；被强调部分为 the desire...or the chance...；that 后是真正谓语 lures。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>也许正是对孤独的渴望，或获得意外发现的机会，把人们吸引到地球深处。</p></div>
+    <div class="field words"><span>词</span><p>desire 渴望； solitude 孤独； unexpected discovery 意外发现； lure 吸引/诱惑； depths of the earth 地球深处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="34.42" data-end="40.92">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> impossible <span class="weak">to</span> give <span class="weak">a</span> <span class="linking">satisfactory</span> explanation <span class="weak linking">for</span> <span class="weak">a</span> pot-holer's motives.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">tə</span> ɡɪv<span class="linking">‿</span><span class="weak">ə</span> ˌsæɾɪsˈfæktəri ˌɛkspləˈneɪʃən <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> ˈpɑtˌhoʊlɚz ˈmoʊɾɪvz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪz‿ɪmˈpɑsəbəl、ɡɪv‿ə、fɚ‿ə 连读；ɪz、tə、ə、fɚ 弱读/弱化；ɪɾ‿ɪz‿ɪmˈpɑsəbəl、ˌsæɾɪsˈfæktəri、ˈmoʊɾɪvz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It 作形式主语；to give... 为真正主语；for a pot-holer's motives 作对象。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>要对洞穴探险者的动机作出令人满意的解释是不可能的。</p></div>
+    <div class="field words"><span>词</span><p>satisfactory 令人满意的； explanation 解释； motive 动机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.92" data-end="48.99">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">For</span> <span class="weak">him</span>, caves <span class="weak">have</span> <span class="weak">the</span> same peculiar fascination which high mountains <span class="weak">have</span> <span class="weak">for</span> <span class="weak">the</span> climber.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> <span class="weak">hɪm</span> keɪvz hæv <span class="weak">ðə</span> seɪm pɪˈkjuljɚ ˌfæsəˈneɪʃən wɪtʃ haɪ ˈmaʊntənz hæv <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈklaɪmɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ、hɪm、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句，修饰 fascination；the same...which... 表对应比较。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>对他来说，洞穴具有一种奇特的吸引力，就像高山对登山者具有的吸引力一样。</p></div>
+    <div class="field words"><span>词</span><p>peculiar 奇特的； fascination 吸引力； climber 登山者；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="48.99" data-end="54.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">They</span> arouse instincts which <span class="weak linking">can</span> only <span class="weak">be</span> <span class="linking">dimly</span> understood.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ əˈraʊz<span class="linking">‿</span>ˈɪnstɪŋkts wɪtʃ kæn<span class="linking">‿</span>ˈoʊnli bi ˈdɪmli ˌʌndɚˈstʊd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈraʊz‿ˈɪnstɪŋkts、kæn‿ˈoʊnli 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 instincts；can be understood 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can be understood 为情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>它们唤起一些只能被模糊理解的本能。</p></div>
+    <div class="field words"><span>词</span><p>arouse 唤起； instinct 本能； dimly 模糊地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="54.42" data-end="60.19">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Exploring really deep <span class="linking">caves</span> <span class="weak">is</span> <span class="linking">not</span> <span class="weak">a</span> task <span class="weak">for</span> <span class="weak">the</span> <span class="linking">Sunday</span> afternoon rambler.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪkˈsplɔrɪŋ ˈriəli dip keɪvz<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span> tæsk <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsʌndeɪ ˌæftɚˈnun ˈræmblɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪvz‿ɪz、nɑɾ‿ə 连读；ɪz、ə、fɚ、ðə 弱读/弱化；nɑɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>动名词短语 Exploring... 作主语；for the Sunday afternoon rambler 表适合对象，带轻微讽刺。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>探索真正深的洞穴可不是星期日下午散步者能胜任的任务。</p></div>
+    <div class="field words"><span>词</span><p>task 任务； rambler 漫步者； Sunday afternoon rambler 周日下午散步者/业余爱好者；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="60.19" data-end="68.04">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Such</span> undertakings require <span class="weak">the</span> precise <span class="linking">planning</span> <span class="weak">and</span> <span class="linking">foresight</span> <span class="weak">of</span> <span class="linking">military</span> operations.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌtʃ<span class="linking">‿</span>ˌʌndɚˈteɪkɪŋz rɪˈkwaɪɚ <span class="weak">ðə</span> prɪˈsaɪs ˈplænɪŋ<span class="linking">‿</span><span class="weak">ən</span> ˈfɔrˌsaɪɾ<span class="linking">‿</span><span class="weak">əv</span> ˈmɪləˌtɛri ˌɑpəˈreɪʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sʌtʃ‿ˌʌndɚˈteɪkɪŋz、ˈplænɪŋ‿ən、ˈfɔrˌsaɪɾ‿əv 连读；ðə、ən、əv 弱读/弱化；ˈfɔrˌsaɪɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；of military operations 作后置定语，说明 planning and foresight 的程度/类型。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这种行动需要像军事行动那样精确的计划和远见。</p></div>
+    <div class="field words"><span>词</span><p>undertaking 行动/事业； precise 精确的； foresight 远见； military operation 军事行动；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="68.04" data-end="80.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">It</span> <span class="weak">can</span> take <span class="weak">as</span> <span class="linking">long</span> <span class="weak linking">as</span> eight days <span class="weak">to</span> <span class="linking">rig</span> up rope <span class="linking">ladders</span> <span class="weak">and</span> <span class="weak">to</span> establish supply bases before <span class="weak">a</span> descent <span class="weak">can</span> <span class="weak">be</span> made into <span class="weak">a</span> very deep cave.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt kæn teɪk<span class="linking">‿</span>æz lɔŋ<span class="linking">‿</span>æz<span class="linking">‿</span>eɪt deɪz <span class="weak">tə</span> rɪɡ<span class="linking">‿</span>ʌp roʊp ˈlædɚz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> ɪˈstæblɪʃ səˈplaɪ ˈbeɪsɪz bɪˈfɔr<span class="linking">‿</span><span class="weak">ə</span> dɪˈsɛnt kæn bi meɪd<span class="linking">‿</span>ˈɪntu<span class="linking">‿</span><span class="weak">ə</span> ˈvɛri dip keɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>teɪk‿æz、lɔŋ‿æz‿eɪt、rɪɡ‿ʌp、ˈlædɚz‿ən、bɪˈfɔr‿ə 连读；tə、ən、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>It 作形式主语；to rig up...and to establish... 为真正主语；before 引导时间状语从句；can be made 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can take/can be made 表一般可能性。</p></div>
+    <div class="field cn"><span>中</span><p>在能够进入一个很深的洞穴之前，架设绳梯和建立补给基地可能要花长达八天的时间。</p></div>
+    <div class="field words"><span>词</span><p>as long as 长达； rig up 架设； rope ladder 绳梯； establish 建立； supply base 补给基地； descent 下降/进入；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="80.61" data-end="92.06">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">Precautions</span> <span class="weak">of</span> this <span class="linking">sort</span> <span class="weak">are</span> necessary, <span class="weak linking">for</span> <span class="weak linking">it</span> <span class="weak linking">is</span> impossible <span class="weak">to</span> foretell <span class="weak">the</span> exact nature <span class="weak">of</span> <span class="weak">the</span> difficulties which will confront <span class="weak">the</span> pot-holer.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/prɪˈkɔʃənz<span class="linking">‿</span><span class="weak">əv</span> ðɪs sɔrt<span class="linking">‿</span><span class="weak">ɑr</span> ˈnɛsəˌsɛri <span class="weak">fɚ</span><span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">tə</span> fɔrˈtɛl <span class="weak">ði</span> ɪɡˈzækt ˈneɪtʃɚ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈdɪfəkəltiz wɪtʃ wɪl kənˈfrʌnt <span class="weak">ðə</span> ˈpɑtˌhoʊlɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>prɪˈkɔʃənz‿əv、sɔrt‿ɑr、fɚ‿ɪɾ‿ɪz‿ɪmˈpɑsəbəl、ˈneɪtʃɚ‿əv 连读；əv、ɑr、fɚ、ɪz、tə、ði 弱读/弱化；fɚ‿ɪɾ‿ɪz‿ɪmˈpɑsəbəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句；it 作形式主语；which 引导定语从句修饰 difficulties。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will confront 表将来可能遇到。</p></div>
+    <div class="field cn"><span>中</span><p>这种预防措施是必要的，因为无法预知洞穴探险者将会遇到的困难究竟是什么样的。</p></div>
+    <div class="field words"><span>词</span><p>precaution 预防措施； of this sort 这类的； foretell 预知； exact nature 确切性质； confront 面临；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="92.06" data-end="98.66">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> deepest known cave <span class="weak">in</span> <span class="weak">the</span> <span class="linking">world</span> <span class="weak">is</span> <span class="weak">the</span> Gouffre Berger near Grenoble.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈdipəst noʊn keɪv<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> wɝld<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> ˌɡufrə bɛrˈʒeɪ nɪr ɡrəˈnoʊbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪv‿ɪn、wɝld‿ɪz 连读；ðə、ɪn、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；known 为过去分词作定语；near Grenoble 作地点后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>世界上已知最深的洞穴是格勒诺布尔附近的古夫尔贝尔热洞。</p></div>
+    <div class="field words"><span>词</span><p>deepest known 已知最深的； cave 洞穴；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="98.66" data-end="104.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak linking">It</span> extends <span class="weak">to</span> <span class="weak">a</span> <span class="linking">depth</span> <span class="weak">of</span> 3,723 feet.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span>ɪkˈstɛndz <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> dɛpθ<span class="linking">‿</span><span class="weak">əv</span> θri ˈθaʊzənd ˈsɛvən ˈhʌndrəd twɛnti θri fit/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪkˈstɛndz、tə‿ə、dɛpθ‿əv 连读；tə、ə、əv 弱读/弱化；ɪɾ‿ɪkˈstɛndz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；to a depth of... 表延伸到的深度。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它深达 3,723 英尺。</p></div>
+    <div class="field words"><span>词</span><p>extend 延伸； depth 深度； foot 英尺；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="104.33" data-end="113.65">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">This</span> immense chasm <span class="weak">has</span> <span class="weak">been</span> formed <span class="linking">by</span> <span class="weak linking">an</span> underground stream which <span class="weak">has</span> <span class="linking">tunnelled</span> <span class="weak">a</span> course <span class="linking">through</span> <span class="weak">a</span> <span class="linking">flaw</span> <span class="weak">in</span> <span class="weak">the</span> rocks.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span>ɪˈmɛns ˈkæzəm hæz bɪn fɔrmd baɪ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈʌndɚˌɡraʊnd strim wɪtʃ hæz ˈtʌnəld<span class="linking">‿</span><span class="weak">ə</span> kɔrs θru<span class="linking">‿</span><span class="weak">ə</span> flɔ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> rɑks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪˈmɛns、baɪ‿ən‿ˈʌndɚˌɡraʊnd、ˈtʌnəld‿ə、θru‿ə、flɔ‿ɪn 连读；ən、ə、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主句为现在完成时被动；which 引导定语从句修饰 stream；through a flaw in the rocks 作路径状语。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时被动 <code>has been formed</code>；定语从句现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>这个巨大的裂谷是由一条地下溪流形成的，它沿着岩石中的裂缝冲刷出了一条通道。</p></div>
+    <div class="field words"><span>词</span><p>immense 巨大的； chasm 裂谷/深渊； underground stream 地下溪流； tunnel a course 冲出通道； flaw 裂缝/缺陷；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="113.65" data-end="120.13">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> entrance <span class="weak">to</span> <span class="weak">the</span> cave <span class="weak linking">is</span> <span class="linking">on</span> <span class="weak">a</span> plateau <span class="weak">in</span> <span class="weak">the</span> Dauphine Alps.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span> ˈɛntrəns <span class="weak">tə</span> <span class="weak">ðə</span> keɪv<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> plæˈtoʊ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> doʊˈfineɪ ælps/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪv‿ɪz‿ɑn‿ə、plæˈtoʊ‿ɪn 连读；ði、tə、ðə、ɪz、ə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；to the cave 修饰 entrance；on a plateau 和 in the Dauphine Alps 为地点信息。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这个洞穴的入口位于多菲内阿尔卑斯山的一片高原上。</p></div>
+    <div class="field words"><span>词</span><p>entrance 入口； plateau 高原； Alps 阿尔卑斯山；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="120.13" data-end="125.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak linking">As</span> <span class="weak linking">it</span> <span class="weak linking">is</span> only six <span class="linking">feet</span> <span class="linking">across</span>, <span class="weak linking">it</span> <span class="weak">is</span> barely noticeable.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈoʊnli sɪks fiɾ<span class="linking">‿</span>əˈkrɔs<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> ˈbɛrli ˈnoʊɾəsəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>æz‿ɪɾ‿ɪz‿ˈoʊnli、fiɾ‿əˈkrɔs‿ɪɾ‿ɪz 连读；ɪz 弱读/弱化；æz‿ɪɾ‿ɪz‿ˈoʊnli、fiɾ‿əˈkrɔs‿ɪɾ‿ɪz、ˈnoʊɾəsəbəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；主句为主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>因为它只有六英尺宽，所以几乎不引人注意。</p></div>
+    <div class="field words"><span>词</span><p>across 宽； barely 几乎不； noticeable 显眼的/可注意到的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="125.39" data-end="135">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> cave might never <span class="weak">have</span> <span class="weak">been</span> discovered <span class="weak">had</span> not <span class="weak">the</span> entrance <span class="weak">been</span> spotted by <span class="weak">the</span> distinguished French pot-holer, Berger.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> keɪv maɪt ˈnɛvɚ hæv bɪn dɪˈskʌvɚd hæd nɑt <span class="weak">ði</span> ˈɛntrəns bɪn ˈspɑɾɪd baɪ <span class="weak">ðə</span> dɪˈstɪŋɡwɪʃt frɛntʃ ˈpɑtˌhoʊlɚ bɛrˈʒeɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、ði 弱读/弱化；ˈspɑɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>省略 if 的虚拟条件句倒装：<code>had not the entrance been spotted</code> = if the entrance had not been spotted；主句 <code>might never have been discovered</code> 表对过去的假设。</p></div>
+    <div class="field tense"><span>时态</span><p>过去虚拟；主句情态完成被动；条件从句过去完成被动。</p></div>
+    <div class="field cn"><span>中</span><p>如果不是杰出的法国洞穴探险者贝尔热发现了入口，这个洞穴也许永远不会被发现。</p></div>
+    <div class="field words"><span>词</span><p>might never have been discovered 也许永远不会被发现； spot 发现； distinguished 杰出的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="135" data-end="140.66">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Since <span class="weak">its</span> <span class="linking">discovery</span>, <span class="weak">it</span> <span class="weak">has</span> become <span class="weak">a</span> <span class="linking">sort</span> <span class="weak">of</span> <span class="linking">pot-holers</span>' Everest.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sɪns<span class="linking">‿</span>ɪts dɪˈskʌvəri ɪt hæz bɪˈkʌm<span class="linking">‿</span><span class="weak">ə</span> sɔrt<span class="linking">‿</span><span class="weak">əv</span> ˈpɑtˌhoʊlɚz<span class="linking">‿</span>ˈɛvərəst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɪns‿ɪts、bɪˈkʌm‿ə、sɔrt‿əv、ˈpɑtˌhoʊlɚz‿ˈɛvərəst 连读；ə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Since its discovery 作时间状语；a sort of 表“某种”；pot-holers' Everest 为比喻。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>自从被发现以来，它已经成了洞穴探险者心目中的某种“珠穆朗玛峰”。</p></div>
+    <div class="field words"><span>词</span><p>since 自从； a sort of 某种； Everest 珠穆朗玛峰/最高挑战；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="140.66" data-end="147.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="linking">Though</span> <span class="weak">a</span> <span class="linking">number</span> <span class="weak">of</span> descents <span class="weak">have</span> <span class="weak">been</span> made, <span class="linking">much</span> <span class="weak linking">of</span> <span class="weak">it</span> still remains <span class="weak">to</span> <span class="weak">be</span> explored.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ<span class="linking">‿</span><span class="weak">ə</span> ˈnʌmbɚ<span class="linking">‿</span><span class="weak">əv</span> dɪˈsɛnts hæv bɪn meɪd mʌtʃ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪt stɪl rɪˈmeɪnz <span class="weak">tə</span> bi ɪkˈsplɔrd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðoʊ‿ə、ˈnʌmbɚ‿əv、mʌtʃ‿əv‿ɪt 连读；ə、əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；主句 remains to be explored 表“仍有待探索”。</p></div>
+    <div class="field tense"><span>时态</span><p>从句现在完成时被动；主句一般现在时；to be explored 为不定式被动。</p></div>
+    <div class="field cn"><span>中</span><p>尽管已经有人多次下到洞中，但它的大部分仍有待探索。</p></div>
+    <div class="field words"><span>词</span><p>a number of 多次/许多； descent 下探； remain to be done 仍有待被做； explore 探索；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="147.85" data-end="153.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">A</span> <span class="linking">team</span> <span class="weak">of</span> pot-holers recently went down <span class="weak">the</span> Gouffre Berger.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> tim<span class="linking">‿</span><span class="weak">əv</span> ˈpɑtˌhoʊlɚz ˈrisəntli wɛnt daʊn <span class="weak">ðə</span> ˌɡufrə bɛrˈʒeɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tim‿əv 连读；ə、əv、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；went down 表进入/下到洞中。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>最近，一队洞穴探险者下到了古夫尔贝尔热洞中。</p></div>
+    <div class="field words"><span>词</span><p>a team of 一队； go down 下去/进入；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="153.27" data-end="163.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">After</span> entering <span class="weak">the</span> narrow <span class="linking">gap</span> on <span class="weak">the</span> plateau, they climbed down <span class="weak">the</span> steep <span class="linking">sides</span> <span class="weak">of</span> <span class="weak">the</span> cave until they came <span class="weak">to</span> <span class="weak">a</span> narrow corridor.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈɛntərɪŋ <span class="weak">ðə</span> ˈnæroʊ ɡæp<span class="linking">‿</span>ɑn <span class="weak">ðə</span> plæˈtoʊ ðeɪ klaɪmd daʊn <span class="weak">ðə</span> stip saɪdz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪv<span class="linking">‿</span>ənˈtɪl ðeɪ keɪm <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> ˈnæroʊ ˈkɔrədɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡæp‿ɑn、saɪdz‿əv、keɪv‿ənˈtɪl、tə‿ə 连读；ðə、əv、tə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>After entering... 为介词 + 动名词短语作时间状语；until 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；entering 为非谓语。</p></div>
+    <div class="field cn"><span>中</span><p>进入高原上的狭窄裂口后，他们沿着洞穴陡峭的侧壁往下爬，直到来到一条狭窄的通道。</p></div>
+    <div class="field words"><span>词</span><p>narrow gap 狭窄裂口； plateau 高原； steep 陡峭的； corridor 通道；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="163.62" data-end="172.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">They <span class="weak">had</span> <span class="weak">to</span> edge their <span class="linking">way</span> along this, sometimes <span class="linking">wading</span> across shallow <span class="linking">streams</span>, or <span class="linking">swimming</span> across deep pools.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ hæd <span class="weak">tə</span> ɛdʒ ðɛr weɪ<span class="linking">‿</span>əˈlɔŋ ðɪs ˈsʌmˌtaɪmz ˈweɪdɪŋ<span class="linking">‿</span>əˈkrɔs ˈʃæloʊ strimz<span class="linking">‿</span>ɔr ˈswɪmɪŋ<span class="linking">‿</span>əˈkrɔs dip pulz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>weɪ‿əˈlɔŋ、ˈweɪdɪŋ‿əˈkrɔs、strimz‿ɔr、ˈswɪmɪŋ‿əˈkrɔs 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>had to do 表不得不；wading/swimming 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们不得不沿着这条通道慢慢挪动，有时涉过浅溪，有时游过深潭。</p></div>
+    <div class="field words"><span>词</span><p>edge one's way 缓慢移动； wade 涉水； shallow 浅的； stream 小溪； pool 水潭；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="172.62" data-end="180.69">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Suddenly they came <span class="weak">to</span> <span class="weak">a</span> waterfall which <span class="linking">dropped</span> into <span class="weak linking">an</span> underground lake at <span class="weak">the</span> <span class="linking">bottom</span> <span class="weak">of</span> <span class="weak">the</span> cave.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈsʌdənli ðeɪ keɪm <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> ˈwɔɾɚˌfɔl wɪtʃ drɑpt<span class="linking">‿</span>ˈɪntu<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈʌndɚˌɡraʊnd leɪk<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈbɑɾəm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿ə、drɑpt‿ˈɪntu‿ən‿ˈʌndɚˌɡraʊnd、leɪk‿æt、ˈbɑɾəm‿əv 连读；tə、ə、ən、ðə、əv 弱读/弱化；ˈwɔɾɚˌfɔl、ˈbɑɾəm‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 waterfall；into... 和 at... 表地点。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>突然，他们来到一处瀑布前，瀑布落入洞穴底部的一个地下湖中。</p></div>
+    <div class="field words"><span>词</span><p>waterfall 瀑布； underground lake 地下湖； at the bottom of 在……底部；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="180.69" data-end="191.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">They <span class="linking">plunged</span> into <span class="weak">the</span> lake, <span class="weak linking">and</span> after loading their <span class="linking">gear</span> <span class="linking">on</span> <span class="weak linking">an</span> inflatable rubber dinghy, let <span class="weak">the</span> current carry them <span class="weak">to</span> <span class="weak">the</span> other side.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ plʌndʒd<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> leɪk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈæftɚ ˈloʊdɪŋ ðɛr ɡɪr<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪnˈfleɪɾəbəl ˈrʌbɚ ˈdɪŋi lɛt <span class="weak">ðə</span> ˈkɝənt ˈkæri ðɛm <span class="weak">tə</span> <span class="weak">ði</span> ˈʌðɚ saɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>plʌndʒd‿ˈɪntu、leɪk‿ən‿ˈæftɚ、ɡɪr‿ɑn‿ən‿ɪnˈfleɪɾəbəl 连读；ðə、ən、tə、ði 弱读/弱化；ɡɪr‿ɑn‿ən‿ɪnˈfleɪɾəbəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>plunged 和 let 为并列谓语；after loading... 为时间状语；let + 宾语 + 动词原形。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们跳入湖中，把装备装到一只充气橡皮艇上之后，让水流把他们带到另一边。</p></div>
+    <div class="field words"><span>词</span><p>plunge into 跳入； gear 装备； inflatable 可充气的； rubber dinghy 橡皮艇； current 水流；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="191.67" data-end="198.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">To</span> protect themselves <span class="weak">from</span> <span class="weak">the</span> icy water, they <span class="weak">had</span> <span class="weak">to</span> wear special rubber suits.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span> prəˈtɛkt ðəmˈsɛlvz <span class="weak">frəm</span> <span class="weak">ði</span> ˈaɪsi ˈwɔɾɚ ðeɪ hæd <span class="weak">tə</span> wɛr ˈspɛʃəl ˈrʌbɚ suts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə、frəm、ði 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>To protect... 为目的状语；主句 had to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>为了保护自己不受冰冷湖水侵袭，他们不得不穿上特制橡胶服。</p></div>
+    <div class="field words"><span>词</span><p>protect sb from 保护某人免受； icy 冰冷的； rubber suit 橡胶服；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="198.58" data-end="206.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">At <span class="weak">the</span> <span class="linking">far</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> lake, they came <span class="weak">to</span> huge <span class="linking">piles</span> <span class="weak">of</span> rubble which <span class="weak">had</span> <span class="weak">been</span> <span class="linking">washed</span> up by <span class="weak">the</span> water.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æt <span class="weak">ðə</span> fɑr<span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> leɪk ðeɪ keɪm <span class="weak">tə</span> hjudʒ paɪlz<span class="linking">‿</span><span class="weak">əv</span> ˈrʌbəl wɪtʃ hæd bɪn wɑʃt<span class="linking">‿</span>ʌp baɪ <span class="weak">ðə</span> ˈwɔɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɑr‿ɛnd‿əv、paɪlz‿əv、wɑʃt‿ʌp 连读；ðə、əv、tə 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 rubble；had been washed up 为过去完成时被动。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；从句过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在湖的远端，他们来到一大堆被水冲上来的碎石前。</p></div>
+    <div class="field words"><span>词</span><p>far end 远端； pile 堆； rubble 碎石； wash up 冲上来；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="206.87" data-end="220.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">In</span> this <span class="linking">part</span> <span class="weak">of</span> <span class="weak">the</span> cave, they <span class="weak">could</span> <span class="linking">hear</span> <span class="weak linking">an</span> insistent booming sound which they found <span class="weak">was</span> caused <span class="linking">by</span> <span class="weak">a</span> small waterspout shooting <span class="linking">down</span> into <span class="weak">a</span> pool <span class="weak">from</span> <span class="weak">the</span> <span class="linking">roof</span> <span class="weak">of</span> <span class="weak">the</span> cave.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ðɪs pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪv ðeɪ kʊd hɪr<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪnˈsɪstənt ˈbumɪŋ saʊnd wɪtʃ ðeɪ faʊnd <span class="weak">wəz</span> kɔzd baɪ<span class="linking">‿</span><span class="weak">ə</span> smɔl ˈwɔɾɚˌspaʊt ˈʃuɾɪŋ daʊn<span class="linking">‿</span>ˈɪntu<span class="linking">‿</span><span class="weak">ə</span> pul <span class="weak">frəm</span> <span class="weak">ðə</span> ruf<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pɑrt‿əv、hɪr‿ən‿ɪnˈsɪstənt、baɪ‿ə、daʊn‿ˈɪntu‿ə、ruf‿əv 连读；ɪn、əv、ðə、ən、wəz、ə 弱读/弱化；ˈwɔɾɚˌspaʊt、ˈʃuɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 sound；they found 为插入性主谓；was caused by 为被动语态；shooting down... 为现在分词短语作 waterspout 的后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表过去能力；was caused 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在洞穴的这一部分，他们能听到一种持续的隆隆声，他们发现这是由一股小水柱从洞顶射入水潭所造成的。</p></div>
+    <div class="field words"><span>词</span><p>insistent 持续不断的； booming 隆隆作响的； waterspout 水柱； shoot down 射下/冲下； roof of the cave 洞顶；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="220.42" data-end="229.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text">Squeezing <span class="linking">through</span> <span class="weak">a</span> <span class="linking">cleft</span> <span class="weak">in</span> <span class="weak">the</span> rocks, <span class="weak">the</span> <span class="linking">pot-holers</span> <span class="linking">arrived</span> <span class="linking">at</span> <span class="weak linking">an</span> enormous cavern, <span class="weak">the</span> size <span class="weak linking">of</span> <span class="weak">a</span> huge concert hall.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈskwizɪŋ θru<span class="linking">‿</span><span class="weak">ə</span> klɛft<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> rɑks <span class="weak">ðə</span> ˈpɑtˌhoʊlɚz<span class="linking">‿</span>əˈraɪvd<span class="linking">‿</span>æɾ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪˈnɔrməs ˈkævɚn <span class="weak">ðə</span> saɪz<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> hjudʒ ˈkɑnsɚt hɔl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>θru‿ə、klɛft‿ɪn、ˈpɑtˌhoʊlɚz‿əˈraɪvd‿æɾ‿ən‿ɪˈnɔrməs、saɪz‿əv‿ə 连读；ə、ɪn、ðə、ən、əv 弱读/弱化；ˈpɑtˌhoʊlɚz‿əˈraɪvd‿æɾ‿ən‿ɪˈnɔrməs 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Squeezing... 为现在分词短语作方式/伴随状语；the size of... 为同位语，补充说明 cavern。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>探险者们从岩石裂缝中挤过去，来到一个巨大的洞穴，大小相当于一座大型音乐厅。</p></div>
+    <div class="field words"><span>词</span><p>squeeze through 挤过； cleft 裂缝； enormous 巨大的； cavern 大洞穴； concert hall 音乐厅；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="229.72" data-end="245.43">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text">After <span class="linking">switching</span> on <span class="linking">powerful</span> arc lights, they saw great stalagmites--some <span class="weak">of</span> <span class="linking">them</span> over forty feet high--<span class="linking">rising</span> up like tree-trunks <span class="weak">to</span> meet <span class="weak">the</span> stalactites suspended <span class="weak">from</span> <span class="weak">the</span> roof.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈswɪtʃɪŋ<span class="linking">‿</span>ɑn ˈpaʊɚfəl<span class="linking">‿</span>ɑrk laɪts ðeɪ sɔ ɡreɪt stəˈlæɡmaɪts sʌm<span class="linking">‿</span><span class="weak">əv</span> ðɛm<span class="linking">‿</span>ˈoʊvɚ ˈfɔrdi fit haɪ ˈraɪzɪŋ<span class="linking">‿</span>ʌp laɪk tri trʌŋks <span class="weak">tə</span> mit <span class="weak">ðə</span> stəˈlæktɪts səˈspɛndɪd <span class="weak">frəm</span> <span class="weak">ðə</span> ruf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈswɪtʃɪŋ‿ɑn、ˈpaʊɚfəl‿ɑrk、sʌm‿əv、ðɛm‿ˈoʊvɚ、ˈraɪzɪŋ‿ʌp 连读；əv、tə、ðə、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>After switching on... 为时间状语；saw + 宾语 + 现在分词；破折号中为插入说明；suspended from the roof 为过去分词短语修饰 stalactites。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；switching/rising 为非谓语。</p></div>
+    <div class="field cn"><span>中</span><p>打开强力弧光灯后，他们看到巨大的石笋，有些高达四十多英尺，像树干一样向上伸展，去迎接从洞顶悬下的钟乳石。</p></div>
+    <div class="field words"><span>词</span><p>switch on 打开； arc light 弧光灯； stalagmite 石笋； tree-trunk 树干； stalactite 钟乳石； suspended 悬挂的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="245.43" data-end="252.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text"><span class="linking">Round</span> about, <span class="linking">piles</span> <span class="weak">of</span> limestone <span class="linking">glistened</span> <span class="weak linking">in</span> all <span class="weak">the</span> <span class="linking">colours</span> <span class="weak">of</span> <span class="weak">the</span> rainbow.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/raʊnd<span class="linking">‿</span>əˈbaʊt paɪlz<span class="linking">‿</span><span class="weak">əv</span> ˈlaɪmˌstoʊn ˈɡlɪsənd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ɔl <span class="weak">ðə</span> ˈkʌlɚz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈreɪnˌboʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>raʊnd‿əˈbaʊt、paɪlz‿əv、ˈɡlɪsənd‿ɪn‿ɔl、ˈkʌlɚz‿əv 连读；əv、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Round about 作地点状语；主谓结构；in all the colours... 表呈现的颜色。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>四周一堆堆石灰岩闪烁着彩虹般的各种颜色。</p></div>
+    <div class="field words"><span>词</span><p>round about 周围； limestone 石灰岩； glisten 闪光； rainbow 彩虹；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="252.14" data-end="261.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> eerie silence <span class="weak">of</span> <span class="weak">the</span> cavern, <span class="weak">the</span> only sound <span class="weak">that</span> <span class="weak">could</span> <span class="weak">be</span> heard <span class="weak">was</span> made by water which dripped continuously <span class="weak">from</span> <span class="weak">the</span> high dome above them.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ði</span> ˈɪri ˈsaɪləns<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈkævɚn <span class="weak">ði</span> ˈoʊnli saʊnd ðæt kʊd bi hɝd <span class="weak">wəz</span> meɪd baɪ ˈwɔɾɚ wɪtʃ drɪpt kənˈtɪnjuəsli <span class="weak">frəm</span> <span class="weak">ðə</span> haɪ doʊm<span class="linking">‿</span>əˈbʌv ðɛm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsaɪləns‿əv、doʊm‿əˈbʌv 连读；ɪn、ði、əv、ðə、wəz、frəm 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In... 作地点/氛围状语；that could be heard 修饰 sound；was made by 为被动语态；which 引导定语从句修饰 water。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could be heard 为情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>在洞穴令人毛骨悚然的寂静中，唯一能听到的声音是水从他们头顶高高的穹顶上不断滴落所发出的声音。</p></div>
+    <div class="field words"><span>词</span><p>eerie 怪异可怕的； cavern 大洞穴； could be heard 能被听到； drip 滴落； continuously 不断地； dome 穹顶；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>洞穴地貌: cave 洞穴； chasm 裂谷； plateau 高原； corridor 通道； waterfall 瀑布； underground lake 地下湖； cavern 大洞穴； cleft 裂缝； dome 穹顶；</p>
+    <p>探险动作: explore 探索； descent 下探； rig up 架设； edge one's way 缓慢移动； wade 涉水； plunge into 跳入； squeeze through 挤过； switch on 打开；</p>
+    <p>装备与材料: rope ladder 绳梯； supply base 补给基地； gear 装备； inflatable rubber dinghy 充气橡皮艇； rubber suit 橡胶服； arc light 弧光灯；</p>
+    <p>岩石与水: rubble 碎石； limestone 石灰岩； stalagmite 石笋； stalactite 钟乳石； waterspout 水柱； current 水流；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>it is...that...</code>: 强调句，用于突出吸引人们下洞的原因。</p>
+    <p><code>It is impossible to do...</code>: It 作形式主语，不定式是真正主语。</p>
+    <p><code>had not the entrance been spotted</code>: 省略 if 的虚拟条件倒装。</p>
+    <p><code>remains to be explored</code>: remain + to be done 表“仍有待……”。</p>
+    <p><code>saw...rising up...</code>: see + 宾语 + 现在分词，强调正在呈现的景象。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于说明洞穴探险的普遍事实：<code>is</code>, <code>have</code>, <code>require</code>, <code>are necessary</code>。</p>
+    <p>现在完成时用于洞穴形成、命名和发现后的影响：<code>has come to be known</code>, <code>has been formed</code>, <code>has become</code>。</p>
+    <p>一般过去时用于具体探险过程：<code>went down</code>, <code>climbed</code>, <code>came</code>, <code>plunged</code>, <code>arrived</code>, <code>saw</code>。</p>
+    <p>过去完成时被动用于更早发生的地貌变化：<code>had been washed up</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>can only be dimly understood</code> 表能力/可能性有限。</p>
+    <p><code>can take as long as...</code> 表可能需要长达多少时间。</p>
+    <p><code>might never have been discovered</code> 是对过去事实相反情况的推测。</p>
+    <p><code>could hear</code> 和 <code>could be heard</code> 分别表示过去能力和情态被动。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>as it</code> -&gt; /æz‿ɪt/；<code>chance of</code> -&gt; /tʃæns‿əv/；<code>rig up</code> -&gt; /rɪɡ‿ʌp/；<code>washed up</code> -&gt; /wɑʃt‿ʌp/；<code>switching on</code> -&gt; /ˈswɪtʃɪŋ‿ɑn/。</p>
+    <p>元音 + 元音滑读: <code>into a</code> -&gt; /ˈɪntu‿ə/；<code>to a depth</code> -&gt; /tə‿ə dɛpθ/；<code>the entrance</code> -&gt; /ði ˈɛntrəns/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>as</code>, <code>for</code> 多弱读，如 <code>depths of the earth</code> -&gt; /dɛpθs‿əv ði‿ɝθ/。</p>
+    <p>意群停顿: 第 27 句可按 <code>After switching on... / they saw great stalagmites / some of them... / rising up...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 42 - Modern Cavemen</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../42－Modern Cavemen.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.31,"end":23.34,"text":"Cave exploration, or pot-holing, as it has come to be known, is a relatively new sport."},{"index":2,"start":23.34,"end":34.42,"text":"Perhaps it is the desire for solitude or the chance of making an unexpected discovery that lures people down to the depths of the earth."},{"index":3,"start":34.42,"end":40.92,"text":"It is impossible to give a satisfactory explanation for a pot-holer's motives."},{"index":4,"start":40.92,"end":48.99,"text":"For him, caves have the same peculiar fascination which high mountains have for the climber."},{"index":5,"start":48.99,"end":54.42,"text":"They arouse instincts which can only be dimly understood."},{"index":6,"start":54.42,"end":60.19,"text":"Exploring really deep caves is not a task for the Sunday afternoon rambler."},{"index":7,"start":60.19,"end":68.04,"text":"Such undertakings require the precise planning and foresight of military operations."},{"index":8,"start":68.04,"end":80.61,"text":"It can take as long as eight days to rig up rope ladders and to establish supply bases before a descent can be made into a very deep cave."},{"index":9,"start":80.61,"end":92.06,"text":"Precautions of this sort are necessary, for it is impossible to foretell the exact nature of the difficulties which will confront the pot-holer."},{"index":10,"start":92.06,"end":98.66,"text":"The deepest known cave in the world is the Gouffre Berger near Grenoble."},{"index":11,"start":98.66,"end":104.33,"text":"It extends to a depth of 3,723 feet."},{"index":12,"start":104.33,"end":113.65,"text":"This immense chasm has been formed by an underground stream which has tunnelled a course through a flaw in the rocks."},{"index":13,"start":113.65,"end":120.13,"text":"The entrance to the cave is on a plateau in the Dauphine Alps."},{"index":14,"start":120.13,"end":125.39,"text":"As it is only six feet across, it is barely noticeable."},{"index":15,"start":125.39,"end":135,"text":"The cave might never have been discovered had not the entrance been spotted by the distinguished French pot-holer, Berger."},{"index":16,"start":135,"end":140.66,"text":"Since its discovery, it has become a sort of pot-holers' Everest."},{"index":17,"start":140.66,"end":147.85,"text":"Though a number of descents have been made, much of it still remains to be explored."},{"index":18,"start":147.85,"end":153.27,"text":"A team of pot-holers recently went down the Gouffre Berger."},{"index":19,"start":153.27,"end":163.62,"text":"After entering the narrow gap on the plateau, they climbed down the steep sides of the cave until they came to a narrow corridor."},{"index":20,"start":163.62,"end":172.62,"text":"They had to edge their way along this, sometimes wading across shallow streams, or swimming across deep pools."},{"index":21,"start":172.62,"end":180.69,"text":"Suddenly they came to a waterfall which dropped into an underground lake at the bottom of the cave."},{"index":22,"start":180.69,"end":191.67,"text":"They plunged into the lake, and after loading their gear on an inflatable rubber dinghy, let the current carry them to the other side."},{"index":23,"start":191.67,"end":198.58,"text":"To protect themselves from the icy water, they had to wear special rubber suits."},{"index":24,"start":198.58,"end":206.87,"text":"At the far end of the lake, they came to huge piles of rubble which had been washed up by the water."},{"index":25,"start":206.87,"end":220.42,"text":"In this part of the cave, they could hear an insistent booming sound which they found was caused by a small waterspout shooting down into a pool from the roof of the cave."},{"index":26,"start":220.42,"end":229.72,"text":"Squeezing through a cleft in the rocks, the pot-holers arrived at an enormous cavern, the size of a huge concert hall."},{"index":27,"start":229.72,"end":245.43,"text":"After switching on powerful arc lights, they saw great stalagmites--some of them over forty feet high--rising up like tree-trunks to meet the stalactites suspended from the roof."},{"index":28,"start":245.43,"end":252.14,"text":"Round about, piles of limestone glistened in all the colours of the rainbow."},{"index":29,"start":252.14,"end":261.22,"text":"In the eerie silence of the cavern, the only sound that could be heard was made by water which dripped continuously from the high dome above them."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

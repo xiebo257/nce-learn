@@ -864,47 +864,85 @@ function highlightIpa(ipa) {
 }
 
 function highlightEnglish(line) {
+  const tokens = tokenize(normalizeLine(line));
+  const linkIndexes = new Set();
+  for (let index = 0; index < tokens.length - 1; index += 1) {
+    const left = wordKey(tokens[index]);
+    const right = wordKey(tokens[index + 1]);
+    if (!left || !right) continue;
+    const leftIpa = ipaWords.get(left) ?? dictionaryIpa(left) ?? left;
+    const rightIpa = ipaWords.get(right) ?? dictionaryIpa(right) ?? right;
+    const reducedRight = {
+      a: 'ə',
+      an: 'ən',
+      and: 'ən',
+      are: 'ɑr',
+      is: 'ɪz',
+      of: 'əv',
+      the: 'ðə',
+      to: 'tə',
+      in: 'ɪn',
+    }[right] ?? rightIpa;
+    const shouldMark =
+      startsWithVowelSound(reducedRight) &&
+      (endsWithLinkableSound(leftIpa) || weakForms.has(right) || ['and', 'are', 'is', 'it'].includes(right));
+    if (shouldMark) {
+      linkIndexes.add(index);
+      linkIndexes.add(index + 1);
+    }
+  }
+
+  let wordIndex = 0;
   return normalizeLine(line).split(/(\s+)/).map((part) => {
     if (/^\s+$/.test(part)) return part;
     const key = wordKey(part);
     const escaped = escapeHtml(part);
-    if (weakForms.has(key)) return `<span class="weak">${escaped}</span>`;
-    if (/^[aeiou]/i.test(key) || ['and', 'are', 'is', 'it'].includes(key)) return `<span class="linking">${escaped}</span>`;
+    const currentIndex = wordIndex;
+    wordIndex += key ? 1 : 0;
+    const classes = [];
+    if (weakForms.has(key)) classes.push('weak');
+    if (linkIndexes.has(currentIndex) || /^[aeiou]/i.test(key)) classes.push('linking');
+    if (classes.length > 0) return `<span class="${classes.join(' ')}">${escaped}</span>`;
     return escaped;
   }).join('');
 }
 
-function linkingPairsFor(line, ipa) {
-  if (!ipa.includes('‿')) return [];
-  const words = tokenize(line).map((word) => word.replace(/[?!.,]/g, ''));
-  const pairs = [];
-  for (let index = 0; index < words.length - 1; index += 1) {
-    const left = wordKey(words[index]);
-    const right = wordKey(words[index + 1]);
-    if (!left || !right) continue;
-    const leftIpa = ipaWords.get(left) ?? dictionaryIpa(left) ?? left;
-    const rightIpa = ipaWords.get(right) ?? dictionaryIpa(right) ?? right;
-    if (ipa.includes(`${leftIpa}‿`) || ['and', 'a', 'an', 'the', 'to', 'of', 'are', 'is', 'it'].includes(right)) {
-      pairs.push(`${words[index]} ${words[index + 1]}`);
-    }
+function linkedIpaChunks(ipa) {
+  return [...ipa.matchAll(/[^\s]+‿[^\s]+/g)]
+    .map((match) => match[0].replace(/[/?.,;:!()"']/g, ''))
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
+function weakIpaForms(ipa) {
+  const forms = [];
+  for (const weak of ['ðə', 'ði', 'ə', 'ən', 'əm', 'tə', 'tʊ', 'əv', 'ɑr', 'ɪz', 'wəz', 'wɚ', 'fɚ', 'frəm', 'həd', 'həv', 'jə']) {
+    const pattern = new RegExp(`(^|[\\s‿])${weak}(?=$|[\\s‿])`);
+    if (pattern.test(ipa) && !forms.includes(weak)) forms.push(weak);
   }
-  return [...new Set(pairs)].slice(0, 5);
+  return forms.slice(0, 6);
+}
+
+function flapChunks(ipa) {
+  return ipa.split(/\s+/)
+    .map((part) => part.replace(/[/?.,;:!()"']/g, ''))
+    .filter((part) => part.includes('ɾ'))
+    .slice(0, 3);
 }
 
 function liaisonFor(line, ipa) {
   const points = [];
-  const pairs = linkingPairsFor(line, ipa);
-  if (ipa.includes('‿')) {
-    points.push(pairs.length > 0
-      ? `${pairs.join('、')} 连读。`
-      : '有自然跨词连读，前一词收尾直接接后一词开头。');
-  }
-  if (/ɾ/.test(ipa)) points.push('两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。');
+  const links = linkedIpaChunks(ipa);
+  const weak = weakIpaForms(ipa);
+  const flaps = flapChunks(ipa);
+  if (links.length > 0) points.push(`${links.join('、')} 连读`);
+  if (weak.length > 0) points.push(`${weak.join('、')} 弱读/弱化`);
+  if (flaps.length > 0) points.push(`${flaps.join('、')} 中 /ɾ/ 为美式闪音`);
   if (points.length === 0) {
     const focus = contentWords(line).slice(0, 3).join(' / ');
-    points.push(focus ? `本句没有明显跨词连读；按意群朗读，重读 ${focus}。` : '本句按完整意群朗读，保持清晰语调。');
+    points.push(focus ? `本句没有明显跨词连读；按意群朗读，重读 ${focus}` : '本句按完整意群朗读，保持清晰语调');
   }
-  return points.join(' ');
+  return `${points.join('；')}。`;
 }
 
 function structureFor(line) {

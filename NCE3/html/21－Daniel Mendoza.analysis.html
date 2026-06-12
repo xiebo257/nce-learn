@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 21 - Daniel Mendoza</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 21 - Daniel Mendoza</h1>
+      <p class="meta">Generated from 21－Daniel Mendoza.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.59" data-end="23.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Boxing matches <span class="weak">were</span> very <span class="linking">popular</span> <span class="weak linking">in</span> England two hundred <span class="linking">years</span> ago.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈbɑksɪŋ ˈmætʃɪz <span class="weak">wɚ</span> ˈvɛri ˈpɑpjəlɚ <span class="weak">ɪn</span><span class="linking">‿</span>ˈɪŋɡlənd <span class="weak">tu</span> ˈhʌndrəd jɪrz<span class="linking">‿</span>əˈɡoʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn‿ˈɪŋɡlənd、jɪrz‿əˈɡoʊ 连读；wɚ、ɪn、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；two hundred years ago 作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>两百年前，拳击比赛在英格兰非常流行。</p></div>
+    <div class="field words"><span>词</span><p>boxing match 拳击比赛； popular 流行的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.52" data-end="28.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">In</span> those days, boxers fought with bare fists <span class="weak">for</span> prize money.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ðoʊz deɪz ˈbɑksɚz fɔt wɪð bɛr fɪsts <span class="weak">fɚ</span> praɪz ˈmʌni/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>In those days 作时间状语；with... 表方式；for... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>那时，拳击手赤手空拳为奖金而战。</p></div>
+    <div class="field words"><span>词</span><p>in those days 在当时； boxer 拳击手； bare fists 赤手空拳； prize money 奖金；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="28.93" data-end="33.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Because <span class="weak">of</span> this, they <span class="weak">were</span> <span class="linking">known</span> <span class="weak">as</span> 'prizefighters'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈkɔz<span class="linking">‿</span><span class="weak">əv</span> ðɪs ðeɪ <span class="weak">wɚ</span> noʊn<span class="linking">‿</span>æz ˈpraɪzˌfaɪɾɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkɔz‿əv、noʊn‿æz 连读；əv、wɚ 弱读/弱化；ˈpraɪzˌfaɪɾɚz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Because of this 作原因状语；be known as 表“被称为”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>因此，他们被称为“职业拳击手/奖金拳手”。</p></div>
+    <div class="field words"><span>词</span><p>be known as 被称为； prizefighter 职业拳击手；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="33.27" data-end="44.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">However, boxing <span class="weak">was</span> very crude, <span class="weak">for</span> <span class="weak">there</span> <span class="weak">were</span> no <span class="linking">rules</span> <span class="weak linking">and</span> <span class="weak">a</span> prizefighter <span class="weak">could</span> <span class="weak">be</span> <span class="linking">seriously</span> <span class="linking">injured</span> <span class="linking">or</span> even killed <span class="linking">during</span> <span class="weak">a</span> match.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ ˈbɑksɪŋ <span class="weak">wəz</span> ˈvɛri krud <span class="weak">fɚ</span> ðɛr <span class="weak">wɚ</span> noʊ rulz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> ˈpraɪzˌfaɪɾɚ kʊd bi ˈsɪriəsli ˈɪndʒɚd<span class="linking">‿</span>ɔr<span class="linking">‿</span>ˈivən kɪld ˈdʊrɪŋ<span class="linking">‿</span><span class="weak">ə</span> mætʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rulz‿ən‿ə、ˈɪndʒɚd‿ɔr‿ˈivən、ˈdʊrɪŋ‿ə 连读；wəz、fɚ、wɚ、ən、ə 弱读/弱化；ˈpraɪzˌfaɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句；could be injured/killed 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>然而，拳击非常粗野，因为没有规则，拳手在比赛中可能严重受伤甚至丧命。</p></div>
+    <div class="field words"><span>词</span><p>crude 粗野的； rule 规则； seriously injured 严重受伤； be killed 被杀死；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="44.94" data-end="53.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">One <span class="weak">of</span> <span class="weak">the</span> most colourful <span class="linking">figures</span> <span class="weak">in</span> boxing history <span class="weak">was</span> Daniel Mendoza, who <span class="weak">was</span> <span class="linking">born</span> <span class="weak">in</span> 1764.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> moʊst ˈkʌlɚfəl ˈfɪɡjɚz<span class="linking">‿</span><span class="weak">ɪn</span> ˈbɑksɪŋ ˈhɪstəri <span class="weak">wəz</span> ˈdænjəl mɛnˈdoʊzə hu <span class="weak">wəz</span> bɔrn<span class="linking">‿</span><span class="weak">ɪn</span> ˌsɛvənˈtin ˈsɪksti fɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、ˈfɪɡjɚz‿ɪn、bɔrn‿ɪn 连读；əv、ðə、ɪn、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>One of... 作主语；who 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was born 为出生表达。</p></div>
+    <div class="field cn"><span>中</span><p>拳击史上最富传奇色彩的人物之一是丹尼尔・门多萨，他出生于 1764 年。</p></div>
+    <div class="field words"><span>词</span><p>colourful figure 传奇人物； boxing history 拳击史； be born 出生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="53.56" data-end="62.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> use <span class="weak">of</span> gloves <span class="weak">was</span> <span class="linking">not</span> <span class="linking">introduced</span> until 1860, when <span class="weak">the</span> <span class="linking">Marquis</span> <span class="weak">of</span> Queensberry <span class="linking">drew</span> up <span class="weak">the</span> first <span class="linking">set</span> <span class="weak">of</span> rules.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> jus<span class="linking">‿</span><span class="weak">əv</span> ɡlʌvz <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span>ˌɪntrəˈdust<span class="linking">‿</span>ənˈtɪl<span class="linking">‿</span>ˌeɪˈtin ˈsɪksti wɛn <span class="weak">ðə</span> ˈmɑrkwɪs<span class="linking">‿</span><span class="weak">əv</span> ˈkwinzˌbɛri dru ʌp <span class="weak">ðə</span> fɝst sɛɾ<span class="linking">‿</span><span class="weak">əv</span> rulz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jus‿əv、nɑɾ‿ˌɪntrəˈdust‿ənˈtɪl‿ˌeɪˈtin、ˈmɑrkwɪs‿əv、sɛɾ‿əv 连读；ðə、əv、wəz 弱读/弱化；nɑɾ‿ˌɪntrəˈdust‿ənˈtɪl‿ˌeɪˈtin、sɛɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not...until... 表直到……才；when 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动；定语从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>直到 1860 年，昆斯伯里侯爵制定第一套规则时，拳击手套才被引入。</p></div>
+    <div class="field words"><span>词</span><p>glove 手套； introduce 引入； draw up 制定； set of rules 一套规则；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="62.63" data-end="73.71">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Though he <span class="weak">was</span> <span class="linking">technically</span> <span class="weak">a</span> prizefighter, Mendoza did much <span class="weak">to</span> change crude <span class="linking">prizefighting</span> into <span class="weak">a</span> sport, <span class="weak">for</span> he brought science <span class="weak">to</span> <span class="weak">the</span> game.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ hi <span class="weak">wəz</span> ˈtɛknɪkəli <span class="weak">ə</span> ˈpraɪzˌfaɪɾɚ mɛnˈdoʊzə dɪd mʌtʃ <span class="weak">tə</span> tʃeɪndʒ krud ˈpraɪzˌfaɪɾɪŋ<span class="linking">‿</span>ˈɪntu <span class="weak">ə</span> spɔrt <span class="weak">fɚ</span> hi brɔt ˈsaɪəns <span class="weak">tə</span> <span class="weak">ðə</span> ɡeɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpraɪzˌfaɪɾɪŋ‿ˈɪntu 连读；wəz、ə、tə、fɚ、ðə 弱读/弱化；ˈpraɪzˌfaɪɾɚ、ˈpraɪzˌfaɪɾɪŋ‿ˈɪntu 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步从句；to change... 表结果/目的；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>虽然严格说门多萨是奖金拳手，但他为把粗野拳击变成一项运动做了很多，因为他把科学方法带入了拳击。</p></div>
+    <div class="field words"><span>词</span><p>technically 严格说； do much to 对……贡献很大； crude 粗野的； bring science to 引入科学方法；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="73.71" data-end="78.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">In</span> <span class="weak">his</span> day, Mendoza enjoyed tremendous popularity.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">hɪz</span> deɪ mɛnˈdoʊzə ɪnˈdʒɔɪd trəˈmɛndəs ˌpɑpjəˈlærəɾi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn、hɪz 弱读/弱化；ˌpɑpjəˈlærəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In his day 作时间状语；enjoy popularity 表“享有声望”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在他的时代，门多萨享有极高的人气。</p></div>
+    <div class="field words"><span>词</span><p>in his day 在他的时代； tremendous 巨大的； popularity 人气；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="78.41" data-end="81.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">He <span class="weak linking">was</span> adored by <span class="linking">rich</span> <span class="weak">and</span> <span class="linking">poor</span> alike.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span><span class="linking">‿</span>əˈdɔrd baɪ rɪtʃ<span class="linking">‿</span><span class="weak">ən</span> pʊr<span class="linking">‿</span>əˈlaɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿əˈdɔrd、rɪtʃ‿ən、pʊr‿əˈlaɪk 连读；wəz、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>被动语态；by rich and poor alike 表施动者。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>富人和穷人都崇拜他。</p></div>
+    <div class="field words"><span>词</span><p>adore 崇拜； rich and poor alike 富人和穷人都；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="81.94" data-end="88.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Mendoza rose <span class="weak">to</span> fame <span class="linking">swiftly</span> <span class="linking">after</span> <span class="weak">a</span> boxing match when he <span class="weak linking">was</span> only fourteen <span class="linking">years</span> old.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/mɛnˈdoʊzə roʊz <span class="weak">tə</span> feɪm ˈswɪftli ˈæftɚ <span class="weak">ə</span> ˈbɑksɪŋ mætʃ wɛn hi <span class="weak">wəz</span><span class="linking">‿</span>ˈoʊnli fɔrˈtin jɪrz<span class="linking">‿</span>oʊld/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ˈoʊnli、jɪrz‿oʊld 连读；tə、ə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>after... 作时间状语；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>门多萨在十四岁时的一场拳击赛后迅速成名。</p></div>
+    <div class="field words"><span>词</span><p>rise to fame 成名； swiftly 迅速地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="88.42" data-end="95.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">This</span> attracted <span class="weak">the</span> <span class="linking">attention</span> <span class="weak">of</span> Richard Humphries who <span class="weak">was</span> then <span class="weak">the</span> <span class="linking">most</span> eminent <span class="linking">boxer</span> <span class="weak linking">in</span> England.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span>əˈtræktɪd <span class="weak">ði</span> əˈtɛnʃən<span class="linking">‿</span><span class="weak">əv</span> ˈrɪtʃɚd ˈhʌmfriz hu <span class="weak">wəz</span> ðɛn <span class="weak">ðə</span> moʊst<span class="linking">‿</span>ˈɛmənənt ˈbɑksɚ <span class="weak">ɪn</span><span class="linking">‿</span>ˈɪŋɡlənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿əˈtræktɪd、əˈtɛnʃən‿əv、moʊst‿ˈɛmənənt、ɪn‿ˈɪŋɡlənd 连读；ði、əv、wəz、ðə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>attract the attention of 表“引起……注意”；who 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这引起了理查德・汉弗莱斯的注意，他当时是英格兰最杰出的拳击手。</p></div>
+    <div class="field words"><span>词</span><p>attract attention 引起注意； eminent 杰出的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="95.87" data-end="100.98">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">He offered <span class="weak">to</span> train Mendoza <span class="weak">and</span> <span class="weak">his</span> young pupil <span class="weak">was</span> quick <span class="weak">to</span> learn.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈɔfɚd <span class="weak">tə</span> treɪn mɛnˈdoʊzə <span class="weak">ən</span> <span class="weak">hɪz</span> jʌŋ ˈpjupəl <span class="weak">wəz</span> kwɪk <span class="weak">tə</span> lɝn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə、ən、hɪz、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>offer to do 主动提出；and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他主动提出训练门多萨，而这位年轻学生学得很快。</p></div>
+    <div class="field words"><span>词</span><p>offer to do 主动提出； pupil 学生； quick to learn 学得快；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="100.98" data-end="108.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">In</span> fact, Mendoza soon became so successful <span class="weak">that</span> Humphries <span class="linking">turned</span> against <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> fækt mɛnˈdoʊzə sun bɪˈkeɪm soʊ səkˈsɛsfəl ðæt ˈhʌmfriz tɝnd<span class="linking">‿</span>əˈɡɛnst <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tɝnd‿əˈɡɛnst 连读；ɪn、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that 引导结果状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>事实上，门多萨很快变得非常成功，以至于汉弗莱斯转而反对他。</p></div>
+    <div class="field words"><span>词</span><p>in fact 事实上； turn against 反对/背叛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="108.01" data-end="116.5">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> two men quarrelled <span class="linking">bitterly</span> <span class="weak linking">and</span> <span class="weak">it</span> <span class="weak">was</span> clear <span class="weak">that</span> <span class="weak">the</span> argument <span class="weak linking">could</span> only <span class="weak">be</span> settled <span class="linking">by</span> <span class="weak">a</span> fight.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> <span class="weak">tu</span> mɛn ˈkwɔrəld ˈbɪɾɚli <span class="weak">ən</span><span class="linking">‿</span>ɪt <span class="weak">wəz</span> klɪr ðæt <span class="weak">ði</span> ˈɑrɡjəmənt kʊd<span class="linking">‿</span>ˈoʊnli bi ˈsɛɾəld baɪ <span class="weak">ə</span> faɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿ɪt、kʊd‿ˈoʊnli 连读；ðə、tu、ən、wəz、ði、ə 弱读/弱化；ˈbɪɾɚli、ˈsɛɾəld 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；it 为形式主语；that 从句为真正主语；could be settled 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>两人激烈争吵，很明显这场争端只能通过打一场来解决。</p></div>
+    <div class="field words"><span>词</span><p>quarrel 争吵； bitterly 激烈地； argument 争端； settle 解决；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="116.5" data-end="121.6">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">A</span> match <span class="weak">was</span> <span class="linking">held</span> at Stilton, where both men fought <span class="weak linking">for</span> <span class="weak">an</span> hour.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> mætʃ <span class="weak">wəz</span> hɛld<span class="linking">‿</span>æt ˈstɪltən wɛr boʊθ mɛn fɔt <span class="weak">fɚ</span> <span class="weak">ən</span> ˈaʊɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɛld‿æt 连读；ə、wəz、fɚ、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主句被动；where 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动；从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一场比赛在斯蒂尔顿举行，两人在那里打了一个小时。</p></div>
+    <div class="field words"><span>词</span><p>be held 举行； fight for an hour 打一小时；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="121.6" data-end="127.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> public <span class="linking">bet</span> <span class="weak">a</span> great <span class="linking">deal</span> <span class="weak">of</span> <span class="linking">money</span> on Mendoza, but he <span class="weak">was</span> defeated.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈpʌblɪk bɛɾ<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt dil<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni ɑn mɛnˈdoʊzə bət hi <span class="weak">wəz</span> dɪˈfiɾɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɛɾ‿ə、dil‿əv 连读；ðə、ə、əv、wəz 弱读/弱化；bɛɾ‿ə、dɪˈfiɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；was defeated 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>公众在门多萨身上下了大笔赌注，但他被打败了。</p></div>
+    <div class="field words"><span>词</span><p>bet money on 在……身上下注； be defeated 被打败；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="127.22" data-end="133.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Mendoza met <span class="linking">Humphries</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">ring</span> <span class="linking">on</span> <span class="weak">a</span> <span class="linking">later</span> <span class="linking">occasion</span> <span class="weak">and</span> he lost <span class="weak linking">for</span> <span class="weak">a</span> second time.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/mɛnˈdoʊzə mɛt ˈhʌmfriz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> rɪŋ<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> ˈleɪɾɚ əˈkeɪʒən<span class="linking">‿</span><span class="weak">ən</span> hi lɔst <span class="weak">fɚ</span> <span class="weak">ə</span> ˈsɛkənd taɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhʌmfriz‿ɪn、rɪŋ‿ɑn‿ə、əˈkeɪʒən‿ən 连读；ɪn、ðə、ə、ən、fɚ 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；in the ring 作地点状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>后来门多萨又在拳台上与汉弗莱斯交手，并第二次输了。</p></div>
+    <div class="field words"><span>词</span><p>in the ring 在拳台上； on a later occasion 后来一次； for a second time 第二次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="133.97" data-end="143.5">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> <span class="linking">not</span> until <span class="weak">his</span> third <span class="linking">match</span> <span class="weak">in</span> 1790 <span class="weak">that</span> he finally beat <span class="linking">Humphries</span> <span class="weak">and</span> became <span class="linking">Champion</span> <span class="weak linking">of</span> England.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span>ənˈtɪl <span class="weak">hɪz</span> θɝd mætʃ<span class="linking">‿</span><span class="weak">ɪn</span> ˌsɛvənˈtin ˈnaɪnti ðæt hi ˈfaɪnəli bit ˈhʌmfriz<span class="linking">‿</span><span class="weak">ən</span> bɪˈkeɪm ˈtʃæmpiən<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɪŋɡlənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɑɾ‿ənˈtɪl、mætʃ‿ɪn、ˈhʌmfriz‿ən、ˈtʃæmpiən‿əv‿ˈɪŋɡlənd 连读；wəz、hɪz、ɪn、ən、əv 弱读/弱化；nɑɾ‿ənˈtɪl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It was not until...that... 强调句型；beat 和 became 并列。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>直到 1790 年第三次交手时，他才终于击败汉弗莱斯，成为英格兰冠军。</p></div>
+    <div class="field words"><span>词</span><p>not until 直到……才； champion 冠军；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="143.5" data-end="151.59">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">Meanwhile, he <span class="linking">founded</span> <span class="weak">a</span> highly <span class="linking">successful</span> <span class="linking">Academy</span> <span class="weak linking">and</span> even Lord Byron became one <span class="weak">of</span> <span class="weak">his</span> pupils.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl hi ˈfaʊndɪd<span class="linking">‿</span><span class="weak">ə</span> ˈhaɪli səkˈsɛsfəl<span class="linking">‿</span>əˈkædəmi <span class="weak">ən</span><span class="linking">‿</span>ˈivən lɔrd ˈbaɪrən bɪˈkeɪm wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span> ˈpjupəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfaʊndɪd‿ə、səkˈsɛsfəl‿əˈkædəmi、ən‿ˈivən、wʌn‿əv 连读；ə、ən、əv、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；one of... 表其中之一。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>与此同时，他创办了一所非常成功的学院，甚至拜伦勋爵也成了他的学生之一。</p></div>
+    <div class="field words"><span>词</span><p>meanwhile 与此同时； found 创办； academy 学院； pupil 学生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="151.59" data-end="159.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">He <span class="linking">earned</span> enormous <span class="linking">sums</span> <span class="weak">of</span> <span class="linking">money</span> <span class="weak">and</span> <span class="weak">was</span> <span class="linking">paid</span> <span class="weak">as</span> <span class="linking">much</span> <span class="weak">as</span> £100 <span class="weak linking">for</span> <span class="weak">a</span> single appearance.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ɝnd<span class="linking">‿</span>ɪˈnɔrməs sʌmz<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni <span class="weak">ən</span> <span class="weak">wəz</span> peɪd<span class="linking">‿</span>æz mʌtʃ<span class="linking">‿</span>æz wʌn ˈhʌndrəd paʊndz <span class="weak">fɚ</span> <span class="weak">ə</span> ˈsɪŋɡəl<span class="linking">‿</span>əˈpɪrəns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɝnd‿ɪˈnɔrməs、sʌmz‿əv、peɪd‿æz、mʌtʃ‿æz、ˈsɪŋɡəl‿əˈpɪrəns 连读；əv、ən、wəz、fɚ、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>earned 和 was paid 为并列谓语；as much as 强调金额大。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他赚了大笔钱，一次出场就能得到多达 100 英镑。</p></div>
+    <div class="field words"><span>词</span><p>enormous sums 大笔金额； be paid 获得报酬； appearance 出场；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="159.85" data-end="165.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Despite this, he <span class="weak">was</span> so extravagant <span class="weak">that</span> he <span class="weak linking">was</span> <span class="linking">always</span> <span class="weak">in</span> debt.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈspaɪt ðɪs hi <span class="weak">wəz</span> soʊ ɪkˈstrævəɡənt ðæt hi <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlweɪz<span class="linking">‿</span><span class="weak">ɪn</span> dɛt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ˈɔlweɪz‿ɪn 连读；wəz、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Despite this 作让步状语；so...that 引导结果状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管如此，他挥霍无度，总是负债。</p></div>
+    <div class="field words"><span>词</span><p>despite this 尽管如此； extravagant 挥霍的； in debt 负债；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="165.91" data-end="172.53">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">After he <span class="weak">was</span> defeated by <span class="weak">a</span> boxer called Gentleman Jackson, he <span class="weak">was</span> quickly forgotten.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ hi <span class="weak">wəz</span> dɪˈfiɾɪd baɪ <span class="weak">ə</span> ˈbɑksɚ kɔld ˈdʒɛntəlmən ˈdʒæksən hi <span class="weak">wəz</span> ˈkwɪkli fɚˈɡɑɾən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz、ə 弱读/弱化；dɪˈfiɾɪd、fɚˈɡɑɾən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After 引导时间状语从句；called... 修饰 boxer；两处被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在被一位名叫“绅士杰克逊”的拳击手击败后，他很快被人遗忘。</p></div>
+    <div class="field words"><span>词</span><p>be defeated by 被……击败； be forgotten 被遗忘；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="172.53" data-end="177.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">He <span class="weak">was</span> sent <span class="weak">to</span> prison <span class="weak">for</span> failing <span class="weak">to</span> pay <span class="weak">his</span> <span class="linking">debts</span> <span class="weak">and</span> <span class="linking">died</span> <span class="weak">in</span> <span class="linking">poverty</span> <span class="weak">in</span> 1836.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span> sɛnt <span class="weak">tə</span> ˈprɪzən <span class="weak">fɚ</span> ˈfeɪlɪŋ <span class="weak">tə</span> peɪ <span class="weak">hɪz</span> dɛts<span class="linking">‿</span><span class="weak">ən</span> daɪd<span class="linking">‿</span><span class="weak">ɪn</span> ˈpɑvɚɾi <span class="weak">ɪn</span><span class="linking">‿</span>ˌeɪˈtin ˈθɝɾi sɪks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɛts‿ən、daɪd‿ɪn、ɪn‿ˌeɪˈtin 连读；wəz、tə、fɚ、hɪz、ən、ɪn 弱读/弱化；ˈpɑvɚɾi、ˈθɝɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>was sent 和 died 为并列谓语；for failing... 表原因。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他因无力偿还债务而被送进监狱，并于 1836 年在贫困中死去。</p></div>
+    <div class="field words"><span>词</span><p>be sent to prison 入狱； fail to pay debts 无力还债； die in poverty 在贫困中死去；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>拳击与规则: boxing match 拳击比赛； boxer 拳击手； prizefighter 奖金拳手； bare fists 赤手空拳； gloves 手套； rules 规则；</p>
+      <p>人物与名声: colourful figure 传奇人物； popularity 人气； rise to fame 成名； champion 冠军； pupil 学生；</p>
+      <p>金钱与结局: prize money 奖金； enormous sums 大笔钱； in debt 负债； prison 监狱； poverty 贫困；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>be known as...</code>: 被称为……。</p>
+      <p><code>not...until...</code>: 直到……才。</p>
+      <p><code>Though..., ...for...</code>: 让步 + 原因说明。</p>
+      <p><code>so...that...</code>: 结果状语从句。</p>
+      <p><code>It was not until...that...</code>: 强调“直到……才……”。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时用于人物生平叙述：<code>fought</code>, <code>became</code>, <code>founded</code>, <code>earned</code>, <code>died</code>。</p>
+      <p>被动语态突出规则引入、比赛举行和人物遭遇：<code>was introduced</code>, <code>was held</code>, <code>was defeated</code>, <code>was sent</code>。</p>
+      <p>情态 <code>could be injured or killed</code> 表无规则拳击的危险可能。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>could be seriously injured or even killed</code> 强调早期拳击的危险。</p>
+      <p><code>could only be settled by a fight</code> 表争端只能用拳赛解决。</p>
+      <p>文章语气先赞扬门多萨改革拳击，后转为感叹其挥霍和悲惨结局。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>known as</code> -&gt; /noʊn‿æz/；<code>turned against</code> -&gt; /tɝnd‿əˈɡɛnst/；<code>paid as much as</code> 多处弱读连读。</p>
+      <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>for</code> 轻读，如 <code>one of the most colourful figures</code>。</p>
+      <p>意群停顿: 第 7 句按 <code>Though he was... / Mendoza did much... / for he brought...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 21 - Daniel Mendoza</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../21－Daniel Mendoza.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.59,"end":23.52,"text":"Boxing matches were very popular in England two hundred years ago."},{"index":2,"start":23.52,"end":28.93,"text":"In those days, boxers fought with bare fists for prize money."},{"index":3,"start":28.93,"end":33.27,"text":"Because of this, they were known as 'prizefighters'."},{"index":4,"start":33.27,"end":44.94,"text":"However, boxing was very crude, for there were no rules and a prizefighter could be seriously injured or even killed during a match."},{"index":5,"start":44.94,"end":53.56,"text":"One of the most colourful figures in boxing history was Daniel Mendoza, who was born in 1764."},{"index":6,"start":53.56,"end":62.63,"text":"The use of gloves was not introduced until 1860, when the Marquis of Queensberry drew up the first set of rules."},{"index":7,"start":62.63,"end":73.71,"text":"Though he was technically a prizefighter, Mendoza did much to change crude prizefighting into a sport, for he brought science to the game."},{"index":8,"start":73.71,"end":78.41,"text":"In his day, Mendoza enjoyed tremendous popularity."},{"index":9,"start":78.41,"end":81.94,"text":"He was adored by rich and poor alike."},{"index":10,"start":81.94,"end":88.42,"text":"Mendoza rose to fame swiftly after a boxing match when he was only fourteen years old."},{"index":11,"start":88.42,"end":95.87,"text":"This attracted the attention of Richard Humphries who was then the most eminent boxer in England."},{"index":12,"start":95.87,"end":100.98,"text":"He offered to train Mendoza and his young pupil was quick to learn."},{"index":13,"start":100.98,"end":108.01,"text":"In fact, Mendoza soon became so successful that Humphries turned against him."},{"index":14,"start":108.01,"end":116.5,"text":"The two men quarrelled bitterly and it was clear that the argument could only be settled by a fight."},{"index":15,"start":116.5,"end":121.6,"text":"A match was held at Stilton, where both men fought for an hour."},{"index":16,"start":121.6,"end":127.22,"text":"The public bet a great deal of money on Mendoza, but he was defeated."},{"index":17,"start":127.22,"end":133.97,"text":"Mendoza met Humphries in the ring on a later occasion and he lost for a second time."},{"index":18,"start":133.97,"end":143.5,"text":"It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."},{"index":19,"start":143.5,"end":151.59,"text":"Meanwhile, he founded a highly successful Academy and even Lord Byron became one of his pupils."},{"index":20,"start":151.59,"end":159.85,"text":"He earned enormous sums of money and was paid as much as £100 for a single appearance."},{"index":21,"start":159.85,"end":165.91,"text":"Despite this, he was so extravagant that he was always in debt."},{"index":22,"start":165.91,"end":172.53,"text":"After he was defeated by a boxer called Gentleman Jackson, he was quickly forgotten."},{"index":23,"start":172.53,"end":177.3,"text":"He was sent to prison for failing to pay his debts and died in poverty in 1836."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 43 - Fully Insured</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 43 - Fully Insured</h1>
+      <p class="meta">Generated from 43－Fully Insured.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.55" data-end="20.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Insurance <span class="linking">companies</span> <span class="weak">are</span> normally willing <span class="weak">to</span> insure anything.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪnˈʃʊrəns ˈkʌmpəniz<span class="linking">‿</span><span class="weak">ɑr</span> ˈnɔrməli ˈwɪlɪŋ <span class="weak">tə</span> ɪnˈʃʊr<span class="linking">‿</span>ˈɛniˌθɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkʌmpəniz‿ɑr、ɪnˈʃʊr‿ˈɛniˌθɪŋ 连读；ɑr、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；be willing to do 表“愿意做”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>保险公司通常愿意承保任何东西。</p></div>
+    <div class="field words"><span>词</span><p>insurance company 保险公司； normally 通常； be willing to do 愿意做； insure 承保/给……保险；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="20.85" data-end="28.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Insuring <span class="linking">public</span> or private <span class="linking">property</span> <span class="weak linking">is</span> <span class="weak">a</span> standard practice <span class="weak">in</span> most <span class="linking">countries</span> <span class="weak">in</span> <span class="weak">the</span> world.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪnˈʃʊrɪŋ ˈpʌblɪk<span class="linking">‿</span>ɔr ˈpraɪvət ˈprɑpɚɾi <span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈstændɚd ˈpræktɪs<span class="linking">‿</span><span class="weak">ɪn</span> moʊst ˈkʌntriz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> wɝld/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpʌblɪk‿ɔr、ɪz‿ə、ˈpræktɪs‿ɪn、ˈkʌntriz‿ɪn 连读；ɪz、ə、ɪn、ðə 弱读/弱化；ˈprɑpɚɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>动名词短语 Insuring... 作主语；in most countries 作地点范围。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>给公共或私人财产投保，是世界上大多数国家的惯常做法。</p></div>
+    <div class="field words"><span>词</span><p>public property 公共财产； private property 私人财产； standard practice 惯常做法；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="28.14" data-end="40.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">If, however, <span class="weak">you</span> <span class="weak">were</span> <span class="linking">holding</span> <span class="weak linking">an</span> <span class="linking">open</span> air garden <span class="linking">party</span> <span class="linking">or</span> <span class="weak">a</span> fete <span class="weak">it</span> <span class="weak">would</span> <span class="weak">be</span> equally possible <span class="weak">to</span> insure <span class="linking">yourself</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">event</span> <span class="weak">of</span> bad weather.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf haʊˈɛvɚ ju <span class="weak">wɚ</span> ˈhoʊldɪŋ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈoʊpən<span class="linking">‿</span>ɛr ˈɡɑrdən ˈpɑrti ɔr<span class="linking">‿</span><span class="weak">ə</span> feɪɾ<span class="linking">‿</span>ɪt wʊd bi ˈikwəli ˈpɑsəbəl <span class="weak">tə</span> ɪnˈʃʊr jʊrˈsɛlf<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span><span class="linking">‿</span>ɪˈvɛnt<span class="linking">‿</span><span class="weak">əv</span> bæd ˈwɛðɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhoʊldɪŋ‿ən‿ˈoʊpən‿ɛr、ɔr‿ə、feɪɾ‿ɪt、jʊrˈsɛlf‿ɪn、ði‿ɪˈvɛnt‿əv 连读；wɚ、ən、ə、tə、ɪn、ði 弱读/弱化；feɪɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导条件句；however 为插入语；it 作形式主语；to insure yourself 为真正主语；in the event of 表条件。</p></div>
+    <div class="field tense"><span>时态</span><p>were holding 表假设中的进行情况；would be 表假设结果。</p></div>
+    <div class="field cn"><span>中</span><p>然而，如果你正在举办露天花园聚会或游园会，那么也同样可以为自己投保，以防天气恶劣。</p></div>
+    <div class="field words"><span>词</span><p>open air 露天的； garden party 花园聚会； fete 游园会； equally 同样地； in the event of 万一/如果发生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.27" data-end="49.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Needless <span class="weak">to</span> say, <span class="weak">the</span> bigger <span class="weak">the</span> <span class="linking">risk</span> <span class="weak linking">an</span> insurance company takes, <span class="weak">the</span> higher <span class="weak">the</span> premium <span class="weak">you</span> will <span class="weak">have</span> <span class="weak">to</span> pay.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈnidləs <span class="weak">tə</span> seɪ <span class="weak">ðə</span> ˈbɪɡɚ <span class="weak">ðə</span> rɪsk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪnˈʃʊrəns ˈkʌmpəni teɪks <span class="weak">ðə</span> ˈhaɪɚ <span class="weak">ðə</span> ˈprimiəm ju wɪl hæv <span class="weak">tə</span> peɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪsk‿ən‿ɪnˈʃʊrəns 连读；tə、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Needless to say 作插入语；the + 比较级..., the + 比较级... 表“越……越……”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will have to pay 表将来/必然结果。</p></div>
+    <div class="field cn"><span>中</span><p>不用说，保险公司承担的风险越大，你必须支付的保险费就越高。</p></div>
+    <div class="field words"><span>词</span><p>needless to say 不用说； risk 风险； premium 保险费； the bigger..., the higher... 越大……越高……；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.9" data-end="58.02">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak linking">It</span> <span class="weak">is</span> <span class="linking">not</span> uncommon <span class="weak">to</span> hear <span class="weak linking">that</span> <span class="weak">a</span> shipping company <span class="weak">has</span> made <span class="weak">a</span> claim <span class="weak">for</span> <span class="weak">the</span> <span class="linking">cost</span> <span class="weak">of</span> <span class="linking">salvaging</span> <span class="weak">a</span> sunken ship.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span>ənˈkɑmən <span class="weak">tə</span> hɪr ðæɾ<span class="linking">‿</span><span class="weak">ə</span> ˈʃɪpɪŋ ˈkʌmpəni hæz meɪd<span class="linking">‿</span><span class="weak">ə</span> kleɪm <span class="weak">fɚ</span> <span class="weak">ðə</span> kɔst<span class="linking">‿</span><span class="weak">əv</span> ˈsælvɪdʒɪŋ<span class="linking">‿</span><span class="weak">ə</span> ˈsʌŋkən ʃɪp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪz、nɑɾ‿ənˈkɑmən、ðæɾ‿ə、meɪd‿ə、kɔst‿əv 连读；ɪz、tə、ə、fɚ、ðə、əv 弱读/弱化；ɪɾ‿ɪz、nɑɾ‿ənˈkɑmən、ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It 作形式主语；to hear... 为真正主语；that 引导 hear 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；宾语从句现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>听说某航运公司为打捞沉船的费用提出索赔，这并不罕见。</p></div>
+    <div class="field words"><span>词</span><p>uncommon 不常见的； shipping company 航运公司； make a claim 索赔； salvage 打捞； sunken ship 沉船；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="58.02" data-end="68.34">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">But <span class="weak">the</span> claim made <span class="linking">by</span> <span class="weak">a</span> <span class="linking">local</span> authority <span class="weak">to</span> recover <span class="weak">the</span> <span class="linking">cost</span> <span class="weak">of</span> <span class="linking">salvaging</span> <span class="weak">a</span> sunken pie dish must surely <span class="weak">be</span> unique.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət <span class="weak">ðə</span> kleɪm meɪd baɪ<span class="linking">‿</span><span class="weak">ə</span> ˈloʊkəl<span class="linking">‿</span>əˈθɔrəɾi <span class="weak">tə</span> rɪˈkʌvɚ <span class="weak">ðə</span> kɔst<span class="linking">‿</span><span class="weak">əv</span> ˈsælvɪdʒɪŋ<span class="linking">‿</span><span class="weak">ə</span> ˈsʌŋkən paɪ dɪʃ mʌst ˈʃʊrli bi juˈnik/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>baɪ‿ə、ˈloʊkəl‿əˈθɔrəɾi、kɔst‿əv、ˈsælvɪdʒɪŋ‿ə 连读；ðə、ə、tə、əv 弱读/弱化；ˈloʊkəl‿əˈθɔrəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>made by... 为过去分词短语修饰 claim；to recover... 表目的；must surely be 表强烈判断。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；must 表推断。</p></div>
+    <div class="field cn"><span>中</span><p>但是，一个地方当局为收回打捞一只沉没馅饼盘的费用而提出索赔，这肯定是独一无二的。</p></div>
+    <div class="field words"><span>词</span><p>local authority 地方当局； recover 收回/弥补； pie dish 馅饼盘； surely 肯定； unique 独一无二的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="68.34" data-end="77.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Admittedly</span> <span class="weak">it</span> <span class="weak linking">was</span> <span class="weak linking">an</span> unusual pie dish, <span class="weak linking">for</span> <span class="weak">it</span> <span class="weak linking">was</span> eighteen feet <span class="linking">long</span> <span class="weak">and</span> six feet wide.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ədˈmɪɾɪdli ɪt <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ənˈjuʒuəl paɪ dɪʃ <span class="weak">fɚ</span><span class="linking">‿</span>ɪt <span class="weak">wəz</span><span class="linking">‿</span>eɪˈtin fit lɔŋ<span class="linking">‿</span><span class="weak">ən</span> sɪks fit waɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ən‿ənˈjuʒuəl、fɚ‿ɪt、wəz‿eɪˈtin、lɔŋ‿ən 连读；wəz、ən、fɚ 弱读/弱化；ədˈmɪɾɪdli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Admittedly 作让步副词；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>诚然，这是一只不同寻常的馅饼盘，因为它长十八英尺、宽六英尺。</p></div>
+    <div class="field words"><span>词</span><p>admittedly 诚然； unusual 不寻常的； foot 英尺； wide 宽的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="77.4" data-end="86.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">It</span> <span class="weak">had</span> <span class="weak">been</span> purchased <span class="linking">by</span> <span class="weak">a</span> <span class="linking">local</span> authority so <span class="weak linking">that</span> <span class="weak linking">an</span> enormous pie <span class="weak">could</span> <span class="weak">be</span> baked <span class="weak linking">for</span> <span class="weak linking">an</span> annual fair.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt hæd bɪn ˈpɝtʃəst baɪ<span class="linking">‿</span><span class="weak">ə</span> ˈloʊkəl<span class="linking">‿</span>əˈθɔrəɾi soʊ ðæɾ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪˈnɔrməs paɪ kʊd bi beɪkt <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈænjuəl fɛr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>baɪ‿ə、ˈloʊkəl‿əˈθɔrəɾi、ðæɾ‿ən‿ɪˈnɔrməs、fɚ‿ən‿ˈænjuəl 连读；ə、ən、fɚ 弱读/弱化；ˈloʊkəl‿əˈθɔrəɾi、ðæɾ‿ən‿ɪˈnɔrməs 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句为过去完成时被动；so that 引导目的状语从句；could be baked 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动；could be baked 表过去目的中的可能。</p></div>
+    <div class="field cn"><span>中</span><p>它是由一个地方当局购买的，为的是烤一个巨大的馅饼用于一年一度的集市。</p></div>
+    <div class="field words"><span>词</span><p>purchase 购买； enormous 巨大的； bake 烘烤； annual fair 年度集市；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="86.4" data-end="96.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> pie committee decided <span class="weak">that</span> <span class="weak">the</span> best way <span class="weak">to</span> transport <span class="weak">the</span> dish <span class="weak">would</span> <span class="weak">be</span> by canal so <span class="linking">they</span> <span class="linking">insured</span> <span class="weak">it</span> <span class="weak">for</span> <span class="weak">the</span> trip.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> paɪ kəˈmɪɾi dɪˈsaɪdɪd ðæt <span class="weak">ðə</span> bɛst weɪ <span class="weak">tə</span> trænsˈpɔrt <span class="weak">ðə</span> dɪʃ wʊd bi baɪ kəˈnæl soʊ ðeɪ ɪnˈʃʊrd<span class="linking">‿</span>ɪt <span class="weak">fɚ</span> <span class="weak">ðə</span> trɪp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪnˈʃʊrd‿ɪt 连读；ðə、tə、fɚ 弱读/弱化；kəˈmɪɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>decided 后接 that 宾语从句；to transport the dish 修饰 way；so 连接结果分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be 表过去视角下的将来/安排。</p></div>
+    <div class="field cn"><span>中</span><p>馅饼委员会认为运输这只盘子的最佳方式是走运河，于是他们为这次运输给它投了保。</p></div>
+    <div class="field words"><span>词</span><p>committee 委员会； transport 运输； by canal 走运河； insure 投保； trip 行程；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="96.61" data-end="103.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">Shortly</span> <span class="linking">after</span> <span class="weak">it</span> <span class="weak">was</span> launched, <span class="weak">the</span> pie committee went <span class="weak">to</span> <span class="weak">a</span> <span class="linking">local</span> inn <span class="weak">to</span> celebrate.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈʃɔrtli ˈæftɚ<span class="linking">‿</span>ɪt <span class="weak">wəz</span> lɔntʃt <span class="weak">ðə</span> paɪ kəˈmɪɾi wɛnt <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> ˈloʊkəl<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">tə</span> ˈsɛləˌbreɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈæftɚ‿ɪt、tə‿ə、ˈloʊkəl‿ɪn 连读；wəz、ðə、tə、ə、ɪn 弱读/弱化；kəˈmɪɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Shortly after 引导时间状语从句；to celebrate 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was launched 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>它下水后不久，馅饼委员会去了当地一家小旅馆庆祝。</p></div>
+    <div class="field words"><span>词</span><p>shortly after 不久之后； launch 使下水/发射； inn 小旅馆； celebrate 庆祝；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="103.28" data-end="111.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">At <span class="weak">the</span> same time, <span class="weak">a</span> <span class="linking">number</span> <span class="weak">of</span> teenagers <span class="linking">climbed</span> on <span class="weak">to</span> <span class="weak">the</span> <span class="linking">dish</span> <span class="weak">and</span> <span class="linking">held</span> <span class="weak">a</span> little <span class="linking">party</span> <span class="weak">of</span> <span class="linking">their</span> own.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æt <span class="weak">ðə</span> seɪm taɪm<span class="linking">‿</span><span class="weak">ə</span> ˈnʌmbɚ<span class="linking">‿</span><span class="weak">əv</span> ˈtinˌeɪdʒɚz klaɪmd<span class="linking">‿</span>ˈɑntu <span class="weak">ðə</span> dɪʃ<span class="linking">‿</span><span class="weak">ən</span> hɛld<span class="linking">‿</span><span class="weak">ə</span> ˈlɪɾəl ˈpɑrti<span class="linking">‿</span><span class="weak">əv</span> ðɛr<span class="linking">‿</span>oʊn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>taɪm‿ə、ˈnʌmbɚ‿əv、klaɪmd‿ˈɑntu、dɪʃ‿ən、hɛld‿ə 连读；ðə、ə、əv、ən 弱读/弱化；ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>climbed 和 held 为并列谓语；of their own 作后置定语，表示“他们自己的”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>与此同时，一群青少年爬到盘子上，开起了他们自己的小聚会。</p></div>
+    <div class="field words"><span>词</span><p>at the same time 与此同时； a number of 许多/一些； teenager 青少年； of one's own 自己的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="111.27" data-end="121.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Dancing proved <span class="weak">to</span> <span class="weak">be</span> more <span class="weak">than</span> <span class="weak">the</span> dish <span class="weak">could</span> bear, <span class="weak">for</span> during <span class="weak">the</span> <span class="linking">party</span> <span class="weak">it</span> <span class="linking">capsized</span> <span class="weak">and</span> <span class="linking">sank</span> <span class="weak">in</span> seven <span class="linking">feet</span> <span class="weak">of</span> water.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈdænsɪŋ pruvd <span class="weak">tə</span> bi mɔr ðən <span class="weak">ðə</span> dɪʃ kʊd bɛr <span class="weak">fɚ</span> ˈdʊrɪŋ <span class="weak">ðə</span> ˈpɑrti ɪt kæpˈsaɪzd<span class="linking">‿</span><span class="weak">ən</span> sæŋk<span class="linking">‿</span><span class="weak">ɪn</span> ˈsɛvən fiɾ<span class="linking">‿</span><span class="weak">əv</span> ˈwɔɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kæpˈsaɪzd‿ən、sæŋk‿ɪn、fiɾ‿əv 连读；tə、ðə、fɚ、ən、ɪn、əv 弱读/弱化；fiɾ‿əv、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Dancing 作主语；proved to be 表“结果证明是”；more than...could bear 表“超过……承受能力”；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表能力。</p></div>
+    <div class="field cn"><span>中</span><p>跳舞结果超过了这只盘子的承受能力，因为在聚会期间它翻了并沉入七英尺深的水中。</p></div>
+    <div class="field words"><span>词</span><p>prove to be 证明是； more than...can bear 超过……能承受的； capsize 翻覆； sink 沉没；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="121.76" data-end="130.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> pie committee <span class="linking">telephoned</span> <span class="weak">a</span> local garage owner who <span class="linking">arrived</span> <span class="weak linking">in</span> <span class="weak">a</span> recovery truck <span class="weak">to</span> salvage <span class="weak">the</span> pie dish.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> paɪ kəˈmɪɾi ˈtɛləˌfoʊnd<span class="linking">‿</span><span class="weak">ə</span> ˈloʊkəl ɡəˈrɑʒ<span class="linking">‿</span>ˈoʊnɚ hu əˈraɪvd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> rɪˈkʌvəri trʌk <span class="weak">tə</span> ˈsælvɪdʒ <span class="weak">ðə</span> paɪ dɪʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtɛləˌfoʊnd‿ə、ɡəˈrɑʒ‿ˈoʊnɚ、əˈraɪvd‿ɪn‿ə 连读；ðə、ə、ɪn、tə 弱读/弱化；kəˈmɪɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句修饰 owner；to salvage... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>馅饼委员会给当地一位车库老板打电话，他开着救援卡车赶来打捞馅饼盘。</p></div>
+    <div class="field words"><span>词</span><p>garage owner 车库老板； recovery truck 救援卡车； salvage 打捞；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="130.67" data-end="141.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="linking">Shivering</span> <span class="weak">in</span> their wet clothes, <span class="weak">the</span> teenagers <span class="linking">looked</span> on while three men dived <span class="linking">repeatedly</span> into <span class="weak">the</span> water <span class="weak">to</span> locate <span class="weak">the</span> dish.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈʃɪvərɪŋ<span class="linking">‿</span><span class="weak">ɪn</span> ðɛr wɛt kloʊðz <span class="weak">ðə</span> ˈtinˌeɪdʒɚz lʊkt<span class="linking">‿</span>ɑn waɪl θri mɛn daɪvd rɪˈpiɾɪdli ˈɪntu <span class="weak">ðə</span> ˈwɔɾɚ <span class="weak">tə</span> ˈloʊkeɪt <span class="weak">ðə</span> dɪʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈʃɪvərɪŋ‿ɪn、lʊkt‿ɑn 连读；ɪn、ðə、tə 弱读/弱化；rɪˈpiɾɪdli、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Shivering... 为现在分词短语作伴随状语；while 引导时间状语从句；to locate... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>青少年们穿着湿衣服瑟瑟发抖地在一旁看着，三个男人一次次潜入水中寻找盘子。</p></div>
+    <div class="field words"><span>词</span><p>shiver 发抖； look on 旁观； repeatedly 反复地； dive into 潜入； locate 找到位置；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="141.41" data-end="150.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">They <span class="weak">had</span> little <span class="linking">difficulty</span> <span class="weak">in</span> <span class="linking">finding</span> <span class="weak">it</span>, but <span class="linking">hauling</span> <span class="weak linking">it</span> <span class="linking">out</span> <span class="weak">of</span> <span class="weak">the</span> water proved <span class="weak">to</span> <span class="weak">be</span> <span class="weak">a</span> serious problem.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ hæd ˈlɪɾəl ˈdɪfəkəlti<span class="linking">‿</span><span class="weak">ɪn</span> ˈfaɪndɪŋ<span class="linking">‿</span>ɪt bət ˈhɔlɪŋ<span class="linking">‿</span>ɪt<span class="linking">‿</span>aʊɾ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈwɔɾɚ pruvd <span class="weak">tə</span> bi<span class="linking">‿</span><span class="weak">ə</span> ˈsɪriəs ˈprɑbləm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdɪfəkəlti‿ɪn、ˈfaɪndɪŋ‿ɪt、ˈhɔlɪŋ‿ɪt‿aʊɾ‿əv、bi‿ə 连读；ɪn、əv、ðə、tə、ə 弱读/弱化；ˈlɪɾəl、ˈhɔlɪŋ‿ɪt‿aʊɾ‿əv、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>have difficulty in doing 表“做某事有困难”；but 连接转折分句；hauling... 为动名词短语作主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们找到它并不费劲，但把它从水里拖出来却成了一个严重问题。</p></div>
+    <div class="field words"><span>词</span><p>have difficulty in doing 做某事有困难； haul out 拖出； prove to be 证明是；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="150.27" data-end="162.12">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> <span class="linking">sides</span> <span class="weak">of</span> <span class="weak">the</span> dish <span class="weak">were</span> so smooth <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak linking">was</span> <span class="linking">almost</span> impossible <span class="weak">to</span> attach <span class="linking">hawsers</span> <span class="weak">and</span> chains <span class="weak">to</span> <span class="weak">the</span> rim without <span class="linking">damaging</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> saɪdz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> dɪʃ <span class="weak">wɚ</span> soʊ smuð ðæɾ<span class="linking">‿</span>ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlmoʊst<span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">tə</span> əˈtætʃ ˈhɔzɚz<span class="linking">‿</span><span class="weak">ən</span> tʃeɪnz <span class="weak">tə</span> <span class="weak">ðə</span> rɪm wɪˈðaʊt ˈdæmɪdʒɪŋ<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>saɪdz‿əv、ðæɾ‿ɪt、wəz‿ˈɔlmoʊst‿ɪmˈpɑsəbəl、ˈhɔzɚz‿ən、ˈdæmɪdʒɪŋ‿ɪt 连读；ðə、əv、wɚ、wəz、tə、ən 弱读/弱化；ðæɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that 引导结果状语从句；it 作形式主语；to attach... 为真正主语；without damaging... 作条件/方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>盘子的边太光滑了，要把粗缆和链条固定到边缘而不损坏它，几乎是不可能的。</p></div>
+    <div class="field words"><span>词</span><p>smooth 光滑的； attach A to B 把 A 固定到 B 上； hawser 粗缆； chain 链条； rim 边缘；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="162.12" data-end="170.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Eventually chains <span class="weak">were</span> fixed <span class="weak">to</span> one <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">dish</span> <span class="weak linking">and</span> <span class="weak">a</span> powerful winch <span class="weak">was</span> <span class="linking">put</span> into operation.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪˈvɛntʃuəli tʃeɪnz <span class="weak">wɚ</span> fɪkst <span class="weak">tə</span> wʌn<span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> dɪʃ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> ˈpaʊɚfəl wɪntʃ <span class="weak">wəz</span> pʊɾ<span class="linking">‿</span>ˈɪntu ˌɑpəˈreɪʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿ɛnd‿əv、dɪʃ‿ən‿ə、pʊɾ‿ˈɪntu 连读；wɚ、tə、əv、ðə、ən、ə 弱读/弱化；pʊɾ‿ˈɪntu 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个并列被动分句；put into operation 表“投入使用”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>最后，链条被固定在盘子的一端，一台强力绞车被启动。</p></div>
+    <div class="field words"><span>词</span><p>eventually 最终； fix to 固定到； winch 绞车； put into operation 投入使用；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="170.84" data-end="178.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">The</span> dish rose <span class="weak">to</span> <span class="weak">the</span> surface <span class="weak">and</span> <span class="weak">was</span> gently drawn towards <span class="weak">the</span> canal bank.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> dɪʃ roʊz <span class="weak">tə</span> <span class="weak">ðə</span> ˈsɝfəs<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">wəz</span> ˈdʒɛntli drɔn təˈwɔrdz <span class="weak">ðə</span> kəˈnæl bæŋk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsɝfəs‿ən 连读；ðə、tə、ən、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>rose 和 was drawn 为并列谓语；第二个为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was drawn 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>盘子浮到水面，被轻轻拉向运河岸边。</p></div>
+    <div class="field words"><span>词</span><p>rise to the surface 浮到水面； draw 拉； canal bank 运河岸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="178.1" data-end="191.34">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak linking">For</span> one agonizing moment, <span class="weak">the</span> dish <span class="weak">was</span> perched <span class="linking">precariously</span> on <span class="weak">the</span> <span class="linking">bank</span> <span class="weak">of</span> <span class="weak">the</span> canal, <span class="linking">but</span> <span class="weak">it</span> <span class="linking">suddenly</span> <span class="linking">overbalanced</span> <span class="weak">and</span> slid <span class="linking">back</span> into <span class="weak">the</span> water.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> wʌn<span class="linking">‿</span>ˈæɡəˌnaɪzɪŋ ˈmoʊmənt <span class="weak">ðə</span> dɪʃ <span class="weak">wəz</span> pɝtʃt prɪˈkɛriəsli<span class="linking">‿</span>ɑn <span class="weak">ðə</span> bæŋk<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> kəˈnæl bəɾ<span class="linking">‿</span>ɪt ˈsʌdənli ˌoʊvɚˈbælənst<span class="linking">‿</span><span class="weak">ən</span> slɪd bæk<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> ˈwɔɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿ˈæɡəˌnaɪzɪŋ、prɪˈkɛriəsli‿ɑn、bæŋk‿əv、bəɾ‿ɪt、ˌoʊvɚˈbælənst‿ən 连读；fɚ、ðə、wəz、əv、ən 弱读/弱化；bəɾ‿ɪt、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>For one agonizing moment 作时间状语；but 连接转折分句；overbalanced 和 slid 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在令人揪心的一瞬间，盘子摇摇欲坠地停在运河岸边，但它突然失去平衡，又滑回了水中。</p></div>
+    <div class="field words"><span>词</span><p>agonizing 令人痛苦的； perch 停放/栖在； precariously 摇摇欲坠地； overbalance 失去平衡； slide back 滑回；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="191.34" data-end="195.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">The</span> men <span class="weak">were</span> now obliged <span class="weak">to</span> try once more.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mɛn <span class="weak">wɚ</span> naʊ əˈblaɪdʒd <span class="weak">tə</span> traɪ wʌns mɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wɚ、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>be obliged to do 表“不得不做”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这些人现在不得不再试一次。</p></div>
+    <div class="field words"><span>词</span><p>be obliged to do 被迫/不得不做； once more 再一次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="195.82" data-end="204.77">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">This time they fixed heavy metal clamps <span class="weak">to</span> both <span class="linking">sides</span> <span class="weak">of</span> <span class="weak">the</span> dish so <span class="weak">that</span> they <span class="weak">could</span> fasten <span class="weak">the</span> chains.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs taɪm ðeɪ fɪkst ˈhɛvi ˈmɛɾəl klæmps <span class="weak">tə</span> boʊθ saɪdz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> dɪʃ soʊ ðæt ðeɪ kʊd ˈfæsən <span class="weak">ðə</span> tʃeɪnz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>saɪdz‿əv 连读；tə、əv、ðə 弱读/弱化；ˈmɛɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>so that 引导目的状语从句；fix A to B 表固定。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表目的中的能力。</p></div>
+    <div class="field cn"><span>中</span><p>这一次，他们把沉重的金属夹固定在盘子两侧，以便能系上链条。</p></div>
+    <div class="field words"><span>词</span><p>metal clamp 金属夹； both sides 两侧； fasten 系牢；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="204.77" data-end="212.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">The</span> dish now <span class="weak">had</span> <span class="weak">to</span> <span class="weak">be</span> lifted vertically because one edge <span class="weak">was</span> <span class="linking">resting</span> against <span class="weak">the</span> side <span class="weak">of</span> <span class="weak">the</span> canal.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> dɪʃ naʊ hæd <span class="weak">tə</span> bi ˈlɪftɪd ˈvɝtɪkəli bɪˈkɔz wʌn<span class="linking">‿</span>ɛdʒ <span class="weak">wəz</span> ˈrɛstɪŋ<span class="linking">‿</span>əˈɡɛnst <span class="weak">ðə</span> saɪd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> kəˈnæl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿ɛdʒ、ˈrɛstɪŋ‿əˈɡɛnst、saɪd‿əv 连读；ðə、tə、wəz、əv 弱读/弱化；ˈvɝtɪkəli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>had to be lifted 为半情态被动；because 引导原因状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was resting 为过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>现在必须把盘子垂直吊起，因为它的一边靠在运河侧壁上。</p></div>
+    <div class="field words"><span>词</span><p>lift vertically 垂直吊起； edge 边缘； rest against 靠在……上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="212.23" data-end="218.89">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">The</span> winch <span class="weak linking">was</span> again <span class="linking">put</span> into <span class="linking">operation</span> <span class="weak linking">and</span> one <span class="weak">of</span> <span class="weak">the</span> men <span class="linking">started</span> up <span class="weak">the</span> truck.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> wɪntʃ <span class="weak">wəz</span><span class="linking">‿</span>əˈɡɛn pʊɾ<span class="linking">‿</span>ˈɪntu ˌɑpəˈreɪʃən<span class="linking">‿</span><span class="weak">ən</span> wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> mɛn ˈstɑrtɪd<span class="linking">‿</span>ʌp <span class="weak">ðə</span> trʌk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿əˈɡɛn、pʊɾ‿ˈɪntu、ˌɑpəˈreɪʃən‿ən、wʌn‿əv、ˈstɑrtɪd‿ʌp 连读；ðə、wəz、ən、əv 弱读/弱化；pʊɾ‿ˈɪntu 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个并列分句；第一分句为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was put 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>绞车再次启动，其中一个人发动了卡车。</p></div>
+    <div class="field words"><span>词</span><p>put into operation 启动/投入使用； start up 发动； truck 卡车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="218.89" data-end="225.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">Several minutes later, <span class="weak">the</span> dish <span class="weak">was</span> successfully <span class="linking">hauled</span> above <span class="weak">the</span> surface <span class="weak">of</span> <span class="weak">the</span> water.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈsɛvrəl ˈmɪnəts ˈleɪɾɚ <span class="weak">ðə</span> dɪʃ <span class="weak">wəz</span> səkˈsɛsfəli hɔld<span class="linking">‿</span>əˈbʌv <span class="weak">ðə</span> ˈsɝfəs<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈwɔɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɔld‿əˈbʌv、ˈsɝfəs‿əv 连读；ðə、wəz、əv 弱读/弱化；ˈleɪɾɚ、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句为被动语态；above the surface of the water 作位置状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>几分钟后，盘子被成功拖出了水面。</p></div>
+    <div class="field words"><span>词</span><p>successfully 成功地； haul 拖/拉； above the surface 在水面以上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="225.3" data-end="233.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text">Water <span class="linking">streamed</span> <span class="weak">in</span> <span class="linking">torrents</span> <span class="linking">over</span> <span class="weak">its</span> sides with such force <span class="weak linking">that</span> <span class="weak">it</span> <span class="linking">set</span> <span class="linking">up</span> <span class="weak">a</span> huge wave <span class="weak">in</span> <span class="weak">the</span> canal.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈwɔɾɚ strimd<span class="linking">‿</span><span class="weak">ɪn</span> ˈtɔrənts<span class="linking">‿</span>ˈoʊvɚ<span class="linking">‿</span>ɪts saɪdz wɪð sʌtʃ fɔrs ðæɾ<span class="linking">‿</span>ɪt sɛɾ<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ə</span> hjudʒ weɪv<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> kəˈnæl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>strimd‿ɪn、ˈtɔrənts‿ˈoʊvɚ‿ɪts、ðæɾ‿ɪt、sɛɾ‿ʌp‿ə、weɪv‿ɪn 连读；ɪn、ə、ðə 弱读/弱化；ˈwɔɾɚ、ðæɾ‿ɪt、sɛɾ‿ʌp‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>with such force that... 为 such...that 结果结构；set up 表“产生/形成”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>水从盘子两侧成股倾泻而下，力量如此之大，以至于在运河中激起一股巨浪。</p></div>
+    <div class="field words"><span>词</span><p>stream 流淌； in torrents 成股地/倾盆地； with such force 力量如此之大； set up 产生； wave 波浪；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="233.96" data-end="244.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text"><span class="weak">There</span> <span class="weak linking">was</span> <span class="weak">a</span> danger <span class="weak">that</span> <span class="weak">the</span> wave <span class="weak">would</span> <span class="linking">rebound</span> off <span class="weak">the</span> other side <span class="weak">of</span> <span class="weak">the</span> <span class="linking">bank</span> <span class="weak">and</span> send <span class="weak">the</span> dish <span class="linking">plunging</span> into <span class="weak">the</span> <span class="linking">water</span> again.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈdeɪndʒɚ ðæt <span class="weak">ðə</span> weɪv wʊd rɪˈbaʊnd<span class="linking">‿</span>ɔf <span class="weak">ði</span> ˈʌðɚ saɪd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> bæŋk<span class="linking">‿</span><span class="weak">ən</span> sɛnd <span class="weak">ðə</span> dɪʃ ˈplʌndʒɪŋ<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> ˈwɔɾɚ əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə、rɪˈbaʊnd‿ɔf、saɪd‿əv、bæŋk‿ən、ˈplʌndʒɪŋ‿ˈɪntu 连读；wəz、ə、ðə、ði、əv、ən 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；that 引导同位语从句，解释 danger；send + 宾语 + 现在分词 表“使……做/进入某状态”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would 表过去视角下可能发生的结果。</p></div>
+    <div class="field cn"><span>中</span><p>有一种危险：那股浪会从对岸反弹回来，使盘子再次跌入水中。</p></div>
+    <div class="field words"><span>词</span><p>danger 危险； rebound off 从……反弹； send sth doing 使某物……； plunge into 跌入；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="244.44" data-end="250.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text">By <span class="linking">working</span> at tremendous speed, <span class="weak">the</span> men managed <span class="weak">to</span> get <span class="weak">the</span> <span class="linking">dish</span> on <span class="weak">to</span> dry land before <span class="weak">the</span> wave returned.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/baɪ ˈwɝkɪŋ<span class="linking">‿</span>æt trəˈmɛndəs spid <span class="weak">ðə</span> mɛn ˈmænɪdʒd <span class="weak">tə</span> ɡɛt <span class="weak">ðə</span> dɪʃ<span class="linking">‿</span>ˈɑntu draɪ lænd bɪˈfɔr <span class="weak">ðə</span> weɪv rɪˈtɝnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈwɝkɪŋ‿æt、dɪʃ‿ˈɑntu 连读；ðə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>By working... 表方式；managed to do 表“设法成功做成”；before 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这些人以惊人的速度工作，终于在浪头返回之前把盘子弄到了干地上。</p></div>
+    <div class="field words"><span>词</span><p>tremendous 巨大的/惊人的； manage to do 设法成功做； dry land 干地； return 返回；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>保险与索赔: insurance company 保险公司； insure 承保/投保； premium 保险费； make a claim 索赔； recover the cost 收回费用；</p>
+    <p>打捞动作: salvage 打捞； launch 下水； capsize 翻覆； sink 沉没； dive 潜水； locate 找到位置； haul out 拖出； lift vertically 垂直吊起；</p>
+    <p>设备与部件: recovery truck 救援卡车； hawser 粗缆； chain 链条； rim 边缘； winch 绞车； metal clamp 金属夹；</p>
+    <p>状态描写: precariously 摇摇欲坠地； agonizing 令人揪心的； in torrents 成股地； tremendous speed 惊人速度；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>the bigger..., the higher...</code>: “越……越……”结构。</p>
+    <p><code>It is not uncommon to hear that...</code>: It 作形式主语，that 从句作 hear 的宾语。</p>
+    <p><code>so...that...</code> 和 <code>such...that...</code>: 结果状语结构。</p>
+    <p><code>have difficulty in doing</code>: 做某事有困难。</p>
+    <p><code>There was a danger that...</code>: that 引导同位语从句，说明 danger 的内容。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于开头说明保险行业常规：<code>are willing</code>, <code>is a standard practice</code>。</p>
+    <p>一般过去时用于讲述馅饼盘事件：<code>decided</code>, <code>went</code>, <code>climbed</code>, <code>capsized</code>, <code>sank</code>, <code>telephoned</code>。</p>
+    <p>过去完成时被动说明更早的购买行为：<code>had been purchased</code>。</p>
+    <p>被动语态很多，用于突出物品处理过程：<code>was launched</code>, <code>were fixed</code>, <code>was put</code>, <code>was drawn</code>, <code>was hauled</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>would be equally possible</code> 表假设条件下的可能。</p>
+    <p><code>must surely be unique</code> 表强烈推断。</p>
+    <p><code>could be baked</code> 和 <code>could fasten</code> 表目的中的可能/能力。</p>
+    <p><code>had to be lifted</code> 表客观上不得不采取的操作。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>standard practice in</code> -&gt; /ˈstændɚd ˈpræktɪs‿ɪn/；<code>cost of</code> -&gt; /kɔst‿əv/；<code>launched it</code> 可连读；<code>looked on</code> -&gt; /lʊkt‿ɑn/；<code>set up a</code> -&gt; /sɛt‿ʌp‿ə/。</p>
+    <p>弱读词: <code>a</code>, <code>an</code>, <code>of</code>, <code>to</code>, <code>and</code> 要轻读，如 <code>a number of teenagers</code> -&gt; /ə ˈnʌmbɚ‿əv ˈtinˌeɪdʒɚz/。</p>
+    <p>意群停顿: 第 16 句可按 <code>The sides...were so smooth / that it was almost impossible / to attach... / without damaging it</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 43 - Fully Insured</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../43－Fully Insured.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.55,"end":20.85,"text":"Insurance companies are normally willing to insure anything."},{"index":2,"start":20.85,"end":28.14,"text":"Insuring public or private property is a standard practice in most countries in the world."},{"index":3,"start":28.14,"end":40.27,"text":"If, however, you were holding an open air garden party or a fete it would be equally possible to insure yourself in the event of bad weather."},{"index":4,"start":40.27,"end":49.9,"text":"Needless to say, the bigger the risk an insurance company takes, the higher the premium you will have to pay."},{"index":5,"start":49.9,"end":58.02,"text":"It is not uncommon to hear that a shipping company has made a claim for the cost of salvaging a sunken ship."},{"index":6,"start":58.02,"end":68.34,"text":"But the claim made by a local authority to recover the cost of salvaging a sunken pie dish must surely be unique."},{"index":7,"start":68.34,"end":77.4,"text":"Admittedly it was an unusual pie dish, for it was eighteen feet long and six feet wide."},{"index":8,"start":77.4,"end":86.4,"text":"It had been purchased by a local authority so that an enormous pie could be baked for an annual fair."},{"index":9,"start":86.4,"end":96.61,"text":"The pie committee decided that the best way to transport the dish would be by canal so they insured it for the trip."},{"index":10,"start":96.61,"end":103.28,"text":"Shortly after it was launched, the pie committee went to a local inn to celebrate."},{"index":11,"start":103.28,"end":111.27,"text":"At the same time, a number of teenagers climbed on to the dish and held a little party of their own."},{"index":12,"start":111.27,"end":121.76,"text":"Dancing proved to be more than the dish could bear, for during the party it capsized and sank in seven feet of water."},{"index":13,"start":121.76,"end":130.67,"text":"The pie committee telephoned a local garage owner who arrived in a recovery truck to salvage the pie dish."},{"index":14,"start":130.67,"end":141.41,"text":"Shivering in their wet clothes, the teenagers looked on while three men dived repeatedly into the water to locate the dish."},{"index":15,"start":141.41,"end":150.27,"text":"They had little difficulty in finding it, but hauling it out of the water proved to be a serious problem."},{"index":16,"start":150.27,"end":162.12,"text":"The sides of the dish were so smooth that it was almost impossible to attach hawsers and chains to the rim without damaging it."},{"index":17,"start":162.12,"end":170.84,"text":"Eventually chains were fixed to one end of the dish and a powerful winch was put into operation."},{"index":18,"start":170.84,"end":178.1,"text":"The dish rose to the surface and was gently drawn towards the canal bank."},{"index":19,"start":178.1,"end":191.34,"text":"For one agonizing moment, the dish was perched precariously on the bank of the canal, but it suddenly overbalanced and slid back into the water."},{"index":20,"start":191.34,"end":195.82,"text":"The men were now obliged to try once more."},{"index":21,"start":195.82,"end":204.77,"text":"This time they fixed heavy metal clamps to both sides of the dish so that they could fasten the chains."},{"index":22,"start":204.77,"end":212.23,"text":"The dish now had to be lifted vertically because one edge was resting against the side of the canal."},{"index":23,"start":212.23,"end":218.89,"text":"The winch was again put into operation and one of the men started up the truck."},{"index":24,"start":218.89,"end":225.3,"text":"Several minutes later, the dish was successfully hauled above the surface of the water."},{"index":25,"start":225.3,"end":233.96,"text":"Water streamed in torrents over its sides with such force that it set up a huge wave in the canal."},{"index":26,"start":233.96,"end":244.44,"text":"There was a danger that the wave would rebound off the other side of the bank and send the dish plunging into the water again."},{"index":27,"start":244.44,"end":250.82,"text":"By working at tremendous speed, the men managed to get the dish on to dry land before the wave returned."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

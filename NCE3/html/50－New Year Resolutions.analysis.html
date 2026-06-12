@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 50 - New Year Resolutions</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 50 - New Year Resolutions</h1>
+      <p class="meta">Generated from 50－New Year Resolutions.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.81" data-end="19.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> New <span class="linking">Year</span> <span class="weak linking">is</span> <span class="weak">a</span> time <span class="weak">for</span> resolutions.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> nu<span class="linking">‿</span>jɪr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> taɪm <span class="weak">fɚ</span> ˌrɛzəˈluʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nu‿jɪr‿ɪz‿ə 连读；ðə、ɪz、ə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；for resolutions 作后置定语，说明 time 的用途。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时，说明普遍看法。</p></div>
+    <div class="field cn"><span>中</span><p>新年是下决心的时候。</p></div>
+    <div class="field words"><span>词</span><p>resolution 决心/计划； a time for... 做……的时候；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.91" data-end="27.54">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Mentally</span>, at least, <span class="linking">most</span> <span class="weak linking">of</span> us <span class="weak">could</span> compile formidable <span class="linking">lists</span> <span class="weak">of</span> '<span class="linking">dos</span>' <span class="weak">and</span> 'don'ts'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɛntəli<span class="linking">‿</span>æt list moʊst<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs kʊd kəmˈpaɪl ˈfɔrmɪdəbəl lɪsts<span class="linking">‿</span><span class="weak">əv</span> duz<span class="linking">‿</span><span class="weak">ən</span> doʊnts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmɛntəli‿æt、moʊst‿əv‿ʌs、lɪsts‿əv、duz‿ən 连读；əv、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Mentally, at least 为插入状语；主句为 most of us could compile...；of 'dos' and 'don'ts' 修饰 lists。</p></div>
+    <div class="field tense"><span>时态</span><p>could 表理论上的能力或可能性。</p></div>
+    <div class="field cn"><span>中</span><p>至少在心里，我们大多数人都能列出一长串“该做”和“不该做”的清单。</p></div>
+    <div class="field words"><span>词</span><p>mentally 在心里； at least 至少； compile 编制/列出； formidable 令人望而生畏的； dos and don'ts 该做和不该做的事；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="27.54" data-end="34.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> same old favourites recur <span class="linking">year</span> <span class="weak">in</span> <span class="linking">year</span> out with monotonous regularity.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> seɪm<span class="linking">‿</span>oʊld ˈfeɪvərəts rɪˈkɝ jɪr<span class="linking">‿</span><span class="weak">ɪn</span> jɪr<span class="linking">‿</span>aʊt wɪð məˈnɑɾənəs ˌrɛɡjəˈlærəɾi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>seɪm‿oʊld、jɪr‿ɪn、jɪr‿aʊt 连读；ðə、ɪn 弱读/弱化；məˈnɑɾənəs、ˌrɛɡjəˈlærəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；year in year out 作时间状语；with...regularity 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时，表示反复发生。</p></div>
+    <div class="field cn"><span>中</span><p>那些老一套的常见决心年复一年地以单调的规律重复出现。</p></div>
+    <div class="field words"><span>词</span><p>recur 反复出现； year in year out 年复一年； monotonous 单调的； regularity 规律性；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="34.27" data-end="51.73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">We resolve <span class="weak">to</span> <span class="linking">get</span> <span class="linking">up</span> <span class="linking">earlier</span> each <span class="linking">morning</span>, eat less, find more time <span class="weak">to</span> play with <span class="weak">the</span> children, do <span class="weak">a</span> <span class="linking">thousand</span> <span class="weak linking">and</span> one <span class="linking">jobs</span> about <span class="weak">the</span> house, <span class="weak">be</span> nice <span class="weak">to</span> people we don't like, drive <span class="linking">carefully</span>, <span class="weak">and</span> take <span class="weak">the</span> dog <span class="weak linking">for</span> <span class="weak">a</span> <span class="linking">walk</span> every day.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi rɪˈzɑlv <span class="weak">tə</span> ɡɛɾ<span class="linking">‿</span>ʌp<span class="linking">‿</span>ˈɝliɚ<span class="linking">‿</span>itʃ ˈmɔrnɪŋ<span class="linking">‿</span>it lɛs faɪnd mɔr taɪm <span class="weak">tə</span> pleɪ wɪð <span class="weak">ðə</span> ˈtʃɪldrən du<span class="linking">‿</span><span class="weak">ə</span> ˈθaʊzənd<span class="linking">‿</span><span class="weak">ən</span> wʌn dʒɑbz<span class="linking">‿</span>əˈbaʊt <span class="weak">ðə</span> haʊs bi naɪs <span class="weak">tə</span> ˈpipəl wi doʊnt laɪk draɪv ˈkerfəli<span class="linking">‿</span><span class="weak">ən</span> teɪk <span class="weak">ðə</span> dɔɡ <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> wɔk<span class="linking">‿</span>ˈɛvri deɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɛɾ‿ʌp‿ˈɝliɚ‿itʃ、ˈmɔrnɪŋ‿it、du‿ə、ˈθaʊzənd‿ən、dʒɑbz‿əˈbaʊt 连读；tə、ðə、ə、ən、fɚ 弱读/弱化；ɡɛɾ‿ʌp‿ˈɝliɚ‿itʃ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>resolve to do 后接一串并列动词短语；people we don't like 为省略关系代词的定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；to do 不定式表示决心内容。</p></div>
+    <div class="field cn"><span>中</span><p>我们决心每天早上早起，少吃，抽出更多时间陪孩子玩，做家里无数件杂事，善待不喜欢的人，小心开车，并每天遛狗。</p></div>
+    <div class="field words"><span>词</span><p>resolve to do 决心做； a thousand and one 许许多多的； be nice to 对……友善； take the dog for a walk 遛狗；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="51.73" data-end="57.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Past</span> experience <span class="weak">has</span> <span class="linking">taught</span> us <span class="weak">that</span> <span class="linking">certain</span> <span class="linking">accomplishments</span> <span class="weak">are</span> <span class="linking">beyond</span> attainment.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/pæst<span class="linking">‿</span>ɪkˈspɪriəns <span class="weak">həz</span> tɔɾ<span class="linking">‿</span>ʌs ðæt ˈsɝɾən<span class="linking">‿</span>əˈkɑmplɪʃmənts<span class="linking">‿</span><span class="weak">ɑr</span> bɪˈjɑnd<span class="linking">‿</span>əˈteɪnmənt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pæst‿ɪkˈspɪriəns、tɔɾ‿ʌs、ˈsɝɾən‿əˈkɑmplɪʃmənts‿ɑr、bɪˈjɑnd‿əˈteɪnmənt 连读；həz、ɑr 弱读/弱化；tɔɾ‿ʌs、ˈsɝɾən‿əˈkɑmplɪʃmənts‿ɑr 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句 Past experience has taught us；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时 has taught，表示过去经验对现在认识的影响；从句一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>过去的经验告诉我们，有些成就是无法达到的。</p></div>
+    <div class="field words"><span>词</span><p>past experience 过去经验； accomplishment 成就； beyond attainment 无法达到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="57.86" data-end="67.83">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">If we <span class="linking">remain</span> inveterate <span class="linking">smokers</span>, <span class="weak linking">it</span> <span class="weak linking">is</span> only because we <span class="weak">have</span> so <span class="linking">often</span> experienced <span class="weak">the</span> frustration <span class="weak">that</span> results <span class="weak">from</span> failure.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf wi rɪˈmeɪn<span class="linking">‿</span>ɪnˈvɛɾərət ˈsmoʊkɚz<span class="linking">‿</span>ɪɾɪz<span class="linking">‿</span>ˈoʊnli bɪˈkɔz wi <span class="weak">həv</span> soʊ<span class="linking">‿</span>ˈɔfən<span class="linking">‿</span>ɪkˈspɪriənst <span class="weak">ðə</span> frʌˈstreɪʃən ðæt rɪˈzʌlts <span class="weak">frəm</span> ˈfeɪljɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈmeɪn‿ɪnˈvɛɾərət、ˈsmoʊkɚz‿ɪɾɪz‿ˈoʊnli、soʊ‿ˈɔfən‿ɪkˈspɪriənst 连读；həv、ðə、frəm 弱读/弱化；rɪˈmeɪn‿ɪnˈvɛɾərət、ˈsmoʊkɚz‿ɪɾɪz‿ˈoʊnli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导条件状语从句；主句 it is only because...；that results from failure 为定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>如果我们仍是根深蒂固的烟民，那只是因为我们太常经历失败所带来的挫败感。</p></div>
+    <div class="field words"><span>词</span><p>inveterate 根深蒂固的； smoker 烟民； frustration 挫败感； result from 源于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="67.83" data-end="77.37">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Most</span> <span class="weak linking">of</span> us <span class="linking">fail</span> <span class="weak linking">in</span> <span class="linking">our</span> <span class="linking">efforts</span> at self-improvement because our <span class="linking">schemes</span> <span class="weak">are</span> too <span class="linking">ambitious</span> <span class="weak">and</span> we never <span class="weak">have</span> time <span class="weak">to</span> carry <span class="linking">them</span> out.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/moʊst<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs feɪl<span class="linking">‿</span><span class="weak">ɪn</span> aʊr<span class="linking">‿</span>ˈɛfɚts<span class="linking">‿</span>æt ˌsɛlfɪmˈpruvmənt bɪˈkɔz aʊr skimz<span class="linking">‿</span><span class="weak">ɑr</span> <span class="weak">tu</span><span class="linking">‿</span>æmˈbɪʃəs<span class="linking">‿</span><span class="weak">ən</span> wi ˈnɛvɚ <span class="weak">həv</span> taɪm <span class="weak">tə</span> ˈkæri ðɛm<span class="linking">‿</span>aʊt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>moʊst‿əv‿ʌs、feɪl‿ɪn、aʊr‿ˈɛfɚts‿æt、skimz‿ɑr、tu‿æmˈbɪʃəs‿ən 连读；əv、ɪn、ɑr、tu、ən、həv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>because 引导原因状语从句；and 连接两个原因。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>我们大多数人在自我改进的努力中失败，是因为计划太宏大，而且从来没有时间去实行。</p></div>
+    <div class="field words"><span>词</span><p>self-improvement 自我改进； scheme 计划； ambitious 雄心太大的； carry out 实行；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="77.37" data-end="89.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">We also make <span class="weak">the</span> <span class="linking">fundamental</span> <span class="linking">error</span> <span class="weak linking">of</span> <span class="linking">announcing</span> our resolutions <span class="weak">to</span> everybody so <span class="weak">that</span> we <span class="linking">look</span> even more foolish when we slip <span class="linking">back</span> into our <span class="linking">bad</span> old ways.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi ˈɔlsoʊ meɪk <span class="weak">ðə</span> ˌfʌndəˈmɛntəl<span class="linking">‿</span>ˈɛrɚ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>əˈnaʊnsɪŋ aʊr ˌrɛzəˈluʃənz <span class="weak">tə</span> ˈɛvribɑdi soʊ<span class="linking">‿</span>ðæt wi lʊk<span class="linking">‿</span>ˈivən mɔr ˈfulɪʃ wɛn wi slɪp bæk<span class="linking">‿</span>ˈɪntu aʊr bæd<span class="linking">‿</span>oʊld weɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌfʌndəˈmɛntəl‿ˈɛrɚ‿əv‿əˈnaʊnsɪŋ、soʊ‿ðæt、lʊk‿ˈivən、bæk‿ˈɪntu、bæd‿oʊld 连读；ðə、əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>make the error of doing；so that 引导结果状语从句；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>我们还会犯一个根本错误：把决心告诉所有人，结果当我们又回到老毛病时显得更加愚蠢。</p></div>
+    <div class="field words"><span>词</span><p>fundamental 根本的； announce 宣布； slip back into 重新陷入； bad old ways 老毛病；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="89.2" data-end="96.21">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Aware <span class="weak">of</span> these pitfalls, this <span class="linking">year</span> I attempted <span class="weak">to</span> keep my resolutions <span class="weak">to</span> myself.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈwer<span class="linking">‿</span><span class="weak">əv</span> ðiz ˈpɪtˌfɔlz ðɪs jɪr<span class="linking">‿</span>aɪ əˈtɛmptɪd <span class="weak">tə</span> kip maɪ ˌrɛzəˈluʃənz <span class="weak">tə</span> maɪˈsɛlf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈwer‿əv、jɪr‿aɪ 连读；əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Aware of... 为形容词短语作原因状语；主句 I attempted to...</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>意识到这些陷阱后，今年我试图把自己的决心保密。</p></div>
+    <div class="field words"><span>词</span><p>aware of 意识到； pitfall 陷阱； attempt to do 试图做； keep...to oneself 不告诉别人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="96.21" data-end="106.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">I limited myself <span class="weak">to</span> two <span class="linking">modest</span> ambitions: <span class="weak">to</span> do <span class="linking">physical</span> <span class="linking">exercises</span> every <span class="linking">morning</span> <span class="weak">and</span> <span class="weak">to</span> read more <span class="weak linking">of</span> <span class="weak linking">an</span> evening.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ˈlɪmɪɾɪd maɪˈsɛlf <span class="weak">tə</span> <span class="weak">tu</span> ˈmɑdəst<span class="linking">‿</span>æmˈbɪʃənz <span class="weak">tə</span> du ˈfɪzɪkəl<span class="linking">‿</span>ˈɛksɚˌsaɪzɪz<span class="linking">‿</span>ˈɛvri ˈmɔrnɪŋ<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> rid mɔr<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈivnɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmɑdəst‿æmˈbɪʃənz、ˈfɪzɪkəl‿ˈɛksɚˌsaɪzɪz‿ˈɛvri、ˈmɔrnɪŋ‿ən、mɔr‿əv‿ən‿ˈivnɪŋ 连读；tə、tu、ən、əv 弱读/弱化；ˈlɪmɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>limit oneself to...；冒号后两个不定式短语解释 ambitions。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我把自己限制在两个小小的目标上：每天早上做体操，晚上多读点书。</p></div>
+    <div class="field words"><span>词</span><p>limit oneself to 限定自己只做； modest 适度的； ambition 目标/志向； of an evening 在晚上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="106.61" data-end="123.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak linking">An</span> all-night <span class="linking">party</span> on New <span class="linking">Year's</span> Eve provided me <span class="linking">with</span> <span class="weak">a</span> <span class="linking">good</span> excuse <span class="weak">for</span> not <span class="linking">carrying</span> <span class="linking">out</span> <span class="linking">either</span> <span class="weak">of</span> these new <span class="linking">resolutions</span> on <span class="weak">the</span> first <span class="linking">day</span> <span class="weak">of</span> <span class="weak">the</span> year, <span class="linking">but</span> on <span class="weak">the</span> <span class="linking">second</span>, I applied <span class="linking">myself</span> assiduously <span class="weak">to</span> <span class="weak">the</span> task.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>ɔl naɪt ˈpɑrti<span class="linking">‿</span>ɑn nu jɪrz<span class="linking">‿</span>iv prəˈvaɪdɪd mi wɪð<span class="linking">‿</span><span class="weak">ə</span> ɡʊd<span class="linking">‿</span>ɪkˈskjus <span class="weak">fɚ</span> nɑt ˈkæriɪŋ<span class="linking">‿</span>aʊɾ<span class="linking">‿</span>ˈiðɚ<span class="linking">‿</span><span class="weak">əv</span> ðiz nu ˌrɛzəˈluʃənz<span class="linking">‿</span>ɑn <span class="weak">ðə</span> fɝst deɪ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> jɪr bəɾ<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈsɛkənd aɪ əˈplaɪd maɪˈsɛlf<span class="linking">‿</span>əˈsɪdʒuəsli <span class="weak">tə</span> <span class="weak">ðə</span> tæsk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿ɔl、ˈpɑrti‿ɑn、jɪrz‿iv、wɪð‿ə、ɡʊd‿ɪkˈskjus 连读；ən、ə、fɚ、əv、ðə、tə 弱读/弱化；ˈkæriɪŋ‿aʊɾ‿ˈiðɚ‿əv、bəɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接两个并列分句；for not carrying out... 作 excuse 的补足说明；apply oneself to 表投入做。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>除夕夜的通宵聚会给了我一个好借口，让我在新年第一天不用执行任何一个新决心；但第二天，我便认真投入这项任务。</p></div>
+    <div class="field words"><span>词</span><p>all-night 通宵的； New Year's Eve 除夕； excuse 借口； carry out 执行； apply oneself to 专心致力于； assiduously 勤勉地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="123.67" data-end="133.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> <span class="linking">daily</span> exercises <span class="linking">lasted</span> <span class="linking">only</span> eleven <span class="linking">minutes</span> <span class="weak linking">and</span> I proposed <span class="weak">to</span> do <span class="linking">them</span> <span class="linking">early</span> <span class="weak">in</span> <span class="weak">the</span> morning before anyone <span class="weak">had</span> <span class="linking">got</span> up.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈdeɪli ˈɛksɚˌsaɪzɪz ˈlæstɪd<span class="linking">‿</span>ˈoʊnli ɪˈlɛvən ˈmɪnɪts<span class="linking">‿</span><span class="weak">ən</span> aɪ prəˈpoʊzd <span class="weak">tə</span> du ðɛm<span class="linking">‿</span>ˈɝli<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈmɔrnɪŋ bɪˈfɔr<span class="linking">‿</span>ˈɛniwʌn hæd ɡɑɾ<span class="linking">‿</span>ʌp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈlæstɪd‿ˈoʊnli、ˈmɪnɪts‿ən、ðɛm‿ˈɝli‿ɪn、bɪˈfɔr‿ˈɛniwʌn、ɡɑɾ‿ʌp 连读；ðə、ən、tə、ɪn 弱读/弱化；ɡɑɾ‿ʌp 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；before 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had got up 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>每天的体操只持续十一分钟，我打算在早上任何人起床之前做完。</p></div>
+    <div class="field words"><span>词</span><p>daily exercises 每日体操； propose to do 打算做； get up 起床；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="133.4" data-end="141.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> self-discipline required <span class="weak">to</span> drag <span class="linking">myself</span> <span class="linking">out</span> <span class="weak">of</span> bed 11 <span class="linking">minutes</span> earlier <span class="weak linking">than</span> usual <span class="weak">was</span> considerable.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˌsɛlfˈdɪsəplɪn rɪˈkwaɪɚd <span class="weak">tə</span> dræɡ maɪˈsɛlf<span class="linking">‿</span>aʊɾ<span class="linking">‿</span><span class="weak">əv</span> bɛd<span class="linking">‿</span>ɪˈlɛvən ˈmɪnɪts<span class="linking">‿</span>ˈɝliɚ ðən ˈjuʒuəl <span class="weak">wəz</span> kənˈsɪdərəbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>maɪˈsɛlf‿aʊɾ‿əv、bɛd‿ɪˈlɛvən、ˈmɪnɪts‿ˈɝliɚ 连读；ðə、tə、əv、wəz 弱读/弱化；maɪˈsɛlf‿aʊɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主语为 The self-discipline；required... 为过去分词短语作定语；to drag... 为目的/内容。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>要比平常早十一分钟把自己从床上拽起来，所需的自律相当大。</p></div>
+    <div class="field words"><span>词</span><p>self-discipline 自律； require 需要； drag 拖/拽； considerable 相当大的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="141.74" data-end="151.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="linking">Nevertheless</span>, I managed <span class="weak">to</span> creep <span class="linking">down</span> into <span class="weak">the</span> living room <span class="weak">for</span> two days before anyone found me out.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˌnɛvɚðəˈlɛs aɪ ˈmænɪdʒd <span class="weak">tə</span> krip daʊn<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> ˈlɪvɪŋ rum <span class="weak">fɚ</span> <span class="weak">tu</span> deɪz bɪˈfɔr<span class="linking">‿</span>ˈɛniwʌn faʊnd mi<span class="linking">‿</span>aʊt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>daʊn‿ˈɪntu、bɪˈfɔr‿ˈɛniwʌn、mi‿aʊt 连读；tə、ðə、fɚ、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>nevertheless 表转折；manage to do 表设法做到；before 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>不过，我还是设法偷偷下到客厅，坚持了两天才被人发现。</p></div>
+    <div class="field words"><span>词</span><p>nevertheless 然而； manage to do 设法做成； creep down 蹑手蹑脚地下去； find out 发现；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="151.03" data-end="162.89">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">After <span class="linking">jumping</span> <span class="linking">about</span> on <span class="weak">the</span> <span class="linking">carpet</span> <span class="weak">and</span> twisting <span class="weak">the</span> human frame into uncomfortable <span class="linking">positions</span>, I sat <span class="linking">down</span> at <span class="weak">the</span> breakfast table <span class="weak linking">in</span> <span class="weak linking">an</span> exhausted condition.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈdʒʌmpɪŋ<span class="linking">‿</span>əˈbaʊɾ<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈkɑrpəɾ<span class="linking">‿</span><span class="weak">ən</span> ˈtwɪstɪŋ <span class="weak">ðə</span> ˈhjumən freɪm<span class="linking">‿</span>ˈɪntu ənˈkʌmftəbəl pəˈzɪʃənz aɪ sæt daʊn<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈbrɛkfəst ˈteɪbəl<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪɡˈzɔstəd kənˈdɪʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdʒʌmpɪŋ‿əˈbaʊɾ‿ɑn、ˈkɑrpəɾ‿ən、freɪm‿ˈɪntu、daʊn‿æt、ˈteɪbəl‿ɪn‿ən‿ɪɡˈzɔstəd 连读；ðə、ən、ɪn 弱读/弱化；ˈdʒʌmpɪŋ‿əˈbaʊɾ‿ɑn、ˈkɑrpəɾ‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After + 动名词短语作时间状语；主句 I sat down...</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；非谓语 jumping/twisting 表先行动作。</p></div>
+    <div class="field cn"><span>中</span><p>在地毯上跳来跳去并把身体扭成不舒服的姿势后，我筋疲力尽地坐到早餐桌旁。</p></div>
+    <div class="field words"><span>词</span><p>jump about 跳来跳去； twist 扭动； human frame 人体； exhausted 筋疲力尽的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="162.89" data-end="165.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> this <span class="weak">that</span> betrayed me.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> ðɪs ðæt bɪˈtreɪd mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>强调句型 It was...that...，强调 this。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>正是这一点出卖了我。</p></div>
+    <div class="field words"><span>词</span><p>betray 出卖/暴露；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="165.78" data-end="170.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> next morning <span class="weak">the</span> whole family <span class="linking">trooped</span> <span class="weak">in</span> <span class="weak">to</span> watch <span class="weak">the</span> performance.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> nɛkst ˈmɔrnɪŋ <span class="weak">ðə</span> hoʊl ˈfæməli trupt<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">tə</span> wɑtʃ <span class="weak">ðə</span> pɚˈfɔrməns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>trupt‿ɪn 连读；ðə、ɪn、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；to watch... 为目的状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>第二天早上，全家人都成群进来观看这场表演。</p></div>
+    <div class="field words"><span>词</span><p>troop in 成群走进； performance 表演；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="170.51" data-end="180.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">That</span> <span class="weak">was</span> <span class="linking">really</span> unsettling <span class="linking">but</span> I <span class="linking">fended</span> off <span class="weak">the</span> <span class="linking">taunts</span> <span class="weak">and</span> <span class="linking">jibes</span> <span class="weak">of</span> <span class="weak">the</span> family <span class="linking">good-humouredly</span> <span class="weak">and</span> <span class="linking">soon</span> everybody <span class="linking">got</span> used <span class="weak">to</span> <span class="weak">the</span> idea.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðæt <span class="weak">wəz</span> ˈriəli ənˈsɛɾəlɪŋ bət<span class="linking">‿</span>aɪ ˈfɛndɪd<span class="linking">‿</span>ɔf <span class="weak">ðə</span> tɔnts<span class="linking">‿</span><span class="weak">ən</span> dʒaɪbz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈfæməli ˈɡʊdˌhjumərdli<span class="linking">‿</span><span class="weak">ən</span> sun<span class="linking">‿</span>ˈɛvribədi ɡɑt just <span class="weak">tə</span> <span class="weak">ði</span><span class="linking">‿</span>aɪˈdiə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bət‿aɪ、ˈfɛndɪd‿ɔf、tɔnts‿ən、dʒaɪbz‿əv、ˈhjumərdli‿ən 连读；wəz、ðə、ən、əv、tə、ði 弱读/弱化；ənˈsɛɾəlɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句；and 连接后续结果。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>那确实令人不安，但我愉快地挡开了家人的嘲笑和挖苦，很快大家都习惯了这个想法。</p></div>
+    <div class="field words"><span>词</span><p>unsettling 令人不安的； fend off 挡开/避开； taunt 嘲弄； jibe 挖苦； good-humouredly 好脾气地； get used to 习惯于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="180.4" data-end="183.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">However, <span class="linking">my</span> enthusiasm waned.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ maɪ<span class="linking">‿</span>ɪnˈθuziˌæzəm weɪnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>maɪ‿ɪnˈθuziˌæzəm 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>however 表转折；主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，我的热情减退了。</p></div>
+    <div class="field words"><span>词</span><p>enthusiasm 热情； wane 减弱/衰退；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="183.85" data-end="187.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">The</span> time I <span class="linking">spent</span> <span class="linking">at</span> exercises gradually diminished.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> taɪm<span class="linking">‿</span>aɪ spɛnt<span class="linking">‿</span>æɾ<span class="linking">‿</span>ˈɛksɚˌsaɪzɪz ˈɡrædʒuəli dɪˈmɪnɪʃt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>taɪm‿aɪ、spɛnt‿æɾ‿ˈɛksɚˌsaɪzɪz 连读；ðə 弱读/弱化；spɛnt‿æɾ‿ˈɛksɚˌsaɪzɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>The time 后接省略关系词的定语从句 I spent at exercises。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我花在体操上的时间逐渐减少。</p></div>
+    <div class="field words"><span>词</span><p>spend time at/on 花时间做； gradually 逐渐地； diminish 减少；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="187.67" data-end="192.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Little by little <span class="weak">the</span> eleven minutes fell <span class="weak">to</span> zero.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈlɪɾəl baɪ ˈlɪɾəl <span class="weak">ði</span><span class="linking">‿</span>ɪˈlɛvən ˈmɪnɪts fɛl <span class="weak">tə</span> ˈzɪroʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿ɪˈlɛvən 连读；ði、tə 弱读/弱化；ˈlɪɾəl、ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Little by little 作方式状语；主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>渐渐地，那十一分钟减少到了零。</p></div>
+    <div class="field words"><span>词</span><p>little by little 逐渐地； fall to zero 降到零；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="192.29" data-end="197.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">By January 10<span class="linking">th</span>, I <span class="weak">was</span> back <span class="weak">to</span> where I <span class="weak">had</span> started <span class="weak">from</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/baɪ ˈdʒænjuˌeri tɛnθ aɪ <span class="weak">wəz</span> bæk <span class="weak">tə</span> wer<span class="linking">‿</span>aɪ hæd ˈstɑrtɪd <span class="weak">frəm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wer‿aɪ 连读；wəz、tə、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>By... 作时间状语；where 引导宾语从句，作 to 的宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had started 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>到一月十日，我又回到了起点。</p></div>
+    <div class="field words"><span>词</span><p>be back to 回到； start from 从……开始；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="197.33" data-end="208.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">I argued <span class="weak linking">that</span> <span class="linking">if</span> I spent less time exhausting <span class="linking">myself</span> <span class="linking">at</span> <span class="linking">exercises</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">morning</span>, I <span class="weak">would</span> keep my mind fresh <span class="weak">for</span> reading <span class="linking">when</span> I got home <span class="weak">from</span> work.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ˈɑrɡjud ðæɾ<span class="linking">‿</span>ɪf<span class="linking">‿</span>aɪ spɛnt lɛs taɪm<span class="linking">‿</span>ɪɡˈzɔstɪŋ maɪˈsɛlf<span class="linking">‿</span>æɾ<span class="linking">‿</span>ˈɛksɚˌsaɪzɪz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈmɔrnɪŋ aɪ wʊd kip maɪ maɪnd frɛʃ <span class="weak">fɚ</span> ˈridɪŋ wɛn<span class="linking">‿</span>aɪ ɡɑt hoʊm <span class="weak">frəm</span> wɝk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ɪf‿aɪ、taɪm‿ɪɡˈzɔstɪŋ、maɪˈsɛlf‿æɾ‿ˈɛksɚˌsaɪzɪz‿ɪn、wɛn‿aɪ 连读；ɪn、ðə、fɚ、frəm 弱读/弱化；ðæɾ‿ɪf‿aɪ、maɪˈsɛlf‿æɾ‿ˈɛksɚˌsaɪzɪz‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；从句中 if 引导条件句；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；宾语从句中 spent/would keep 表过去语境下的条件结果。</p></div>
+    <div class="field cn"><span>中</span><p>我辩解说，如果早上少花时间做体操把自己弄累，晚上下班回家读书时头脑就会保持清醒。</p></div>
+    <div class="field words"><span>词</span><p>argue 辩解； exhaust 使筋疲力尽； keep one's mind fresh 保持头脑清醒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="208.32" data-end="217.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">Resisting <span class="weak">the</span> <span class="linking">hypnotizing</span> <span class="linking">effect</span> <span class="weak">of</span> <span class="linking">television</span>, I <span class="linking">sat</span> <span class="weak">in</span> my room <span class="weak linking">for</span> <span class="weak">a</span> <span class="linking">few</span> evenings with <span class="linking">my</span> eyes glued <span class="weak">to</span> <span class="weak">a</span> book.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/rɪˈzɪstɪŋ <span class="weak">ðə</span> ˈhɪpnəˌtaɪzɪŋ<span class="linking">‿</span>ɪˈfɛkt<span class="linking">‿</span><span class="weak">əv</span> ˈtɛləˌvɪʒən aɪ sæɾ<span class="linking">‿</span><span class="weak">ɪn</span> maɪ rum <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> fju ˈivnɪŋz wɪð maɪ<span class="linking">‿</span>aɪz ɡlud <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> bʊk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhɪpnəˌtaɪzɪŋ‿ɪˈfɛkt‿əv、sæɾ‿ɪn、fɚ‿ə、maɪ‿aɪz、tə‿ə 连读；ðə、əv、ɪn、fɚ、ə、tə 弱读/弱化；sæɾ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Resisting... 为现在分词短语作伴随/方式状语；with my eyes glued to a book 为 with 复合结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>为了抵抗电视的催眠作用，有几个晚上我坐在房间里，眼睛紧盯着书。</p></div>
+    <div class="field words"><span>词</span><p>resist 抵抗； hypnotizing 催眠的； effect 影响； glue one's eyes to 眼睛盯着；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="217.18" data-end="227.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text">One night, however, feeling <span class="linking">cold</span> <span class="weak">and</span> <span class="linking">lonely</span>, I went <span class="linking">downstairs</span> <span class="weak">and</span> <span class="linking">sat</span> <span class="weak">in</span> <span class="linking">front</span> <span class="weak">of</span> <span class="weak">the</span> television pretending <span class="weak">to</span> read.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn naɪt haʊˈɛvɚ ˈfilɪŋ koʊld<span class="linking">‿</span><span class="weak">ən</span> ˈloʊnli aɪ wɛnt ˌdaʊnˈsterz<span class="linking">‿</span><span class="weak">ən</span> sæɾ<span class="linking">‿</span><span class="weak">ɪn</span> frʌnt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈtɛləˌvɪʒən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>koʊld‿ən、ˌdaʊnˈsterz‿ən、sæɾ‿ɪn、frʌnt‿əv 连读；ən、ɪn、əv、ðə 弱读/弱化；sæɾ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>feeling cold and lonely 为现在分词短语作原因状语；pretending to read 作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而有一天晚上，我觉得又冷又孤独，便下楼坐在电视机前，假装读书。</p></div>
+    <div class="field words"><span>词</span><p>downstairs 楼下； in front of 在……前面； pretend to do 假装做；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="227.05" data-end="237.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text"><span class="weak">That</span> proved <span class="weak">to</span> <span class="weak">be</span> <span class="linking">my</span> undoing, <span class="weak linking">for</span> I soon got back <span class="weak">to</span> <span class="linking">my</span> old bad <span class="linking">habit</span> <span class="weak">of</span> <span class="linking">dozing</span> <span class="linking">off</span> <span class="weak">in</span> <span class="linking">front</span> <span class="weak">of</span> <span class="weak">the</span> screen.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðæt pruvd <span class="weak">tə</span> bi maɪ ənˈduɪŋ <span class="weak">fɚ</span><span class="linking">‿</span>aɪ sun ɡɑt bæk <span class="weak">tə</span> maɪ oʊld bæd ˈhæbɪɾ<span class="linking">‿</span><span class="weak">əv</span> ˈdoʊzɪŋ<span class="linking">‿</span>ɔf<span class="linking">‿</span><span class="weak">ɪn</span> frʌnt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> skrin/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ‿aɪ、ˈhæbɪɾ‿əv、ˈdoʊzɪŋ‿ɔf‿ɪn、frʌnt‿əv 连读；tə、fɚ、əv、ɪn、ðə 弱读/弱化；ˈhæbɪɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句；of dozing off... 修饰 habit。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>那证明成了我的失败之源，因为我很快又恢复了在电视机前打瞌睡的老毛病。</p></div>
+    <div class="field words"><span>词</span><p>prove to be 证明是； undoing 失败的原因； get back to 回到； doze off 打瞌睡； screen 屏幕；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="237.32" data-end="241.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text">I still haven't <span class="linking">given</span> up my resolution <span class="weak">to</span> do more reading.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ stɪl ˈhævənt ˈɡɪvən<span class="linking">‿</span>ʌp maɪ ˌrɛzəˈluʃən <span class="weak">tə</span> du mɔr ˈridɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈɡɪvən‿ʌp 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；to do more reading 为不定式短语修饰 resolution。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时 haven't given up。</p></div>
+    <div class="field cn"><span>中</span><p>我仍然没有放弃多读书的决心。</p></div>
+    <div class="field words"><span>词</span><p>give up 放弃； resolution 决心；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="241.22" data-end="248.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text"><span class="weak">In</span> <span class="linking">fact</span>, I <span class="weak">have</span> just <span class="linking">bought</span> <span class="weak">a</span> <span class="linking">book</span> entitled How <span class="weak">to</span> <span class="linking">Read</span> <span class="weak">a</span> Thousand <span class="linking">Words</span> <span class="weak">a</span> Minute.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> fækt aɪ <span class="weak">həv</span> dʒʌst bɔɾ<span class="linking">‿</span><span class="weak">ə</span> bʊk<span class="linking">‿</span>ɪnˈtaɪɾəld haʊ <span class="weak">tə</span> rid<span class="linking">‿</span><span class="weak">ə</span> ˈθaʊzənd wɝdz<span class="linking">‿</span><span class="weak">ə</span> ˈmɪnɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɔɾ‿ə、bʊk‿ɪnˈtaɪɾəld、rid‿ə、wɝdz‿ə 连读；ɪn、həv、ə、tə 弱读/弱化；bɔɾ‿ə、bʊk‿ɪnˈtaɪɾəld 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In fact 作插入状语；entitled... 为过去分词短语作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时 have bought。</p></div>
+    <div class="field cn"><span>中</span><p>事实上，我刚买了一本名叫《如何每分钟读一千词》的书。</p></div>
+    <div class="field words"><span>词</span><p>in fact 事实上； entitled 题名为； a thousand words a minute 每分钟一千词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="248.7" data-end="253.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text"><span class="linking">Perhaps</span> <span class="weak">it</span> will solve my problem, <span class="linking">but</span> I just haven't <span class="weak">had</span> time <span class="weak">to</span> <span class="linking">read</span> <span class="weak">it</span>!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/pɚˈhæps<span class="linking">‿</span>ɪt wɪl sɑlv maɪ ˈprɑbləm bət<span class="linking">‿</span>aɪ dʒʌst ˈhævənt hæd taɪm <span class="weak">tə</span> rid<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pɚˈhæps‿ɪt、bət‿aɪ、rid‿ɪt 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句。</p></div>
+    <div class="field tense"><span>时态</span><p>will solve 为一般将来时；haven't had 为现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>也许它会解决我的问题，但我只是还没有时间去读它！</p></div>
+    <div class="field words"><span>词</span><p>perhaps 也许； solve 解决； have time to do 有时间做；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>决心与习惯: resolution 决心； resolve to do 决心做； self-improvement 自我改进； carry out 执行； give up 放弃； bad old ways 老毛病；</p>
+    <p>失败与退步: frustration 挫败感； failure 失败； slip back into 重新陷入； undoing 失败根源； wane 衰退； diminish 减少；</p>
+    <p>行动与状态: apply oneself to 专心致力于； assiduously 勤勉地； self-discipline 自律； exhausted 筋疲力尽的； get used to 习惯；</p>
+    <p>嘲笑与应对: betray 暴露； fend off 挡开； taunt 嘲弄； jibe 挖苦； good-humouredly 好脾气地；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>a time for...</code> 表示“做……的时候”。</p>
+    <p><code>make the error of doing</code> 表示“犯了做某事的错误”。</p>
+    <p><code>so that...</code> 表结果。</p>
+    <p><code>Aware of...</code> 形容词短语前置作原因状语。</p>
+    <p><code>It was...that...</code> 是强调句型。</p>
+    <p><code>with my eyes glued to a book</code> 是 with 复合结构。</p>
+    <p><code>prove to be...</code> 表示“结果证明是……”。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>文章主体用一般过去时叙述作者执行决心的过程：<code>attempted</code>, <code>limited</code>, <code>managed</code>, <code>waned</code>。</p>
+    <p>现在完成时用于过去经验对现在的影响：<code>has taught</code>, <code>haven't given up</code>, <code>have just bought</code>。</p>
+    <p>过去完成时用于更早发生的动作：<code>before anyone had got up</code>, <code>where I had started from</code>。</p>
+    <p>将来时用于最后的猜测：<code>Perhaps it will solve my problem</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>could compile</code> 表理论可能；<code>would keep</code> 表条件下的结果；<code>will solve</code> 表对未来的可能期待。</p>
+    <p>全文带自嘲语气，特别是 <code>That proved to be my undoing</code> 和最后一句 <code>I just haven't had time to read it!</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>New Year is</code> -&gt; /nu‿jɪr‿ɪz/；<code>most of us</code> -&gt; /moʊst‿əv‿ʌs/；<code>spent at</code> -&gt; /spɛnt‿æt/；<code>found me out</code> -&gt; /faʊnd mi‿aʊt/；<code>read it</code> -&gt; /rid‿ɪt/。</p>
+    <p>元音 + 元音滑读: <code>my aunt</code> 类似 /maɪjænt/；本课中 <code>to everybody</code>, <code>to air</code> 类结构读时不要断开，<code>to</code> 弱读后自然滑到元音上。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>a</code>, <code>the</code> 多弱读并粘连：<code>lists of</code> -&gt; /lɪsts‿əv/；<code>habit of</code> -&gt; /ˈhæbɪt‿əv/；<code>with a</code> -&gt; /wɪð‿ə/。</p>
+    <p>美音闪音 /ɾ/: <code>get up</code> 可读 /ɡɛɾ‿ʌp/；<code>got up</code> 可读 /ɡɑɾ‿ʌp/；<code>not</code> 在快速语流中夹在元音环境附近也会变轻。</p>
+    <p>意群停顿: 长句第 4 句的决心清单要按并列动作分组读；第 11 句可在 <code>on the first day of the year / but on the second</code> 处分组；第 23 句可按 <code>I argued that / if... / I would... / when...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 50 - New Year Resolutions</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../50－New Year Resolutions.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.81,"end":19.91,"text":"The New Year is a time for resolutions."},{"index":2,"start":19.91,"end":27.54,"text":"Mentally, at least, most of us could compile formidable lists of 'dos' and 'don'ts'."},{"index":3,"start":27.54,"end":34.27,"text":"The same old favourites recur year in year out with monotonous regularity."},{"index":4,"start":34.27,"end":51.73,"text":"We resolve to get up earlier each morning, eat less, find more time to play with the children, do a thousand and one jobs about the house, be nice to people we don't like, drive carefully, and take the dog for a walk every day."},{"index":5,"start":51.73,"end":57.86,"text":"Past experience has taught us that certain accomplishments are beyond attainment."},{"index":6,"start":57.86,"end":67.83,"text":"If we remain inveterate smokers, it is only because we have so often experienced the frustration that results from failure."},{"index":7,"start":67.83,"end":77.37,"text":"Most of us fail in our efforts at self-improvement because our schemes are too ambitious and we never have time to carry them out."},{"index":8,"start":77.37,"end":89.2,"text":"We also make the fundamental error of announcing our resolutions to everybody so that we look even more foolish when we slip back into our bad old ways."},{"index":9,"start":89.2,"end":96.21,"text":"Aware of these pitfalls, this year I attempted to keep my resolutions to myself."},{"index":10,"start":96.21,"end":106.61,"text":"I limited myself to two modest ambitions: to do physical exercises every morning and to read more of an evening."},{"index":11,"start":106.61,"end":123.67,"text":"An all-night party on New Year's Eve provided me with a good excuse for not carrying out either of these new resolutions on the first day of the year, but on the second, I applied myself assiduously to the task."},{"index":12,"start":123.67,"end":133.4,"text":"The daily exercises lasted only eleven minutes and I proposed to do them early in the morning before anyone had got up."},{"index":13,"start":133.4,"end":141.74,"text":"The self-discipline required to drag myself out of bed 11 minutes earlier than usual was considerable."},{"index":14,"start":141.74,"end":151.03,"text":"Nevertheless, I managed to creep down into the living room for two days before anyone found me out."},{"index":15,"start":151.03,"end":162.89,"text":"After jumping about on the carpet and twisting the human frame into uncomfortable positions, I sat down at the breakfast table in an exhausted condition."},{"index":16,"start":162.89,"end":165.78,"text":"It was this that betrayed me."},{"index":17,"start":165.78,"end":170.51,"text":"The next morning the whole family trooped in to watch the performance."},{"index":18,"start":170.51,"end":180.4,"text":"That was really unsettling but I fended off the taunts and jibes of the family good-humouredly and soon everybody got used to the idea."},{"index":19,"start":180.4,"end":183.85,"text":"However, my enthusiasm waned."},{"index":20,"start":183.85,"end":187.67,"text":"The time I spent at exercises gradually diminished."},{"index":21,"start":187.67,"end":192.29,"text":"Little by little the eleven minutes fell to zero."},{"index":22,"start":192.29,"end":197.33,"text":"By January 10th, I was back to where I had started from."},{"index":23,"start":197.33,"end":208.32,"text":"I argued that if I spent less time exhausting myself at exercises in the morning, I would keep my mind fresh for reading when I got home from work."},{"index":24,"start":208.32,"end":217.18,"text":"Resisting the hypnotizing effect of television, I sat in my room for a few evenings with my eyes glued to a book."},{"index":25,"start":217.18,"end":227.05,"text":"One night, however, feeling cold and lonely, I went downstairs and sat in front of the television pretending to read."},{"index":26,"start":227.05,"end":237.32,"text":"That proved to be my undoing, for I soon got back to my old bad habit of dozing off in front of the screen."},{"index":27,"start":237.32,"end":241.22,"text":"I still haven't given up my resolution to do more reading."},{"index":28,"start":241.22,"end":248.7,"text":"In fact, I have just bought a book entitled How to Read a Thousand Words a Minute."},{"index":29,"start":248.7,"end":253.01,"text":"Perhaps it will solve my problem, but I just haven't had time to read it!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

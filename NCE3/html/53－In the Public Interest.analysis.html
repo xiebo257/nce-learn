@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 53 - In the Public Interest</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 53 - In the Public Interest</h1>
+      <p class="meta">Generated from 53－In the Public Interest.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.8" data-end="23.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> Scandinavian <span class="linking">countries</span> <span class="weak">are</span> <span class="linking">much</span> <span class="linking">admired</span> <span class="linking">all</span> over <span class="weak">the</span> world <span class="weak">for</span> <span class="linking">their</span> enlightened social policies.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˌskændəˈneɪviən ˈkʌntriz<span class="linking">‿</span><span class="weak">ɑr</span> mʌtʃ<span class="linking">‿</span>ədˈmaɪɚd<span class="linking">‿</span>ɔl<span class="linking">‿</span>ˈoʊvɚ <span class="weak">ðə</span> wɝld <span class="weak">fɚ</span> ðer<span class="linking">‿</span>ɪnˈlaɪɾənd ˈsoʊʃəl ˈpɑləsiz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkʌntriz‿ɑr、mʌtʃ‿ədˈmaɪɚd‿ɔl‿ˈoʊvɚ、ðer‿ɪnˈlaɪɾənd 连读；ðə、ɑr、fɚ 弱读/弱化；ðer‿ɪnˈlaɪɾənd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主语 + 被动谓语；all over the world 作范围状语；for... 表原因。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>斯堪的纳维亚国家因其开明的社会政策而受到全世界的赞赏。</p></div>
+    <div class="field words"><span>词</span><p>Scandinavian 斯堪的纳维亚的； admire 赞赏； all over the world 全世界； enlightened 开明的； social policy 社会政策；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.38" data-end="33.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Sweden <span class="weak linking">has</span> <span class="linking">evolved</span> <span class="weak linking">an</span> excellent system <span class="weak">for</span> protecting <span class="weak">the</span> individual citizen <span class="weak">from</span> <span class="linking">high-handed</span> <span class="linking">or</span> incompetent <span class="linking">public</span> officers.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈswidən <span class="weak">həz</span><span class="linking">‿</span>ɪˈvɑlvd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛksələnt ˈsɪstəm <span class="weak">fɚ</span> prəˈtɛktɪŋ <span class="weak">ði</span><span class="linking">‿</span>ˌɪndəˈvɪdʒuəl ˈsɪɾɪzən <span class="weak">frəm</span> haɪ ˈhændɪd<span class="linking">‿</span>ɔr<span class="linking">‿</span>ɪnˈkɑmpəɾənt ˈpʌblɪk<span class="linking">‿</span>ˈɔfəsɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>həz‿ɪˈvɑlvd‿ən‿ˈɛksələnt、ði‿ˌɪndəˈvɪdʒuəl、ˈhændɪd‿ɔr‿ɪnˈkɑmpəɾənt、ˈpʌblɪk‿ˈɔfəsɚz 连读；həz、ən、fɚ、ði、frəm 弱读/弱化；ˈsɪɾɪzən、ˈhændɪd‿ɔr‿ɪnˈkɑmpəɾənt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；for protecting... 作 system 的用途说明；from... 表保护对象的来源。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时，表示制度已经发展形成。</p></div>
+    <div class="field cn"><span>中</span><p>瑞典已经形成了一套优秀制度，用来保护个体公民免受专横或不称职的公职人员侵害。</p></div>
+    <div class="field words"><span>词</span><p>evolve 发展形成； individual citizen 个体公民； high-handed 专横的； incompetent 不称职的； public officer 公职人员；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="33.22" data-end="40.21">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> system <span class="weak">has</span> worked so well, <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak">has</span> <span class="weak linking">been</span> <span class="linking">adopted</span> <span class="weak linking">in</span> other countries too.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈsɪstəm <span class="weak">həz</span> wɝkt soʊ wɛl ðæɾ<span class="linking">‿</span>ɪt <span class="weak">həz</span> bɪn<span class="linking">‿</span>əˈdɑptɪd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ˈʌðɚ ˈkʌntriz <span class="weak">tu</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ɪt、bɪn‿əˈdɑptɪd‿ɪn‿ˈʌðɚ 连读；ðə、həz、ɪn、tu 弱读/弱化；ðæɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that... 结果状语从句；has been adopted 为现在完成时被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>这一制度运行得如此好，以至于也被其他国家采用了。</p></div>
+    <div class="field words"><span>词</span><p>work well 运行良好； adopt 采用；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.21" data-end="56.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> Swedes <span class="weak">were</span> <span class="weak">the</span> first <span class="weak">to</span> recognize <span class="weak">that</span> <span class="linking">public</span> officials like civil servants, police officers, <span class="linking">health</span> <span class="linking">inspectors</span> or tax-collectors <span class="weak">can</span> make <span class="linking">mistakes</span> <span class="linking">or</span> <span class="linking">act</span> <span class="linking">over-zealously</span> <span class="weak">in</span> <span class="weak">the</span> belief <span class="weak">that</span> <span class="linking">they</span> <span class="weak">are</span> serving <span class="weak">the</span> public.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> swidz <span class="weak">wɚ</span> <span class="weak">ðə</span> fɝst <span class="weak">tə</span> ˈrɛkəɡˌnaɪz ðæt ˈpʌblɪk<span class="linking">‿</span>əˈfɪʃəlz laɪk ˈsɪvəl ˈsɝvənts pəˈlis<span class="linking">‿</span>ˈɔfəsɚz hɛlθ<span class="linking">‿</span>ɪnˈspɛktɚz<span class="linking">‿</span>ɔr tæks kəˈlɛktɚz <span class="weak">kən</span> meɪk mɪˈsteɪks<span class="linking">‿</span>ɔr<span class="linking">‿</span>ækt<span class="linking">‿</span>ˌoʊvɚ ˈzɛləsli<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> bɪˈlif ðæt ðeɪ<span class="linking">‿</span><span class="weak">ɑr</span> ˈsɝvɪŋ <span class="weak">ðə</span> ˈpʌblɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpʌblɪk‿əˈfɪʃəlz、pəˈlis‿ˈɔfəsɚz、hɛlθ‿ɪnˈspɛktɚz‿ɔr、mɪˈsteɪks‿ɔr‿ækt‿ˌoʊvɚ、ˈzɛləsli‿ɪn 连读；ðə、wɚ、tə、kən、ɪn、ɑr 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>the first to do；that 引导 recognize 的宾语从句；like... 举例；in the belief that... 作原因/心理状语。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；宾语从句一般现在时表示普遍可能。</p></div>
+    <div class="field cn"><span>中</span><p>瑞典人最先认识到，公务员、警察、卫生检查员或税务员等公职人员也会犯错，或者出于“服务公众”的信念而过分热心地行事。</p></div>
+    <div class="field words"><span>词</span><p>public official 公职人员； civil servant 公务员； health inspector 卫生检查员； tax-collector 税务员； over-zealously 过分热心地； in the belief that 以为/相信；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="56.76" data-end="66.75">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">As</span> <span class="linking">long</span> ago <span class="weak">as</span> 1809, <span class="weak">the</span> Swedish <span class="linking">Parliament</span> <span class="linking">introduced</span> <span class="weak">a</span> scheme <span class="weak">to</span> safeguard <span class="weak">the</span> <span class="linking">interest</span> <span class="weak">of</span> <span class="weak">the</span> individual.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz lɔŋ<span class="linking">‿</span>əˈɡoʊ<span class="linking">‿</span>æz<span class="linking">‿</span>ˌeɪɾin<span class="linking">‿</span>oʊ naɪn <span class="weak">ðə</span> ˈswidɪʃ ˈpɑrləmənt<span class="linking">‿</span>ˌɪntrəˈdust<span class="linking">‿</span><span class="weak">ə</span> skim <span class="weak">tə</span> ˈseɪfˌɡɑrd <span class="weak">ði</span><span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˌɪndəˈvɪdʒuəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɔŋ‿əˈɡoʊ‿æz‿ˌeɪɾin‿oʊ、ˈpɑrləmənt‿ˌɪntrəˈdust‿ə、ði‿ˈɪntrəst‿əv、ði‿ˌɪndəˈvɪdʒuəl 连读；ðə、ə、tə、ði、əv 弱读/弱化；lɔŋ‿əˈɡoʊ‿æz‿ˌeɪɾin‿oʊ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As long ago as... 作时间状语；to safeguard... 为目的不定式。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>早在 1809 年，瑞典议会就引入了一项保护个人利益的制度。</p></div>
+    <div class="field words"><span>词</span><p>as long ago as 早在； Parliament 议会； scheme 方案/制度； safeguard 保护； interest 利益；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="66.75" data-end="78.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">A</span> parliamentary committee <span class="linking">representing</span> all political <span class="linking">parties</span> <span class="linking">appoints</span> <span class="weak">a</span> person who <span class="weak">is</span> suitably qualified <span class="weak">to</span> investigate private <span class="linking">grievances</span> against <span class="weak">the</span> State.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˌpɑrləˈmɛntri kəˈmɪɾi ˌrɛprɪˈzɛntɪŋ<span class="linking">‿</span>ɔl pəˈlɪɾɪkəl ˈpɑrtiz<span class="linking">‿</span>əˈpɔɪnts<span class="linking">‿</span><span class="weak">ə</span> ˈpɝsən hu<span class="linking">‿</span><span class="weak">ɪz</span> ˈsuɾəbli ˈkwɑləˌfaɪd <span class="weak">tə</span><span class="linking">‿</span>ɪnˈvɛstəˌɡeɪt ˈpraɪvət ˈɡrivənsɪz<span class="linking">‿</span>əˈɡɛnst <span class="weak">ðə</span> steɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌrɛprɪˈzɛntɪŋ‿ɔl、ˈpɑrtiz‿əˈpɔɪnts‿ə、hu‿ɪz、tə‿ɪnˈvɛstəˌɡeɪt、ˈɡrivənsɪz‿əˈɡɛnst 连读；ə、ɪz、tə、ðə 弱读/弱化；kəˈmɪɾi、pəˈlɪɾɪkəl、ˈsuɾəbli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>representing... 为现在分词短语作定语；who 引导定语从句；to investigate... 表资格内容/目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>一个代表所有政党的议会委员会任命一名资格合适的人，调查针对国家的个人申诉。</p></div>
+    <div class="field words"><span>词</span><p>parliamentary 议会的； committee 委员会； represent 代表； appoint 任命； suitably qualified 资格合适的； grievance 申诉/不满； the State 国家；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="78.63" data-end="89.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">The</span> official title <span class="weak">of</span> <span class="weak">the</span> <span class="linking">person</span> <span class="weak">is</span> 'Justiteombudsman', but <span class="weak">the</span> Swedes commonly refer <span class="weak">to</span> <span class="weak linking">him</span> <span class="weak">as</span> <span class="weak">the</span> '<span class="linking">J</span>.O.' <span class="linking">or</span> 'Ombudsman'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>əˈfɪʃəl ˈtaɪɾəl<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈpɝsən<span class="linking">‿</span><span class="weak">ɪz</span> ˈjʌstɪɾ<span class="linking">‿</span>ˈɑmbʊdzmən bət <span class="weak">ðə</span> swidz ˈkɑmənli rɪˈfɝ <span class="weak">tə</span> <span class="weak">hɪm</span><span class="linking">‿</span>æz <span class="weak">ðə</span> dʒeɪ oʊ ɔr<span class="linking">‿</span>ˈɑmbʊdzmən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿əˈfɪʃəl、ˈtaɪɾəl‿əv、ˈpɝsən‿ɪz、ˈjʌstɪɾ‿ˈɑmbʊdzmən、hɪm‿æz 连读；ði、əv、ðə、ɪz、tə、hɪm 弱读/弱化；ˈtaɪɾəl‿əv、ˈjʌstɪɾ‿ˈɑmbʊdzmən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句；refer to...as... 表“把……称作……”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这个人的正式头衔是“Justiteombudsman”，但瑞典人通常称他为 “J.O.” 或 “Ombudsman”。</p></div>
+    <div class="field words"><span>词</span><p>official title 正式头衔； commonly 通常； refer to...as... 把……称为； Ombudsman 监察专员；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="89.51" data-end="93.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> <span class="linking">Ombudsman</span> <span class="weak">is</span> not subject <span class="weak">to</span> political pressure.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən<span class="linking">‿</span><span class="weak">ɪz</span> nɑt ˈsʌbdʒɪkt <span class="weak">tə</span> pəˈlɪɾɪkəl ˈprɛʃɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿ˈɑmbʊdzmən‿ɪz 连读；ði、ɪz、tə 弱读/弱化；pəˈlɪɾɪkəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；be subject to 表“受……支配/影响”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员不受政治压力影响。</p></div>
+    <div class="field words"><span>词</span><p>be subject to 受……影响/支配； political pressure 政治压力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="93.72" data-end="100.31">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">He investigates complaints large <span class="weak">and</span> small <span class="weak">that</span> come <span class="weak">to</span> <span class="weak">him</span> <span class="weak linking">from</span> all <span class="linking">levels</span> <span class="weak">of</span> society.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi<span class="linking">‿</span>ɪnˈvɛstəˌɡeɪts kəmˈpleɪnts lɑrdʒ<span class="linking">‿</span><span class="weak">ən</span> smɔl ðæt kʌm <span class="weak">tə</span> <span class="weak">hɪm</span> <span class="weak">frəm</span><span class="linking">‿</span>ɔl ˈlɛvəlz<span class="linking">‿</span><span class="weak">əv</span> səˈsaɪəɾi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hi‿ɪnˈvɛstəˌɡeɪts、lɑrdʒ‿ən、frəm‿ɔl、ˈlɛvəlz‿əv 连读；ən、tə、hɪm、frəm、əv 弱读/弱化；səˈsaɪəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>complaints large and small 为名词 + 形容词后置；that 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>他调查来自社会各阶层的各种大小投诉。</p></div>
+    <div class="field words"><span>词</span><p>investigate 调查； complaint 投诉； large and small 大大小小的； levels of society 社会阶层；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="100.31" data-end="108.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">As</span> complaints must <span class="weak">be</span> made <span class="weak">in</span> writing, <span class="weak">the</span> Ombudsman <span class="linking">receives</span> <span class="weak linking">an</span> average <span class="weak">of</span> 1,200 <span class="linking">letters</span> <span class="weak">a</span> year.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz kəmˈpleɪnts mʌst bi meɪd<span class="linking">‿</span><span class="weak">ɪn</span> ˈraɪɾɪŋ <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən rɪˈsivz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈævərɪdʒ<span class="linking">‿</span><span class="weak">əv</span> twɛlv ˈhʌndrəd ˈlɛɾɚz<span class="linking">‿</span><span class="weak">ə</span> jɪr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿ɪn、ði‿ˈɑmbʊdzmən、rɪˈsivz‿ən‿ˈævərɪdʒ‿əv、ˈlɛɾɚz‿ə 连读；ɪn、ði、ən、əv、ə 弱读/弱化；ˈraɪɾɪŋ、ˈlɛɾɚz‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；must be made 为情态动词 + 被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>由于投诉必须以书面形式提出，监察专员每年平均收到 1200 封信。</p></div>
+    <div class="field words"><span>词</span><p>in writing 以书面形式； receive 收到； an average of 平均；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="108.78" data-end="116.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">He <span class="weak linking">has</span> eight <span class="linking">lawyer</span> assistants <span class="weak">to</span> help <span class="weak linking">him</span> <span class="weak">and</span> he <span class="linking">examines</span> every single <span class="linking">letter</span> <span class="weak">in</span> detail.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi hæz<span class="linking">‿</span>eɪt ˈlɔjɚ<span class="linking">‿</span>əˈsɪstənts <span class="weak">tə</span> hɛlp <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">ən</span> hi<span class="linking">‿</span>ɪɡˈzæmənz<span class="linking">‿</span>ˈɛvri ˈsɪŋɡəl ˈlɛɾɚ<span class="linking">‿</span><span class="weak">ɪn</span> dɪˈteɪl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæz‿eɪt、ˈlɔjɚ‿əˈsɪstənts、hɪm‿ən、hi‿ɪɡˈzæmənz‿ˈɛvri、ˈlɛɾɚ‿ɪn 连读；tə、hɪm、ən、ɪn 弱读/弱化；ˈlɛɾɚ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列句；to help him 为不定式作目的/后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>他有八名律师助理帮助他，并且他会详细审查每一封信。</p></div>
+    <div class="field words"><span>词</span><p>lawyer assistant 律师助理； examine 审查； every single 每一个； in detail 详细地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="116.26" data-end="124.5">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">There</span> <span class="weak">is</span> nothing secretive about <span class="weak">the</span> Ombudsman's work, <span class="weak">for</span> <span class="weak">his</span> correspondence <span class="weak linking">is</span> open <span class="weak">to</span> <span class="linking">public</span> inspection.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðer<span class="linking">‿</span><span class="weak">ɪz</span> ˈnʌθɪŋ ˈsikrəɾɪv<span class="linking">‿</span>əˈbaʊt <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmənz wɝk <span class="weak">fɚ</span> <span class="weak">hɪz</span> ˌkɔrəˈspɑndəns<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈoʊpən <span class="weak">tə</span> ˈpʌblɪk<span class="linking">‿</span>ɪnˈspɛkʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðer‿ɪz、ˈsikrəɾɪv‿əˈbaʊt、ði‿ˈɑmbʊdzmənz、ˌkɔrəˈspɑndəns‿ɪz‿ˈoʊpən、ˈpʌblɪk‿ɪnˈspɛkʃən 连读；ɪz、ði、fɚ、hɪz、tə 弱读/弱化；ˈsikrəɾɪv‿əˈbaʊt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>there be 句型；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员的工作没有什么秘密可言，因为他的通信公开接受公众查阅。</p></div>
+    <div class="field words"><span>词</span><p>secretive 秘密的； correspondence 通信； be open to 对……开放； public inspection 公众查阅；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="124.5" data-end="131.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">If</span> <span class="weak">a</span> citizen's <span class="linking">complaint</span> <span class="weak">is</span> justified <span class="weak">the</span> Ombudsman <span class="linking">will</span> <span class="linking">act</span> on <span class="weak">his</span> behalf.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf<span class="linking">‿</span><span class="weak">ə</span> ˈsɪɾɪzənz kəmˈpleɪnt<span class="linking">‿</span><span class="weak">ɪz</span> ˈdʒʌstəˌfaɪd <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən wɪl<span class="linking">‿</span>ækt<span class="linking">‿</span>ɑn <span class="weak">hɪz</span> bɪˈhæf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪf‿ə、kəmˈpleɪnt‿ɪz、ði‿ˈɑmbʊdzmən、wɪl‿ækt‿ɑn 连读；ə、ɪz、ði、hɪz 弱读/弱化；ˈsɪɾɪzənz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导条件状语从句；act on one's behalf 固定搭配。</p></div>
+    <div class="field tense"><span>时态</span><p>从句一般现在时；主句一般将来时。</p></div>
+    <div class="field cn"><span>中</span><p>如果某位公民的投诉是正当的，监察专员将代表他采取行动。</p></div>
+    <div class="field words"><span>词</span><p>justified 正当的； act on one's behalf 代表某人行动；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="131.26" data-end="136">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> action he takes <span class="linking">varies</span> according <span class="weak">to</span> <span class="weak">the</span> nature <span class="weak">of</span> <span class="weak">the</span> complaint.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈækʃən hi teɪks ˈvɛriz<span class="linking">‿</span>əˈkɔrdɪŋ <span class="weak">tə</span> <span class="weak">ðə</span> ˈneɪtʃɚ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> kəmˈpleɪnt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿ˈækʃən、ˈvɛriz‿əˈkɔrdɪŋ、ˈneɪtʃɚ‿əv 连读；ði、tə、ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>The action 后接省略关系词的定语从句 he takes；according to... 作依据状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>他采取的行动因投诉性质而异。</p></div>
+    <div class="field words"><span>词</span><p>action 行动； vary 变化； according to 根据； nature 性质；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="136" data-end="143.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">He may gently <span class="linking">reprimand</span> <span class="weak linking">an</span> <span class="linking">official</span> <span class="linking">or</span> even suggest <span class="weak">to</span> parliament <span class="weak linking">that</span> <span class="weak">a</span> law <span class="weak">be</span> altered.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi meɪ ˈdʒɛntli ˈrɛprɪˌmænd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈfɪʃəl<span class="linking">‿</span>ɔr<span class="linking">‿</span>ˈivən səɡˈdʒɛst <span class="weak">tə</span> ˈpɑrləmənt ðæɾ<span class="linking">‿</span><span class="weak">ə</span> lɔ bi ˈɔltɚd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈrɛprɪˌmænd‿ən‿əˈfɪʃəl‿ɔr‿ˈivən、ðæɾ‿ə 连读；ən、tə、ə 弱读/弱化；ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>may 连接两个并列谓语；that a law be altered 为 suggest 后的虚拟语气宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>may 表可能；be altered 为虚拟语气中的动词原形被动。</p></div>
+    <div class="field cn"><span>中</span><p>他可能温和地训诫一名官员，甚至建议议会修改某项法律。</p></div>
+    <div class="field words"><span>词</span><p>reprimand 训诫； official 官员； suggest 建议； parliament 议会； alter 修改；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="143.23" data-end="149.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> following case <span class="weak linking">is</span> <span class="weak">a</span> <span class="linking">typical</span> example <span class="weak">of</span> <span class="weak">the</span> Ombudsman's work.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈfɑloʊɪŋ keɪs<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈtɪpɪkəl<span class="linking">‿</span>ɪɡˈzæmpəl<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmənz wɝk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪs‿ɪz‿ə、ˈtɪpɪkəl‿ɪɡˈzæmpəl‿əv、ði‿ˈɑmbʊdzmənz 连读；ðə、ɪz、ə、əv、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；of... 作 example 的后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>以下案例是监察专员工作的一个典型例子。</p></div>
+    <div class="field words"><span>词</span><p>following 以下的； case 案例； typical example 典型例子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="149.28" data-end="160.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">A</span> foreigner <span class="linking">living</span> <span class="weak linking">in</span> <span class="weak">a</span> Swedish village wrote <span class="weak">to</span> <span class="weak">the</span> Ombudsman complaining <span class="weak">that</span> he <span class="weak">had</span> <span class="weak linking">been</span> ill-treated by <span class="weak">the</span> police, simply because he <span class="weak linking">was</span> <span class="weak">a</span> foreigner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈfɔrənɚ ˈlɪvɪŋ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈswidɪʃ ˈvɪlɪdʒ roʊt <span class="weak">tə</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən kəmˈpleɪnɪŋ ðæt hi hæd bɪn<span class="linking">‿</span>ɪl ˈtriɾɪd baɪ <span class="weak">ðə</span> pəˈlis ˈsɪmpli bɪˈkəz hi <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈfɔrənɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈlɪvɪŋ‿ɪn‿ə、ði‿ˈɑmbʊdzmən、bɪn‿ɪl、wəz‿ə 连读；ə、ɪn、tə、ði、ðə、wəz 弱读/弱化；ˈtriɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>living... 和 complaining... 为现在分词短语作定语/伴随；that 引导 complaint 内容；because 引导原因状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>wrote 为一般过去时；had been ill-treated 为过去完成时被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>一名住在瑞典村庄的外国人写信给监察专员，投诉自己受到警察虐待，仅仅因为他是外国人。</p></div>
+    <div class="field words"><span>词</span><p>foreigner 外国人； complain 投诉； ill-treat 虐待； simply because 仅仅因为；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="160.42" data-end="169.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">The</span> <span class="linking">Ombudsman</span> immediately wrote <span class="weak">to</span> <span class="weak">the</span> <span class="linking">Chief</span> <span class="weak">of</span> Police <span class="weak">in</span> <span class="weak">the</span> <span class="linking">district</span> asking <span class="weak">him</span> <span class="weak">to</span> <span class="linking">send</span> <span class="weak">a</span> <span class="linking">record</span> <span class="weak">of</span> <span class="weak">the</span> case.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən<span class="linking">‿</span>ɪˈmidiətli roʊt <span class="weak">tə</span> <span class="weak">ðə</span> tʃif<span class="linking">‿</span><span class="weak">əv</span> pəˈlis<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈdɪstrɪkt<span class="linking">‿</span>ˈæskɪŋ <span class="weak">hɪm</span> <span class="weak">tə</span> sɛnd<span class="linking">‿</span><span class="weak">ə</span> ˈrɛkɚd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿ˈɑmbʊdzmən‿ɪˈmidiətli、tʃif‿əv、pəˈlis‿ɪn、ˈdɪstrɪkt‿ˈæskɪŋ、sɛnd‿ə 连读；ði、tə、ðə、əv、ɪn、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>asking him to... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员立即写信给该地区警察局长，要求他寄来此案记录。</p></div>
+    <div class="field words"><span>词</span><p>Chief of Police 警察局长； district 地区； record 记录；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="169.38" data-end="180.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak">There</span> <span class="weak">was</span> <span class="linking">nothing</span> <span class="weak">in</span> <span class="weak">the</span> record <span class="weak">to</span> show <span class="weak">that</span> <span class="weak">the</span> foreigner's complaint <span class="weak">was</span> <span class="linking">justified</span> <span class="weak">and</span> <span class="weak">the</span> <span class="linking">Chief</span> <span class="weak">of</span> Police strongly denied <span class="weak">the</span> accusation.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðer <span class="weak">wəz</span> ˈnʌθɪŋ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈrɛkɚd <span class="weak">tə</span> ʃoʊ ðæt <span class="weak">ðə</span> ˈfɔrənɚz kəmˈpleɪnt <span class="weak">wəz</span> ˈdʒʌstəˌfaɪd<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> tʃif<span class="linking">‿</span><span class="weak">əv</span> pəˈlis ˈstrɔŋli dɪˈnaɪd <span class="weak">ði</span><span class="linking">‿</span>ˌækjəˈzeɪʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈnʌθɪŋ‿ɪn、ˈdʒʌstəˌfaɪd‿ən、tʃif‿əv、ði‿ˌækjəˈzeɪʃən 连读；wəz、ɪn、ðə、tə、ən、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>there be 句型；to show... 为后置定语；and 连接并列句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>记录中没有任何内容表明该外国人的投诉是正当的，警察局长也坚决否认这项指控。</p></div>
+    <div class="field words"><span>词</span><p>justified 正当的； strongly deny 坚决否认； accusation 指控；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="180.56" data-end="195.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> impossible <span class="weak">for</span> <span class="weak">the</span> Ombudsman <span class="weak">to</span> take action, but when he <span class="linking">received</span> <span class="weak">a</span> similar complaint <span class="weak linking">from</span> another <span class="linking">foreigner</span> <span class="weak">in</span> <span class="weak">the</span> same village, he immediately <span class="linking">sent</span> one <span class="weak">of</span> <span class="weak">his</span> lawyers <span class="weak">to</span> investigate <span class="weak">the</span> matter.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">fɚ</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən <span class="weak">tə</span> teɪk<span class="linking">‿</span>ˈækʃən bət wɛn hi rɪˈsivd<span class="linking">‿</span><span class="weak">ə</span> ˈsɪmələr kəmˈpleɪnt <span class="weak">frəm</span><span class="linking">‿</span>əˈnʌðɚ ˈfɔrənɚ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> seɪm ˈvɪlɪdʒ hi<span class="linking">‿</span>ɪˈmidiətli sɛnt wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span> ˈlɔjɚz <span class="weak">tu</span><span class="linking">‿</span>ɪnˈvɛstəˌɡeɪt <span class="weak">ðə</span> ˈmæɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ɪmˈpɑsəbəl、ði‿ˈɑmbʊdzmən、teɪk‿ˈækʃən、rɪˈsivd‿ə、frəm‿əˈnʌðɚ 连读；wəz、fɚ、ði、tə、ə、frəm 弱读/弱化；ˈmæɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It was impossible for sb to do 形式主语结构；but 连接转折；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员无法采取行动，但当他收到同一村庄另一名外国人的类似投诉时，他立即派一名律师去调查此事。</p></div>
+    <div class="field words"><span>词</span><p>take action 采取行动； similar 类似的； investigate the matter 调查此事；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="195.03" data-end="203.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">The</span> <span class="linking">lawyer</span> ascertained <span class="weak linking">that</span> <span class="weak">a</span> policeman <span class="weak linking">had</span> indeed dealt roughly with <span class="linking">foreigners</span> on <span class="linking">several</span> occasions.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈlɔjɚ ˌæsɚˈteɪnd ðæɾ<span class="linking">‿</span><span class="weak">ə</span> pəˈlismən hæd<span class="linking">‿</span>ɪnˈdid dɛlt ˈrʌfli wɪð ˈfɔrənɚz<span class="linking">‿</span>ɑn ˈsɛvrəl<span class="linking">‿</span>əˈkeɪʒənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ə、hæd‿ɪnˈdid、ˈfɔrənɚz‿ɑn、ˈsɛvrəl‿əˈkeɪʒənz 连读；ðə、ə 弱读/弱化；ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导 ascertained 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>这名律师查明，某位警察确实曾多次粗暴对待外国人。</p></div>
+    <div class="field words"><span>词</span><p>ascertain 查明； indeed 确实； deal roughly with 粗暴对待； on several occasions 多次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="203.18" data-end="210.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">The</span> fact <span class="weak">that</span> <span class="weak">the</span> policeman <span class="weak">was</span> <span class="linking">prejudiced</span> against foreigners <span class="weak">could</span> not <span class="weak">be</span> <span class="linking">recorded</span> <span class="weak">in</span> <span class="weak">the</span> official files.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> fækt ðæt <span class="weak">ðə</span> pəˈlismən <span class="weak">wəz</span> ˈprɛdʒədɪst<span class="linking">‿</span>əˈɡɛnst ˈfɔrənɚz kʊd nɑt bi rɪˈkɔrdɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span><span class="linking">‿</span>əˈfɪʃəl faɪlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈprɛdʒədɪst‿əˈɡɛnst、rɪˈkɔrdɪd‿ɪn、ði‿əˈfɪʃəl 连读；ðə、wəz、ɪn、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导 fact 的同位语从句；could not be recorded 为情态动词 + 被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时语境中的情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>这名警察对外国人有偏见这一事实，无法被记录在官方档案中。</p></div>
+    <div class="field words"><span>词</span><p>prejudiced 有偏见的； be prejudiced against 对……有偏见； official files 官方档案；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="210.55" data-end="220.24">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> only possible <span class="weak">for</span> <span class="weak">the</span> Ombudsman <span class="weak">to</span> find <span class="linking">this</span> out by <span class="linking">sending</span> one <span class="weak">of</span> <span class="weak">his</span> representatives <span class="weak">to</span> check <span class="weak">the</span> facts.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈoʊnli ˈpɑsəbəl <span class="weak">fɚ</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmən <span class="weak">tə</span> faɪnd ðɪs<span class="linking">‿</span>aʊt baɪ ˈsɛndɪŋ wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span> ˌrɛprɪˈzɛntəɾɪvz <span class="weak">tə</span> tʃɛk <span class="weak">ðə</span> fækts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ˈoʊnli、ði‿ˈɑmbʊdzmən、ðɪs‿aʊt、wʌn‿əv 连读；wəz、fɚ、ði、tə、əv、hɪz 弱读/弱化；ˌrɛprɪˈzɛntəɾɪvz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It was possible for sb to do 形式主语结构；by doing 表方式。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员只有通过派一名代表去核实事实，才可能查明这一点。</p></div>
+    <div class="field words"><span>词</span><p>find out 查明； representative 代表； check the facts 核实事实；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="220.24" data-end="231.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text"><span class="weak">The</span> <span class="linking">policeman</span> <span class="weak">in</span> question <span class="weak">was</span> severely <span class="linking">reprimanded</span> <span class="weak">and</span> <span class="weak linking">was</span> informed <span class="weak linking">that</span> <span class="linking">if</span> any further complaints <span class="weak">were</span> <span class="linking">lodged</span> against <span class="weak">him</span>, he <span class="weak">would</span> <span class="weak">be</span> prosecuted.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> pəˈlismən<span class="linking">‿</span><span class="weak">ɪn</span> ˈkwɛstʃən <span class="weak">wəz</span> səˈvɪrli ˈrɛprɪˌmændɪd<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">wəz</span><span class="linking">‿</span>ɪnˈfɔrmd ðæɾ<span class="linking">‿</span>ɪf<span class="linking">‿</span>ˈɛni ˈfɝðɚ kəmˈpleɪnts <span class="weak">wɚ</span> lɑdʒd<span class="linking">‿</span>əˈɡɛnst <span class="weak">hɪm</span> hi wʊd bi ˈprɑsəˌkjuɾɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pəˈlismən‿ɪn、ˈrɛprɪˌmændɪd‿ən、wəz‿ɪnˈfɔrmd、ðæɾ‿ɪf‿ˈɛni、lɑdʒd‿əˈɡɛnst 连读；ðə、ɪn、wəz、ən、wɚ、hɪm 弱读/弱化；ðæɾ‿ɪf‿ˈɛni、ˈprɑsəˌkjuɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>两个并列被动谓语；that 引导 inform 的宾语从句；if 引导条件状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动语态；would be prosecuted 为过去将来被动。</p></div>
+    <div class="field cn"><span>中</span><p>这名涉事警察受到了严厉训诫，并被告知如果再有投诉针对他提出，他将被起诉。</p></div>
+    <div class="field words"><span>词</span><p>in question 涉事的/所说的； severely 严厉地； lodge a complaint 提出投诉； prosecute 起诉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="231.78" data-end="238.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">The</span> Ombudsman's <span class="linking">prompt</span> <span class="linking">action</span> <span class="linking">at</span> once <span class="linking">put</span> <span class="weak linking">an</span> end <span class="weak">to</span> <span class="weak linking">an</span> unpleasant practice which might <span class="weak">have</span> gone unnoticed.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈɑmbʊdzmənz prɑmpt<span class="linking">‿</span>ˈækʃən<span class="linking">‿</span>ət wʌns pʊɾ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɛnd <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ənˈplɛzənt ˈpræktɪs wɪtʃ maɪt <span class="weak">həv</span> ɡɔn<span class="linking">‿</span>ˌənˈnoʊɾəst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿ˈɑmbʊdzmənz、prɑmpt‿ˈækʃən‿ət、pʊɾ‿ən‿ɛnd、tə‿ən‿ənˈplɛzənt、ɡɔn‿ˌənˈnoʊɾəst 连读；ði、ən、tə、həv 弱读/弱化；pʊɾ‿ən‿ɛnd、ɡɔn‿ˌənˈnoʊɾəst 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；which 引导定语从句，修饰 practice。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；might have gone 表过去可能但未发生/差点被忽视。</p></div>
+    <div class="field cn"><span>中</span><p>监察专员迅速的行动立即终止了一种本可能被忽视的不愉快做法。</p></div>
+    <div class="field words"><span>词</span><p>prompt 迅速的； at once 立即； put an end to 结束； unpleasant practice 不良做法； go unnoticed 被忽视；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>公共制度: social policy 社会政策； public official 公职人员； civil servant 公务员； Parliament 议会； Ombudsman 监察专员； official files 官方档案；</p>
+    <p>投诉与调查: complaint 投诉； grievance 申诉； investigate 调查； record 记录； accusation 指控； check the facts 核实事实；</p>
+    <p>法律动作: reprimand 训诫； alter a law 修改法律； lodge a complaint 提出投诉； prosecute 起诉； act on one's behalf 代表某人行动；</p>
+    <p>态度与问题: high-handed 专横的； incompetent 不称职的； over-zealously 过分热心地； prejudiced 有偏见的； justified 正当的；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>be admired for...</code> 表“因……而受赞赏”。</p>
+    <p><code>protect A from B</code> 表“保护 A 免受 B”。</p>
+    <p><code>so...that...</code> 结果状语从句。</p>
+    <p><code>the first to recognize that...</code> 第一个认识到……。</p>
+    <p><code>be subject to...</code> 受……影响。</p>
+    <p><code>There is nothing...about...</code> 表“……没有什么……”。</p>
+    <p><code>suggest that a law be altered</code> 为 suggest 后虚拟语气。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>制度介绍多用一般现在时：<code>appoints</code>, <code>investigates</code>, <code>receives</code>, <code>examines</code>。</p>
+    <p>制度形成用现在完成时：<code>has evolved</code>, <code>has worked</code>, <code>has been adopted</code>。</p>
+    <p>案例叙述用一般过去时：<code>wrote</code>, <code>received</code>, <code>sent</code>, <code>ascertained</code>。</p>
+    <p>被动语态很多：<code>is admired</code>, <code>has been adopted</code>, <code>was reprimanded</code>, <code>would be prosecuted</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>can make mistakes</code> 表公职人员可能犯错。</p>
+    <p><code>must be made in writing</code> 表制度要求。</p>
+    <p><code>may reprimand...or suggest...</code> 表监察专员可能采取的行动。</p>
+    <p><code>could not be recorded</code> 表制度文书上的限制。</p>
+    <p><code>might have gone unnoticed</code> 表如果没有及时行动，问题本可能被忽视。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>countries are</code> -&gt; /ˈkʌntriz‿ɑr/；<code>much admired</code> -&gt; /mʌtʃ‿ədˈmaɪɚd/；<code>worked so well that it</code> -&gt; /wɝkt soʊ wɛl ðæt‿ɪt/；<code>recorded in</code> -&gt; /rɪˈkɔrdɪd‿ɪn/；<code>complaints were lodged against</code> -&gt; /kəmˈpleɪnts wɚ lɑdʒd‿əˈɡɛnst/。</p>
+    <p>元音 + 元音滑读: <code>the individual</code> -&gt; /ði‿ˌɪndəˈvɪdʒuəl/；<code>the official</code> -&gt; /ði‿əˈfɪʃəl/；<code>to investigate</code> -&gt; /tə‿ɪnˈvɛstəˌɡeɪt/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>a</code> 多弱读：<code>title of</code> -&gt; /ˈtaɪtəl‿əv/；<code>one of</code> -&gt; /wʌn‿əv/；<code>representing all</code> -&gt; /ˌrɛprɪˈzɛntɪŋ ɔl/。</p>
+    <p>美音闪音 /ɾ/: <code>put an end</code> 常读 /pʊɾ‿ən‿ɛnd/；<code>citizen</code>, <code>political</code>, <code>representative</code> 等词内部非重读位置要轻读。</p>
+    <p>意群停顿: 第 4 句按公职人员列表分组；第 20 句按 <code>It was impossible... / but when... / he immediately sent...</code> 分组；第 24 句按 <code>was reprimanded / and was informed / that if...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 53 - In the Public Interest</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../53－In the Public Interest.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.8,"end":23.38,"text":"The Scandinavian countries are much admired all over the world for their enlightened social policies."},{"index":2,"start":23.38,"end":33.22,"text":"Sweden has evolved an excellent system for protecting the individual citizen from high-handed or incompetent public officers."},{"index":3,"start":33.22,"end":40.21,"text":"The system has worked so well, that it has been adopted in other countries too."},{"index":4,"start":40.21,"end":56.76,"text":"The Swedes were the first to recognize that public officials like civil servants, police officers, health inspectors or tax-collectors can make mistakes or act over-zealously in the belief that they are serving the public."},{"index":5,"start":56.76,"end":66.75,"text":"As long ago as 1809, the Swedish Parliament introduced a scheme to safeguard the interest of the individual."},{"index":6,"start":66.75,"end":78.63,"text":"A parliamentary committee representing all political parties appoints a person who is suitably qualified to investigate private grievances against the State."},{"index":7,"start":78.63,"end":89.51,"text":"The official title of the person is 'Justiteombudsman', but the Swedes commonly refer to him as the 'J.O.' or 'Ombudsman'."},{"index":8,"start":89.51,"end":93.72,"text":"The Ombudsman is not subject to political pressure."},{"index":9,"start":93.72,"end":100.31,"text":"He investigates complaints large and small that come to him from all levels of society."},{"index":10,"start":100.31,"end":108.78,"text":"As complaints must be made in writing, the Ombudsman receives an average of 1,200 letters a year."},{"index":11,"start":108.78,"end":116.26,"text":"He has eight lawyer assistants to help him and he examines every single letter in detail."},{"index":12,"start":116.26,"end":124.5,"text":"There is nothing secretive about the Ombudsman's work, for his correspondence is open to public inspection."},{"index":13,"start":124.5,"end":131.26,"text":"If a citizen's complaint is justified the Ombudsman will act on his behalf."},{"index":14,"start":131.26,"end":136,"text":"The action he takes varies according to the nature of the complaint."},{"index":15,"start":136,"end":143.23,"text":"He may gently reprimand an official or even suggest to parliament that a law be altered."},{"index":16,"start":143.23,"end":149.28,"text":"The following case is a typical example of the Ombudsman's work."},{"index":17,"start":149.28,"end":160.42,"text":"A foreigner living in a Swedish village wrote to the Ombudsman complaining that he had been ill-treated by the police, simply because he was a foreigner."},{"index":18,"start":160.42,"end":169.38,"text":"The Ombudsman immediately wrote to the Chief of Police in the district asking him to send a record of the case."},{"index":19,"start":169.38,"end":180.56,"text":"There was nothing in the record to show that the foreigner's complaint was justified and the Chief of Police strongly denied the accusation."},{"index":20,"start":180.56,"end":195.03,"text":"It was impossible for the Ombudsman to take action, but when he received a similar complaint from another foreigner in the same village, he immediately sent one of his lawyers to investigate the matter."},{"index":21,"start":195.03,"end":203.18,"text":"The lawyer ascertained that a policeman had indeed dealt roughly with foreigners on several occasions."},{"index":22,"start":203.18,"end":210.55,"text":"The fact that the policeman was prejudiced against foreigners could not be recorded in the official files."},{"index":23,"start":210.55,"end":220.24,"text":"It was only possible for the Ombudsman to find this out by sending one of his representatives to check the facts."},{"index":24,"start":220.24,"end":231.78,"text":"The policeman in question was severely reprimanded and was informed that if any further complaints were lodged against him, he would be prosecuted."},{"index":25,"start":231.78,"end":238.55,"text":"The Ombudsman's prompt action at once put an end to an unpleasant practice which might have gone unnoticed."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

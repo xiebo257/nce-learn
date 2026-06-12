@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 52 - Mud is Mud</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 52 - Mud is Mud</h1>
+      <p class="meta">Generated from 52－Mud is Mud.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.35" data-end="23.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">My cousin, Harry, <span class="linking">keeps</span> <span class="weak">a</span> large curiously-shaped bottle on permanent <span class="linking">display</span> <span class="weak">in</span> <span class="weak">his</span> study.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/maɪ ˈkʌzən ˈhæri kips<span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ ˈkjʊriəsli ʃeɪpt ˈbɑɾəl<span class="linking">‿</span>ɑn ˈpɝmənənt dɪˈspleɪ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">hɪz</span> ˈstʌdi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kips‿ə、ˈbɑɾəl‿ɑn、dɪˈspleɪ‿ɪn 连读；ə、ɪn、hɪz 弱读/弱化；ˈbɑɾəl‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；Harry 为同位语；on permanent display 和 in his study 作地点/状态状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时，描述习惯性状态。</p></div>
+    <div class="field cn"><span>中</span><p>我的表兄哈里在书房里长期陈列着一个形状奇特的大瓶子。</p></div>
+    <div class="field words"><span>词</span><p>cousin 表兄弟/堂兄弟； curiously-shaped 形状奇特的； permanent display 长期陈列； study 书房；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.47" data-end="35.6">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Despite <span class="weak">the</span> fact <span class="weak">that</span> <span class="weak">the</span> bottle <span class="weak">is</span> <span class="linking">tinted</span> <span class="weak">a</span> delicate shade <span class="weak">of</span> <span class="linking">green</span>, <span class="weak linking">an</span> observant visitor <span class="weak">would</span> soon notice <span class="weak linking">that</span> <span class="weak linking">it</span> <span class="weak">is</span> filled with what looks like <span class="weak">a</span> thick, greyish substance.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈspaɪt <span class="weak">ðə</span> fækt ðæt <span class="weak">ðə</span> ˈbɑɾəl<span class="linking">‿</span><span class="weak">ɪz</span> ˈtɪntɪd<span class="linking">‿</span><span class="weak">ə</span> ˈdɛləkət ʃeɪd<span class="linking">‿</span><span class="weak">əv</span> ɡrin<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əbˈzɝvənt ˈvɪzɪɾɚ wʊd sun ˈnoʊɾəs ðæɾ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> fɪld wɪð wʌt lʊks laɪk<span class="linking">‿</span><span class="weak">ə</span> θɪk ˈɡreɪɪʃ ˈsʌbstəns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈbɑɾəl‿ɪz、ˈtɪntɪd‿ə、ʃeɪd‿əv、ɡrin‿ən‿əbˈzɝvənt、ðæɾ‿ɪɾ‿ɪz 连读；ðə、ɪz、ə、əv、ən 弱读/弱化；ˈbɑɾəl‿ɪz、ˈvɪzɪɾɚ、ˈnoʊɾəs、ðæɾ‿ɪɾ‿ɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Despite 引导让步介词短语；that the bottle... 为 fact 的同位语从句；notice 后接宾语从句；what looks like... 为介词 with 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>is/is filled 为一般现在时；would notice 表推测。</p></div>
+    <div class="field cn"><span>中</span><p>尽管这个瓶子被染成了淡淡的绿色，观察力敏锐的访客很快会注意到里面装着一种看起来像浓稠灰色物质的东西。</p></div>
+    <div class="field words"><span>词</span><p>despite 尽管； tint 染色； delicate 淡雅的； shade 色调； observant 观察力敏锐的； greyish 略带灰色的； substance 物质；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="35.6" data-end="42.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">If <span class="weak">you</span> <span class="weak">were</span> <span class="weak">to</span> ask Harry what <span class="weak linking">was</span> <span class="weak">in</span> <span class="weak">the</span> bottle, he <span class="weak">would</span> tell <span class="weak">you</span> <span class="weak linking">that</span> <span class="weak">it</span> contained perfumed mud.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf ju <span class="weak">wɚ</span> <span class="weak">tə</span><span class="linking">‿</span>æsk ˈhæri wʌt <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈbɑɾəl hi wʊd tɛl ju ðæɾ<span class="linking">‿</span>ɪt kənˈteɪnd pɚˈfjumd mʌd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿æsk、wəz‿ɪn、ðæɾ‿ɪt 连读；wɚ、tə、wəz、ɪn、ðə 弱读/弱化；ˈbɑɾəl、ðæɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>If you were to ask... 为虚拟条件句；what was... 为 ask 的宾语从句；that 引导 tell 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>与现在事实相关的虚拟语气：were to ask + would tell；contained 为过去式配合主句。</p></div>
+    <div class="field cn"><span>中</span><p>如果你去问哈里瓶子里是什么，他会告诉你里面装的是香泥。</p></div>
+    <div class="field words"><span>词</span><p>were to do 假如要做； contain 包含； perfumed mud 香泥；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="42.44" data-end="52.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">If <span class="weak">you</span> expressed <span class="linking">doubt</span> or surprise, he <span class="weak linking">would</span> <span class="linking">immediately</span> invite <span class="weak">you</span> <span class="weak">to</span> <span class="linking">smell</span> <span class="weak linking">it</span> <span class="weak">and</span> then <span class="weak">to</span> rub some into <span class="weak">your</span> skin.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf ju<span class="linking">‿</span>ɪkˈsprɛst daʊɾ<span class="linking">‿</span>ɔr sɚˈpraɪz hi wʊd<span class="linking">‿</span>ɪˈmidiətli ɪnˈvaɪt ju <span class="weak">tə</span> smɛl<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ən</span> ðɛn <span class="weak">tə</span> rʌb səm<span class="linking">‿</span>ˈɪntu <span class="weak">jɚ</span> skɪn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ju‿ɪkˈsprɛst、daʊɾ‿ɔr、wʊd‿ɪˈmidiətli、smɛl‿ɪɾ‿ən、səm‿ˈɪntu 连读；tə、ən、jɚ 弱读/弱化；daʊɾ‿ɔr、smɛl‿ɪɾ‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导虚拟条件句；invite sb to do 后接两个并列不定式。</p></div>
+    <div class="field tense"><span>时态</span><p>expressed/would invite 为虚拟条件结构。</p></div>
+    <div class="field cn"><span>中</span><p>如果你表示怀疑或惊讶，他会立刻请你闻一闻，然后把一些擦进皮肤里。</p></div>
+    <div class="field words"><span>词</span><p>express doubt 表示怀疑； invite sb to do 邀请某人做； rub into 擦进； skin 皮肤；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="52.01" data-end="56.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">The</span> <span class="linking">brief</span> experiment <span class="weak">would</span> <span class="linking">dispel</span> any further doubts she might <span class="weak">have</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> brif<span class="linking">‿</span>ɪkˈspɛrəmənt wʊd dɪˈspɛl<span class="linking">‿</span>ˈɛni ˈfɝðɚ daʊts ʃi maɪt hæv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>brif‿ɪkˈspɛrəmənt、dɪˈspɛl‿ˈɛni 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；she might have 为省略关系词的定语从句，修饰 doubts。</p></div>
+    <div class="field tense"><span>时态</span><p>would dispel/might have 表假设语气。</p></div>
+    <div class="field cn"><span>中</span><p>这个短暂的实验会消除她可能还有的任何进一步怀疑。</p></div>
+    <div class="field words"><span>词</span><p>brief 短暂的； experiment 实验； dispel 消除； further doubts 进一步怀疑；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="56.84" data-end="60.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> bottle really does contain perfumed mud.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈbɑɾəl ˈriəli dʌz kənˈteɪn pɚˈfjumd mʌd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化；ˈbɑɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>does + 动词原形，强调谓语 contain。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；does 表强调。</p></div>
+    <div class="field cn"><span>中</span><p>这个瓶子里确实装着香泥。</p></div>
+    <div class="field words"><span>词</span><p>really does 确实； contain 装有；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="60.8" data-end="69.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">How Harry came into <span class="weak">the</span> <span class="linking">possession</span> <span class="weak">of</span> <span class="linking">this</span> outlandish stuff <span class="linking">makes</span> <span class="weak linking">an</span> interesting story which he <span class="weak">is</span> <span class="linking">fond</span> <span class="weak">of</span> relating.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊ ˈhæri keɪm<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> pəˈzɛʃən<span class="linking">‿</span><span class="weak">əv</span> ðɪs aʊtˈlændɪʃ stʌf meɪks<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪntrəstɪŋ ˈstɔri wɪtʃ hi<span class="linking">‿</span><span class="weak">ɪz</span> fɑnd<span class="linking">‿</span><span class="weak">əv</span> rɪˈleɪɾɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪm‿ˈɪntu、pəˈzɛʃən‿əv、meɪks‿ən‿ˈɪntrəstɪŋ、hi‿ɪz、fɑnd‿əv 连读；ðə、əv、ən、ɪz 弱读/弱化；rɪˈleɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>How...stuff 为主语从句；which 引导定语从句，修饰 story。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时 came；主句 makes 和定语从句 is 为一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>哈里是怎样得到这种古怪东西的，构成了一个他喜欢讲述的有趣故事。</p></div>
+    <div class="field words"><span>词</span><p>come into possession of 得到/拥有； outlandish 古怪的； stuff 东西； be fond of doing 喜欢做； relate 讲述；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="69.36" data-end="77.66">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Furthermore, <span class="weak">the</span> <span class="linking">acquisition</span> <span class="weak">of</span> this bottle cured <span class="weak linking">him</span> <span class="weak linking">of</span> <span class="weak">a</span> bad habit he <span class="weak">had</span> <span class="weak">been</span> developing <span class="weak">for</span> years.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈfɝðɚˌmɔr <span class="weak">ði</span> ˌækwəˈzɪʃən<span class="linking">‿</span><span class="weak">əv</span> ðɪs ˈbɑɾəl kjʊrd <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> bæd ˈhæbɪt hi hæd bɪn dɪˈvɛləpɪŋ <span class="weak">fɚ</span> jɪrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌækwəˈzɪʃən‿əv、hɪm‿əv‿ə 连读；ði、əv、hɪm、ə、fɚ 弱读/弱化；ˈbɑɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；he had been developing for years 为省略关系词的定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>cured 为一般过去时；had been developing 为过去完成进行时。</p></div>
+    <div class="field cn"><span>中</span><p>此外，得到这个瓶子还治好了他多年来一直在养成的一个坏习惯。</p></div>
+    <div class="field words"><span>词</span><p>furthermore 此外； acquisition 获得； cure sb of 治好某人的……； develop a habit 养成习惯；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="77.66" data-end="88.92">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">Harry</span> used <span class="weak">to</span> <span class="linking">consider</span> <span class="weak linking">it</span> <span class="weak">a</span> great joke <span class="weak">to</span> go into expensive cosmetic <span class="linking">shops</span> <span class="weak">and</span> make outrageous requests <span class="weak">for</span> goods <span class="weak">that</span> do <span class="linking">not</span> exist.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈhæri just <span class="weak">tə</span> kənˈsɪdɚ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt dʒoʊk <span class="weak">tə</span> ɡoʊ<span class="linking">‿</span>ˈɪntu ɪkˈspɛnsɪv kɑzˈmɛdɪk ʃɑps<span class="linking">‿</span><span class="weak">ən</span> meɪk aʊtˈreɪdʒəs rɪˈkwɛsts <span class="weak">fɚ</span> ɡʊdz ðæt du nɑɾ<span class="linking">‿</span>ɪɡˈzɪst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kənˈsɪdɚ‿ɪɾ‿ə、ɡoʊ‿ˈɪntu、ʃɑps‿ən、nɑɾ‿ɪɡˈzɪst 连读；tə、ə、ən、fɚ 弱读/弱化；kənˈsɪdɚ‿ɪɾ‿ə、kɑzˈmɛdɪk、nɑɾ‿ɪɡˈzɪst 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>used to do 表过去习惯；consider it a joke to do 中 it 为形式宾语；that 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>used to 表过去常常；do not exist 为一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>哈里过去常把走进昂贵的化妆品店，提出购买并不存在商品的荒唐要求当成一个大笑话。</p></div>
+    <div class="field words"><span>词</span><p>used to 过去常常； cosmetic 化妆品的； outrageous 荒唐的； request 要求； goods 商品； exist 存在；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="88.92" data-end="92.37">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">He <span class="weak linking">would</span> invent fanciful <span class="linking">names</span> on <span class="weak">the</span> spot.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi wʊd<span class="linking">‿</span>ɪnˈvɛnt ˈfænsɪfəl neɪmz<span class="linking">‿</span>ɑn <span class="weak">ðə</span> spɑt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʊd‿ɪnˈvɛnt、neɪmz‿ɑn 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；on the spot 作时间/地点状语。</p></div>
+    <div class="field tense"><span>时态</span><p>would do 表过去反复习惯。</p></div>
+    <div class="field cn"><span>中</span><p>他会当场编造一些稀奇古怪的名字。</p></div>
+    <div class="field words"><span>词</span><p>invent 编造； fanciful 想象出来的/古怪的； on the spot 当场；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="92.37" data-end="102.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">On</span> <span class="linking">entering</span> <span class="weak">a</span> shop, he <span class="weak linking">would</span> ask <span class="weak linking">for</span> <span class="weak">a</span> new perfume called 'Scented <span class="linking">Shadow</span>' or <span class="weak linking">for</span> 'insoluble bath cubes'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɑn<span class="linking">‿</span>ˈɛntərɪŋ<span class="linking">‿</span><span class="weak">ə</span> ʃɑp hi wʊd<span class="linking">‿</span>æsk <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> nu pɚˈfjum kɔld ˈsɛntɪd ˈʃædoʊ ɔr <span class="weak">fɚ</span> ɪnˈsɑljəbəl bæθ kjubz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɑn‿ˈɛntərɪŋ‿ə、wʊd‿æsk、fɚ‿ə 连读；ə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>On entering... 表“一进入……”；would ask for 表过去习惯；called... 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>would do 表过去反复动作。</p></div>
+    <div class="field cn"><span>中</span><p>一进店，他就会要一种叫“香影”的新香水，或者要“不可溶浴块”。</p></div>
+    <div class="field words"><span>词</span><p>on doing 一……就； ask for 要求； perfume 香水； insoluble 不溶的； bath cube 浴块；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="102.32" data-end="109.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">If</span> <span class="weak">a</span> <span class="linking">shop</span> assistant told <span class="weak">him</span> she <span class="weak">had</span> not <span class="linking">heard</span> <span class="weak linking">of</span> <span class="weak">it</span>, he <span class="weak">would</span> pretend <span class="weak">to</span> <span class="weak">be</span> considerably <span class="linking">put</span> out.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf<span class="linking">‿</span><span class="weak">ə</span> ʃɑp<span class="linking">‿</span>əˈsɪstənt toʊld <span class="weak">hɪm</span> ʃi hæd nɑt hɝd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪt hi wʊd prɪˈtɛnd <span class="weak">tə</span> bi kənˈsɪdərəbli pʊt<span class="linking">‿</span>aʊt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪf‿ə、ʃɑp‿əˈsɪstənt、hɝd‿əv‿ɪt、pʊt‿aʊt 连读；ə、hɪm、əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导条件句；she had not heard... 为 told 的宾语从句；pretend to be... 作主句谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>told/would pretend 表过去习惯性条件；had not heard 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>如果店员告诉他没听说过这种东西，他就会假装非常不高兴。</p></div>
+    <div class="field words"><span>词</span><p>shop assistant 店员； hear of 听说； pretend 假装； considerably 相当地； put out 不高兴的/恼火的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="109.63" data-end="123.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">He loved <span class="weak">to</span> <span class="weak">be</span> told <span class="weak linking">that</span> one <span class="weak">of</span> <span class="weak linking">his</span> imaginary products <span class="weak">was</span> <span class="linking">temporarily</span> <span class="linking">out</span> <span class="weak">of</span> <span class="linking">stock</span> <span class="weak">and</span> he <span class="weak">would</span> faithfully promise <span class="weak">to</span> <span class="linking">call</span> <span class="linking">again</span> at some future date, <span class="linking">but</span> <span class="weak">of</span> course he never did.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi lʌvd <span class="weak">tə</span> bi toʊld ðæt wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span><span class="linking">‿</span>ɪˈmædʒəneri ˈprɑdəkts <span class="weak">wəz</span> ˌtɛmpəˈrerəli aʊɾ<span class="linking">‿</span><span class="weak">əv</span> stɑk<span class="linking">‿</span><span class="weak">ən</span> hi wʊd ˈfeɪθfəli ˈprɑmɪs <span class="weak">tə</span> kɔl<span class="linking">‿</span>əˈɡɛn<span class="linking">‿</span>æt səm ˈfjutʃɚ deɪt bəɾ<span class="linking">‿</span><span class="weak">əv</span> kɔrs hi ˈnɛvɚ dɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、hɪz‿ɪˈmædʒəneri、aʊɾ‿əv、stɑk‿ən、kɔl‿əˈɡɛn‿æt 连读；tə、əv、hɪz、wəz、ən 弱读/弱化；aʊɾ‿əv、bəɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导 be told 的宾语从句；and/but 连接并列分句；to call again 作 promise 的宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would promise 表过去习惯。</p></div>
+    <div class="field cn"><span>中</span><p>他喜欢听人说他虚构的某种产品暂时缺货，然后会信誓旦旦地答应日后再来，当然他从来不会来。</p></div>
+    <div class="field words"><span>词</span><p>imaginary 想象中的； temporarily 暂时地； out of stock 缺货； faithfully 忠实地/认真地； at some future date 将来某一天；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="123.27" data-end="130.31">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">How Harry managed <span class="weak">to</span> <span class="linking">keep</span> <span class="weak">a</span> straight face during these <span class="linking">performances</span> <span class="weak">is</span> quite beyond me.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊ ˈhæri ˈmænɪdʒd <span class="weak">tə</span> kip<span class="linking">‿</span><span class="weak">ə</span> streɪt feɪs ˈdʊrɪŋ ðiz pɚˈfɔrmənsɪz<span class="linking">‿</span><span class="weak">ɪz</span> kwaɪt bɪˈjɑnd mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kip‿ə、pɚˈfɔrmənsɪz‿ɪz 连读；tə、ə、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>How...performances 为主语从句；is beyond me 为主句。</p></div>
+    <div class="field tense"><span>时态</span><p>managed 为一般过去时；is 为一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>哈里在这些表演中是怎样忍住不笑的，我实在无法理解。</p></div>
+    <div class="field words"><span>词</span><p>manage to do 设法做到； keep a straight face 板着脸/忍住不笑； performance 表演； beyond me 我无法理解；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="130.31" data-end="136.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Harry does not need <span class="weak">to</span> <span class="weak">be</span> prompted <span class="weak">to</span> explain how he bought <span class="weak">his</span> precious bottle <span class="weak">of</span> mud.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈhæri dʌz nɑt nid <span class="weak">tə</span> bi ˈprɑmptɪd <span class="weak">tə</span><span class="linking">‿</span>ɪkˈspleɪn haʊ hi bɔt <span class="weak">hɪz</span> ˈprɛʃəs ˈbɑɾəl<span class="linking">‿</span><span class="weak">əv</span> mʌd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿ɪkˈspleɪn、ˈbɑɾəl‿əv 连读；tə、hɪz、əv 弱读/弱化；ˈbɑɾəl‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>need to be prompted 为被动不定式；how 引导 explain 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>不用别人提示，哈里就会解释他是怎样买到那瓶珍贵的泥的。</p></div>
+    <div class="field words"><span>词</span><p>prompt 提示/促使； explain 解释； precious 珍贵的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="136.1" data-end="143.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">One day, he went <span class="weak">to</span> <span class="weak linking">an</span> exclusive <span class="linking">shop</span> <span class="weak">in</span> <span class="linking">London</span> <span class="weak linking">and</span> asked <span class="weak">for</span> 'Myrolite'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn deɪ hi wɛnt <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪkˈsklusɪv ʃɑp<span class="linking">‿</span><span class="weak">ɪn</span> ˈlʌndən<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>æskt <span class="weak">fɚ</span> ˈmaɪrəˌlaɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿ən‿ɪkˈsklusɪv、ʃɑp‿ɪn、ˈlʌndən‿ən‿æskt 连读；tə、ən、ɪn、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个连续动作。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>有一天，他走进伦敦一家高级商店，要买“Myrolite”。</p></div>
+    <div class="field words"><span>词</span><p>exclusive 高级的/专营的； ask for 要求购买；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="143.14" data-end="151">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> <span class="linking">shop</span> assistant looked <span class="linking">puzzled</span> <span class="weak">and</span> Harry repeated <span class="weak">the</span> word, slowly <span class="linking">stressing</span> each syllable.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ʃɑp<span class="linking">‿</span>əˈsɪstənt lʊkt ˈpʌzəld<span class="linking">‿</span><span class="weak">ən</span> ˈhæri rɪˈpiɾɪd <span class="weak">ðə</span> wɝd ˈsloʊli ˈstrɛsɪŋ<span class="linking">‿</span>itʃ ˈsɪləbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃɑp‿əˈsɪstənt、ˈpʌzəld‿ən、ˈstrɛsɪŋ‿itʃ 连读；ðə、ən 弱读/弱化；rɪˈpiɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；stressing... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>店员看起来困惑不解，哈里便重复了这个词，慢慢地重读每一个音节。</p></div>
+    <div class="field words"><span>词</span><p>puzzled 困惑的； repeat 重复； stress 重读； syllable 音节；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="151" data-end="164.08">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">When <span class="weak">the</span> woman shook <span class="weak">her</span> <span class="linking">head</span> <span class="weak">in</span> bewilderment, Harry <span class="linking">went</span> on <span class="weak">to</span> explain <span class="weak">that</span> 'myrolite' <span class="weak linking">was</span> <span class="weak">a</span> <span class="linking">hard</span>, amber-like substance which <span class="weak">could</span> <span class="weak">be</span> used <span class="weak">to</span> remove freckles.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn <span class="weak">ðə</span> ˈwʊmən ʃʊk <span class="weak">hɚ</span> hɛd<span class="linking">‿</span><span class="weak">ɪn</span> bɪˈwɪldɚmənt ˈhæri wɛnt<span class="linking">‿</span>ɑn <span class="weak">tə</span><span class="linking">‿</span>ɪkˈspleɪn ðæt ˈmaɪrəˌlaɪt <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> hɑrd<span class="linking">‿</span>ˈæmbɚ laɪk ˈsʌbstəns wɪtʃ kʊd bi juzd <span class="weak">tə</span> rɪˈmuv ˈfrɛkəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɛd‿ɪn、wɛnt‿ɑn、tə‿ɪkˈspleɪn、wəz‿ə、hɑrd‿ˈæmbɚ 连读；ðə、hɚ、ɪn、tə、wəz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；that 引导 explain 的宾语从句；which 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could be used 为情态动词 + 被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>当那女人困惑地摇头时，哈里继续解释说，“myrolite” 是一种坚硬的琥珀状物质，可以用来去除雀斑。</p></div>
+    <div class="field words"><span>词</span><p>bewilderment 困惑； go on to explain 继续解释； amber-like 琥珀状的； substance 物质； freckle 雀斑；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="164.08" data-end="170.69">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">This</span> <span class="linking">explanation</span> evidently conveyed something <span class="weak">to</span> <span class="weak">the</span> woman who searched <span class="linking">shelf</span> after shelf.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span>ˌɛkspləˈneɪʃən<span class="linking">‿</span>ˈɛvədəntli kənˈveɪd ˈsʌmθɪŋ <span class="weak">tə</span> <span class="weak">ðə</span> ˈwʊmən hu sɝtʃt ʃɛlf<span class="linking">‿</span>ˈæftɚ ʃɛlf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿ˌɛkspləˈneɪʃən‿ˈɛvədəntli、ʃɛlf‿ˈæftɚ 连读；tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；who 引导定语从句，修饰 woman。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这个解释显然让那女人明白了点什么，她一层又一层货架地找了起来。</p></div>
+    <div class="field words"><span>词</span><p>evidently 显然； convey 传达； shelf after shelf 一个又一个货架；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="170.69" data-end="178.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">She <span class="linking">produced</span> all <span class="linking">sorts</span> <span class="weak">of</span> weird concoctions, but none <span class="weak">of</span> them met with Harry's requirements.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi prəˈdust<span class="linking">‿</span>ɔl sɔrts<span class="linking">‿</span><span class="weak">əv</span> wɪrd kənˈkɑkʃənz bət nʌn<span class="linking">‿</span><span class="weak">əv</span> ðəm mɛt wɪð ˈhæriz rɪˈkwaɪrmənts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>prəˈdust‿ɔl、sɔrts‿əv、nʌn‿əv 连读；əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她拿出了各种奇怪的调制品，但没有一种符合哈里的要求。</p></div>
+    <div class="field words"><span>词</span><p>produce 拿出/生产； all sorts of 各种各样的； weird 奇怪的； concoction 调制品； meet with requirements 符合要求；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="178.09" data-end="185.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">When Harry <span class="linking">put</span> on <span class="weak linking">his</span> <span class="linking">act</span> <span class="weak">of</span> <span class="weak">being</span> <span class="linking">mildly</span> annoyed, <span class="weak">the</span> assistant promised <span class="weak">to</span> order some <span class="weak">for</span> <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn ˈhæri pʊɾ<span class="linking">‿</span>ɑn <span class="weak">hɪz</span><span class="linking">‿</span>ækt<span class="linking">‿</span><span class="weak">əv</span> ˈbiɪŋ ˈmaɪldli əˈnɔɪd <span class="weak">ði</span><span class="linking">‿</span>əˈsɪstənt ˈprɑməst <span class="weak">tə</span> ˈɔrdɚ səm <span class="weak">fɚ</span><span class="linking">‿</span>ɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pʊɾ‿ɑn、hɪz‿ækt‿əv、ði‿əˈsɪstənt、fɚ‿ɪm 连读；hɪz、əv、ði、tə、fɚ 弱读/弱化；pʊɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；of being... 修饰 act；promise to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>当哈里装出有点恼火的样子时，店员答应为他订购一些。</p></div>
+    <div class="field words"><span>词</span><p>put on an act 装模作样； mildly 稍微地； annoyed 恼火的； order 订购；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="185.09" data-end="191.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">Intoxicated by <span class="weak">his</span> success, Harry <span class="linking">then</span> asked <span class="weak">for</span> perfumed mud.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪnˈtɑksɪˌkeɪɾɪd baɪ <span class="weak">hɪz</span> səkˈsɛs ˈhæri ðɛn<span class="linking">‿</span>æskt <span class="weak">fɚ</span> pɚˈfjumd mʌd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛn‿æskt 连读；hɪz、fɚ 弱读/弱化；ɪnˈtɑksɪˌkeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Intoxicated by... 为过去分词短语作原因状语；主句 Harry asked...</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>被自己的成功冲昏头脑后，哈里接着要买香泥。</p></div>
+    <div class="field words"><span>词</span><p>intoxicated 陶醉的/冲昏头脑的； success 成功； perfumed mud 香泥；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="191.64" data-end="195.81">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">He expected <span class="weak">the</span> assistant <span class="weak">to</span> <span class="linking">look</span> at <span class="weak linking">him</span> <span class="weak">in</span> <span class="linking">blank</span> astonishment.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi<span class="linking">‿</span>ɪkˈspɛktɪd <span class="weak">ði</span><span class="linking">‿</span>əˈsɪstənt <span class="weak">tə</span> lʊk<span class="linking">‿</span>æt <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">ɪn</span> blæŋk<span class="linking">‿</span>əˈstɑnɪʃmənt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hi‿ɪkˈspɛktɪd、ði‿əˈsɪstənt、lʊk‿æt、hɪm‿ɪn、blæŋk‿əˈstɑnɪʃmənt 连读；ði、tə、hɪm、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>expect sb to do 结构；in blank astonishment 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他预料店员会茫然惊讶地看着他。</p></div>
+    <div class="field words"><span>词</span><p>expect 预料； blank 茫然的； astonishment 惊讶；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="195.81" data-end="209.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text"><span class="linking">However</span>, <span class="weak">it</span> <span class="weak">was</span> <span class="weak">his</span> turn <span class="weak">to</span> <span class="weak">be</span> surprised, <span class="weak">for</span> <span class="weak">the</span> <span class="linking">woman's</span> <span class="linking">eyes</span> immediately <span class="linking">lit</span> <span class="linking">up</span> <span class="weak">and</span> she fetched several bottles which she <span class="linking">placed</span> on <span class="weak">the</span> counter <span class="weak">for</span> Harry <span class="weak">to</span> inspect.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ ɪt <span class="weak">wəz</span> <span class="weak">hɪz</span> tɝn <span class="weak">tə</span> bi sɚˈpraɪzd <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈwʊmənz aɪz<span class="linking">‿</span>ɪˈmidiətli lɪɾ<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ən</span> ʃi fɛtʃt ˈsɛvrəl ˈbɑɾəlz wɪtʃ ʃi pleɪst<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈkaʊntɚ <span class="weak">fɚ</span> ˈhæri <span class="weak">tu</span><span class="linking">‿</span>ɪnˈspɛkt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>aɪz‿ɪˈmidiətli、lɪɾ‿ʌp‿ən、pleɪst‿ɑn、tu‿ɪnˈspɛkt 连读；wəz、hɪz、tə、fɚ、ðə、ən 弱读/弱化；lɪɾ‿ʌp‿ən、ˈbɑɾəlz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>it was one's turn to do；for 引导原因分句；which 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，这次轮到他吃惊了，因为那女人的眼睛立刻亮了起来，并取来几瓶放在柜台上让哈里查看。</p></div>
+    <div class="field words"><span>词</span><p>one's turn 轮到某人； light up 眼睛一亮； fetch 取来； counter 柜台； inspect 查看；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="209.03" data-end="212.65">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak linking">For</span> once, Harry <span class="weak">had</span> <span class="weak">to</span> admit defeat.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> wʌns ˈhæri hæd <span class="weak">tə</span><span class="linking">‿</span>ədˈmɪt dɪˈfit/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿ədˈmɪt 连读；fɚ、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；For once 作状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had to 表不得不。</p></div>
+    <div class="field cn"><span>中</span><p>这一次，哈里不得不认输。</p></div>
+    <div class="field words"><span>词</span><p>for once 这一次； admit defeat 认输；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="212.65" data-end="219.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text">He <span class="linking">picked</span> up what seemed <span class="weak">to</span> <span class="weak">be</span> <span class="weak">the</span> smallest bottle <span class="weak">and</span> <span class="linking">discreetly</span> asked <span class="weak">the</span> price.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi pɪkt<span class="linking">‿</span>ʌp wʌt simd <span class="weak">tə</span> bi <span class="weak">ðə</span> ˈsmɔləst ˈbɑɾəl<span class="linking">‿</span><span class="weak">ən</span> dɪˈskritli æskt <span class="weak">ðə</span> praɪs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pɪkt‿ʌp、ˈbɑɾəl‿ən 连读；tə、ðə、ən 弱读/弱化；ˈbɑɾəl‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>what seemed... 为宾语从句；and 连接并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他拿起看起来最小的一瓶，谨慎地问了价钱。</p></div>
+    <div class="field words"><span>词</span><p>pick up 拿起； seem to be 似乎是； discreetly 谨慎地； price 价格；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="219.3" data-end="228.57">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text">He <span class="weak">was</span> glad <span class="weak">to</span> <span class="linking">get</span> away <span class="linking">with</span> <span class="weak">a</span> mere twenty <span class="linking">pounds</span> <span class="weak">and</span> he <span class="linking">beat</span> <span class="weak">a</span> hasty retreat, clutching <span class="weak">the</span> precious bottle under <span class="weak linking">his</span> arm.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span> ɡlæd <span class="weak">tə</span> ɡɛɾ<span class="linking">‿</span>əˈweɪ wɪð<span class="linking">‿</span><span class="weak">ə</span> mɪr ˈtwɛnti paʊndz<span class="linking">‿</span><span class="weak">ən</span> hi biɾ<span class="linking">‿</span><span class="weak">ə</span> ˈheɪsti rɪˈtrit ˈklʌtʃɪŋ <span class="weak">ðə</span> ˈprɛʃəs ˈbɑɾəl<span class="linking">‿</span>ˈʌndɚ <span class="weak">hɪz</span><span class="linking">‿</span>ɑrm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɛɾ‿əˈweɪ、wɪð‿ə、paʊndz‿ən、biɾ‿ə、ˈbɑɾəl‿ˈʌndɚ 连读；wəz、tə、ə、ən、ðə、hɪz 弱读/弱化；ɡɛɾ‿əˈweɪ、biɾ‿ə、ˈbɑɾəl‿ˈʌndɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列句；clutching... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他庆幸只花了区区二十英镑就脱身了，便夹着那只珍贵的瓶子匆匆离去。</p></div>
+    <div class="field words"><span>词</span><p>get away with 侥幸脱身/只付出； mere 区区的； beat a hasty retreat 匆忙撤退； clutch 紧抓/夹着；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="228.57" data-end="235.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text"><span class="weak">From</span> <span class="linking">then</span> on, Harry decided <span class="weak">that</span> this little game he <span class="weak linking">had</span> invented might prove <span class="weak">to</span> <span class="weak">be</span> expensive.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> ðɛn<span class="linking">‿</span>ɑn ˈhæri dɪˈsaɪdɪd ðæt ðɪs ˈlɪɾəl ɡeɪm hi hæd<span class="linking">‿</span>ɪnˈvɛntɪd maɪt pruv <span class="weak">tə</span> bi ɪkˈspɛnsɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛn‿ɑn、hæd‿ɪnˈvɛntɪd 连读；frəm、tə 弱读/弱化；ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；he had invented 为省略关系词的定语从句，修饰 game。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；had invented 为过去完成时；might prove 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>从那以后，哈里认定他发明的这个小游戏可能会变得代价高昂。</p></div>
+    <div class="field words"><span>词</span><p>from then on 从那以后； invent 发明/编造； prove to be 结果是； expensive 昂贵的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="235.68" data-end="242.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text"><span class="weak">The</span> curious bottle which <span class="linking">now</span> adorns <span class="weak">the</span> bookcase <span class="weak">in</span> <span class="weak">his</span> study <span class="weak">was</span> <span class="weak">his</span> <span class="linking">first</span> <span class="weak">and</span> last purchase <span class="weak">of</span> rare cosmetics.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkjʊriəs ˈbɑɾəl wɪtʃ naʊ<span class="linking">‿</span>əˈdɔrnz <span class="weak">ðə</span> ˈbʊkˌkeɪs<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">hɪz</span> ˈstʌdi <span class="weak">wəz</span> <span class="weak">hɪz</span> fɝst<span class="linking">‿</span><span class="weak">ən</span> læst ˈpɝtʃəs<span class="linking">‿</span><span class="weak">əv</span> rer kɑzˈmɛdɪks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>naʊ‿əˈdɔrnz、ˈbʊkˌkeɪs‿ɪn、fɝst‿ən、ˈpɝtʃəs‿əv 连读；ðə、ɪn、hɪz、wəz、ən、əv 弱读/弱化；ˈbɑɾəl、kɑzˈmɛdɪks 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句；first and last purchase 表“第一次也是最后一次购买”。</p></div>
+    <div class="field tense"><span>时态</span><p>定语从句一般现在时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>现在装点着他书房书架的那个奇特瓶子，是他第一次也是最后一次购买稀有化妆品。</p></div>
+    <div class="field words"><span>词</span><p>adorn 装饰； bookcase 书架； purchase 购买； rare cosmetics 稀有化妆品；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>物品与化妆品: perfumed mud 香泥； cosmetic shop 化妆品店； perfume 香水； bath cube 浴块； concoction 调制品； rare cosmetics 稀有化妆品；</p>
+    <p>态度与表演: express doubt 表示怀疑； pretend 假装； put out 恼火的； keep a straight face 忍住不笑； put on an act 装样子； blank astonishment 茫然惊讶；</p>
+    <p>动作短语: come into possession of 得到； cure sb of 治好某人； ask for 要求； meet with requirements 符合要求； admit defeat 认输； beat a hasty retreat 匆忙撤退；</p>
+    <p>描述词: curiously-shaped 形状奇特的； outlandish 古怪的； outrageous 荒唐的； fanciful 想象出来的； weird 奇怪的； discreetly 谨慎地；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>Despite the fact that...</code> 让步结构。</p>
+    <p><code>If you were to..., he would...</code> 虚拟条件句。</p>
+    <p><code>does contain</code> 用助动词强调谓语。</p>
+    <p><code>How...makes an interesting story</code> 主语从句。</p>
+    <p><code>consider it a joke to do</code> 中 it 为形式宾语。</p>
+    <p><code>On entering a shop</code> 表“一进入商店”。</p>
+    <p><code>it was his turn to be surprised</code> 表“轮到他吃惊”。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于描述瓶子的现状和哈里现在的讲述习惯：<code>keeps</code>, <code>does contain</code>, <code>is fond of</code>。</p>
+    <p>一般过去时用于叙述买香泥的经历：<code>went</code>, <code>asked</code>, <code>looked</code>, <code>produced</code>, <code>picked up</code>。</p>
+    <p>过去完成时说明更早发生或持续的背景：<code>had been developing</code>, <code>had not heard</code>, <code>had invented</code>。</p>
+    <p>would/used to 表过去习惯：<code>used to consider</code>, <code>would invent</code>, <code>would ask</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>would tell</code>, <code>would invite</code>, <code>would pretend</code> 用在虚拟或过去习惯中。</p>
+    <p><code>could be used</code> 表被动可能用途。</p>
+    <p><code>might prove to be expensive</code> 表哈里事后的推测。</p>
+    <p>文章语气幽默，靠虚构商品名和结尾“first and last purchase”形成反差。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>keeps a</code> -&gt; /kips‿ə/；<code>bottle on</code> -&gt; /ˈbɑɾəl‿ɑn/；<code>came into</code> -&gt; /keɪm‿ˈɪntu/；<code>heard of it</code> -&gt; /hɝd‿əv‿ɪt/；<code>picked up</code> -&gt; /pɪkt‿ʌp/。</p>
+    <p>元音 + 元音滑读: <code>to ask</code> -&gt; /tə‿æsk/；<code>to explain</code> -&gt; /tə‿ɪkˈspleɪn/；<code>now adorns</code> -&gt; /naʊ‿əˈdɔrnz/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>a</code> 常粘连：<code>possession of</code> -&gt; /pəˈzɛʃən‿əv/；<code>act of</code> -&gt; /ækt‿əv/；<code>sorts of</code> -&gt; /sɔrts‿əv/。</p>
+    <p>美音闪音 /ɾ/: <code>get away</code> 可读 /ɡɛɾ‿əˈweɪ/；<code>bottle</code> 词内 /t/ 在美音中常闪化为近似 /ɾ/；<code>Harry had invented</code> 中 <code>had invented</code> 可连成 /hæd‿ɪnˈvɛntɪd/。</p>
+    <p>意群停顿: 第 2 句按 <code>Despite... / an observant visitor would notice...</code> 分组；第 24 句按 <code>However / it was his turn... / for... / and she fetched...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 52 - Mud is Mud</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../52－Mud is Mud.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.35,"end":23.47,"text":"My cousin, Harry, keeps a large curiously-shaped bottle on permanent display in his study."},{"index":2,"start":23.47,"end":35.6,"text":"Despite the fact that the bottle is tinted a delicate shade of green, an observant visitor would soon notice that it is filled with what looks like a thick, greyish substance."},{"index":3,"start":35.6,"end":42.44,"text":"If you were to ask Harry what was in the bottle, he would tell you that it contained perfumed mud."},{"index":4,"start":42.44,"end":52.01,"text":"If you expressed doubt or surprise, he would immediately invite you to smell it and then to rub some into your skin."},{"index":5,"start":52.01,"end":56.84,"text":"The brief experiment would dispel any further doubts she might have."},{"index":6,"start":56.84,"end":60.8,"text":"The bottle really does contain perfumed mud."},{"index":7,"start":60.8,"end":69.36,"text":"How Harry came into the possession of this outlandish stuff makes an interesting story which he is fond of relating."},{"index":8,"start":69.36,"end":77.66,"text":"Furthermore, the acquisition of this bottle cured him of a bad habit he had been developing for years."},{"index":9,"start":77.66,"end":88.92,"text":"Harry used to consider it a great joke to go into expensive cosmetic shops and make outrageous requests for goods that do not exist."},{"index":10,"start":88.92,"end":92.37,"text":"He would invent fanciful names on the spot."},{"index":11,"start":92.37,"end":102.32,"text":"On entering a shop, he would ask for a new perfume called 'Scented Shadow' or for 'insoluble bath cubes'."},{"index":12,"start":102.32,"end":109.63,"text":"If a shop assistant told him she had not heard of it, he would pretend to be considerably put out."},{"index":13,"start":109.63,"end":123.27,"text":"He loved to be told that one of his imaginary products was temporarily out of stock and he would faithfully promise to call again at some future date, but of course he never did."},{"index":14,"start":123.27,"end":130.31,"text":"How Harry managed to keep a straight face during these performances is quite beyond me."},{"index":15,"start":130.31,"end":136.1,"text":"Harry does not need to be prompted to explain how he bought his precious bottle of mud."},{"index":16,"start":136.1,"end":143.14,"text":"One day, he went to an exclusive shop in London and asked for 'Myrolite'."},{"index":17,"start":143.14,"end":151,"text":"The shop assistant looked puzzled and Harry repeated the word, slowly stressing each syllable."},{"index":18,"start":151,"end":164.08,"text":"When the woman shook her head in bewilderment, Harry went on to explain that 'myrolite' was a hard, amber-like substance which could be used to remove freckles."},{"index":19,"start":164.08,"end":170.69,"text":"This explanation evidently conveyed something to the woman who searched shelf after shelf."},{"index":20,"start":170.69,"end":178.09,"text":"She produced all sorts of weird concoctions, but none of them met with Harry's requirements."},{"index":21,"start":178.09,"end":185.09,"text":"When Harry put on his act of being mildly annoyed, the assistant promised to order some for him."},{"index":22,"start":185.09,"end":191.64,"text":"Intoxicated by his success, Harry then asked for perfumed mud."},{"index":23,"start":191.64,"end":195.81,"text":"He expected the assistant to look at him in blank astonishment."},{"index":24,"start":195.81,"end":209.03,"text":"However, it was his turn to be surprised, for the woman's eyes immediately lit up and she fetched several bottles which she placed on the counter for Harry to inspect."},{"index":25,"start":209.03,"end":212.65,"text":"For once, Harry had to admit defeat."},{"index":26,"start":212.65,"end":219.3,"text":"He picked up what seemed to be the smallest bottle and discreetly asked the price."},{"index":27,"start":219.3,"end":228.57,"text":"He was glad to get away with a mere twenty pounds and he beat a hasty retreat, clutching the precious bottle under his arm."},{"index":28,"start":228.57,"end":235.68,"text":"From then on, Harry decided that this little game he had invented might prove to be expensive."},{"index":29,"start":235.68,"end":242.76,"text":"The curious bottle which now adorns the bookcase in his study was his first and last purchase of rare cosmetics."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

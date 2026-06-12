@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 14 - A Noble Gangster</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main { padding: 22px 0 40px; }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p { color: #581c87; }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 14 - A Noble Gangster</h1>
+      <p class="meta">Generated from 14－A Noble Gangster.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.2" data-end="26.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">There</span> <span class="weak linking">was</span> <span class="weak">a</span> time when <span class="weak">the</span> <span class="linking">owners</span> <span class="weak">of</span> <span class="linking">shops</span> <span class="weak">and</span> <span class="linking">businesses</span> <span class="weak">in</span> Chicago <span class="weak">had</span> <span class="weak">to</span> pay large <span class="linking">sums</span> <span class="weak">of</span> money <span class="weak">to</span> <span class="linking">gangsters</span> <span class="weak">in</span> return <span class="weak">for</span> 'protection'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> taɪm wɛn <span class="weak">ði</span> ˈoʊnɚz<span class="linking">‿</span><span class="weak">əv</span> ʃɑps<span class="linking">‿</span><span class="weak">ən</span> ˈbɪznəsɪz<span class="linking">‿</span><span class="weak">ɪn</span> ʃɪˈkɑɡoʊ hæd <span class="weak">tə</span> peɪ lɑrdʒ sʌmz<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni <span class="weak">tə</span> ˈɡæŋstɚz<span class="linking">‿</span><span class="weak">ɪn</span> rɪˈtɝn <span class="weak">fɚ</span> prəˈtɛkʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə、ˈoʊnɚz‿əv、ʃɑps‿ən、ˈbɪznəsɪz‿ɪn、sʌmz‿əv 连读；wəz、ə、ði、əv、ən、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>There was a time when... 句型；when 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>曾经有一段时期，芝加哥商店和企业的老板不得不向歹徒支付大笔钱以换取“保护”。</p></div>
+    <div class="field words"><span>词</span><p>owner 所有者； business 企业； gangster 歹徒； in return for 作为……的回报； protection 保护；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.33" data-end="35.46">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">If <span class="weak">the</span> money <span class="weak">was</span> not paid promptly, <span class="weak">the</span> gangsters <span class="weak">would</span> quickly <span class="linking">put</span> <span class="weak">a</span> <span class="linking">man</span> <span class="linking">out</span> <span class="weak">of</span> business by destroying <span class="weak">his</span> shop.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪf <span class="weak">ðə</span> ˈmʌni <span class="weak">wəz</span> nɑt peɪd ˈprɑmptli <span class="weak">ðə</span> ˈɡæŋstɚz wʊd ˈkwɪkli pʊt<span class="linking">‿</span><span class="weak">ə</span> mæn<span class="linking">‿</span>aʊt<span class="linking">‿</span><span class="weak">əv</span> ˈbɪznəs baɪ dɪˈstrɔɪɪŋ <span class="weak">hɪz</span> ʃɑp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pʊt‿ə、mæn‿aʊt‿əv 连读；ðə、wəz、ə、əv、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>If 引导条件从句；by doing 表方式。</p></div>
+    <div class="field tense"><span>时态</span><p>从句一般过去时被动；主句 would 表过去习惯/假设结果。</p></div>
+    <div class="field cn"><span>中</span><p>如果钱没有及时支付，歹徒们就会迅速通过毁掉店铺使人破产。</p></div>
+    <div class="field words"><span>词</span><p>promptly 及时地； put sb out of business 使某人停业/破产； destroy 毁坏；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="35.46" data-end="39.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Obtaining 'protection <span class="linking">money</span>' <span class="weak">is</span> <span class="linking">not</span> <span class="weak">a</span> modern crime.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əbˈteɪnɪŋ prəˈtɛkʃən ˈmʌni <span class="weak">ɪz</span> nɑt<span class="linking">‿</span><span class="weak">ə</span> ˈmɑdɚn kraɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɑt‿ə 连读；ɪz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>动名词短语作主语；主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>收取“保护费”并不是现代犯罪。</p></div>
+    <div class="field words"><span>词</span><p>obtain 获得； protection money 保护费； crime 犯罪；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="39.67" data-end="56.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">As</span> <span class="linking">long</span> ago <span class="weak">as</span> <span class="weak">the</span> fourteenth <span class="linking">century</span>, <span class="weak linking">an</span> Englishman, Sir John Hawkwood, made <span class="weak">the</span> remarkable discovery <span class="weak">that</span> people <span class="weak">would</span> rather pay large <span class="linking">sums</span> <span class="weak">of</span> money <span class="weak">than</span> <span class="weak">have</span> their life work destroyed by gangsters.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz lɔŋ<span class="linking">‿</span>əˈɡoʊ<span class="linking">‿</span>æz <span class="weak">ðə</span> ˌfɔrˈtinθ ˈsɛntʃɚi <span class="weak">ən</span> ˈɪŋɡlɪʃmən sɚ dʒɑn ˈhɔkˌwʊd meɪd <span class="weak">ðə</span> rɪˈmɑrkəbəl dɪˈskʌvɚi ðæt ˈpipəl wʊd ˈræðɚ peɪ lɑrdʒ sʌmz<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni ðən hæv ðɛr laɪf wɝk dɪˈstrɔɪd baɪ ˈɡæŋstɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɔŋ‿əˈɡoʊ‿æz、sʌmz‿əv 连读；ðə、ən、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As long ago as... 作时间状语；that 引导同位语从句；would rather...than... 表宁愿。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；从句 would 表过去习惯/意愿。</p></div>
+    <div class="field cn"><span>中</span><p>早在 14 世纪，英国人约翰·霍克伍德爵士就有了一个惊人发现：人们宁愿支付大笔金钱，也不愿让毕生事业被歹徒毁掉。</p></div>
+    <div class="field words"><span>词</span><p>as long ago as 早在； remarkable 非凡的； discovery 发现； would rather...than 宁愿……也不愿； life work 毕生事业；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="56.51" data-end="65.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Six hundred <span class="linking">years</span> ago, Sir John <span class="linking">Hawkwood</span> <span class="linking">arrived</span> <span class="weak linking">in</span> Italy <span class="linking">with</span> <span class="weak">a</span> <span class="linking">band</span> <span class="weak">of</span> <span class="linking">soldiers</span> <span class="weak">and</span> settled near Florence.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sɪks ˈhʌndrəd jɪrz<span class="linking">‿</span>əˈɡoʊ sɚ dʒɑn ˈhɔkˌwʊd əˈraɪvd<span class="linking">‿</span><span class="weak">ɪn</span> ˈɪɾəli wɪð<span class="linking">‿</span><span class="weak">ə</span> bænd<span class="linking">‿</span><span class="weak">əv</span> ˈsoʊldʒɚz<span class="linking">‿</span><span class="weak">ən</span> ˈsɛɾəld nɪr ˈflɔrəns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɪrz‿əˈɡoʊ、əˈraɪvd‿ɪn、wɪð‿ə、bænd‿əv、ˈsoʊldʒɚz‿ən 连读；ɪn、ə、əv、ən 弱读/弱化；ˈɪɾəli、ˈsɛɾəld 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>arrived 和 settled 为并列谓语；with... 作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>600 年前，约翰·霍克伍德爵士带着一队士兵来到意大利，并在佛罗伦萨附近定居。</p></div>
+    <div class="field words"><span>词</span><p>a band of 一伙/一队； soldier 士兵； settle 定居； Florence 佛罗伦萨；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="65.36" data-end="73.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">He soon made <span class="weak">a</span> name <span class="weak">for</span> <span class="linking">himself</span> <span class="weak">and</span> came <span class="weak">to</span> <span class="weak">be</span> known <span class="weak">to</span> <span class="weak">the</span> <span class="linking">Italians</span> <span class="weak">as</span> Giovanni Acuto.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi sun meɪd<span class="linking">‿</span><span class="weak">ə</span> neɪm <span class="weak">fɚ</span> hɪmˈsɛlf<span class="linking">‿</span><span class="weak">ən</span> keɪm <span class="weak">tə</span> bi noʊn <span class="weak">tə</span> <span class="weak">ði</span> ɪˈtæljənz<span class="linking">‿</span>æz dʒoʊˈvɑni əˈkutoʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿ə、hɪmˈsɛlf‿ən、ɪˈtæljənz‿æz 连读；ə、fɚ、ən、tə、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>made 和 came 为并列谓语；came to be known 表逐渐被称为。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他很快成名，并逐渐被意大利人称为乔瓦尼·阿库托。</p></div>
+    <div class="field words"><span>词</span><p>make a name for oneself 成名； come to be known as 逐渐被称为；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="73.45" data-end="85.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Whenever <span class="weak">the</span> Italian city-states <span class="weak">were</span> at war <span class="linking">with</span> <span class="linking">each</span> other, <span class="linking">Hawkwood</span> used <span class="weak">to</span> hire <span class="weak">his</span> soldiers <span class="weak">to</span> princes who <span class="weak">were</span> willing <span class="weak">to</span> pay <span class="weak">the</span> high price he demanded.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛnˈɛvɚ <span class="weak">ði</span> ɪˈtæljən ˈsɪɾi steɪts <span class="weak">wɚ</span><span class="linking">‿</span>æt wɔr wɪð<span class="linking">‿</span>itʃ ˈʌðɚ ˈhɔkˌwʊd jus <span class="weak">tə</span> haɪr <span class="weak">hɪz</span> ˈsoʊldʒɚz <span class="weak">tə</span> ˈprɪnsɪz hu <span class="weak">wɚ</span> ˈwɪlɪŋ <span class="weak">tə</span> peɪ <span class="weak">ðə</span> haɪ praɪs hi dɪˈmændɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɚ‿æt、wɪð‿itʃ 连读；ði、wɚ、tə、hɪz、ðə 弱读/弱化；ˈsɪɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Whenever 引导时间状语从句；who 引导定语从句；he demanded 为定语从句省略关系词。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；used to 表过去习惯。</p></div>
+    <div class="field cn"><span>中</span><p>每当意大利城邦彼此交战时，霍克伍德就把士兵雇给愿意支付他高价的王公。</p></div>
+    <div class="field words"><span>词</span><p>city-state 城邦； be at war 交战； hire 雇用； prince 王公； be willing to 愿意； demand 要求；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="85.4" data-end="100.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">In</span> <span class="linking">times</span> <span class="weak">of</span> peace, when business <span class="weak">was</span> bad, <span class="linking">Hawkwood</span> <span class="weak">and</span> <span class="weak">his</span> men <span class="weak">would</span> <span class="linking">march</span> into <span class="weak">a</span> city-state, <span class="weak linking">and</span> after burning <span class="linking">down</span> <span class="weak">a</span> few farms, <span class="weak linking">would</span> offer <span class="weak">to</span> go <span class="linking">away</span> if protection money <span class="weak">was</span> paid <span class="weak">to</span> them.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> taɪmz<span class="linking">‿</span><span class="weak">əv</span> pis wɛn ˈbɪznəs <span class="weak">wəz</span> bæd ˈhɔkˌwʊd<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">hɪz</span> mɛn wʊd mɑrtʃ ˈɪntu<span class="linking">‿</span><span class="weak">ə</span> ˈsɪɾi steɪt<span class="linking">‿</span><span class="weak">ən</span> ˈæftɚ ˈbɝnɪŋ daʊn<span class="linking">‿</span><span class="weak">ə</span> fju fɑrmz wʊd ˈɔfɚ <span class="weak">tə</span> ɡoʊ<span class="linking">‿</span>əˈweɪ<span class="linking">‿</span>ɪf prəˈtɛkʃən ˈmʌni <span class="weak">wəz</span> peɪd <span class="weak">tə</span> ðɛm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>taɪmz‿əv、ˈhɔkˌwʊd‿ən、ˈɪntu‿ə、steɪt‿ən、daʊn‿ə 连读；ɪn、əv、wəz、ən、hɪz、ə 弱读/弱化；ˈsɪɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In times of peace 作时间状语；when 插入时间从句；after doing 作时间状语；if 引导条件从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would 表过去习惯；条件从句被动。</p></div>
+    <div class="field cn"><span>中</span><p>和平时期生意不好时，霍克伍德和手下会开进一个城邦，烧毁几座农场后，提出只要付给他们保护费就离开。</p></div>
+    <div class="field words"><span>词</span><p>in times of peace 和平时期； march into 开进； burn down 烧毁； offer to do 主动提出做；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="100.29" data-end="104.35">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Hawkwood made large <span class="linking">sums</span> <span class="weak">of</span> <span class="linking">money</span> <span class="weak">in</span> this way.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈhɔkˌwʊd meɪd lɑrdʒ sʌmz<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni <span class="weak">ɪn</span> ðɪs weɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sʌmz‿əv 连读；əv、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；in this way 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>霍克伍德就这样赚了大笔钱。</p></div>
+    <div class="field words"><span>词</span><p>large sums of money 大笔钱； in this way 以这种方式；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="104.35" data-end="109.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> spite <span class="weak">of</span> this, <span class="weak">the</span> Italians regarded <span class="weak linking">him</span> <span class="weak linking">as</span> <span class="weak">a</span> <span class="linking">sort</span> <span class="weak">of</span> hero.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> spaɪt<span class="linking">‿</span><span class="weak">əv</span> ðɪs <span class="weak">ði</span> ɪˈtæljənz rɪˈɡɑrdɪd <span class="weak">hɪm</span><span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> sɔrt<span class="linking">‿</span><span class="weak">əv</span> ˈhɪroʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>spaɪt‿əv、hɪm‿æz‿ə、sɔrt‿əv 连读；ɪn、əv、ði、hɪm、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>In spite of... 作让步状语；regard sb as...。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管如此，意大利人仍把他看作某种英雄。</p></div>
+    <div class="field words"><span>词</span><p>in spite of 尽管； regard...as 把……看作； a sort of 一种；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="109.86" data-end="123.24">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">When he <span class="linking">died</span> at <span class="weak">the</span> age <span class="weak linking">of</span> eighty, <span class="weak">the</span> Florentines gave <span class="weak linking">him</span> <span class="weak">a</span> state <span class="linking">funeral</span> <span class="weak">and</span> <span class="weak linking">had</span> <span class="weak">a</span> picture painted which <span class="weak">was</span> dedicated <span class="weak">to</span> <span class="weak">the</span> <span class="linking">memory</span> <span class="weak">of</span> '<span class="weak">the</span> most valiant <span class="linking">soldier</span> <span class="weak">and</span> most notable leader, Signor Giovanni Haukodue'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn hi daɪd<span class="linking">‿</span>æt <span class="weak">ði</span> eɪdʒ<span class="linking">‿</span><span class="weak">əv</span> ˈeɪɾi <span class="weak">ðə</span> ˈflɔrənˌtinz ɡeɪv <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">ə</span> steɪt ˈfjunɚəl<span class="linking">‿</span><span class="weak">ən</span> hæd<span class="linking">‿</span><span class="weak">ə</span> ˈpɪktʃɚ ˈpeɪntɪd wɪtʃ <span class="weak">wəz</span> ˈdɛdəˌkeɪɾɪd <span class="weak">tə</span> <span class="weak">ðə</span> ˈmɛmɚi<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> moʊst ˈvæljənt ˈsoʊldʒɚ<span class="linking">‿</span><span class="weak">ən</span> moʊst ˈnoʊtəbəl ˈlidɚ sinˈjɔr dʒoʊˈvɑni hɔkəˈdueɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>daɪd‿æt、eɪdʒ‿əv、hɪm‿ə、ˈfjunɚəl‿ən、hæd‿ə 连读；ði、əv、ðə、hɪm、ə、ən 弱读/弱化；ˈeɪɾi、ˈdɛdəˌkeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；gave 和 had 为并列谓语；have sth done；which 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；定语从句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他 80 岁去世时，佛罗伦萨人为他举行了国葬，并请人画了一幅画，题献给“最英勇的士兵、最杰出的领袖乔瓦尼·霍科杜埃先生”的纪念。</p></div>
+    <div class="field words"><span>词</span><p>at the age of 在……岁时； state funeral 国葬； dedicate to 献给； memory 纪念； valiant 英勇的； notable 杰出的；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>犯罪与保护费: gangster 歹徒； protection money 保护费； crime 犯罪； put sb out of business 使某人破产；</p>
+      <p>战争与雇佣: soldier 士兵； city-state 城邦； be at war 交战； hire 雇佣； prince 王公； march into 开进；</p>
+      <p>荣誉与评价: hero 英雄； state funeral 国葬； valiant 英勇的； notable 杰出的； dedicate to 献给；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>There was a time when...</code> 表“曾经有一段时间……”。</p>
+      <p><code>would rather...than...</code> 表宁愿。</p>
+      <p><code>used to do</code> 表过去习惯。</p>
+      <p><code>have sth done</code> 表请人做某事。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时讲述历史事实。</p>
+      <p>一般现在时用于概括：<code>is not a modern crime</code>。</p>
+      <p><code>used to</code> 和 <code>would</code> 都用来描述过去反复发生的行为。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>had to pay</code> 表被迫；<code>would quickly put...</code> 和 <code>would march...</code> 表过去习惯性做法。</p>
+      <p><code>were willing to pay</code> 表愿意支付的态度。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>out of business</code> /aʊt‿əv/、<code>made a name</code> /meɪd‿ə/。</p>
+      <p>美式闪音: <code>city-states</code> /ˈsɪɾi steɪts/、<code>settled</code> /ˈsɛɾəld/、<code>eighty</code> /ˈeɪɾi/。</p>
+      <p>长句可按时间状语、主句、定语从句分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 14 - A Noble Gangster</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../14－A Noble Gangster.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.2,"end":26.33,"text":"There was a time when the owners of shops and businesses in Chicago had to pay large sums of money to gangsters in return for 'protection'."},{"index":2,"start":26.33,"end":35.46,"text":"If the money was not paid promptly, the gangsters would quickly put a man out of business by destroying his shop."},{"index":3,"start":35.46,"end":39.67,"text":"Obtaining 'protection money' is not a modern crime."},{"index":4,"start":39.67,"end":56.51,"text":"As long ago as the fourteenth century, an Englishman, Sir John Hawkwood, made the remarkable discovery that people would rather pay large sums of money than have their life work destroyed by gangsters."},{"index":5,"start":56.51,"end":65.36,"text":"Six hundred years ago, Sir John Hawkwood arrived in Italy with a band of soldiers and settled near Florence."},{"index":6,"start":65.36,"end":73.45,"text":"He soon made a name for himself and came to be known to the Italians as Giovanni Acuto."},{"index":7,"start":73.45,"end":85.4,"text":"Whenever the Italian city-states were at war with each other, Hawkwood used to hire his soldiers to princes who were willing to pay the high price he demanded."},{"index":8,"start":85.4,"end":100.29,"text":"In times of peace, when business was bad, Hawkwood and his men would march into a city-state, and after burning down a few farms, would offer to go away if protection money was paid to them."},{"index":9,"start":100.29,"end":104.35,"text":"Hawkwood made large sums of money in this way."},{"index":10,"start":104.35,"end":109.86,"text":"In spite of this, the Italians regarded him as a sort of hero."},{"index":11,"start":109.86,"end":123.24,"text":"When he died at the age of eighty, the Florentines gave him a state funeral and had a picture painted which was dedicated to the memory of 'the most valiant soldier and most notable leader, Signor Giovanni Haukodue'."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

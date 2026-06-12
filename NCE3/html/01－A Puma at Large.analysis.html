@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 1 - A Puma at Large</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 1 - A Puma at Large</h1>
+      <p class="meta">Generated from 01－A Puma at Large.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.48" data-end="19.17">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Pumas</span> <span class="weak">are</span> large, cat-like animals <span class="linking">which</span> <span class="weak">are</span> <span class="linking">found</span> <span class="weak linking">in</span> America.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈpjuməz<span class="linking">‿</span><span class="weak">ɑr</span> lɑrdʒ ˈkætˌlaɪk ˈænəməlz wɪtʃ<span class="linking">‿</span><span class="weak">ɑr</span> faʊnd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>əˈmɛrəkə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpjuməz‿ɑr、wɪtʃ‿ɑr、faʊnd‿ɪn‿əˈmɛrəkə 连读；ɑr、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；which 引导定语从句，修饰 animals。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；定语从句为一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>美洲狮是体型庞大、像猫一样的动物，生活在美洲。</p></div>
+    <div class="field words"><span>词</span><p>puma 美洲狮； cat-like 像猫的； be found in 分布于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.17" data-end="29.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">When reports came into London Zoo <span class="weak linking">that</span> <span class="weak">a</span> wild puma <span class="weak">had</span> <span class="weak">been</span> spotted forty-five miles <span class="linking">south</span> <span class="weak">of</span> London, they <span class="weak">were</span> not taken seriously.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn rɪˈpɔrts keɪm<span class="linking">‿</span>ɪntu ˈlʌndən zu ðæt<span class="linking">‿</span><span class="weak">ə</span> waɪld ˈpjumə <span class="weak">həd</span> bɪn ˈspɑɾɪd ˈfɔrdi faɪv maɪlz saʊθ<span class="linking">‿</span><span class="weak">əv</span> ˈlʌndən ðeɪ <span class="weak">wɚ</span> nɑt ˈteɪkən ˈsɪriəsli/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪm‿ɪntu、ðæt‿ə、saʊθ‿əv 连读；ə、həd、əv、wɚ 弱读/弱化；ˈspɑɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；that 引导同位语从句解释 reports；主句被动。</p></div>
+    <div class="field tense"><span>时态</span><p>从句一般过去时 + 过去完成时被动；主句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>当伦敦动物园收到报告说在伦敦以南 45 英里处有人发现一只野生美洲狮时，这些报告并未受到认真对待。</p></div>
+    <div class="field words"><span>词</span><p>report 报告； spot 发现； take seriously 认真对待；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="29.15" data-end="43.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">However</span>, <span class="weak">as</span> <span class="weak">the</span> evidence began <span class="weak">to</span> accumulate, experts <span class="weak">from</span> <span class="weak">the</span> Zoo <span class="linking">felt</span> obliged <span class="weak">to</span> investigate, <span class="weak">for</span> <span class="weak">the</span> descriptions given by people who claimed <span class="weak">to</span> <span class="weak">have</span> seen <span class="weak">the</span> puma <span class="weak">were</span> extraordinarily similar.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ æz <span class="weak">ði</span> ˈɛvədəns bɪˈɡæn <span class="weak">tʊ</span><span class="linking">‿</span>əˈkjumjəˌleɪt ˈɛkspɚts <span class="weak">frəm</span> <span class="weak">ðə</span> zu fɛlt<span class="linking">‿</span>əˈblaɪdʒd <span class="weak">tʊ</span><span class="linking">‿</span>ɪnˈvɛstəˌɡeɪt <span class="weak">fɚ</span> <span class="weak">ðə</span> dɪˈskrɪpʃənz ˈɡɪvən baɪ ˈpipəl hu kleɪmd <span class="weak">tə</span> <span class="weak">həv</span> sin <span class="weak">ðə</span> ˈpjumə <span class="weak">wɚ</span> ɪkˈstrɔrdəˌnɛrəli ˈsɪməlɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʊ‿əˈkjumjəˌleɪt、fɛlt‿əˈblaɪdʒd、tʊ‿ɪnˈvɛstəˌɡeɪt 连读；ði、tʊ、frəm、ðə、fɚ、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>as 引导时间状语从句；felt obliged to do 为主干；for 引导原因分句；given... 为过去分词定语；who 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；to have seen 表先于 claimed 的动作。</p></div>
+    <div class="field cn"><span>中</span><p>然而，随着证据开始积累，动物园专家觉得有必要调查，因为声称见过这只美洲狮的人所作的描述极其相似。</p></div>
+    <div class="field words"><span>词</span><p>evidence 证据； accumulate 积累； feel obliged to do 觉得有义务做； investigate 调查； description 描述； extraordinarily 极其；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.86" data-end="53.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> hunt <span class="weak">for</span> <span class="weak">the</span> puma <span class="linking">began</span> <span class="weak linking">in</span> <span class="weak">a</span> small village where <span class="weak">a</span> woman picking blackberries <span class="linking">saw</span> '<span class="weak">a</span> large <span class="linking">cat</span>' only five <span class="linking">yards</span> away <span class="weak">from</span> <span class="weak">her</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> hʌnt <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈpjumə bɪˈɡæn<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> smɔl ˈvɪlɪdʒ wɛr<span class="linking">‿</span><span class="weak">ə</span> ˈwʊmən ˈpɪkɪŋ ˈblækˌbɛriz sɔ<span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ kæt ˈoʊnli faɪv jɑrdz<span class="linking">‿</span>əˈweɪ <span class="weak">frəm</span> <span class="weak">hɚ</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈɡæn‿ɪn‿ə、wɛr‿ə、sɔ‿ə、jɑrdz‿əˈweɪ 连读；ðə、fɚ、ɪn、ə、frəm、hɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>where 引导定语从句；picking blackberries 为现在分词短语作定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>对美洲狮的搜寻始于一个小村庄，在那里一位采黑莓的妇女看见一只“大猫”，离她只有五码远。</p></div>
+    <div class="field words"><span>词</span><p>hunt 搜寻； blackberry 黑莓； yard 码；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="53.61" data-end="62.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak linking">It</span> immediately <span class="linking">ran</span> away when she <span class="linking">saw</span> <span class="weak linking">it</span>, <span class="weak linking">and</span> experts confirmed <span class="weak linking">that</span> <span class="weak">a</span> puma will <span class="linking">not</span> <span class="linking">attack</span> <span class="weak">a</span> human <span class="weak linking">being</span> <span class="linking">unless</span> <span class="weak linking">it</span> <span class="weak">is</span> cornered.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ɪˈmidiətli ræn<span class="linking">‿</span>əˈweɪ wɛn ʃi sɔ<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ən</span> ˈɛkspɚts kənˈfɝmd ðæt<span class="linking">‿</span><span class="weak">ə</span> ˈpjumə wɪl nɑt<span class="linking">‿</span>əˈtæk<span class="linking">‿</span><span class="weak">ə</span> ˈhjumən ˈbiɪŋ ənˈlɛs<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> ˈkɔrnɚd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪˈmidiətli、ræn‿əˈweɪ、sɔ‿ɪt‿ən、ðæt‿ə、nɑt‿əˈtæk‿ə 连读；ən、ə、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>when 引导时间状语从句；and 连接并列分句；that 引导宾语从句；unless 引导条件从句。</p></div>
+    <div class="field tense"><span>时态</span><p>前半句一般过去时；宾语从句一般现在/将来表示习性。</p></div>
+    <div class="field cn"><span>中</span><p>她一看见它，它立刻跑开了；专家证实，美洲狮除非被逼入绝境，否则不会攻击人类。</p></div>
+    <div class="field words"><span>词</span><p>run away 逃跑； confirm 证实； attack 攻击； human being 人类； corner 逼入困境；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="62.94" data-end="72.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> search proved difficult, <span class="weak">for</span> <span class="weak">the</span> puma <span class="weak linking">was</span> <span class="linking">often</span> <span class="linking">observed</span> <span class="linking">at</span> one place <span class="weak">in</span> <span class="weak">the</span> <span class="linking">morning</span> <span class="weak linking">and</span> <span class="linking">at</span> another place twenty <span class="linking">miles</span> <span class="linking">away</span> <span class="weak">in</span> <span class="weak">the</span> evening.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> sɝtʃ pruvd ˈdɪfəkəlt <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈpjumə <span class="weak">wəz</span> ˈɔfən əbˈzɝvd<span class="linking">‿</span>æt wʌn pleɪs<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈmɔrnɪŋ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>æt<span class="linking">‿</span>əˈnʌðɚ pleɪs ˈtwɛnti maɪlz<span class="linking">‿</span>əˈweɪ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈivnɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əbˈzɝvd‿æt、pleɪs‿ɪn、ˈmɔrnɪŋ‿ən‿æt‿əˈnʌðɚ、maɪlz‿əˈweɪ‿ɪn 连读；ðə、fɚ、wəz、ɪn、ən、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>prove + 形容词；for 引导原因分句；原因分句为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；原因分句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>搜寻证明很困难，因为人们常常早上在一个地方看见它，晚上又在 20 英里外的另一个地方看见它。</p></div>
+    <div class="field words"><span>词</span><p>search 搜寻； prove difficult 证明困难； observe 观察到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="72.58" data-end="79.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Wherever</span> <span class="weak">it</span> <span class="linking">went</span>, <span class="weak">it</span> left <span class="linking">behind</span> <span class="weak linking">it</span> <span class="weak">a</span> <span class="linking">trail</span> <span class="weak">of</span> dead <span class="linking">deer</span> <span class="weak">and</span> <span class="linking">small</span> animals like rabbits.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛrˈɛvɚ<span class="linking">‿</span>ɪt wɛnt ɪt lɛft bɪˈhaɪnd<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ə</span> treɪl<span class="linking">‿</span><span class="weak">əv</span> dɛd dɪr<span class="linking">‿</span><span class="weak">ən</span> smɔl ˈænəməlz laɪk ˈræbɪts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛrˈɛvɚ‿ɪt、bɪˈhaɪnd‿ɪt‿ə、treɪl‿əv、dɪr‿ən 连读；ə、əv、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Wherever 引导让步状语从句；left behind it 为倒装式表达，宾语为 a trail...</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>无论它走到哪里，身后都会留下一串死鹿和兔子等小动物。</p></div>
+    <div class="field words"><span>词</span><p>wherever 无论哪里； leave behind 留下； trail 踪迹； deer 鹿； rabbit 兔子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="79.38" data-end="85.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Paw prints <span class="weak">were</span> <span class="linking">seen</span> <span class="weak linking">in</span> <span class="weak">a</span> <span class="linking">number</span> <span class="weak">of</span> <span class="linking">places</span> <span class="weak">and</span> puma fur <span class="weak">was</span> found clinging <span class="weak">to</span> bushes.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/pɔ prɪnts <span class="weak">wɚ</span> sin<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈnʌmbɚ<span class="linking">‿</span><span class="weak">əv</span> ˈpleɪsɪz<span class="linking">‿</span><span class="weak">ən</span> ˈpjumə fɝ <span class="weak">wəz</span> faʊnd ˈklɪŋɪŋ <span class="weak">tə</span> ˈbʊʃɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sin‿ɪn‿ə、ˈnʌmbɚ‿əv、ˈpleɪsɪz‿ən 连读；wɚ、ɪn、ə、əv、ən、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个被动分句；clinging to bushes 为现在分词短语作补足。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>许多地方都发现了爪印，还发现美洲狮的毛粘在灌木丛上。</p></div>
+    <div class="field words"><span>词</span><p>paw print 爪印； fur 毛皮/毛； cling to 粘在； bush 灌木；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="85.39" data-end="94.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Several people <span class="linking">complained</span> <span class="weak">of</span> 'cat-like <span class="linking">noises</span>' at <span class="linking">night</span> <span class="weak linking">and</span> <span class="weak">a</span> <span class="linking">businessman</span> <span class="linking">on</span> <span class="weak">a</span> fishing trip saw <span class="weak">the</span> puma <span class="linking">up</span> <span class="weak">a</span> tree.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈsɛvrəl ˈpipəl kəmˈpleɪnd<span class="linking">‿</span><span class="weak">əv</span> kæt laɪk ˈnɔɪzɪz<span class="linking">‿</span>æt naɪt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> ˈbɪznəsˌmæn<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> ˈfɪʃɪŋ trɪp sɔ <span class="weak">ðə</span> ˈpjumə<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ə</span> tri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kəmˈpleɪnd‿əv、ˈnɔɪzɪz‿æt、naɪt‿ən‿ə、ˈbɪznəsˌmæn‿ɑn‿ə、ˈpjumə‿ʌp‿ə 连读；əv、ən、ə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；on a fishing trip 作定语/状语；up a tree 作宾补。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>有几个人抱怨夜里听到“像猫一样的叫声”，一个外出钓鱼的商人还看见那只美洲狮在树上。</p></div>
+    <div class="field words"><span>词</span><p>complain of 抱怨； cat-like 像猫的； fishing trip 钓鱼旅行；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="94.26" data-end="101.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> experts <span class="weak">were</span> now fully convinced <span class="weak">that</span> <span class="weak">the</span> animal <span class="weak linking">was</span> <span class="weak">a</span> puma, but where <span class="weak linking">had</span> <span class="weak">it</span> come <span class="weak">from</span>?</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span> ˈɛkspɚts <span class="weak">wɚ</span> naʊ ˈfʊli kənˈvɪnst ðæt <span class="weak">ði</span> ˈænəməl <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈpjumə bət wɛr <span class="weak">həd</span><span class="linking">‿</span>ɪt kʌm <span class="weak">frəm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə、həd‿ɪt 连读；ði、wɚ、wəz、ə、həd、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；but 后为疑问分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；疑问分句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>专家们现在完全确信这动物是一只美洲狮，但它是从哪里来的呢？</p></div>
+    <div class="field words"><span>词</span><p>fully 完全地； convinced 确信的； come from 来自；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="101.27" data-end="112.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">As</span> no pumas <span class="weak">had</span> <span class="weak">been</span> reported missing <span class="weak linking">from</span> any zoo <span class="weak">in</span> <span class="weak">the</span> country, <span class="linking">this</span> one must <span class="weak">have</span> <span class="weak linking">been</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">possession</span> <span class="weak linking">of</span> <span class="weak">a</span> private <span class="linking">collector</span> <span class="weak">and</span> somehow managed <span class="weak">to</span> escape.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz noʊ ˈpjuməz <span class="weak">həd</span> bɪn rɪˈpɔrtɪd ˈmɪsɪŋ <span class="weak">frəm</span> ˈɛni zu<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈkʌntri ðɪs wʌn mʌst <span class="weak">həv</span> bɪn<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> pəˈzɛʃən<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈpraɪvət kəˈlɛktɚ<span class="linking">‿</span><span class="weak">ən</span> ˈsʌmˌhaʊ ˈmænɪdʒd <span class="weak">tʊ</span><span class="linking">‿</span>ɪˈskeɪp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>zu‿ɪn、bɪn‿ɪn、pəˈzɛʃən‿əv‿ə、kəˈlɛktɚ‿ən、tʊ‿ɪˈskeɪp 连读；həd、frəm、ɪn、ðə、həv、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；must have been 表对过去的肯定推测；and 连接并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去完成时被动；主句情态完成式 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>由于全国任何动物园都没有报告丢失美洲狮，这只美洲狮一定曾属于一位私人收藏者，并且不知怎么设法逃了出来。</p></div>
+    <div class="field words"><span>词</span><p>report missing 报告失踪； in the possession of 为……所有； private collector 私人收藏者； somehow 不知怎么地； escape 逃脱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="112.16" data-end="117.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> hunt <span class="linking">went</span> on <span class="weak">for</span> several weeks, but <span class="weak">the</span> puma <span class="weak">was</span> not caught.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> hʌnt wɛnt<span class="linking">‿</span>ɑn <span class="weak">fɚ</span> ˈsɛvrəl wiks bət <span class="weak">ðə</span> ˈpjumə <span class="weak">wəz</span> nɑt kɔt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛnt‿ɑn 连读；ðə、fɚ、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；后半句被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；后半句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>搜寻持续了几个星期，但那只美洲狮没有被抓住。</p></div>
+    <div class="field words"><span>词</span><p>go on 持续； catch 抓住；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="117.42" data-end="123.57">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak linking">It</span> <span class="weak">is</span> disturbing <span class="weak">to</span> think <span class="weak linking">that</span> <span class="weak">a</span> dangerous <span class="linking">wild</span> <span class="linking">animal</span> <span class="weak">is</span> <span class="linking">still</span> at large <span class="weak">in</span> <span class="weak">the</span> quiet countryside.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> dɪˈstɝbɪŋ <span class="weak">tə</span> θɪŋk ðæt<span class="linking">‿</span><span class="weak">ə</span> ˈdeɪndʒɚəs waɪld ˈænəməl<span class="linking">‿</span><span class="weak">ɪz</span> stɪl<span class="linking">‿</span>æt lɑrdʒ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈkwaɪət ˈkʌntriˌsaɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、ðæt‿ə、ˈænəməl‿ɪz、stɪl‿æt、lɑrdʒ‿ɪn 连读；ɪz、tə、ə、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>It 作形式主语；to think... 为真正主语；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>想到一只危险的野生动物仍在宁静的乡间逍遥自在，真令人不安。</p></div>
+    <div class="field words"><span>词</span><p>disturbing 令人不安的； at large 未被捕/自由活动； countryside 乡间；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>动物与踪迹: puma 美洲狮； paw print 爪印； fur 毛； deer 鹿； rabbit 兔子； trail 踪迹；</p>
+      <p>调查与证据: report 报告； evidence 证据； accumulate 积累； investigate 调查； description 描述； confirm 证实；</p>
+      <p>推测与逃脱: be in the possession of 为……所有； private collector 私人收藏者； escape 逃脱； at large 逍遥法外/自由活动；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>reports came...that...</code> 同位语从句说明报告内容。</p>
+      <p><code>feel obliged to do</code> 表“觉得有义务做”。</p>
+      <p><code>wherever...</code> 引导让步状语从句。</p>
+      <p><code>must have been...</code> 表对过去的肯定推测。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时用于叙述目击和搜寻过程。</p>
+      <p>过去完成时被动用于先前发生的发现和报告：<code>had been spotted</code>, <code>had been reported</code>。</p>
+      <p>一般现在时用于说明美洲狮习性和结尾评论。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>will not attack...unless...</code> 表一般规律。</p>
+      <p><code>must have been...</code> 表作者基于证据的强推测。</p>
+      <p>结尾 <code>It is disturbing to think...</code> 带评论语气。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>came into</code>、<code>found in</code>、<code>ran away</code>、<code>left behind it</code> 的连读。</p>
+      <p>美式闪音: <code>spotted</code> /ˈspɑɾɪd/、<code>quiet</code> /ˈkwaɪət/ 可轻快处理。</p>
+      <p>长句按“时间/原因状语 + 主句 + for 原因分句”分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 1 - A Puma at Large</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../01－A Puma at Large.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.48,"end":19.17,"text":"Pumas are large, cat-like animals which are found in America."},{"index":2,"start":19.17,"end":29.15,"text":"When reports came into London Zoo that a wild puma had been spotted forty-five miles south of London, they were not taken seriously."},{"index":3,"start":29.15,"end":43.86,"text":"However, as the evidence began to accumulate, experts from the Zoo felt obliged to investigate, for the descriptions given by people who claimed to have seen the puma were extraordinarily similar."},{"index":4,"start":43.86,"end":53.61,"text":"The hunt for the puma began in a small village where a woman picking blackberries saw 'a large cat' only five yards away from her."},{"index":5,"start":53.61,"end":62.94,"text":"It immediately ran away when she saw it, and experts confirmed that a puma will not attack a human being unless it is cornered."},{"index":6,"start":62.94,"end":72.58,"text":"The search proved difficult, for the puma was often observed at one place in the morning and at another place twenty miles away in the evening."},{"index":7,"start":72.58,"end":79.38,"text":"Wherever it went, it left behind it a trail of dead deer and small animals like rabbits."},{"index":8,"start":79.38,"end":85.39,"text":"Paw prints were seen in a number of places and puma fur was found clinging to bushes."},{"index":9,"start":85.39,"end":94.26,"text":"Several people complained of 'cat-like noises' at night and a businessman on a fishing trip saw the puma up a tree."},{"index":10,"start":94.26,"end":101.27,"text":"The experts were now fully convinced that the animal was a puma, but where had it come from?"},{"index":11,"start":101.27,"end":112.16,"text":"As no pumas had been reported missing from any zoo in the country, this one must have been in the possession of a private collector and somehow managed to escape."},{"index":12,"start":112.16,"end":117.42,"text":"The hunt went on for several weeks, but the puma was not caught."},{"index":13,"start":117.42,"end":123.57,"text":"It is disturbing to think that a dangerous wild animal is still at large in the quiet countryside."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

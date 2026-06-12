@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 20 - Pioneer Pilots</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 20 - Pioneer Pilots</h1>
+      <p class="meta">Generated from 20－Pioneer Pilots.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.81" data-end="26.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">In</span> 1908 Lord Northcliffe <span class="linking">offered</span> <span class="weak">a</span> prize <span class="weak">of</span> £1,000 <span class="weak">to</span> <span class="weak">the</span> first man who <span class="weak">would</span> <span class="linking">fly</span> across <span class="weak">the</span> English Channel.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ˌnaɪnˈtin<span class="linking">‿</span>oʊ eɪt lɔrd ˈnɔrθklɪf<span class="linking">‿</span>ˈɔfɚd<span class="linking">‿</span><span class="weak">ə</span> praɪz<span class="linking">‿</span><span class="weak">əv</span> wʌn ˈθaʊzənd paʊndz <span class="weak">tə</span> <span class="weak">ðə</span> fɝst mæn hu wʊd flaɪ əˈkrɔs <span class="weak">ði</span> ˈɪŋɡlɪʃ ˈtʃænəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌnaɪnˈtin‿oʊ、ˈnɔrθklɪf‿ˈɔfɚd‿ə、praɪz‿əv 连读；ɪn、ə、əv、tə、ðə、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓双宾结构；who 引导定语从句修饰 the first man。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would fly 表过去视角下将要完成的事。</p></div>
+    <div class="field cn"><span>中</span><p>1908 年，诺思克利夫勋爵悬赏 1000 英镑，奖给第一个飞越英吉利海峡的人。</p></div>
+    <div class="field words"><span>词</span><p>offer a prize 悬赏； fly across 飞越； the English Channel 英吉利海峡；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.78" data-end="31.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Over</span> <span class="weak">a</span> year passed before <span class="weak">the</span> <span class="linking">first</span> attempt <span class="weak">was</span> made.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈoʊvɚ <span class="weak">ə</span> jɪr pæst bɪˈfɔr <span class="weak">ðə</span> fɝst<span class="linking">‿</span>əˈtɛmpt <span class="weak">wəz</span> meɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɝst‿əˈtɛmpt 连读；ə、ðə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>before 引导时间状语从句；was made 为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>一年多过去后，第一次尝试才开始。</p></div>
+    <div class="field words"><span>词</span><p>over a year 一年多； attempt 尝试； make an attempt 尝试；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="31.28" data-end="43.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">On July 19<span class="linking">th</span>, 1909, <span class="weak">in</span> <span class="weak">the</span> early morning, Hubert Latham <span class="linking">took</span> off <span class="weak">from</span> <span class="weak">the</span> French <span class="linking">coast</span> <span class="weak">in</span> <span class="weak">his</span> plane <span class="weak">the</span> 'Antoinette IV.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɑn dʒuˈlaɪ ˌnaɪnˈtinθ ˌnaɪnˈtin<span class="linking">‿</span>oʊ naɪn<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈɝli ˈmɔrnɪŋ ˈhjubɚt ˈlæθəm tʊk<span class="linking">‿</span>ɔf <span class="weak">frəm</span> <span class="weak">ðə</span> frɛntʃ koʊst<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">hɪz</span> pleɪn <span class="weak">ði</span> ænˌtwɑˈnɛt fɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌnaɪnˈtin‿oʊ、naɪn‿ɪn、tʊk‿ɔf、koʊst‿ɪn 连读；ɪn、ði、frəm、ðə、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>多个时间状语置前；the 'Antoinette IV' 为 plane 的同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>1909 年 7 月 19 日清晨，休伯特・莱瑟姆驾驶“安托瓦内特四号”从法国海岸起飞。</p></div>
+    <div class="field words"><span>词</span><p>take off 起飞； coast 海岸； plane 飞机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.14" data-end="52.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">He <span class="weak">had</span> <span class="linking">travelled</span> only seven <span class="linking">miles</span> across <span class="weak">the</span> Channel when <span class="weak linking">his</span> engine <span class="linking">failed</span> <span class="weak">and</span> he <span class="weak">was</span> forced <span class="weak">to</span> <span class="linking">land</span> on <span class="weak">the</span> sea.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi hæd ˈtrævəld<span class="linking">‿</span>ˈoʊnli ˈsɛvən maɪlz<span class="linking">‿</span>əˈkrɔs <span class="weak">ðə</span> ˈtʃænəl wɛn <span class="weak">hɪz</span><span class="linking">‿</span>ˈɛndʒən feɪld<span class="linking">‿</span><span class="weak">ən</span> hi <span class="weak">wəz</span> fɔrst <span class="weak">tə</span> lænd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> si/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtrævəld‿ˈoʊnli、maɪlz‿əˈkrɔs、hɪz‿ˈɛndʒən、feɪld‿ən、lænd‿ɑn 连读；ðə、hɪz、ən、wəz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>had done...when... 表刚做了某事这时；and 连接并列动作；was forced to 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时 + 一般过去时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他只飞越海峡七英里，发动机就失灵了，他被迫降落在海面上。</p></div>
+    <div class="field words"><span>词</span><p>engine failed 发动机失灵； be forced to 被迫； land on the sea 降落海面；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="52.26" data-end="59.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">The</span> 'Antoinette' <span class="linking">floated</span> on <span class="weak">the</span> <span class="linking">water</span> until Latham <span class="weak">was</span> <span class="linking">picked</span> up <span class="linking">by</span> <span class="weak">a</span> ship.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span> ænˌtwɑˈnɛt ˈfloʊɾɪd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈwɔɾɚ ənˈtɪl ˈlæθəm <span class="weak">wəz</span> pɪkt<span class="linking">‿</span>ʌp baɪ <span class="weak">ə</span> ʃɪp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfloʊɾɪd‿ɑn、pɪkt‿ʌp 连读；ði、ðə、wəz、ə 弱读/弱化；ˈfloʊɾɪd‿ɑn、ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>until 引导时间状语从句；was picked up 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>“安托瓦内特”号一直漂在水面上，直到莱瑟姆被一艘船救起。</p></div>
+    <div class="field words"><span>词</span><p>float 漂浮； pick up 救起/接走； ship 船；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="59.22" data-end="67.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Two days later, Louis <span class="linking">Bleriot</span> arrived near Calais <span class="linking">with</span> <span class="weak">a</span> plane called 'No.XI'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tu</span> deɪz ˈleɪɾɚ ˈlui ˈblɛrioʊ əˈraɪvd nɪr kæˈleɪ wɪð<span class="linking">‿</span><span class="weak">ə</span> pleɪn kɔld ˈnʌmbɚ ɪˈlɛvən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɪð‿ə 连读；tu、ə 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>called... 为过去分词短语作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>两天后，路易・布莱里奥带着一架名为“十一号”的飞机来到加来附近。</p></div>
+    <div class="field words"><span>词</span><p>arrive near 到达……附近； called 名为；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="67.16" data-end="74.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Bleriot <span class="weak">had</span> <span class="weak">been</span> making planes since 1905 <span class="weak">and</span> this <span class="weak">was</span> <span class="weak">his</span> latest model.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈblɛrioʊ hæd bɪn ˈmeɪkɪŋ pleɪnz sɪns ˌnaɪnˈtin<span class="linking">‿</span>oʊ faɪv<span class="linking">‿</span><span class="weak">ən</span> ðɪs <span class="weak">wəz</span> <span class="weak">hɪz</span> ˈleɪɾəst ˈmɑdəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌnaɪnˈtin‿oʊ、faɪv‿ən 连读；ən、wəz、hɪz 弱读/弱化；ˈleɪɾəst 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；since 引出动作起点。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成进行时；一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>布莱里奥自 1905 年以来一直制造飞机，而这是他的最新型号。</p></div>
+    <div class="field words"><span>词</span><p>latest model 最新型号； make planes 制造飞机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="74.33" data-end="82.54">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">A</span> week before, he <span class="weak">had</span> <span class="linking">completed</span> <span class="weak">a</span> <span class="linking">successful</span> overland flight during which he covered twenty-six miles.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> wik bɪˈfɔr hi hæd kəmˈpliɾɪd<span class="linking">‿</span><span class="weak">ə</span> səkˈsɛsfəl<span class="linking">‿</span>ˈoʊvɚˌlænd flaɪt ˈdʊrɪŋ wɪtʃ hi ˈkʌvɚd ˈtwɛnti sɪks maɪlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kəmˈpliɾɪd‿ə、səkˈsɛsfəl‿ˈoʊvɚˌlænd 连读；ə 弱读/弱化；kəmˈpliɾɪd‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>during which 引导定语从句，修饰 flight。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时；定语从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一周前，他完成了一次成功的陆上飞行，飞行距离达二十六英里。</p></div>
+    <div class="field words"><span>词</span><p>overland flight 陆上飞行； cover 行进/飞行距离；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="82.54" data-end="85.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Latham, however, did not give <span class="linking">up</span> easily.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈlæθəm haʊˈɛvɚ dɪd nɑt ɡɪv<span class="linking">‿</span>ʌp<span class="linking">‿</span>ˈizəli/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɪv‿ʌp‿ˈizəli 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>however 插入转折；give up 表放弃。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，莱瑟姆并没有轻易放弃。</p></div>
+    <div class="field words"><span>词</span><p>however 然而； give up 放弃； easily 轻易地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="85.76" data-end="92.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">He, too, arrived near <span class="linking">Calais</span> on <span class="weak">the</span> same day <span class="linking">with</span> <span class="weak">a</span> <span class="linking">new</span> 'Antoinette'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">tu</span> əˈraɪvd nɪr kæˈleɪ ɑn <span class="weak">ðə</span> seɪm deɪ wɪð<span class="linking">‿</span><span class="weak">ə</span> nu ænˌtwɑˈnɛt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɪð‿ə 连读；tu、ðə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>too 为插入语；with... 表伴随。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他也在同一天带着一架新的“安托瓦内特”来到加来附近。</p></div>
+    <div class="field words"><span>词</span><p>on the same day 同一天； new 新的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="92.2" data-end="97.19">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">It</span> <span class="linking">looked</span> <span class="weak linking">as</span> if <span class="weak">there</span> <span class="weak">would</span> <span class="weak">be</span> <span class="weak linking">an</span> exciting race across <span class="weak">the</span> Channel.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt lʊkt<span class="linking">‿</span>æz<span class="linking">‿</span>ɪf ðɛr wʊd bi <span class="weak">ən</span><span class="linking">‿</span>ɪkˈsaɪɾɪŋ reɪs<span class="linking">‿</span>əˈkrɔs <span class="weak">ðə</span> ˈtʃænəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lʊkt‿æz‿ɪf、ən‿ɪkˈsaɪɾɪŋ、reɪs‿əˈkrɔs 连读；ən、ðə 弱读/弱化；ən‿ɪkˈsaɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It looked as if... 表“看起来好像”；there would be 表过去将来。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；过去将来时。</p></div>
+    <div class="field cn"><span>中</span><p>看起来似乎将会有一场激动人心的飞越海峡比赛。</p></div>
+    <div class="field words"><span>词</span><p>look as if 看起来好像； exciting race 激动人心的比赛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="97.19" data-end="105.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Both planes <span class="weak">were</span> going <span class="weak">to</span> take <span class="linking">off</span> on July 25th, but Latham failed <span class="weak">to</span> <span class="linking">get</span> <span class="linking">up</span> <span class="linking">early</span> enough.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/boʊθ pleɪnz <span class="weak">wɚ</span> ˈɡoʊɪŋ <span class="weak">tə</span> teɪk<span class="linking">‿</span>ɔf<span class="linking">‿</span>ɑn dʒuˈlaɪ ˈtwɛnti fɪfθ bət ˈlæθəm feɪld <span class="weak">tə</span> ɡɛɾ<span class="linking">‿</span>ʌp<span class="linking">‿</span>ˈɝli ɪˈnʌf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>teɪk‿ɔf‿ɑn、ɡɛɾ‿ʌp‿ˈɝli 连读；wɚ、tə 弱读/弱化；ɡɛɾ‿ʌp‿ˈɝli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；fail to do 表未能做。</p></div>
+    <div class="field tense"><span>时态</span><p>过去将来结构；一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>两架飞机都准备在 7 月 25 日起飞，但莱瑟姆没能起得足够早。</p></div>
+    <div class="field words"><span>词</span><p>be going to do 准备做； fail to do 未能做； get up 起床；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="105.05" data-end="113.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">After <span class="linking">making</span> <span class="weak">a</span> short test <span class="linking">flight</span> <span class="linking">at</span> 4.15 <span class="weak">a</span>.m., Bleriot <span class="linking">set</span> off <span class="linking">half</span> <span class="weak">an</span> hour later.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈmeɪkɪŋ<span class="linking">‿</span><span class="weak">ə</span> ʃɔrt tɛst flaɪɾ<span class="linking">‿</span>æt fɔr fɪfˈtin<span class="linking">‿</span>eɪ ɛm ˈblɛrioʊ sɛɾ<span class="linking">‿</span>ɔf hæf<span class="linking">‿</span><span class="weak">ən</span> ˈaʊɚ ˈleɪɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmeɪkɪŋ‿ə、flaɪɾ‿æt、fɪfˈtin‿eɪ、sɛɾ‿ɔf、hæf‿ən 连读；ə、ən 弱读/弱化；flaɪɾ‿æt、sɛɾ‿ɔf、ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After + 动名词短语作时间状语；set off 表出发。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>早上 4 点 15 分做了一次短暂试飞后，布莱里奥半小时后出发了。</p></div>
+    <div class="field words"><span>词</span><p>test flight 试飞； set off 出发；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="113.1" data-end="116.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">His</span> great flight lasted thirty-seven minutes.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">hɪz</span> ɡreɪt flaɪt ˈlæstɪd ˈθɝɾi ˈsɛvən ˈmɪnɪts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪz 弱读/弱化；ˈθɝɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；last 表“持续”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他这次伟大的飞行持续了三十七分钟。</p></div>
+    <div class="field words"><span>词</span><p>last 持续； flight 飞行；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="116.9" data-end="123.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">When he landed near Dover, <span class="weak">the</span> first person <span class="weak">to</span> greet <span class="weak">him</span> <span class="weak linking">was</span> <span class="weak">a</span> local policeman.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn hi ˈlændɪd nɪr ˈdoʊvɚ <span class="weak">ðə</span> fɝst ˈpɝsən <span class="weak">tə</span> ɡrit <span class="weak">hɪm</span> <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈloʊkəl pəˈlismən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ə 连读；ðə、tə、hɪm、wəz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；to greet him 修饰 person。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他在多佛附近降落时，第一个迎接他的是当地一名警察。</p></div>
+    <div class="field words"><span>词</span><p>land 降落； greet 迎接； local policeman 当地警察；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="123.67" data-end="131.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Latham made <span class="linking">another</span> <span class="linking">attempt</span> <span class="weak">a</span> week <span class="linking">later</span> <span class="weak">and</span> got within <span class="linking">half</span> <span class="weak">a</span> mile <span class="weak">of</span> Dover, but he <span class="weak linking">was</span> <span class="linking">unlucky</span> again.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈlæθəm meɪd<span class="linking">‿</span>əˈnʌðɚ əˈtɛmpt<span class="linking">‿</span><span class="weak">ə</span> wik ˈleɪɾɚ <span class="weak">ən</span> ɡɑt wɪˈðɪn hæf<span class="linking">‿</span><span class="weak">ə</span> maɪl<span class="linking">‿</span><span class="weak">əv</span> ˈdoʊvɚ bət hi <span class="weak">wəz</span><span class="linking">‿</span>ənˈlʌki əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿əˈnʌðɚ、əˈtɛmpt‿ə、hæf‿ə、maɪl‿əv、wəz‿ənˈlʌki 连读；ə、ən、əv、wəz 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>made 和 got 为并列谓语；but 表转折。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一周后莱瑟姆又尝试了一次，并飞到距离多佛半英里以内，但他又一次不走运。</p></div>
+    <div class="field words"><span>词</span><p>make another attempt 再次尝试； within half a mile 半英里以内； unlucky 不走运的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="131.85" data-end="135.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak linking">His</span> engine <span class="linking">failed</span> <span class="weak">and</span> he <span class="linking">landed</span> on <span class="weak">the</span> sea <span class="weak">for</span> <span class="weak">the</span> second time.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">hɪz</span><span class="linking">‿</span>ˈɛndʒən feɪld<span class="linking">‿</span><span class="weak">ən</span> hi ˈlændɪd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> si <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsɛkənd taɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪz‿ˈɛndʒən、feɪld‿ən、ˈlændɪd‿ɑn 连读；hɪz、ən、ðə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他的发动机失灵了，他第二次降落在海面上。</p></div>
+    <div class="field words"><span>词</span><p>for the second time 第二次； engine failed 发动机失灵；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>飞行与竞赛: pioneer pilot 先驱飞行员； take off 起飞； land 降落； flight 飞行； test flight 试飞； race 比赛；</p>
+      <p>地点与路线: English Channel 英吉利海峡； French coast 法国海岸； Calais 加来； Dover 多佛；</p>
+      <p>动作短语: offer a prize 悬赏； make an attempt 尝试； be forced to 被迫； pick up 救起； set off 出发； give up 放弃；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>the first man who would...</code>: who 引导定语从句。</p>
+      <p><code>had travelled only...when...</code>: 刚飞了……这时……。</p>
+      <p><code>It looked as if...</code>: 看起来好像。</p>
+      <p><code>be going to take off</code>: 过去视角下的计划。</p>
+      <p><code>the first person to greet him</code>: 不定式作后置定语。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时是叙事主线：<code>offered</code>, <code>took off</code>, <code>arrived</code>, <code>set off</code>, <code>landed</code>。</p>
+      <p>过去完成时用于先前经历：<code>had travelled</code>, <code>had completed</code>。</p>
+      <p>过去完成进行时 <code>had been making</code> 强调布莱里奥从 1905 年起一直制造飞机。</p>
+      <p>过去将来 <code>would fly</code>, <code>would be</code>, <code>were going to</code> 表当时尚未发生的计划或结果。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>would fly</code> 表悬赏条件中的未来动作。</p>
+      <p><code>was forced to land</code> 表被迫降落。</p>
+      <p>文章语气突出早期飞行的危险和竞争性：一次成功背后有多次失败和发动机故障。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>take off</code> -&gt; /teɪk‿ɔf/；<code>picked up</code> -&gt; /pɪkt‿ʌp/；<code>set off</code> -&gt; /sɛt‿ɔf/；<code>engine failed</code> 可轻连。</p>
+      <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>the</code> 要轻读，如 <code>a prize of £1,000</code>。</p>
+      <p>意群停顿: 第 4 句按 <code>He had travelled only seven miles / when his engine failed / and he was forced...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 20 - Pioneer Pilots</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../20－Pioneer Pilots.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.81,"end":26.78,"text":"In 1908 Lord Northcliffe offered a prize of £1,000 to the first man who would fly across the English Channel."},{"index":2,"start":26.78,"end":31.28,"text":"Over a year passed before the first attempt was made."},{"index":3,"start":31.28,"end":43.14,"text":"On July 19th, 1909, in the early morning, Hubert Latham took off from the French coast in his plane the 'Antoinette IV.'"},{"index":4,"start":43.14,"end":52.26,"text":"He had travelled only seven miles across the Channel when his engine failed and he was forced to land on the sea."},{"index":5,"start":52.26,"end":59.22,"text":"The 'Antoinette' floated on the water until Latham was picked up by a ship."},{"index":6,"start":59.22,"end":67.16,"text":"Two days later, Louis Bleriot arrived near Calais with a plane called 'No.XI'."},{"index":7,"start":67.16,"end":74.33,"text":"Bleriot had been making planes since 1905 and this was his latest model."},{"index":8,"start":74.33,"end":82.54,"text":"A week before, he had completed a successful overland flight during which he covered twenty-six miles."},{"index":9,"start":82.54,"end":85.76,"text":"Latham, however, did not give up easily."},{"index":10,"start":85.76,"end":92.2,"text":"He, too, arrived near Calais on the same day with a new 'Antoinette'."},{"index":11,"start":92.2,"end":97.19,"text":"It looked as if there would be an exciting race across the Channel."},{"index":12,"start":97.19,"end":105.05,"text":"Both planes were going to take off on July 25th, but Latham failed to get up early enough."},{"index":13,"start":105.05,"end":113.1,"text":"After making a short test flight at 4.15 a.m., Bleriot set off half an hour later."},{"index":14,"start":113.1,"end":116.9,"text":"His great flight lasted thirty-seven minutes."},{"index":15,"start":116.9,"end":123.67,"text":"When he landed near Dover, the first person to greet him was a local policeman."},{"index":16,"start":123.67,"end":131.85,"text":"Latham made another attempt a week later and got within half a mile of Dover, but he was unlucky again."},{"index":17,"start":131.85,"end":135.7,"text":"His engine failed and he landed on the sea for the second time."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

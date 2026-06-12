@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 13 - It's Only Me</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main { padding: 22px 0 40px; }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p { color: #581c87; }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 13 - It's Only Me</h1>
+      <p class="meta">Generated from 13－It's Only Me.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.42" data-end="24.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">After <span class="weak">her</span> husband <span class="weak">had</span> gone <span class="weak">to</span> work, Mrs. Richards sent <span class="weak">her</span> children <span class="weak">to</span> <span class="linking">school</span> <span class="weak">and</span> <span class="linking">went</span> upstairs <span class="weak">to</span> <span class="weak">her</span> bedroom.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ <span class="weak">hɚ</span> ˈhʌzbənd <span class="weak">həd</span> ɡɔn <span class="weak">tə</span> wɝk ˈmɪsɪz ˈrɪtʃɚdz sɛnt <span class="weak">hɚ</span> ˈtʃɪldrən <span class="weak">tə</span> skul<span class="linking">‿</span><span class="weak">ən</span> wɛnt<span class="linking">‿</span>ʌpˈstɛrz <span class="weak">tə</span> <span class="weak">hɚ</span> ˈbɛdˌrum/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>skul‿ən、wɛnt‿ʌpˈstɛrz 连读；hɚ、həd、tə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>After 引导时间状语从句；sent 和 went 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去完成时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>丈夫上班后，理查兹夫人把孩子送去上学，然后上楼回到卧室。</p></div>
+    <div class="field words"><span>词</span><p>go to work 上班； upstairs 楼上； bedroom 卧室；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="24.96" data-end="34.89">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">She <span class="weak">was</span> too excited <span class="weak">to</span> do any housework <span class="weak">that</span> morning, <span class="weak linking">for</span> <span class="weak">in</span> <span class="weak">the</span> evening she <span class="weak">would</span> <span class="weak">be</span> going <span class="weak">to</span> <span class="weak">a</span> fancy-dress party with <span class="weak">her</span> husband.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi <span class="weak">wəz</span> <span class="weak">tu</span> ɪkˈsaɪɾɪd <span class="weak">tə</span> du ˈɛni ˈhaʊsˌwɝk ðæt ˈmɔrnɪŋ <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈivnɪŋ ʃi wʊd bi ˈɡoʊɪŋ <span class="weak">tʊ</span><span class="linking">‿</span><span class="weak">ə</span> ˈfænsi drɛs ˈpɑrti wɪð <span class="weak">hɚ</span> ˈhʌzbənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ‿ɪn、tʊ‿ə 连读；wəz、tu、tə、fɚ、ɪn、ði 弱读/弱化；ɪkˈsaɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>too...to... 表“太……而不能”；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；would be going to 表过去将来进行。</p></div>
+    <div class="field cn"><span>中</span><p>那天早上她兴奋得什么家务也做不了，因为晚上她要和丈夫去参加化装舞会。</p></div>
+    <div class="field words"><span>词</span><p>too...to 太……而不能； housework 家务； fancy-dress party 化装舞会；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="34.89" data-end="44.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">She intended <span class="weak">to</span> <span class="linking">dress</span> <span class="linking">up</span> <span class="weak linking">as</span> <span class="weak">a</span> <span class="linking">ghost</span> <span class="weak linking">and</span> <span class="weak">as</span> she <span class="weak">had</span> made <span class="weak">her</span> costume <span class="weak">the</span> night before, she <span class="weak linking">was</span> impatient <span class="weak">to</span> <span class="linking">try</span> <span class="weak linking">it</span> on.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi ɪnˈtɛndɪd <span class="weak">tə</span> drɛs<span class="linking">‿</span>ʌp<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ɡoʊst<span class="linking">‿</span><span class="weak">ən</span> æz ʃi <span class="weak">həd</span> meɪd <span class="weak">hɚ</span> ˈkɑstum <span class="weak">ðə</span> naɪt bɪˈfɔr ʃi <span class="weak">wəz</span> ɪmˈpeɪʃənt <span class="weak">tə</span> traɪ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ɑn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>drɛs‿ʌp‿æz‿ə、ɡoʊst‿ən、traɪ‿ɪɾ‿ɑn 连读；tə、ə、ən、həd、hɚ、ðə 弱读/弱化；traɪ‿ɪɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；as 引导原因状语从句；to try it on 作原因/方面补足。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；原因从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>她打算装扮成鬼；由于前一晚已经做好了服装，她迫不及待想试穿。</p></div>
+    <div class="field words"><span>词</span><p>intend to do 打算做； dress up as 装扮成； costume 服装； impatient 急切的； try on 试穿；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="44.23" data-end="49.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Though <span class="weak">the</span> costume <span class="linking">consisted</span> <span class="linking">only</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">sheet</span>, <span class="weak">it</span> <span class="weak">was</span> <span class="linking">very</span> effective.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ <span class="weak">ðə</span> ˈkɑstum kənˈsɪstɪd ˈoʊnli<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ʃit ɪt <span class="weak">wəz</span> ˈvɛri ɪˈfɛktɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈoʊnli‿əv‿ə 连读；ðə、əv、ə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；主句主系表。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管这套服装只是一条床单，但效果很好。</p></div>
+    <div class="field words"><span>词</span><p>consist of 由……组成； sheet 床单； effective 有效果的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.62" data-end="53.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">After <span class="linking">putting</span> <span class="weak linking">it</span> on, Mrs. Richards went downstairs.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈpʊɾɪŋ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ɑn ˈmɪsɪz ˈrɪtʃɚdz wɛnt ˌdaʊnˈstɛrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpʊɾɪŋ‿ɪɾ‿ɑn 连读；ˈpʊɾɪŋ‿ɪɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After + 动名词短语作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>穿上之后，理查兹夫人下了楼。</p></div>
+    <div class="field words"><span>词</span><p>put on 穿上； downstairs 楼下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="53.93" data-end="58.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">She wanted <span class="weak">to</span> <span class="linking">find</span> out <span class="linking">whether</span> <span class="weak">it</span> <span class="weak">would</span> <span class="weak">be</span> comfortable <span class="weak">to</span> wear.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi ˈwɑntɪd <span class="weak">tə</span> faɪnd<span class="linking">‿</span>aʊt ˈwɛðɚ<span class="linking">‿</span>ɪt wʊd bi ˈkʌmftɚbəl <span class="weak">tə</span> wɛr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faɪnd‿aʊt、ˈwɛðɚ‿ɪt 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>whether 引导宾语从句；to wear 作形容词补足。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would 表过去将来/假设。</p></div>
+    <div class="field cn"><span>中</span><p>她想弄清楚穿着它是否舒服。</p></div>
+    <div class="field words"><span>词</span><p>find out 弄清楚； comfortable 舒服的； wear 穿；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="58.27" data-end="64.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Just</span> <span class="weak">as</span> Mrs. Richards <span class="weak linking">was</span> entering <span class="weak">the</span> dining-room, <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> <span class="linking">knock</span> on <span class="weak">the</span> front door.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dʒʌst<span class="linking">‿</span>æz ˈmɪsɪz ˈrɪtʃɚdz <span class="weak">wəz</span> ˈɛntɚrɪŋ <span class="weak">ðə</span> ˈdaɪnɪŋ rum ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> nɑk<span class="linking">‿</span>ɑn <span class="weak">ðə</span> frʌnt dɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dʒʌst‿æz、wəz‿ə、nɑk‿ɑn 连读；wəz、ðə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Just as 引导时间状语从句；主句 There be。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去进行时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>就在理查兹夫人走进餐厅时，前门响起了敲门声。</p></div>
+    <div class="field words"><span>词</span><p>just as 正当……时； dining-room 餐厅； knock 敲门声；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="64.84" data-end="67.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">She knew <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> baker.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi nu ðæt<span class="linking">‿</span>ɪt mʌst bi <span class="weak">ðə</span> ˈbeɪkɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪt 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；must be 表肯定推测。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；must 表推测。</p></div>
+    <div class="field cn"><span>中</span><p>她知道那一定是面包师。</p></div>
+    <div class="field words"><span>词</span><p>baker 面包师； must be 一定是；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="67.48" data-end="74.42">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">She <span class="weak">had</span> told <span class="weak">him</span> <span class="weak">to</span> come <span class="linking">straight</span> <span class="weak linking">in</span> <span class="linking">if</span> ever she failed <span class="weak">to</span> open <span class="weak">the</span> <span class="linking">door</span> <span class="weak">and</span> <span class="weak">to</span> leave <span class="weak">the</span> <span class="linking">bread</span> on <span class="weak">the</span> kitchen table.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi <span class="weak">həd</span> toʊld <span class="weak">hɪm</span> <span class="weak">tə</span> kʌm streɪt<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ɪf ˈɛvɚ ʃi feɪld <span class="weak">tʊ</span><span class="linking">‿</span>ˈoʊpən <span class="weak">ðə</span> dɔr<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> liv <span class="weak">ðə</span> brɛd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈkɪtʃən ˈteɪbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>streɪt‿ɪn‿ɪf、tʊ‿ˈoʊpən、dɔr‿ən、brɛd‿ɑn 连读；həd、hɪm、tə、ɪn、tʊ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>tell sb to do；if ever 引导条件从句；两个不定式并列。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时；条件从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她曾告诉他，如果她没能开门，就直接进来，把面包放在厨房桌上。</p></div>
+    <div class="field words"><span>词</span><p>come straight in 直接进来； if ever 如果； fail to do 没能做；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="74.42" data-end="82.13">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Not wanting <span class="weak">to</span> frighten <span class="weak">the</span> poor man, Mrs. Richards quickly <span class="linking">hid</span> <span class="weak">in</span> <span class="weak">the</span> small <span class="linking">storeroom</span> under <span class="weak">the</span> stairs.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/nɑt ˈwɑntɪŋ <span class="weak">tə</span> ˈfraɪtən <span class="weak">ðə</span> pʊr mæn ˈmɪsɪz ˈrɪtʃɚdz ˈkwɪkli hɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> smɔl ˈstɔrˌrum ˈʌndɚ <span class="weak">ðə</span> stɛrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪd‿ɪn 连读；tə、ðə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Not wanting... 为现在分词否定短语作原因状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>由于不想吓着这个可怜的人，理查兹夫人迅速躲进楼梯下的小储藏室。</p></div>
+    <div class="field words"><span>词</span><p>frighten 吓唬； hide 躲藏； storeroom 储藏室； under the stairs 楼梯下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.13" data-end="87.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">She heard <span class="weak">the</span> front <span class="linking">door</span> <span class="linking">open</span> <span class="weak">and</span> heavy <span class="linking">footsteps</span> <span class="weak">in</span> <span class="weak">the</span> hall.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi hɝd <span class="weak">ðə</span> frʌnt dɔr ˈoʊpən<span class="linking">‿</span><span class="weak">ən</span> ˈhɛvi ˈfʊtˌstɛps<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> hɔl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈoʊpən‿ən、ˈfʊtˌstɛps‿ɪn 连读；ðə、ən、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>heard 后接宾语和宾补；and 连接两个听到的内容。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她听见前门打开，又听见大厅里沉重的脚步声。</p></div>
+    <div class="field words"><span>词</span><p>footsteps 脚步声； hall 大厅/门厅；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="87.05" data-end="91.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Suddenly <span class="weak">the</span> <span class="linking">door</span> <span class="weak">of</span> <span class="weak">the</span> storeroom <span class="weak linking">was</span> <span class="linking">opened</span> <span class="weak linking">and</span> <span class="weak">a</span> <span class="linking">man</span> entered.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈsʌdənli <span class="weak">ðə</span> dɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈstɔrˌrum <span class="weak">wəz</span> ˈoʊpənd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> mæn ˈɛntɚd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɔr‿əv、ˈoʊpənd‿ən‿ə 连读；ðə、əv、wəz、ən、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个并列分句；前半句被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>突然，储藏室的门被打开，一个男人走了进来。</p></div>
+    <div class="field words"><span>词</span><p>enter 进入；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="91.48" data-end="98.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">Mrs. Richards realized <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> man <span class="weak">from</span> <span class="weak">the</span> Electricity Board who <span class="weak">had</span> come <span class="weak">to</span> read <span class="weak">the</span> metre.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz ˈrɪtʃɚdz ˈriəˌlaɪzd ðæt<span class="linking">‿</span>ɪt mʌst bi <span class="weak">ðə</span> mæn <span class="weak">frəm</span> <span class="weak">ði</span> ɪˌlɛkˈtrɪsəti bɔrd hu <span class="weak">həd</span> kʌm <span class="weak">tə</span> rid <span class="weak">ðə</span> ˈmiɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪt 连读；ðə、frəm、ði、həd、tə 弱读/弱化；ˈmiɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；who 引导定语从句；must be 表推测。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；定语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>理查兹夫人意识到，这一定是电力局派来读电表的人。</p></div>
+    <div class="field words"><span>词</span><p>Electricity Board 电力局； read the metre 读电表； realize 意识到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="98.78" data-end="106.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">She tried <span class="weak">to</span> explain <span class="weak">the</span> situation, <span class="linking">saying</span> '<span class="linking">It's</span> only me', <span class="linking">but</span> <span class="weak">it</span> <span class="weak">was</span> too late.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi traɪd <span class="weak">tʊ</span><span class="linking">‿</span>ɪkˈspleɪn <span class="weak">ðə</span> ˌsɪtʃuˈeɪʃən ˈseɪɪŋ ɪts ˈoʊnli mi bət<span class="linking">‿</span>ɪt <span class="weak">wəz</span> <span class="weak">tu</span> leɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʊ‿ɪkˈspleɪn、bət‿ɪt 连读；tʊ、ðə、wəz、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>saying... 为伴随状语；but 连接转折；too late 作表语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她试图解释情况，说“只是我”，但已经太晚了。</p></div>
+    <div class="field words"><span>词</span><p>explain 解释； situation 情况； too late 太晚；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="106.49" data-end="111.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> man <span class="linking">let</span> <span class="linking">out</span> <span class="weak">a</span> <span class="linking">cry</span> <span class="weak">and</span> jumped back several paces.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mæn lɛɾ<span class="linking">‿</span>aʊt<span class="linking">‿</span><span class="weak">ə</span> kraɪ<span class="linking">‿</span><span class="weak">ən</span> dʒʌmpt bæk ˈsɛvrəl ˈpeɪsɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɛɾ‿aʊt‿ə、kraɪ‿ən 连读；ðə、ə、ən 弱读/弱化；lɛɾ‿aʊt‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>let out 和 jumped back 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>那人叫了一声，向后跳了好几步。</p></div>
+    <div class="field words"><span>词</span><p>let out a cry 叫出声； jump back 向后跳； pace 一步；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="111.82" data-end="116.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">When Mrs. Richards walked towards <span class="weak">him</span>, he fled, slamming <span class="weak">the</span> door behind <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn ˈmɪsɪz ˈrɪtʃɚdz wɔkt təˈwɔrdz <span class="weak">hɪm</span> hi flɛd ˈslæmɪŋ <span class="weak">ðə</span> dɔr bɪˈhaɪnd <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪm、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；slamming... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>当理查兹夫人朝他走去时，他逃走了，并在身后砰地关上了门。</p></div>
+    <div class="field words"><span>词</span><p>flee 逃跑； slam 砰地关上； behind 在……后面；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>家中场景: bedroom 卧室； dining-room 餐厅； front door 前门； storeroom 储藏室； stairs 楼梯；</p>
+      <p>化装舞会: fancy-dress party 化装舞会； dress up as 装扮成； costume 服装； sheet 床单；</p>
+      <p>动作短语: try on 试穿； find out 弄清楚； come straight in 直接进来； let out a cry 叫出声；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>too...to...</code> 表“太……而不能”。</p>
+      <p><code>must be</code> 表肯定推测。</p>
+      <p><code>Not wanting to...</code> 现在分词短语作原因状语。</p>
+      <p><code>hear + 宾语 + do</code> 表听见动作发生。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时讲述事件过程。</p>
+      <p>过去完成时说明先前动作：<code>had gone</code>, <code>had made</code>, <code>had told</code>。</p>
+      <p>过去将来进行时：<code>would be going to</code> 表从过去看将来要发生的安排。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>must be the baker</code>、<code>must be the man...</code> 表强烈推测。</p>
+      <p><code>would be going to</code> 表过去时间点上的将来计划。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>try it on</code> /traɪ‿ɪɾ‿ɑn/、<code>putting it on</code> /ˈpʊɾɪŋ‿ɪɾ‿ɑn/。</p>
+      <p><code>let out a cry</code> 中 <code>let out</code> 可读成 /lɛɾ‿aʊt/。</p>
+      <p>长句按时间状语、主句、原因分句分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 13 - It's Only Me</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../13－It's Only Me.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.42,"end":24.96,"text":"After her husband had gone to work, Mrs. Richards sent her children to school and went upstairs to her bedroom."},{"index":2,"start":24.96,"end":34.89,"text":"She was too excited to do any housework that morning, for in the evening she would be going to a fancy-dress party with her husband."},{"index":3,"start":34.89,"end":44.23,"text":"She intended to dress up as a ghost and as she had made her costume the night before, she was impatient to try it on."},{"index":4,"start":44.23,"end":49.62,"text":"Though the costume consisted only of a sheet, it was very effective."},{"index":5,"start":49.62,"end":53.93,"text":"After putting it on, Mrs. Richards went downstairs."},{"index":6,"start":53.93,"end":58.27,"text":"She wanted to find out whether it would be comfortable to wear."},{"index":7,"start":58.27,"end":64.84,"text":"Just as Mrs. Richards was entering the dining-room, there was a knock on the front door."},{"index":8,"start":64.84,"end":67.48,"text":"She knew that it must be the baker."},{"index":9,"start":67.48,"end":74.42,"text":"She had told him to come straight in if ever she failed to open the door and to leave the bread on the kitchen table."},{"index":10,"start":74.42,"end":82.13,"text":"Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."},{"index":11,"start":82.13,"end":87.05,"text":"She heard the front door open and heavy footsteps in the hall."},{"index":12,"start":87.05,"end":91.48,"text":"Suddenly the door of the storeroom was opened and a man entered."},{"index":13,"start":91.48,"end":98.78,"text":"Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the metre."},{"index":14,"start":98.78,"end":106.49,"text":"She tried to explain the situation, saying 'It's only me', but it was too late."},{"index":15,"start":106.49,"end":111.82,"text":"The man let out a cry and jumped back several paces."},{"index":16,"start":111.82,"end":116.51,"text":"When Mrs. Richards walked towards him, he fled, slamming the door behind him."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

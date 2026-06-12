@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 9 - Flying Cats</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 9 - Flying Cats</h1>
+      <p class="meta">Generated from 09－Flying Cats.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="17.34" data-end="21.77">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Cats never fail <span class="weak">to</span> fascinate human beings.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kæts ˈnɛvɚ feɪl <span class="weak">tə</span> ˈfæsəˌneɪt ˈhjumən ˈbiɪŋz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>never fail to do 表“总能做”；主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>猫总能使人类着迷。</p></div>
+    <div class="field words"><span>词</span><p>fail to do 未能做； fascinate 使着迷； human beings 人类；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="21.77" data-end="29.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">They <span class="weak">can</span> <span class="weak">be</span> <span class="linking">friendly</span> <span class="weak linking">and</span> affectionate towards humans, but they lead mysterious <span class="linking">lives</span> <span class="weak">of</span> <span class="linking">their</span> <span class="linking">own</span> <span class="weak">as</span> well.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ <span class="weak">kən</span> bi ˈfrɛndli<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈfɛkʃənət təˈwɔrdz ˈhjumənz bət ðeɪ lid mɪˈstɪriəs laɪvz<span class="linking">‿</span><span class="weak">əv</span> ðɛr oʊn<span class="linking">‿</span>æz wɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfrɛndli‿ən‿əˈfɛkʃənət、laɪvz‿əv、oʊn‿æz 连读；kən、ən、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；of their own 作后置定语；as well 表补充。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can 表可能/能力。</p></div>
+    <div class="field cn"><span>中</span><p>它们可以对人类友好而亲昵，但也过着自己神秘的生活。</p></div>
+    <div class="field words"><span>词</span><p>affectionate 亲昵的； towards 对； mysterious 神秘的； of one's own 自己的； as well 也；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="29.47" data-end="33.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">They never become submissive like <span class="linking">dogs</span> <span class="weak">and</span> horses.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ ˈnɛvɚ bɪˈkʌm səbˈmɪsɪv laɪk dɔɡz<span class="linking">‿</span><span class="weak">ən</span> ˈhɔrsɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɔɡz‿ən 连读；ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；like... 作比较状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它们从不像狗和马那样变得顺从。</p></div>
+    <div class="field words"><span>词</span><p>submissive 顺从的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="33.63" data-end="39.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak linking">As</span> <span class="weak">a</span> result, humans <span class="weak">have</span> learned <span class="weak">to</span> respect feline independence.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz<span class="linking">‿</span><span class="weak">ə</span> rɪˈzʌlt ˈhjumənz <span class="weak">həv</span> lɝnd <span class="weak">tə</span> rɪˈspɛkt ˈfilaɪn ˌɪndɪˈpɛndəns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>æz‿ə 连读；ə、həv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As a result 作结果状语；learn to do。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>因此，人类已经学会尊重猫科动物的独立性。</p></div>
+    <div class="field words"><span>词</span><p>as a result 因此； respect 尊重； feline 猫科的； independence 独立；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="39.36" data-end="43.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Most cats remain <span class="linking">suspicious</span> <span class="weak">of</span> <span class="linking">humans</span> all their lives.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/moʊst kæts rɪˈmeɪn səˈspɪʃəs<span class="linking">‿</span><span class="weak">əv</span> ˈhjumənz ɔl ðɛr laɪvz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>səˈspɪʃəs‿əv 连读；əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>remain + 形容词；all their lives 作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>大多数猫一生都对人类保持怀疑。</p></div>
+    <div class="field words"><span>词</span><p>remain 保持； suspicious 怀疑的； all one's life 一生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="43.91" data-end="51.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">One <span class="weak">of</span> <span class="weak">the</span> things <span class="weak">that</span> <span class="linking">fascinates</span> us <span class="linking">most</span> about <span class="linking">cats</span> <span class="weak">is</span> <span class="weak">the</span> popular belief <span class="weak">that</span> they <span class="weak">have</span> nine lives.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> θɪŋz ðæt ˈfæsəˌneɪts<span class="linking">‿</span>ʌs moʊst<span class="linking">‿</span>əˈbaʊt kæts<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> ˈpɑpjəlɚ bɪˈlif ðæt ðeɪ <span class="weak">həv</span> naɪn laɪvz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、ˈfæsəˌneɪts‿ʌs、moʊst‿əˈbaʊt、kæts‿ɪz 连读；əv、ðə、ɪz、həv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>One of... 作主语；that fascinates... 为定语从句；that they have... 为同位语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>关于猫，最让我们着迷的事情之一，是人们普遍相信猫有九条命。</p></div>
+    <div class="field words"><span>词</span><p>popular belief 普遍看法； nine lives 九条命；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="51.86" data-end="57.69">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Apparently, <span class="weak">there</span> <span class="weak linking">is</span> <span class="weak">a</span> good <span class="linking">deal</span> <span class="weak">of</span> <span class="linking">truth</span> <span class="weak">in</span> <span class="linking">this</span> idea.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈpærəntli ðɛr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ɡʊd dil<span class="linking">‿</span><span class="weak">əv</span> truθ<span class="linking">‿</span><span class="weak">ɪn</span> ðɪs aɪˈdiə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɪz‿ə、dil‿əv、truθ‿ɪn 连读；ɪz、ə、əv、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；Apparently 作评论状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>显然，这种说法有相当多的真实性。</p></div>
+    <div class="field words"><span>词</span><p>apparently 显然； a good deal of 许多； truth 真实性；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="57.69" data-end="63.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">A</span> <span class="linking">cat's</span> ability <span class="weak">to</span> survive <span class="linking">falls</span> <span class="weak">is</span> <span class="linking">based</span> on fact.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> kæts əˈbɪləɾi <span class="weak">tə</span> sɚˈvaɪv fɔlz<span class="linking">‿</span><span class="weak">ɪz</span> beɪst<span class="linking">‿</span>ɑn fækt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɔlz‿ɪz、beɪst‿ɑn 连读；ə、tə、ɪz 弱读/弱化；əˈbɪləɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>to survive falls 作 ability 的后置定语；is based on 为被动短语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>猫从高处坠落后仍能生存的能力是有事实依据的。</p></div>
+    <div class="field words"><span>词</span><p>ability 能力； survive 幸存； fall 坠落； be based on 以……为依据；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="63.18" data-end="73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Recently <span class="weak">the</span> New <span class="linking">York</span> Animal Medical Centre made <span class="weak">a</span> <span class="linking">study</span> <span class="weak">of</span> 132 <span class="linking">cats</span> <span class="linking">over</span> <span class="weak">a</span> <span class="linking">period</span> <span class="weak">of</span> five months.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈrisəntli <span class="weak">ðə</span> nuˈjɔrk ˈænəməl ˈmɛdɪkəl ˈsɛntɚ meɪd<span class="linking">‿</span><span class="weak">ə</span> ˈstʌdi<span class="linking">‿</span><span class="weak">əv</span> wʌn ˈhʌndrəd ˈθɝɾi <span class="weak">tu</span> kæts ˈoʊvɚ<span class="linking">‿</span><span class="weak">ə</span> ˈpɪriəd<span class="linking">‿</span><span class="weak">əv</span> faɪv mʌnθs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿ə、ˈstʌdi‿əv、ˈoʊvɚ‿ə、ˈpɪriəd‿əv 连读；ðə、ə、əv、tu 弱读/弱化；ˈθɝɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>make a study of 表“研究”；over a period of... 作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>最近，纽约动物医疗中心在五个月时间里对 132 只猫进行了研究。</p></div>
+    <div class="field words"><span>词</span><p>make a study of 研究； over a period of 在……期间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="73" data-end="84.07">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">All these cats <span class="weak linking">had</span> one experience <span class="weak">in</span> common: they <span class="weak">had</span> <span class="linking">fallen</span> off high buildings, <span class="linking">yet</span> <span class="linking">only</span> <span class="linking">eight</span> <span class="weak">of</span> them died <span class="weak">from</span> <span class="linking">shock</span> <span class="linking">or</span> injuries.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɔl ðiz kæts hæd wʌn<span class="linking">‿</span>ɪkˈspɪriəns<span class="linking">‿</span><span class="weak">ɪn</span> ˈkɑmən ðeɪ <span class="weak">həd</span> ˈfɔlən<span class="linking">‿</span>ɔf haɪ ˈbɪldɪŋz jɛt ˈoʊnli eɪt<span class="linking">‿</span><span class="weak">əv</span> ðəm daɪd <span class="weak">frəm</span> ʃɑk ɔr ˈɪndʒɚiz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿ɪkˈspɪriəns‿ɪn、ˈfɔlən‿ɔf、eɪt‿əv 连读；ɪn、həd、əv、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>冒号后解释 common experience；yet 表转折。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；解释部分过去完成时 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>所有这些猫都有一个共同经历：它们都曾从高楼上掉下来，但其中只有 8 只死于休克或受伤。</p></div>
+    <div class="field words"><span>词</span><p>have...in common 有共同点； fall off 从……掉下； shock 休克； injury 伤；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="84.07" data-end="93.79">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">Of</span> course, New <span class="linking">York</span> <span class="weak">is</span> <span class="weak">the</span> ideal place <span class="weak">for</span> <span class="linking">such</span> <span class="weak linking">an</span> interesting study, because <span class="weak">there</span> <span class="weak">is</span> no shortage <span class="weak">of</span> tall buildings.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əv</span> kɔrs nuˈjɔrk<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ði</span> aɪˈdiəl pleɪs <span class="weak">fɚ</span> sʌtʃ<span class="linking">‿</span><span class="weak">ən</span> ˈɪntrəstɪŋ ˈstʌdi bɪˈkɔz ðɛr<span class="linking">‿</span><span class="weak">ɪz</span> noʊ ˈʃɔrtɪdʒ<span class="linking">‿</span><span class="weak">əv</span> tɔl ˈbɪldɪŋz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nuˈjɔrk‿ɪz、sʌtʃ‿ən、ðɛr‿ɪz、ˈʃɔrtɪdʒ‿əv 连读；əv、ɪz、ði、fɚ、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>because 引导原因状语从句；there is no shortage of 表“不缺”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>当然，纽约是进行这种有趣研究的理想地点，因为那里不缺高楼。</p></div>
+    <div class="field words"><span>词</span><p>ideal 理想的； no shortage of 不缺； tall building 高楼；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="93.79" data-end="98.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">There</span> <span class="weak">are</span> <span class="linking">plenty</span> <span class="weak">of</span> high-rise windowsills <span class="weak">to</span> fall <span class="weak">from</span>!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> ˈplɛnti<span class="linking">‿</span><span class="weak">əv</span> haɪ raɪz ˈwɪndoʊˌsɪlz <span class="weak">tə</span> fɔl <span class="weak">frəm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɑr、ˈplɛnti‿əv 连读；ɑr、əv、tə、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；to fall from 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>那里有大量可以掉下来的高层窗台！</p></div>
+    <div class="field words"><span>词</span><p>plenty of 大量； high-rise 高层的； windowsill 窗台；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="98.48" data-end="106.89">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">One cat, Sabrina, fell 32 storeys, <span class="linking">yet</span> only suffered <span class="weak linking">from</span> <span class="weak">a</span> broken tooth.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn kæt səˈbrinə fɛl ˈθɝɾi <span class="weak">tu</span> ˈstɔriz jɛt ˈoʊnli ˈsʌfɚd <span class="weak">frəm</span><span class="linking">‿</span><span class="weak">ə</span> ˈbroʊkən tuθ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>frəm‿ə 连读；tu、frəm、ə 弱读/弱化；ˈθɝɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Sabrina 为同位语；yet 表转折；suffer from 表遭受。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>有一只叫萨布丽娜的猫从 32 层楼上掉下来，却只摔断了一颗牙。</p></div>
+    <div class="field words"><span>词</span><p>storey 楼层； suffer from 遭受； broken tooth 断牙；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="106.89" data-end="112.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">'Cats behave like well-trained <span class="linking">paratroopers</span>,' <span class="weak">a</span> doctor said.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kæts bɪˈheɪv laɪk wɛl treɪnd ˈpærəˌtrupɚz<span class="linking">‿</span><span class="weak">ə</span> ˈdɑktɚ sɛd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpærəˌtrupɚz‿ə 连读；ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>直接引语 + 主谓结构；like... 作比较状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一位医生说：“猫的表现像训练有素的伞兵。”</p></div>
+    <div class="field words"><span>词</span><p>behave 表现； well-trained 训练有素的； paratrooper 伞兵；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="112.15" data-end="119.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">It</span> seems <span class="weak">that</span> <span class="weak">the</span> further cats fall, <span class="weak">the</span> less <span class="linking">they</span> <span class="weak">are</span> likely <span class="weak">to</span> injure themselves.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt simz ðæt <span class="weak">ðə</span> ˈfɝðɚ kæts fɔl <span class="weak">ðə</span> lɛs ðeɪ<span class="linking">‿</span><span class="weak">ɑr</span> ˈlaɪkli <span class="weak">tʊ</span><span class="linking">‿</span>ˈɪndʒɚ ðəmˈsɛlvz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðeɪ‿ɑr、tʊ‿ˈɪndʒɚ 连读；ðə、ɑr、tʊ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>It seems that...；the 比较级..., the 比较级... 结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>看来，猫掉得越远，它们越不容易伤到自己。</p></div>
+    <div class="field words"><span>词</span><p>the further..., the less... 越……越不……； be likely to 可能； injure 伤害；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="119.16" data-end="125.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak linking">In</span> <span class="weak">a</span> long drop, they reach <span class="linking">speeds</span> <span class="weak">of</span> 60 <span class="linking">miles</span> <span class="weak">an</span> <span class="linking">hour</span> <span class="weak">and</span> more.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> lɔŋ drɑp ðeɪ ritʃ spidz<span class="linking">‿</span><span class="weak">əv</span> ˈsɪksti maɪlz<span class="linking">‿</span><span class="weak">ən</span> ˈaʊɚ<span class="linking">‿</span><span class="weak">ən</span> mɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn‿ə、spidz‿əv、maɪlz‿ən、ˈaʊɚ‿ən 连读；ɪn、ə、əv、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>In... 作条件/场景状语；reach speeds of... 表达到速度。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>在长距离坠落中，它们的速度达到每小时 60 英里甚至更快。</p></div>
+    <div class="field words"><span>词</span><p>drop 坠落； reach speeds of 达到……速度； miles an hour 英里每小时；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="125.01" data-end="129.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">At high speeds, falling cats <span class="weak">have</span> time <span class="weak">to</span> relax.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æt haɪ spidz ˈfɔlɪŋ kæts <span class="weak">həv</span> taɪm <span class="weak">tə</span> rɪˈlæks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>həv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>At high speeds 作条件状语；falling cats 为主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>在高速下，坠落的猫有时间放松身体。</p></div>
+    <div class="field words"><span>词</span><p>at high speeds 高速下； relax 放松；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="129.23" data-end="133.69">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">They <span class="linking">stretch</span> out their legs like flying squirrels.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ strɛtʃ<span class="linking">‿</span>aʊt ðɛr lɛɡz laɪk ˈflaɪɪŋ ˈskwɝəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>strɛtʃ‿aʊt 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；like... 作比较状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它们像飞鼠一样伸展四肢。</p></div>
+    <div class="field words"><span>词</span><p>stretch out 伸展； squirrel 松鼠；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="133.69" data-end="139.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">This</span> increases <span class="linking">their</span> air-resistance <span class="weak">and</span> reduces <span class="weak">the</span> <span class="linking">shock</span> <span class="weak linking">of</span> impact when they hit <span class="weak">the</span> ground.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span>ɪnˈkrisɪz ðɛr ɛr rɪˈzɪstəns<span class="linking">‿</span><span class="weak">ən</span> rɪˈdusɪz <span class="weak">ðə</span> ʃɑk<span class="linking">‿</span><span class="weak">əv</span> ˈɪmpækt wɛn ðeɪ hɪt <span class="weak">ðə</span> ɡraʊnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪnˈkrisɪz、rɪˈzɪstəns‿ən、ʃɑk‿əv 连读；ən、ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>increases 和 reduces 为并列谓语；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这增加了它们的空气阻力，并减少了落地时的冲击。</p></div>
+    <div class="field words"><span>词</span><p>air-resistance 空气阻力； reduce 减少； shock 冲击； impact 撞击；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>猫的特性: affectionate 亲昵的； mysterious 神秘的； submissive 顺从的； suspicious 怀疑的； feline independence 猫科独立性；</p>
+      <p>坠落与生存: survive falls 坠落后幸存； high-rise windowsill 高层窗台； shock 休克/冲击； injury 伤； impact 撞击； air-resistance 空气阻力；</p>
+      <p>研究表达: make a study of 研究； over a period of 在……期间； have...in common 有共同点； be based on fact 有事实依据；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>never fail to do</code> 表“总能做”。</p>
+      <p><code>One of the things that...is...</code> 主语较长，谓语用单数。</p>
+      <p><code>the further..., the less...</code> 比较级联动结构。</p>
+      <p><code>There is no shortage of...</code> 表“不缺……”。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时用于说明猫的习性和科学结论。</p>
+      <p>现在完成时 <code>have learned</code> 表人类认识已经形成。</p>
+      <p>一般过去时用于研究案例；过去完成时 <code>had fallen</code> 表猫在研究前已有坠楼经历。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>can be friendly</code> 表可能性。</p>
+      <p><code>are likely to injure</code> 表可能受伤。</p>
+      <p>文章整体从传说转向科学解释，语气逐步客观。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>cats are</code>、<code>based on</code>、<code>fallen off</code>、<code>stretch out</code> 的连读。</p>
+      <p>美式闪音: <code>ability</code> /əˈbɪləɾi/、<code>thirty-two</code> /ˈθɝɾi tu/。</p>
+      <p>比较级结构第 15 句可按 <code>the further... / the less...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 9 - Flying Cats</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../09－Flying Cats.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.34,"end":21.77,"text":"Cats never fail to fascinate human beings."},{"index":2,"start":21.77,"end":29.47,"text":"They can be friendly and affectionate towards humans, but they lead mysterious lives of their own as well."},{"index":3,"start":29.47,"end":33.63,"text":"They never become submissive like dogs and horses."},{"index":4,"start":33.63,"end":39.36,"text":"As a result, humans have learned to respect feline independence."},{"index":5,"start":39.36,"end":43.91,"text":"Most cats remain suspicious of humans all their lives."},{"index":6,"start":43.91,"end":51.86,"text":"One of the things that fascinates us most about cats is the popular belief that they have nine lives."},{"index":7,"start":51.86,"end":57.69,"text":"Apparently, there is a good deal of truth in this idea."},{"index":8,"start":57.69,"end":63.18,"text":"A cat's ability to survive falls is based on fact."},{"index":9,"start":63.18,"end":73,"text":"Recently the New York Animal Medical Centre made a study of 132 cats over a period of five months."},{"index":10,"start":73,"end":84.07,"text":"All these cats had one experience in common: they had fallen off high buildings, yet only eight of them died from shock or injuries."},{"index":11,"start":84.07,"end":93.79,"text":"Of course, New York is the ideal place for such an interesting study, because there is no shortage of tall buildings."},{"index":12,"start":93.79,"end":98.48,"text":"There are plenty of high-rise windowsills to fall from!"},{"index":13,"start":98.48,"end":106.89,"text":"One cat, Sabrina, fell 32 storeys, yet only suffered from a broken tooth."},{"index":14,"start":106.89,"end":112.15,"text":"'Cats behave like well-trained paratroopers,' a doctor said."},{"index":15,"start":112.15,"end":119.16,"text":"It seems that the further cats fall, the less they are likely to injure themselves."},{"index":16,"start":119.16,"end":125.01,"text":"In a long drop, they reach speeds of 60 miles an hour and more."},{"index":17,"start":125.01,"end":129.23,"text":"At high speeds, falling cats have time to relax."},{"index":18,"start":129.23,"end":133.69,"text":"They stretch out their legs like flying squirrels."},{"index":19,"start":133.69,"end":139.61,"text":"This increases their air-resistance and reduces the shock of impact when they hit the ground."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

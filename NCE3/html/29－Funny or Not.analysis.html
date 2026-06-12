@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 29 - Funny or Not</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 29 - Funny or Not</h1>
+      <p class="meta">Generated from 29－Funny or Not.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.46" data-end="21.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Whether we <span class="linking">find</span> <span class="weak">a</span> joke <span class="linking">funny</span> or not largely <span class="linking">depends</span> on where we <span class="weak">have</span> <span class="weak">been</span> <span class="linking">brought</span> up.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈwɛðɚ wi faɪnd<span class="linking">‿</span><span class="weak">ə</span> dʒoʊk ˈfʌni ɔr nɑt ˈlɑrdʒli dɪˈpɛndz<span class="linking">‿</span>ɑn wɛr wi hæv bɪn brɔɾ<span class="linking">‿</span>ʌp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faɪnd‿ə、dɪˈpɛndz‿ɑn、brɔɾ‿ʌp 连读；ə 弱读/弱化；brɔɾ‿ʌp 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Whether...or not 引导主语从句；where 引导宾语从句；have been brought up 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般现在时；从句现在完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>我们觉得一个笑话好不好笑，很大程度上取决于我们是在哪里长大的。</p></div>
+    <div class="field words"><span>词</span><p>whether...or not 是否； largely 很大程度上； depend on 取决于； bring up 抚养/养大；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="21.14" data-end="27.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> sense <span class="weak">of</span> <span class="linking">humour</span> <span class="weak">is</span> mysteriously <span class="linking">bound</span> up with national characteristics.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> sɛns<span class="linking">‿</span><span class="weak">əv</span> ˈhjumɚ <span class="weak">ɪz</span> mɪˈstɪriəsli baʊnd<span class="linking">‿</span>ʌp wɪð ˈnæʃənəl ˌkærəktəˈrɪstɪks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɛns‿əv、baʊnd‿ʌp 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；be bound up with 表“与……密切相关”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动/系表结构。</p></div>
+    <div class="field cn"><span>中</span><p>幽默感与民族特征有着神秘而密切的联系。</p></div>
+    <div class="field words"><span>词</span><p>sense of humour 幽默感； mysteriously 神秘地； be bound up with 与……密切相关； national characteristic 民族特征；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="27.58" data-end="33.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">A</span> Frenchman, <span class="weak linking">for</span> instance, might <span class="linking">find</span> <span class="weak">it</span> hard <span class="weak">to</span> <span class="linking">laugh</span> <span class="linking">at</span> <span class="weak">a</span> Russian joke.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈfrɛntʃmən fɔr<span class="linking">‿</span>ˈɪnstəns maɪt faɪnd<span class="linking">‿</span>ɪt hɑrd <span class="weak">tə</span> læf<span class="linking">‿</span>æɾ<span class="linking">‿</span><span class="weak">ə</span> ˈrʌʃən dʒoʊk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɔr‿ˈɪnstəns、faɪnd‿ɪt、læf‿æɾ‿ə 连读；ə、tə 弱读/弱化；læf‿æɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for instance 为插入语；find it hard to do 中 it 作形式宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在语境；might 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>例如，一个法国人可能会觉得很难对一个俄国笑话发笑。</p></div>
+    <div class="field words"><span>词</span><p>for instance 例如； find it hard to do 觉得做某事困难； laugh at 因……发笑；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="33.15" data-end="43.08">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> same <span class="linking">way</span>, <span class="weak">a</span> Russian might fail <span class="weak">to</span> see <span class="linking">anything</span> <span class="linking">amusing</span> <span class="weak linking">in</span> <span class="weak">a</span> joke which <span class="weak">would</span> make <span class="weak linking">an</span> Englishman laugh <span class="weak">to</span> tears.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> seɪm weɪ <span class="weak">ə</span> ˈrʌʃən maɪt feɪl <span class="weak">tə</span> si ˈɛniˌθɪŋ<span class="linking">‿</span>əˈmjuzɪŋ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> dʒoʊk wɪtʃ wʊd meɪk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪŋɡlɪʃmən læf <span class="weak">tə</span> tɪrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈɛniˌθɪŋ‿əˈmjuzɪŋ‿ɪn‿ə、meɪk‿ən‿ˈɪŋɡlɪʃmən 连读；ɪn、ðə、ə、tə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>In the same way 作状语；which 引导定语从句；make sb do 为使役结构。</p></div>
+    <div class="field tense"><span>时态</span><p>might/would 表可能和假设。</p></div>
+    <div class="field cn"><span>中</span><p>同样，一个俄国人也可能看不出某个笑话有什么可笑之处，而这个笑话却会让英国人笑出眼泪。</p></div>
+    <div class="field words"><span>词</span><p>in the same way 同样； fail to do 未能做； amusing 好笑的； laugh to tears 笑出眼泪；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="43.08" data-end="47.99">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Most funny <span class="linking">stories</span> <span class="weak">are</span> <span class="linking">based</span> on comic situations.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/moʊst ˈfʌni ˈstɔriz<span class="linking">‿</span><span class="weak">ɑr</span> beɪst<span class="linking">‿</span>ɑn ˈkɑmɪk ˌsɪtʃuˈeɪʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈstɔriz‿ɑr、beɪst‿ɑn 连读；ɑr 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；are based on 为被动短语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>大多数有趣的故事都基于滑稽的情境。</p></div>
+    <div class="field words"><span>词</span><p>be based on 以……为基础； comic 滑稽的； situation 情境；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="47.99" data-end="54.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">In</span> spite <span class="weak">of</span> national differences, certain funny situations <span class="weak">have</span> <span class="weak">a</span> <span class="linking">universal</span> appeal.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> spaɪɾ<span class="linking">‿</span><span class="weak">əv</span> ˈnæʃənəl ˈdɪfərənsɪz ˈsɝɾən ˈfʌni ˌsɪtʃuˈeɪʃənz hæv<span class="linking">‿</span><span class="weak">ə</span> ˌjunəˈvɝsəl<span class="linking">‿</span>əˈpil/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>spaɪɾ‿əv、hæv‿ə、ˌjunəˈvɝsəl‿əˈpil 连读；ɪn、əv、ə 弱读/弱化；spaɪɾ‿əv、ˈsɝɾən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In spite of... 作让步状语；主句为主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管存在民族差异，某些滑稽情境仍具有普遍的吸引力。</p></div>
+    <div class="field words"><span>词</span><p>in spite of 尽管； national difference 民族差异； universal 普遍的； appeal 吸引力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="54.56" data-end="63.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">No matter where <span class="weak">you</span> live, <span class="weak">you</span> <span class="weak">would</span> <span class="linking">find</span> <span class="weak">it</span> difficult not <span class="weak">to</span> <span class="linking">laugh</span> at, say, Charlie <span class="linking">Chaplin's</span> early films.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/noʊ ˈmæɾɚ wɛr ju lɪv ju wʊd faɪnd<span class="linking">‿</span>ɪt ˈdɪfəkəlt nɑt <span class="weak">tə</span> læf<span class="linking">‿</span>æt seɪ ˈtʃɑrli ˈtʃæplɪnz<span class="linking">‿</span>ˈɝli fɪlmz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faɪnd‿ɪt、læf‿æt、ˈtʃæplɪnz‿ˈɝli 连读；tə 弱读/弱化；ˈmæɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>No matter where 引导让步状语从句；find it difficult to do 中 it 作形式宾语；say 为插入语。</p></div>
+    <div class="field tense"><span>时态</span><p>从句一般现在时；主句 would 表假设/普遍判断。</p></div>
+    <div class="field cn"><span>中</span><p>无论你住在哪里，你都会觉得很难不对比如查理·卓别林早期的电影发笑。</p></div>
+    <div class="field words"><span>词</span><p>no matter where 无论哪里； find it difficult to do 觉得做某事困难； say 比方说； early films 早期电影；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="63.16" data-end="71.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">However</span>, <span class="weak">a</span> new type <span class="weak">of</span> humour, which stems largely <span class="weak">from</span> <span class="weak">the</span> U.S., <span class="weak">has</span> recently come into fashion.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvɚ <span class="weak">ə</span> nu taɪp<span class="linking">‿</span><span class="weak">əv</span> ˈhjumɚ wɪtʃ stɛmz ˈlɑrdʒli <span class="weak">frəm</span> <span class="weak">ði</span> ju ɛs hæz ˈrisəntli kʌm<span class="linking">‿</span>ˈɪntu ˈfæʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>taɪp‿əv、kʌm‿ˈɪntu 连读；ə、əv、frəm、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>However 表转折；which 引导非限制性定语从句；come into fashion 为固定短语。</p></div>
+    <div class="field tense"><span>时态</span><p>主句现在完成时；定语从句一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，一种主要源自美国的新型幽默最近流行起来了。</p></div>
+    <div class="field words"><span>词</span><p>stem from 源自； largely 主要地； the U.S. 美国； come into fashion 流行起来；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="71.51" data-end="73.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">It</span> <span class="weak">is</span> called 'sick humour'.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> kɔld sɪk ˈhjumɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪz 连读；ɪz 弱读/弱化；ɪɾ‿ɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>简单被动句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>它被称为“病态幽默”。</p></div>
+    <div class="field words"><span>词</span><p>sick humour 病态幽默；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="73.86" data-end="82.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Comedians base their <span class="linking">jokes</span> on tragic situations like violent <span class="linking">death</span> or <span class="linking">serious</span> accidents.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kəˈmidiənz beɪs ðɛr dʒoʊks<span class="linking">‿</span>ɑn ˈtrædʒɪk ˌsɪtʃuˈeɪʃənz laɪk ˈvaɪələnt dɛθ<span class="linking">‿</span>ɔr ˈsɪriəs<span class="linking">‿</span>ˈæksədənts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dʒoʊks‿ɑn、dɛθ‿ɔr、ˈsɪriəs‿ˈæksədənts 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>base...on... 为固定搭配；like 引出例子。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>喜剧演员把他们的笑话建立在暴力死亡或严重事故等悲剧情境之上。</p></div>
+    <div class="field words"><span>词</span><p>comedian 喜剧演员； base...on 以……为基础； tragic 悲剧的； violent death 暴力死亡； serious accident 严重事故；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.68" data-end="87.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Many people find this <span class="linking">sort</span> <span class="weak">of</span> joke distasteful.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɛni ˈpipəl faɪnd ðɪs sɔrt<span class="linking">‿</span><span class="weak">əv</span> dʒoʊk dɪsˈteɪstfəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɔrt‿əv 连读；əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>find + 宾语 + 宾补，distasteful 作宾语补足语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>许多人觉得这类笑话令人反感。</p></div>
+    <div class="field words"><span>词</span><p>this sort of 这类； distasteful 令人反感的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="87.3" data-end="93.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> <span class="linking">following</span> example <span class="weak">of</span> 'sick humour' <span class="linking">will</span> enable <span class="weak">you</span> <span class="weak">to</span> judge <span class="weak">for</span> yourself.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈfɑloʊɪŋ<span class="linking">‿</span>ɪɡˈzæmpəl<span class="linking">‿</span><span class="weak">əv</span> sɪk ˈhjumɚ wɪl<span class="linking">‿</span>ɪˈneɪbəl ju <span class="weak">tə</span> dʒʌdʒ <span class="weak">fɚ</span> jɔrˈsɛlf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfɑloʊɪŋ‿ɪɡˈzæmpəl‿əv、wɪl‿ɪˈneɪbəl 连读；ðə、əv、tə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>enable sb to do 表“使某人能够做”；for yourself 表“亲自”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般将来时。</p></div>
+    <div class="field cn"><span>中</span><p>下面这个“病态幽默”的例子会让你自己作出判断。</p></div>
+    <div class="field words"><span>词</span><p>following 以下的； enable 使能够； judge for yourself 自己判断；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="93.87" data-end="100.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">A</span> man who <span class="weak">had</span> broken <span class="weak">his</span> right leg <span class="weak">was</span> taken <span class="weak">to</span> <span class="linking">hospital</span> <span class="weak">a</span> few weeks before Christmas.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> mæn hu <span class="weak">həd</span> ˈbroʊkən <span class="weak">hɪz</span> raɪt lɛɡ <span class="weak">wəz</span> ˈteɪkən <span class="weak">tə</span> ˈhɑˌspɪɾəl<span class="linking">‿</span><span class="weak">ə</span> fju wiks bɪˈfɔr ˈkrɪsməs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhɑˌspɪɾəl‿ə 连读；ə、həd、hɪz、wəz、tə 弱读/弱化；ˈhɑˌspɪɾəl‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句；was taken 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>定语从句过去完成时；主句一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>圣诞节前几周，一个摔断右腿的男人被送进了医院。</p></div>
+    <div class="field words"><span>词</span><p>break one's leg 摔断腿； be taken to hospital 被送往医院；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="100.55" data-end="108.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">From</span> <span class="weak">the</span> moment he arrived <span class="weak">there</span>, he <span class="linking">kept</span> on pestering <span class="weak">his</span> doctor <span class="weak">to</span> tell <span class="weak">him</span> when he <span class="weak">would</span> <span class="weak">be</span> able <span class="weak">to</span> go home.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> <span class="weak">ðə</span> ˈmoʊmənt hi əˈraɪvd ðɛr hi kɛpt<span class="linking">‿</span>ɑn ˈpɛstərɪŋ <span class="weak">hɪz</span> ˈdɑktɚ <span class="weak">tə</span> tɛl <span class="weak">hɪm</span> wɛn hi wʊd bi ˈeɪbəl <span class="weak">tə</span> ɡoʊ hoʊm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kɛpt‿ɑn 连读；frəm、ðə、hɪz、tə、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>From the moment 引导时间状语；kept on doing 表反复持续；when 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be able to 为过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>从他到医院那一刻起，他就不停地缠着医生问他什么时候能回家。</p></div>
+    <div class="field words"><span>词</span><p>from the moment 从……那一刻起； keep on doing 不断做； pester 纠缠； be able to 能够；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="108.84" data-end="112.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">He dreaded having <span class="weak">to</span> spend <span class="linking">Christmas</span> <span class="weak">in</span> hospital.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈdrɛdɪd ˈhævɪŋ <span class="weak">tə</span> spɛnd ˈkrɪsməs<span class="linking">‿</span><span class="weak">ɪn</span> ˈhɑˌspɪɾəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkrɪsməs‿ɪn 连读；tə、ɪn 弱读/弱化；ˈhɑˌspɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>dread doing 表“害怕做”；having to spend 为动名词短语作宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他害怕不得不在医院里过圣诞节。</p></div>
+    <div class="field words"><span>词</span><p>dread 害怕； have to 不得不； spend Christmas 过圣诞节； in hospital 住院；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="112.72" data-end="117.98">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Though <span class="weak">the</span> doctor did <span class="weak">his</span> best, <span class="weak">the</span> patient's recovery <span class="weak">was</span> slow.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ <span class="weak">ðə</span> ˈdɑktɚ dɪd <span class="weak">hɪz</span> bɛst <span class="weak">ðə</span> ˈpeɪʃənts rɪˈkʌvəri <span class="weak">wəz</span> sloʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、hɪz、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；主句为主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管医生尽了最大努力，病人的康复仍然很慢。</p></div>
+    <div class="field words"><span>词</span><p>do one's best 尽力； patient 病人； recovery 康复；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="117.98" data-end="123.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">On Christmas day, <span class="weak">the</span> man still <span class="weak">had</span> <span class="weak">his</span> right leg <span class="weak">in</span> plaster.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɑn ˈkrɪsməs deɪ <span class="weak">ðə</span> mæn stɪl hæd <span class="weak">hɪz</span> raɪt lɛɡ <span class="weak">ɪn</span> ˈplæstɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、hɪz、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>On Christmas day 作时间状语；have sth in plaster 表状态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>圣诞节那天，这个男人的右腿仍打着石膏。</p></div>
+    <div class="field words"><span>词</span><p>in plaster 打着石膏； still 仍然；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="123.68" data-end="129.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">He <span class="linking">spent</span> <span class="weak">a</span> miserable <span class="linking">day</span> <span class="weak">in</span> bed <span class="linking">thinking</span> <span class="weak linking">of</span> all <span class="weak">the</span> fun he <span class="weak">was</span> missing.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi spɛnt<span class="linking">‿</span><span class="weak">ə</span> ˈmɪzərəbəl deɪ <span class="weak">ɪn</span> bɛd ˈθɪŋkɪŋ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl <span class="weak">ðə</span> fʌn hi <span class="weak">wəz</span> ˈmɪsɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>spɛnt‿ə、ˈθɪŋkɪŋ‿əv‿ɔl 连读；ə、ɪn、əv、ðə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>spent...in bed 为主干；thinking of... 为现在分词短语作伴随状语；he was missing 为定语从句，省略关系词。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；定语从句过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>他在床上痛苦地度过了一天，想着自己错过的所有乐趣。</p></div>
+    <div class="field words"><span>词</span><p>miserable 痛苦的； in bed 卧床； think of 想到； miss 错过；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="129.44" data-end="141.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak">The</span> following day, however, <span class="weak">the</span> doctor consoled <span class="weak">him</span> by telling <span class="weak">him</span> <span class="weak">that</span> <span class="weak">his</span> <span class="linking">chances</span> <span class="weak">of</span> <span class="weak linking">being</span> able <span class="weak">to</span> leave <span class="linking">hospital</span> <span class="weak">in</span> time <span class="weak">for</span> New Year celebrations <span class="weak">were</span> good.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈfɑloʊɪŋ deɪ haʊˈɛvɚ <span class="weak">ðə</span> ˈdɑktɚ kənˈsoʊld <span class="weak">hɪm</span> baɪ ˈtɛlɪŋ <span class="weak">hɪm</span> ðæt <span class="weak">hɪz</span> ˈtʃænsɪz<span class="linking">‿</span><span class="weak">əv</span> ˈbiɪŋ<span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> liv ˈhɑˌspɪɾəl<span class="linking">‿</span><span class="weak">ɪn</span> taɪm <span class="weak">fɚ</span> nu jɪr ˌsɛləˈbreɪʃənz <span class="weak">wɚ</span> ɡʊd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtʃænsɪz‿əv、ˈbiɪŋ‿ˈeɪbəl、ˈhɑˌspɪɾəl‿ɪn 连读；ðə、hɪm、hɪz、əv、tə、ɪn 弱读/弱化；ˈhɑˌspɪɾəl‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>however 为插入转折；by telling him... 表方式；that 引导宾语从句；of being able to leave... 作 chances 的后置修饰。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，第二天医生安慰他说，他很有希望及时出院参加新年庆祝活动。</p></div>
+    <div class="field words"><span>词</span><p>console 安慰； chance 可能性； leave hospital 出院； in time for 及时赶上； celebration 庆祝活动；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="141.56" data-end="149.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">The</span> man took <span class="linking">heart</span> <span class="weak">and</span> sure <span class="linking">enough</span>, on New <span class="linking">Year's</span> Eve he <span class="weak linking">was</span> able <span class="weak">to</span> hobble along <span class="weak">to</span> <span class="weak">a</span> party.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mæn tʊk hɑrt<span class="linking">‿</span><span class="weak">ən</span> ʃʊr<span class="linking">‿</span>ɪˈnʌf<span class="linking">‿</span>ɑn nu jɪrz<span class="linking">‿</span>iv hi <span class="weak">wəz</span><span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> ˈhɑbəl<span class="linking">‿</span>əˈlɔŋ <span class="weak">tə</span> <span class="weak">ə</span> ˈpɑrti/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɑrt‿ən、ʃʊr‿ɪˈnʌf‿ɑn、jɪrz‿iv、wəz‿ˈeɪbəl、ˈhɑbəl‿əˈlɔŋ 连读；ðə、ən、wəz、tə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>took heart 与 was able to 为并列叙述；on New Year's Eve 作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was able to 表过去能力/实现。</p></div>
+    <div class="field cn"><span>中</span><p>这人振作起来；果然，在除夕那天，他能够一瘸一拐地去参加聚会。</p></div>
+    <div class="field words"><span>词</span><p>take heart 振作起来； sure enough 果然； New Year's Eve 除夕； hobble along 一瘸一拐地走；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="149.68" data-end="158.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">To</span> compensate <span class="weak">for</span> <span class="weak linking">his</span> <span class="linking">unpleasant</span> <span class="linking">experiences</span> <span class="weak">in</span> hospital, <span class="weak">the</span> man <span class="linking">drank</span> <span class="weak">a</span> little more <span class="weak">than</span> <span class="weak">was</span> good <span class="weak">for</span> <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span> ˈkɑmpənˌseɪt <span class="weak">fɚ</span> <span class="weak">hɪz</span><span class="linking">‿</span>ənˈplɛzənt<span class="linking">‿</span>ɪkˈspɪriənsɪz<span class="linking">‿</span><span class="weak">ɪn</span> ˈhɑˌspɪɾəl <span class="weak">ðə</span> mæn dræŋk<span class="linking">‿</span><span class="weak">ə</span> ˈlɪɾəl mɔr ðæn <span class="weak">wəz</span> ɡʊd <span class="weak">fɚ</span> <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪz‿ənˈplɛzənt‿ɪkˈspɪriənsɪz‿ɪn、dræŋk‿ə 连读；tə、fɚ、hɪz、ɪn、ðə、ə 弱读/弱化；ˈhɑˌspɪɾəl、ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>To compensate for... 为目的状语；more than was good for him 为比较结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>为了补偿自己在医院里的不愉快经历，这人喝得有点过量。</p></div>
+    <div class="field words"><span>词</span><p>compensate for 补偿； unpleasant 不愉快的； experience 经历； more than was good for him 超过适量；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="158.28" data-end="167.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> process, he enjoyed himself <span class="linking">thoroughly</span> <span class="weak">and</span> kept <span class="linking">telling</span> everybody how much he hated hospitals.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> ˈprɑsɛs hi ɛnˈdʒɔɪd hɪmˈsɛlf ˈθɝəli <span class="weak">ən</span> kɛpt ˈtɛlɪŋ<span class="linking">‿</span>ˈɛvribədi haʊ mʌtʃ hi ˈheɪɾəd ˈhɑˌspɪɾəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtɛlɪŋ‿ˈɛvribədi 连读；ɪn、ðə、ən 弱读/弱化；ˈheɪɾəd、ˈhɑˌspɪɾəlz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>enjoyed 和 kept telling 为并列谓语；how much 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在这个过程中，他玩得非常尽兴，并不停地告诉大家他有多讨厌医院。</p></div>
+    <div class="field words"><span>词</span><p>in the process 在此过程中； enjoy oneself 玩得开心； thoroughly 彻底地/非常； keep telling 不停地说；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="167.15" data-end="175.07">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">He <span class="weak">was</span> still mumbling <span class="linking">something</span> about <span class="linking">hospitals</span> at <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> party when he <span class="linking">slipped</span> <span class="linking">on</span> <span class="weak">a</span> piece <span class="weak linking">of</span> ice <span class="weak">and</span> broke <span class="weak">his</span> left leg.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span> stɪl ˈmʌmbəlɪŋ ˈsʌmθɪŋ<span class="linking">‿</span>əˈbaʊt ˈhɑˌspɪɾəlz<span class="linking">‿</span>æt <span class="weak">ði</span> ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈpɑrti wɛn hi slɪpt<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> pis<span class="linking">‿</span><span class="weak">əv</span> aɪs<span class="linking">‿</span><span class="weak">ən</span> broʊk <span class="weak">hɪz</span> lɛft lɛɡ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsʌmθɪŋ‿əˈbaʊt、ˈhɑˌspɪɾəlz‿æt、ɛnd‿əv、slɪpt‿ɑn‿ə、pis‿əv 连读；wəz、ði、əv、ðə、ə、ən 弱读/弱化；ˈhɑˌspɪɾəlz‿æt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>was mumbling 为背景动作；when 表“就在这时”；slipped 和 broke 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去进行时 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>聚会结束时，他还在含含糊糊地念叨着医院，这时他在一块冰上滑倒，摔断了左腿。</p></div>
+    <div class="field words"><span>词</span><p>mumble 咕哝； at the end of 在……结束时； slip on 滑倒； a piece of ice 一块冰； break one's left leg 摔断左腿；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>幽默与文化: sense of humour 幽默感； national characteristic 民族特征； comic situation 滑稽情境； universal appeal 普遍吸引力； sick humour 病态幽默；</p>
+      <p>评价与反应: amusing 好笑的； distasteful 令人反感的； laugh to tears 笑出眼泪； judge for yourself 自己判断；</p>
+      <p>住院与康复: be taken to hospital 被送医； recovery 康复； in plaster 打着石膏； leave hospital 出院； in time for 及时赶上；</p>
+      <p>动作与状态: pester 纠缠； dread 害怕； console 安慰； take heart 振作； hobble along 一瘸一拐地走； mumble 咕哝； slip on 滑倒；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>Whether...or not...depends on...</code>: 是否……取决于……。</p>
+      <p><code>find it + adj. + to do</code>: it 作形式宾语。</p>
+      <p><code>No matter where...</code>: 让步状语从句。</p>
+      <p><code>be based on</code> / <code>base...on...</code>: 被动和主动两种表达。</p>
+      <p><code>from the moment...</code>: 表“从……那一刻起”。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时用于议论幽默规律：<code>depends</code>, <code>is bound up</code>, <code>are based on</code>。</p>
+      <p>现在完成时用于已形成的背景：<code>have been brought up</code>, <code>has come into fashion</code>。</p>
+      <p>一般过去时用于讲述例子：<code>was taken</code>, <code>kept</code>, <code>spent</code>, <code>slipped</code>, <code>broke</code>。</p>
+      <p>过去进行时用于背景动作：<code>he was missing</code>, <code>was still mumbling</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>might find</code>, <code>might fail</code>, <code>would make</code>, <code>would find</code> 用于假设不同民族对笑话的反应。</p>
+      <p><code>will enable you to judge</code> 带引导读者判断的语气。</p>
+      <p><code>would be able to go home</code> 和 <code>was able to hobble</code> 分别表示过去将来的期待和最终实现的能力。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>find a</code>、<code>laugh at</code>、<code>based on</code>、<code>kept on</code>、<code>slipped on</code> 要连起来读。</p>
+      <p>弱读词: <code>of</code>, <code>to</code>, <code>for</code>, <code>that</code>, <code>and</code> 在长句中弱读，如 <code>the sense of humour</code>、<code>to tell him</code>。</p>
+      <p>意群停顿: 第 19、23 句较长，可按时间状语、主句、从句分组，避免一口气读到底。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 29 - Funny or Not</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../29－Funny or Not.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.46,"end":21.14,"text":"Whether we find a joke funny or not largely depends on where we have been brought up."},{"index":2,"start":21.14,"end":27.58,"text":"The sense of humour is mysteriously bound up with national characteristics."},{"index":3,"start":27.58,"end":33.15,"text":"A Frenchman, for instance, might find it hard to laugh at a Russian joke."},{"index":4,"start":33.15,"end":43.08,"text":"In the same way, a Russian might fail to see anything amusing in a joke which would make an Englishman laugh to tears."},{"index":5,"start":43.08,"end":47.99,"text":"Most funny stories are based on comic situations."},{"index":6,"start":47.99,"end":54.56,"text":"In spite of national differences, certain funny situations have a universal appeal."},{"index":7,"start":54.56,"end":63.16,"text":"No matter where you live, you would find it difficult not to laugh at, say, Charlie Chaplin's early films."},{"index":8,"start":63.16,"end":71.51,"text":"However, a new type of humour, which stems largely from the U.S., has recently come into fashion."},{"index":9,"start":71.51,"end":73.86,"text":"It is called 'sick humour'."},{"index":10,"start":73.86,"end":82.68,"text":"Comedians base their jokes on tragic situations like violent death or serious accidents."},{"index":11,"start":82.68,"end":87.3,"text":"Many people find this sort of joke distasteful."},{"index":12,"start":87.3,"end":93.87,"text":"The following example of 'sick humour' will enable you to judge for yourself."},{"index":13,"start":93.87,"end":100.55,"text":"A man who had broken his right leg was taken to hospital a few weeks before Christmas."},{"index":14,"start":100.55,"end":108.84,"text":"From the moment he arrived there, he kept on pestering his doctor to tell him when he would be able to go home."},{"index":15,"start":108.84,"end":112.72,"text":"He dreaded having to spend Christmas in hospital."},{"index":16,"start":112.72,"end":117.98,"text":"Though the doctor did his best, the patient's recovery was slow."},{"index":17,"start":117.98,"end":123.68,"text":"On Christmas day, the man still had his right leg in plaster."},{"index":18,"start":123.68,"end":129.44,"text":"He spent a miserable day in bed thinking of all the fun he was missing."},{"index":19,"start":129.44,"end":141.56,"text":"The following day, however, the doctor consoled him by telling him that his chances of being able to leave hospital in time for New Year celebrations were good."},{"index":20,"start":141.56,"end":149.68,"text":"The man took heart and sure enough, on New Year's Eve he was able to hobble along to a party."},{"index":21,"start":149.68,"end":158.28,"text":"To compensate for his unpleasant experiences in hospital, the man drank a little more than was good for him."},{"index":22,"start":158.28,"end":167.15,"text":"In the process, he enjoyed himself thoroughly and kept telling everybody how much he hated hospitals."},{"index":23,"start":167.15,"end":175.07,"text":"He was still mumbling something about hospitals at the end of the party when he slipped on a piece of ice and broke his left leg."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

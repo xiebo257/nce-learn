@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 46 - Do It Yourself</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 46 - Do It Yourself</h1>
+      <p class="meta">Generated from 46－Do It Yourself.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+      <a href="#sentence-30">30</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.95" data-end="27.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">So <span class="linking">great</span> <span class="weak linking">is</span> our passion <span class="weak">for</span> doing things <span class="weak linking">for</span> ourselves, <span class="weak">that</span> we <span class="weak">are</span> <span class="linking">becoming</span> increasingly less <span class="linking">dependent</span> on specialized labour.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/soʊ ɡreɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> aʊr ˈpæʃən <span class="weak">fɚ</span> ˈduɪŋ θɪŋz <span class="weak">fɚ</span> aʊrˈsɛlvz ðæt wi <span class="weak">ɑr</span> bɪˈkʌmɪŋ<span class="linking">‿</span>ɪnˈkrisɪŋli lɛs dɪˈpɛndənt<span class="linking">‿</span>ɑn ˈspɛʃəˌlaɪzd ˈleɪbɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡreɪɾ‿ɪz、bɪˈkʌmɪŋ‿ɪnˈkrisɪŋli、dɪˈpɛndənt‿ɑn 连读；ɪz、fɚ、ɑr 弱读/弱化；ɡreɪɾ‿ɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>So great 置首引起倒装；so...that 引导结果状语从句；for doing... 修饰 passion。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 现在进行时，表示趋势正在发展。</p></div>
+    <div class="field cn"><span>中</span><p>我们自己动手做事的热情如此高涨，以至于我们越来越不依赖专业劳动力。</p></div>
+    <div class="field words"><span>词</span><p>passion 热情； do things for ourselves 自己动手做事； increasingly 越来越； dependent on 依赖； specialized labour 专业劳动力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="27.22" data-end="35.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">No one <span class="weak">can</span> <span class="linking">plead</span> ignorance <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">subject</span> any longer, <span class="weak">for</span> <span class="weak">there</span> <span class="weak">are</span> countless do-it-yourself publications.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/noʊ wʌn kæn plid<span class="linking">‿</span>ˈɪɡnərəns<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈsʌbdʒɪkt<span class="linking">‿</span>ˈɛni ˈlɔŋɡɚ <span class="weak">fɚ</span> ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> ˈkaʊntləs ˌdu ɪt jʊrˈsɛlf ˌpʌblɪˈkeɪʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>plid‿ˈɪɡnərəns‿əv‿ə、ˈsʌbdʒɪkt‿ˈɛni、ðɛr‿ɑr 连读；əv、ə、fɚ、ɑr 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>No one 作主语；for 引导原因分句；there be 句型。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>再也没有人能以不懂某个题目为借口，因为有无数的 DIY 出版物。</p></div>
+    <div class="field words"><span>词</span><p>plead ignorance of 以不知为借口； any longer 再； countless 无数的； publication 出版物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="35.22" data-end="43.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Armed with <span class="weak">the</span> right <span class="linking">tools</span> <span class="weak">and</span> materials, newlyweds <span class="linking">gaily</span> <span class="linking">embark</span> on <span class="weak">the</span> <span class="linking">task</span> <span class="weak">of</span> decorating <span class="linking">their</span> own homes.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɑrmd wɪð <span class="weak">ðə</span> raɪt tulz<span class="linking">‿</span><span class="weak">ən</span> məˈtɪriəlz ˈnuliˌwɛdz ˈɡeɪli ɪmˈbɑrk<span class="linking">‿</span>ɑn <span class="weak">ðə</span> tæsk<span class="linking">‿</span><span class="weak">əv</span> ˈdɛkəˌreɪɾɪŋ ðɛr<span class="linking">‿</span>oʊn hoʊmz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tulz‿ən、ɪmˈbɑrk‿ɑn、tæsk‿əv、ðɛr‿oʊn 连读；ðə、ən、əv 弱读/弱化；ˈdɛkəˌreɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Armed with... 为过去分词短语作状语；embark on 表“开始从事”；of decorating... 修饰 task。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>新婚夫妇配备了合适的工具和材料，兴高采烈地开始装饰自己的家。</p></div>
+    <div class="field words"><span>词</span><p>armed with 配备着； tool 工具； material 材料； newlywed 新婚者； gaily 高兴地； embark on 开始从事； decorate 装饰；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.7" data-end="56.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Men, particularly, spend <span class="linking">hours</span> <span class="weak">of</span> their leisure time installing <span class="linking">their</span> own fireplaces, <span class="linking">laying</span> out <span class="linking">their</span> own gardens, building <span class="linking">garages</span> <span class="weak">and</span> making furniture.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/mɛn pɚˈtɪkjəlɚli spɛnd ˈaʊɚz<span class="linking">‿</span><span class="weak">əv</span> ðɛr ˈliʒɚ taɪm<span class="linking">‿</span>ɪnˈstɔlɪŋ ðɛr<span class="linking">‿</span>oʊn ˈfaɪɚˌpleɪsɪz ˈleɪɪŋ<span class="linking">‿</span>aʊt ðɛr<span class="linking">‿</span>oʊn ˈɡɑrdənz ˈbɪldɪŋ ɡəˈrɑʒɪz<span class="linking">‿</span><span class="weak">ən</span> ˈmeɪkɪŋ ˈfɝnɪtʃɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈaʊɚz‿əv、taɪm‿ɪnˈstɔlɪŋ、ðɛr‿oʊn、ˈleɪɪŋ‿aʊt、ðɛr‿oʊn 连读；əv、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>spend time doing；installing/laying/building/making 为并列动名词。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>尤其是男人，会把许多闲暇时间花在安装自己的壁炉、布置自己的花园、建车库和做家具上。</p></div>
+    <div class="field words"><span>词</span><p>particularly 尤其； leisure time 闲暇时间； install 安装； fireplace 壁炉； lay out 布置； garage 车库； furniture 家具；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="56.23" data-end="62.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Some really <span class="linking">keen</span> enthusiasts go so <span class="linking">far</span> <span class="weak">as</span> <span class="weak">to</span> build <span class="linking">their</span> own computers.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌm ˈriəli kin<span class="linking">‿</span>ɪnˈθuziˌæsts ɡoʊ soʊ fɑr<span class="linking">‿</span>æz <span class="weak">tə</span> bɪld ðɛr<span class="linking">‿</span>oʊn kəmˈpjuɾɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kin‿ɪnˈθuziˌæsts、fɑr‿æz、ðɛr‿oʊn 连读；tə 弱读/弱化；kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>go so far as to do 表“竟然做到……的地步”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>一些真正热衷的人甚至做到自己组装电脑的地步。</p></div>
+    <div class="field words"><span>词</span><p>keen 热衷的； enthusiast 爱好者； go so far as to do 甚至做到……；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="62.48" data-end="75.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Shops cater <span class="weak">for</span> <span class="weak">the</span> do-it-yourself craze <span class="linking">not</span> only by running <span class="linking">special</span> advisory services <span class="weak">for</span> novices, but <span class="linking">by</span> offering consumers <span class="linking">bits</span> <span class="weak">and</span> pieces which they <span class="weak linking">can</span> assemble at home.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃɑps ˈkeɪɾɚ <span class="weak">fɚ</span> <span class="weak">ðə</span> ˌdu ɪt jʊrˈsɛlf kreɪz nɑɾ<span class="linking">‿</span>ˈoʊnli baɪ ˈrʌnɪŋ ˈspɛʃəl<span class="linking">‿</span>ædˈvaɪzəri ˈsɝvəsɪz <span class="weak">fɚ</span> ˈnɑvəsɪz bət baɪ ˈɔfərɪŋ kənˈsumɚz bɪts<span class="linking">‿</span><span class="weak">ən</span> ˈpisɪz wɪtʃ ðeɪ kæn<span class="linking">‿</span>əˈsɛmbəl<span class="linking">‿</span>æt hoʊm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɑɾ‿ˈoʊnli、ˈspɛʃəl‿ædˈvaɪzəri、bɪts‿ən、kæn‿əˈsɛmbəl‿æt 连读；fɚ、ðə、ən 弱读/弱化；ˈkeɪɾɚ、nɑɾ‿ˈoʊnli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not only by...but by... 连接两个方式状语；which 引导定语从句修饰 bits and pieces。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can assemble 表能力。</p></div>
+    <div class="field cn"><span>中</span><p>商店迎合 DIY 热潮，不仅为新手开设专门咨询服务，还向消费者提供可在家组装的零部件。</p></div>
+    <div class="field words"><span>词</span><p>cater for 迎合/满足； craze 狂热； advisory service 咨询服务； novice 新手； consumer 消费者； bits and pieces 零碎部件； assemble 组装；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="75.74" data-end="86.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Such things provide <span class="weak linking">an</span> <span class="linking">excellent</span> outlet <span class="weak">for</span> <span class="linking">pent</span> up creative energy, <span class="linking">but</span> unfortunately <span class="linking">not</span> <span class="linking">all</span> <span class="weak linking">of</span> <span class="linking">us</span> <span class="weak">are</span> born handymen.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌtʃ θɪŋz prəˈvaɪd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛksələnt ˈaʊtˌlɛt <span class="weak">fɚ</span> pɛnt<span class="linking">‿</span>ʌp kriˈeɪɾɪv<span class="linking">‿</span>ˈɛnɚdʒi bəɾ<span class="linking">‿</span>ənˈfɔrtʃənətli nɑɾ<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs<span class="linking">‿</span><span class="weak">ɑr</span> bɔrn ˈhændiˌmɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>prəˈvaɪd‿ən‿ˈɛksələnt、pɛnt‿ʌp、kriˈeɪɾɪv‿ˈɛnɚdʒi、bəɾ‿ənˈfɔrtʃənətli、nɑɾ‿ɔl‿əv‿ʌs‿ɑr 连读；ən、fɚ、əv、ɑr 弱读/弱化；kriˈeɪɾɪv‿ˈɛnɚdʒi、bəɾ‿ənˈfɔrtʃənətli、nɑɾ‿ɔl‿əv‿ʌs‿ɑr 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；not all 表部分否定。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；are born 表被动/状态。</p></div>
+    <div class="field cn"><span>中</span><p>这些东西为被压抑的创造力提供了极好的出口，但遗憾的是，并非我们所有人天生都是能工巧匠。</p></div>
+    <div class="field words"><span>词</span><p>provide an outlet 提供出口； pent up 被压抑的； creative energy 创造力； not all 并非所有； handyman 能工巧匠；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="86.47" data-end="93.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Some wives tend <span class="weak">to</span> believe <span class="weak">that</span> their <span class="linking">husbands</span> <span class="weak">are</span> infinitely <span class="linking">resourceful</span> <span class="weak">and</span> <span class="weak">can</span> <span class="linking">fix</span> anything.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌm waɪvz tɛnd <span class="weak">tə</span> bɪˈliv ðæt ðɛr ˈhʌzbəndz<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ˈɪnfənətli rɪˈsɔrsfəl<span class="linking">‿</span><span class="weak">ən</span> kæn fɪks<span class="linking">‿</span>ˈɛniˌθɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhʌzbəndz‿ɑr‿ˈɪnfənətli、rɪˈsɔrsfəl‿ən、fɪks‿ˈɛniˌθɪŋ 连读；tə、ɑr、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>tend to do 表“往往”；that 引导宾语从句；are 和 can fix 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>有些妻子往往认为自己的丈夫极其足智多谋，什么都能修。</p></div>
+    <div class="field words"><span>词</span><p>tend to 往往； infinitely 极其/无限地； resourceful 足智多谋的； fix 修理；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="93.94" data-end="103.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Even men who <span class="weak">can</span> hardly drive <span class="weak">a</span> <span class="linking">nail</span> <span class="weak">in</span> <span class="linking">straight</span> <span class="weak">are</span> supposed <span class="weak">to</span> <span class="weak">be</span> <span class="linking">born</span> electricians, carpenters, <span class="linking">plumbers</span> <span class="weak">and</span> mechanics.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈivən mɛn hu kæn ˈhɑrdli draɪv<span class="linking">‿</span><span class="weak">ə</span> neɪl<span class="linking">‿</span><span class="weak">ɪn</span> streɪɾ<span class="linking">‿</span><span class="weak">ɑr</span> səˈpoʊzd <span class="weak">tə</span> bi bɔrn<span class="linking">‿</span>ɪˌlɛkˈtrɪʃənz ˈkɑrpəntɚz ˈplʌmɚz<span class="linking">‿</span><span class="weak">ən</span> məˈkænɪks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>draɪv‿ə、neɪl‿ɪn、streɪɾ‿ɑr、bɔrn‿ɪˌlɛkˈtrɪʃənz、ˈplʌmɚz‿ən 连读；ə、ɪn、ɑr、tə、ən 弱读/弱化；streɪɾ‿ɑr 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句修饰 men；be supposed to be 表“被认为是/理应是”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>甚至那些连钉子都几乎钉不直的男人，也被认为天生就是电工、木匠、管子工和机械师。</p></div>
+    <div class="field words"><span>词</span><p>drive a nail 钉钉子； straight 直地； be supposed to 被认为/理应； electrician 电工； carpenter 木匠； plumber 管子工； mechanic 机械师；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="103.52" data-end="116.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">When lights fuse, furniture gets rickety, pipes get <span class="linking">clogged</span>, or vacuum cleaners fail <span class="weak">to</span> operate, some <span class="linking">women</span> assume <span class="weak">that</span> their husbands will somehow put things right.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn laɪts fjuz ˈfɝnɪtʃɚ ɡɛts ˈrɪkəɾi paɪps ɡɛt klɑɡd<span class="linking">‿</span>ɔr ˈvækjum ˈklinɚz feɪl <span class="weak">tə</span> ˈɑpəˌreɪt sʌm ˈwɪmən<span class="linking">‿</span>əˈsum ðæt ðɛr ˈhʌzbəndz wɪl ˈsʌmhaʊ pʊt θɪŋz raɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>klɑɡd‿ɔr、ˈwɪmən‿əˈsum 连读；tə 弱读/弱化；ˈrɪkəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间/条件状语从句，列举多种情况；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will put 表将来/预期结果。</p></div>
+    <div class="field cn"><span>中</span><p>当电灯烧断、家具摇晃、管道堵塞或吸尘器不运转时，有些女人就认为丈夫总会设法把事情修好。</p></div>
+    <div class="field words"><span>词</span><p>fuse 烧断保险丝； rickety 摇晃的； pipe 管道； clogged 堵塞的； vacuum cleaner 吸尘器； operate 运转； assume 认为； put things right 修好/纠正；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="116.51" data-end="129.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> worst <span class="linking">thing</span> about <span class="weak">the</span> do-it-yourself game <span class="weak">is</span> <span class="weak">that</span> <span class="linking">sometimes</span> even men live under <span class="weak">the</span> delusion <span class="weak">that</span> they <span class="weak">can</span> do <span class="linking">anything</span>, even when they <span class="weak">have</span> repeatedly <span class="weak">been</span> proved wrong.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> wɝst θɪŋ<span class="linking">‿</span>əˈbaʊt <span class="weak">ðə</span> ˌdu ɪt jʊrˈsɛlf ɡeɪm<span class="linking">‿</span><span class="weak">ɪz</span> ðæt ˈsʌmˌtaɪmz<span class="linking">‿</span>ˈivən mɛn lɪv<span class="linking">‿</span>ˈʌndɚ <span class="weak">ðə</span> dɪˈluʒən ðæt ðeɪ kæn du ˈɛniˌθɪŋ<span class="linking">‿</span>ˈivən wɛn ðeɪ hæv rɪˈpiɾɪdli bɪn pruvd rɔŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>θɪŋ‿əˈbaʊt、ɡeɪm‿ɪz、ˈsʌmˌtaɪmz‿ˈivən、lɪv‿ˈʌndɚ、ˈɛniˌθɪŋ‿ˈivən 连读；ðə、ɪz 弱读/弱化；rɪˈpiɾɪdli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主语 The worst thing...；第一个 that 引导表语从句；第二个 that 引导同位语从句解释 delusion；even when 引导让步状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；have been proved wrong 为现在完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>DIY 游戏最糟糕的一点是，有时连男人自己也抱有一种错觉，认为他们什么都能做，即使他们已经一次次被证明错了。</p></div>
+    <div class="field words"><span>词</span><p>live under the delusion 抱有错觉； repeatedly 反复地； prove sb wrong 证明某人错了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="129.05" data-end="133.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="weak">a</span> <span class="linking">question</span> <span class="weak">of</span> pride <span class="weak">as</span> <span class="linking">much</span> <span class="weak linking">as</span> <span class="linking">anything</span> else.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈkwɛstʃən<span class="linking">‿</span><span class="weak">əv</span> praɪd<span class="linking">‿</span>æz mʌtʃ<span class="linking">‿</span>æz<span class="linking">‿</span>ˈɛniˌθɪŋ<span class="linking">‿</span>ɛls/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪz‿ə、ˈkwɛstʃən‿əv、praɪd‿æz、mʌtʃ‿æz‿ˈɛniˌθɪŋ‿ɛls 连读；ɪz、ə、əv 弱读/弱化；ɪɾ‿ɪz‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It is a question of... 表“这是……的问题”；as much as anything else 表“很大程度上”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这在很大程度上是面子问题。</p></div>
+    <div class="field words"><span>词</span><p>a question of ……的问题； pride 自尊/面子； as much as anything else 与其说别的不如说/很大程度上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="133.1" data-end="139.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">Last spring my wife suggested <span class="weak linking">that</span> I <span class="linking">call</span> <span class="weak linking">in</span> <span class="weak">a</span> man <span class="weak">to</span> <span class="linking">look</span> <span class="linking">at</span> our lawn mower.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/læst sprɪŋ maɪ waɪf səˈdʒɛstɪd ðæt<span class="linking">‿</span>aɪ kɔl<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> mæn <span class="weak">tə</span> lʊk<span class="linking">‿</span>æt aʊr lɔn ˈmoʊɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿aɪ、kɔl‿ɪn‿ə、lʊk‿æt 连读；ɪn、ə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>suggested 后接 that 宾语从句；从句中 call 为虚拟语气原形；to look at... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；宾语从句用 should do 省略 should。</p></div>
+    <div class="field cn"><span>中</span><p>去年春天，我妻子建议我请个人来看看我们的割草机。</p></div>
+    <div class="field words"><span>词</span><p>suggest 建议； call in 请来； lawn mower 割草机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="139.3" data-end="147.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> <span class="weak">had</span> broken down <span class="weak">the</span> previous <span class="linking">summer</span>, <span class="weak">and</span> <span class="linking">though</span> I promised <span class="weak">to</span> <span class="linking">repair</span> <span class="weak linking">it</span>, I <span class="weak">had</span> never got round <span class="weak">to</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt hæd ˈbroʊkən daʊn <span class="weak">ðə</span> ˈpriviəs ˈsʌmɚ <span class="weak">ən</span> ðoʊ<span class="linking">‿</span>aɪ ˈprɑməst <span class="weak">tə</span> rɪˈpɛr<span class="linking">‿</span>ɪt aɪ hæd ˈnɛvɚ ɡɑt raʊnd <span class="weak">tə</span><span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðoʊ‿aɪ、rɪˈpɛr‿ɪt、tə‿ɪt 连读；ðə、ən、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；though 引导让步状语从句；get round to sth 表终于抽出时间做。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时 <code>had broken down</code>, <code>had never got round</code>；promised 为一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>它在前一年夏天就坏了，虽然我答应修它，却一直没有抽出时间。</p></div>
+    <div class="field words"><span>词</span><p>break down 出故障； previous 先前的； repair 修理； get round to sth 抽出时间做某事；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="147.78" data-end="153.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">I <span class="weak">would</span> not <span class="linking">hear</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">suggestion</span> <span class="weak">and</span> said <span class="weak linking">that</span> I <span class="weak">would</span> <span class="linking">fix</span> <span class="weak">it</span> myself.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ wʊd nɑt hɪr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> səˈdʒɛstʃən<span class="linking">‿</span><span class="weak">ən</span> sɛd ðæt<span class="linking">‿</span>aɪ wʊd fɪks<span class="linking">‿</span>ɪt maɪˈsɛlf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪr‿əv、səˈdʒɛstʃən‿ən、ðæt‿aɪ、fɪks‿ɪt 连读；əv、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>would not hear of 表坚决不同意；said 后接 that 宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would 表过去意愿。</p></div>
+    <div class="field cn"><span>中</span><p>我坚决不同意这个建议，说我要自己把它修好。</p></div>
+    <div class="field words"><span>词</span><p>would not hear of 坚决不同意； suggestion 建议； fix 修理；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="153.7" data-end="160.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">One <span class="linking">Saturday</span> <span class="linking">afternoon</span>, I hauled <span class="weak">the</span> machine into <span class="weak">the</span> <span class="linking">garden</span> <span class="weak">and</span> <span class="weak linking">had</span> <span class="weak">a</span> close <span class="linking">look</span> <span class="linking">at</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn ˈsæɾɚdeɪ ˌæftɚˈnun aɪ hɔld <span class="weak">ðə</span> məˈʃin<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> ˈɡɑrdən<span class="linking">‿</span><span class="weak">ən</span> hæd<span class="linking">‿</span><span class="weak">ə</span> kloʊs lʊk<span class="linking">‿</span>æɾ<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>məˈʃin‿ˈɪntu、ˈɡɑrdən‿ən、hæd‿ə、lʊk‿æɾ‿ɪt 连读；ðə、ən、ə 弱读/弱化；ˈsæɾɚdeɪ、lʊk‿æɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>hauled 和 had 为并列谓语；have a close look at 表仔细查看。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一个星期六下午，我把机器拖到花园里，仔细看了看。</p></div>
+    <div class="field words"><span>词</span><p>haul 拖； machine 机器； have a close look at 仔细查看；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="160.45" data-end="173.88">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">As</span> <span class="linking">far</span> <span class="weak linking">as</span> I <span class="weak">could</span> see, <span class="weak">it</span> <span class="linking">needed</span> <span class="linking">only</span> <span class="weak">a</span> <span class="linking">minor</span> <span class="linking">adjustment</span>: <span class="weak">a</span> <span class="linking">turn</span> <span class="weak linking">of</span> <span class="weak">a</span> screw here, <span class="weak">a</span> little <span class="linking">tightening</span> up <span class="weak">there</span>, <span class="weak">a</span> <span class="linking">drop</span> <span class="weak linking">of</span> <span class="linking">oil</span> <span class="weak linking">and</span> <span class="weak">it</span> <span class="weak">would</span> <span class="weak">be</span> <span class="weak">as</span> <span class="linking">good</span> <span class="weak">as</span> new.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz fɑr<span class="linking">‿</span>æz<span class="linking">‿</span>aɪ kʊd si ɪt ˈnidɪd<span class="linking">‿</span>ˈoʊnli<span class="linking">‿</span><span class="weak">ə</span> ˈmaɪnɚ əˈdʒʌstmənt<span class="linking">‿</span><span class="weak">ə</span> tɝn<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> skru hɪr<span class="linking">‿</span><span class="weak">ə</span> ˈlɪɾəl ˈtaɪɾənɪŋ<span class="linking">‿</span>ʌp ðɛr<span class="linking">‿</span><span class="weak">ə</span> drɑp<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔɪl<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt wʊd bi æz ɡʊd<span class="linking">‿</span>æz nu/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɑr‿æz‿aɪ、ˈnidɪd‿ˈoʊnli‿ə、əˈdʒʌstmənt‿ə、tɝn‿əv‿ə、hɪr‿ə 连读；ə、əv、ən 弱读/弱化；ˈlɪɾəl、ˈtaɪɾənɪŋ‿ʌp 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As far as I could see 作插入状语；冒号后列举 adjustment 内容；as good as new 表状态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be 表预期结果。</p></div>
+    <div class="field cn"><span>中</span><p>在我看来，它只需要一点小调整：这里拧一下螺丝，那里稍微紧一紧，滴一滴油，它就会像新的一样好。</p></div>
+    <div class="field words"><span>词</span><p>as far as I can see 在我看来； minor adjustment 小调整； screw 螺丝； tightening up 拧紧； a drop of oil 一滴油； as good as new 像新的一样；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="173.88" data-end="179.04">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Inevitably <span class="weak">the</span> repair job <span class="weak">was</span> not quite so simple.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪnˈɛvəɾəbli <span class="weak">ðə</span> rɪˈpɛr dʒɑb <span class="weak">wəz</span> nɑt kwaɪt soʊ ˈsɪmpəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wəz 弱读/弱化；ɪnˈɛvəɾəbli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；not quite so simple 表“不那么简单”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>不出所料，修理工作并没有那么简单。</p></div>
+    <div class="field words"><span>词</span><p>inevitably 不可避免地； repair job 修理工作； not quite 不完全；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="179.04" data-end="185.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak">The</span> mower firmly refused <span class="weak">to</span> mow, so I decided <span class="weak">to</span> dismantle <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈmoʊɚ ˈfɝmli rɪˈfjuzd <span class="weak">tə</span> moʊ soʊ<span class="linking">‿</span>aɪ dɪˈsaɪdɪd <span class="weak">tə</span> dɪsˈmæntəl<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>soʊ‿aɪ、dɪsˈmæntəl‿ɪt 连读；ðə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>refused to mow 为拟人化表达；so 连接结果分句；decide to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>割草机坚决拒绝割草，于是我决定把它拆开。</p></div>
+    <div class="field words"><span>词</span><p>mower 割草机； firmly 坚决地； mow 割草； dismantle 拆开；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="185.22" data-end="192.99">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">The</span> garden <span class="weak">was</span> soon littered with <span class="linking">chunks</span> <span class="weak">of</span> metal which <span class="weak linking">had</span> once made <span class="linking">up</span> <span class="weak">a</span> lawn mower.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈɡɑrdən <span class="weak">wəz</span> sun ˈlɪɾɚd wɪð tʃʌŋks<span class="linking">‿</span><span class="weak">əv</span> ˈmɛɾəl wɪtʃ hæd wʌns meɪd<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ə</span> lɔn ˈmoʊɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʃʌŋks‿əv、meɪd‿ʌp‿ə 连读；ðə、wəz、əv、ə 弱读/弱化；ˈlɪɾɚd、ˈmɛɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>was littered with 为被动/状态结构；which 引导定语从句修饰 chunks of metal。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；定语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>花园里很快散落着一块块金属，这些金属曾经组成一台割草机。</p></div>
+    <div class="field words"><span>词</span><p>be littered with 到处散落着； chunk 块； make up 组成；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="192.99" data-end="195.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="linking">But</span> I <span class="weak linking">was</span> extremely pleased with myself.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span>aɪ <span class="weak">wəz</span><span class="linking">‿</span>ɪkˈstrimli plizd wɪð maɪˈsɛlf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bət‿aɪ、wəz‿ɪkˈstrimli 连读；wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；be pleased with 表“对……满意”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>但我对自己非常满意。</p></div>
+    <div class="field words"><span>词</span><p>extremely 极其； be pleased with 对……满意；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="195.93" data-end="198.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">I <span class="weak">had</span> traced <span class="weak">the</span> cause <span class="weak">of</span> <span class="weak">the</span> trouble.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ hæd treɪst <span class="weak">ðə</span> kɔz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈtrʌbəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kɔz‿əv 连读；ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；of the trouble 修饰 cause。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>我已经找到了故障的原因。</p></div>
+    <div class="field words"><span>词</span><p>trace 找到/追踪； cause 原因； trouble 故障/问题；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="198.61" data-end="203.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">One <span class="weak">of</span> <span class="weak">the</span> <span class="linking">links</span> <span class="weak">in</span> <span class="weak">the</span> chain <span class="weak">that</span> drives <span class="weak">the</span> wheels <span class="weak">had</span> snapped.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> lɪŋks<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> tʃeɪn ðæt draɪvz <span class="weak">ðə</span> wilz hæd snæpt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、lɪŋks‿ɪn 连读；əv、ðə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>One of... 作主语；that 引导定语从句修饰 chain；had snapped 为谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>驱动车轮的链条中有一个链节已经断了。</p></div>
+    <div class="field words"><span>词</span><p>link 链节； chain 链条； drive the wheels 驱动车轮； snap 断裂；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="203.64" data-end="214.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">After <span class="linking">buying</span> <span class="weak">a</span> new <span class="linking">chain</span> I <span class="weak">was</span> faced with <span class="weak">the</span> insurmountable <span class="linking">task</span> <span class="weak">of</span> putting <span class="weak">the</span> confusing jigsaw puzzle <span class="linking">together</span> again.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈbaɪɪŋ<span class="linking">‿</span><span class="weak">ə</span> nu tʃeɪn aɪ <span class="weak">wəz</span> feɪst wɪð <span class="weak">ði</span> ˌɪnsɚˈmaʊntəbəl tæsk<span class="linking">‿</span><span class="weak">əv</span> ˈpʊɾɪŋ <span class="weak">ðə</span> kənˈfjuzɪŋ ˈdʒɪɡˌsɔ ˈpʌzəl təˈɡɛðɚ əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈbaɪɪŋ‿ə、tæsk‿əv 连读；ə、wəz、ði、əv、ðə 弱读/弱化；ˈpʊɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After buying... 为时间状语；be faced with 表“面临”；of putting... 修饰 task。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；buying/putting 为非谓语。</p></div>
+    <div class="field cn"><span>中</span><p>买了新链条后，我面临着一个不可逾越的任务：把这个令人困惑的拼图重新装起来。</p></div>
+    <div class="field words"><span>词</span><p>be faced with 面临； insurmountable 不可克服的； confusing 令人困惑的； jigsaw puzzle 拼图； put together 组装；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="214.7" data-end="232.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text">I <span class="weak">was</span> not surprised <span class="weak">to</span> find <span class="weak">that</span> <span class="weak">the</span> machine still refused <span class="weak">to</span> <span class="linking">work</span> <span class="linking">after</span> I <span class="weak">had</span> <span class="linking">reassembled</span> <span class="weak">it</span>, <span class="weak">for</span> <span class="weak">the</span> simple reason <span class="weak linking">that</span> I <span class="weak">was</span> left with several curiously shaped <span class="linking">bits</span> <span class="weak">of</span> metal which did not seem <span class="weak">to</span> <span class="linking">fit</span> anywhere.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ <span class="weak">wəz</span> nɑt səˈpraɪzd <span class="weak">tə</span> faɪnd ðæt <span class="weak">ðə</span> məˈʃin stɪl rɪˈfjuzd <span class="weak">tə</span> wɝk<span class="linking">‿</span>ˈæftɚ<span class="linking">‿</span>aɪ hæd ˌriəˈsɛmbəld<span class="linking">‿</span>ɪt <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsɪmpəl ˈrizən ðæt<span class="linking">‿</span>aɪ <span class="weak">wəz</span> lɛft wɪð ˈsɛvrəl ˈkjʊriəsli ʃeɪpt bɪts<span class="linking">‿</span><span class="weak">əv</span> ˈmɛɾəl wɪtʃ dɪd nɑt sim <span class="weak">tə</span> fɪɾ<span class="linking">‿</span>ˈɛniˌwɛr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɝk‿ˈæftɚ‿aɪ、ˌriəˈsɛmbəld‿ɪt、ðæt‿aɪ、bɪts‿əv、fɪɾ‿ˈɛniˌwɛr 连读；wəz、tə、ðə、fɚ、əv 弱读/弱化；ˈmɛɾəl、fɪɾ‿ˈɛniˌwɛr 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>be surprised to find 后接 that 宾语从句；after 引导时间状语从句；for the reason that 引导原因；which 引导定语从句修饰 bits of metal。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had reassembled 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>在我重新装好机器后，发现它仍然拒绝工作，我并不惊讶，原因很简单：我还剩下几块形状奇特、似乎哪里都装不上的金属片。</p></div>
+    <div class="field words"><span>词</span><p>reassemble 重新组装； for the simple reason that 原因很简单； be left with 剩下； curiously shaped 形状奇特的； fit 合适/装上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="232.44" data-end="235.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text">I gave <span class="linking">up</span> <span class="weak">in</span> despair.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ɡeɪv<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ɪn</span> dɪˈspɛr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡeɪv‿ʌp‿ɪn 连读；ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；in despair 作方式/状态状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我绝望地放弃了。</p></div>
+    <div class="field words"><span>词</span><p>give up 放弃； in despair 绝望地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="235.01" data-end="238.12">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text"><span class="weak">The</span> weeks <span class="linking">passed</span> <span class="weak">and</span> <span class="weak">the</span> grass grew.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> wiks pæst<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> ɡræs ɡru/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pæst‿ən 连读；ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>几周过去了，草长高了。</p></div>
+    <div class="field words"><span>词</span><p>pass 过去； grass 草； grow 生长；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="238.12" data-end="246.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text">When my wife nagged me <span class="weak">to</span> do <span class="linking">something</span> <span class="linking">about</span> <span class="weak linking">it</span>, I told <span class="weak">her</span> <span class="weak linking">that</span> <span class="linking">either</span> I <span class="weak">would</span> <span class="weak">have</span> <span class="weak">to</span> <span class="linking">buy</span> <span class="weak">a</span> new <span class="linking">mower</span> or let <span class="weak">the</span> grass grow.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn maɪ waɪf næɡd mi <span class="weak">tə</span> du ˈsʌmθɪŋ<span class="linking">‿</span>əˈbaʊɾ<span class="linking">‿</span>ɪt aɪ toʊld <span class="weak">hɚ</span> ðæɾ<span class="linking">‿</span>ˈiðɚ<span class="linking">‿</span>aɪ wʊd hæv <span class="weak">tə</span> baɪ<span class="linking">‿</span><span class="weak">ə</span> nu ˈmoʊɚ ɔr lɛt <span class="weak">ðə</span> ɡræs ɡroʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsʌmθɪŋ‿əˈbaʊɾ‿ɪt、ðæɾ‿ˈiðɚ‿aɪ、baɪ‿ə 连读；tə、hɚ、ə、ðə 弱读/弱化；ˈsʌmθɪŋ‿əˈbaʊɾ‿ɪt、ðæɾ‿ˈiðɚ‿aɪ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；that 引导宾语从句；either...or... 连接两个选择。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would have to 表过去视角下的不得不。</p></div>
+    <div class="field cn"><span>中</span><p>当妻子唠叨着让我对此采取行动时，我告诉她，要么我得买一台新的割草机，要么就让草继续长。</p></div>
+    <div class="field words"><span>词</span><p>nag 唠叨； do something about it 采取措施； either...or... 要么……要么……；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="246.91" data-end="251.75">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text">Needless <span class="weak">to</span> <span class="linking">say</span> our house <span class="weak">is</span> now surrounded <span class="linking">by</span> <span class="weak">a</span> jungle.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈnidləs <span class="weak">tə</span> seɪ aʊr haʊs<span class="linking">‿</span><span class="weak">ɪz</span> naʊ səˈraʊndɪd baɪ<span class="linking">‿</span><span class="weak">ə</span> ˈdʒʌŋɡəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>haʊs‿ɪz、baɪ‿ə 连读；tə、ɪz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Needless to say 作插入语；主句为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动，表示现在结果。</p></div>
+    <div class="field cn"><span>中</span><p>不用说，我们的房子现在被一片“丛林”包围着。</p></div>
+    <div class="field words"><span>词</span><p>needless to say 不用说； be surrounded by 被……包围； jungle 丛林；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-30" data-start="251.75" data-end="258.06">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="30" aria-label="Play sentence 30">▶</button><span class="sentence-num">30</span><p class="en-text">Buried somewhere <span class="weak">in</span> deep grass <span class="weak">there</span> <span class="weak linking">is</span> <span class="weak">a</span> rusting lawn mower <span class="linking">which</span> I <span class="weak">have</span> promised <span class="weak">to</span> <span class="linking">repair</span> one day.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈbɛrid ˈsʌmˌwɛr<span class="linking">‿</span><span class="weak">ɪn</span> dip ɡræs ðɛr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈrʌstɪŋ lɔn ˈmoʊɚ wɪtʃ<span class="linking">‿</span>aɪ hæv ˈprɑməst <span class="weak">tə</span> rɪˈpɛr wʌn deɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsʌmˌwɛr‿ɪn、ðɛr‿ɪz‿ə、wɪtʃ‿aɪ 连读；ɪn、ɪz、ə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Buried somewhere... 为过去分词短语作状语；there be 句型；which 引导定语从句修饰 mower。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；have promised 为现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>在深草中的某个地方，埋着一台正在生锈的割草机，我答应过有一天要把它修好。</p></div>
+    <div class="field words"><span>词</span><p>buried 埋着的； rusting 生锈的； lawn mower 割草机； one day 有一天；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>DIY 与技能: do-it-yourself DIY； specialized labour 专业劳动力； handyman 能工巧匠； electrician 电工； carpenter 木匠； plumber 管子工； mechanic 机械师； novice 新手；</p>
+    <p>工具与修理: tool 工具； material 材料； fireplace 壁炉； lawn mower 割草机； screw 螺丝； chain 链条； link 链节； bit of metal 金属片；</p>
+    <p>动作短语: embark on 开始从事； cater for 迎合； assemble 组装； call in 请来； break down 出故障； get round to 抽时间做； have a close look at 仔细查看； give up 放弃；</p>
+    <p>评价词: resourceful 足智多谋的； rickety 摇晃的； clogged 堵塞的； insurmountable 不可逾越的； confusing 令人困惑的； curiously shaped 形状奇特的；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>So great is...that...</code>: so + 形容词置首引起倒装。</p>
+    <p><code>Armed with...</code>: 过去分词短语作状语。</p>
+    <p><code>not only by..., but by...</code>: 并列方式状语。</p>
+    <p><code>not all of us...</code>: 部分否定，“并非所有人”。</p>
+    <p><code>suggested that I call...</code>: suggest 表建议时，从句用 should do，should 可省略。</p>
+    <p><code>for the simple reason that...</code>: 引出原因解释。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于开头概述 DIY 风潮：<code>are becoming</code>, <code>provide</code>, <code>tend</code>, <code>assume</code>。</p>
+    <p>一般过去时用于作者修割草机的故事：<code>suggested</code>, <code>hauled</code>, <code>decided</code>, <code>gave up</code>。</p>
+    <p>过去完成时用于更早的故障和发现：<code>had broken down</code>, <code>had never got round</code>, <code>had traced</code>, <code>had snapped</code>, <code>had reassembled</code>。</p>
+    <p>现在完成时在结尾 <code>have promised</code> 中连接过去承诺和现在仍未完成的状态。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>can plead</code>, <code>can fix</code>, <code>can do anything</code> 表能力/可能性。</p>
+    <p><code>are supposed to be</code> 表外界期待，带讽刺。</p>
+    <p><code>would not hear of</code> 表坚决拒绝。</p>
+    <p><code>would be as good as new</code> 表作者当时乐观预期。</p>
+    <p><code>would have to buy...or let...</code> 表过去视角下的无奈选择。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>passion for</code> -&gt; /ˈpæʃən fɚ/；<code>ignorance of a</code> -&gt; /ˈɪɡnərəns‿əv‿ə/；<code>embark on</code> -&gt; /ɪmˈbɑrk‿ɑn/；<code>laying out</code> -&gt; /ˈleɪɪŋ‿aʊt/；<code>gave up in</code> -&gt; /ɡeɪv‿ʌp‿ɪn/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>for</code>, <code>that</code> 要轻读，如 <code>task of putting</code> -&gt; /tæsk‿əv ˈpʊtɪŋ/。</p>
+    <p>意群停顿: 第 25 句较长，可按 <code>I was not surprised to find... / after I had reassembled it / for the simple reason that... / which did not seem...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 46 - Do It Yourself</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../46－Do It Yourself.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.95,"end":27.22,"text":"So great is our passion for doing things for ourselves, that we are becoming increasingly less dependent on specialized labour."},{"index":2,"start":27.22,"end":35.22,"text":"No one can plead ignorance of a subject any longer, for there are countless do-it-yourself publications."},{"index":3,"start":35.22,"end":43.7,"text":"Armed with the right tools and materials, newlyweds gaily embark on the task of decorating their own homes."},{"index":4,"start":43.7,"end":56.23,"text":"Men, particularly, spend hours of their leisure time installing their own fireplaces, laying out their own gardens, building garages and making furniture."},{"index":5,"start":56.23,"end":62.48,"text":"Some really keen enthusiasts go so far as to build their own computers."},{"index":6,"start":62.48,"end":75.74,"text":"Shops cater for the do-it-yourself craze not only by running special advisory services for novices, but by offering consumers bits and pieces which they can assemble at home."},{"index":7,"start":75.74,"end":86.47,"text":"Such things provide an excellent outlet for pent up creative energy, but unfortunately not all of us are born handymen."},{"index":8,"start":86.47,"end":93.94,"text":"Some wives tend to believe that their husbands are infinitely resourceful and can fix anything."},{"index":9,"start":93.94,"end":103.52,"text":"Even men who can hardly drive a nail in straight are supposed to be born electricians, carpenters, plumbers and mechanics."},{"index":10,"start":103.52,"end":116.51,"text":"When lights fuse, furniture gets rickety, pipes get clogged, or vacuum cleaners fail to operate, some women assume that their husbands will somehow put things right."},{"index":11,"start":116.51,"end":129.05,"text":"The worst thing about the do-it-yourself game is that sometimes even men live under the delusion that they can do anything, even when they have repeatedly been proved wrong."},{"index":12,"start":129.05,"end":133.1,"text":"It is a question of pride as much as anything else."},{"index":13,"start":133.1,"end":139.3,"text":"Last spring my wife suggested that I call in a man to look at our lawn mower."},{"index":14,"start":139.3,"end":147.78,"text":"It had broken down the previous summer, and though I promised to repair it, I had never got round to it."},{"index":15,"start":147.78,"end":153.7,"text":"I would not hear of the suggestion and said that I would fix it myself."},{"index":16,"start":153.7,"end":160.45,"text":"One Saturday afternoon, I hauled the machine into the garden and had a close look at it."},{"index":17,"start":160.45,"end":173.88,"text":"As far as I could see, it needed only a minor adjustment: a turn of a screw here, a little tightening up there, a drop of oil and it would be as good as new."},{"index":18,"start":173.88,"end":179.04,"text":"Inevitably the repair job was not quite so simple."},{"index":19,"start":179.04,"end":185.22,"text":"The mower firmly refused to mow, so I decided to dismantle it."},{"index":20,"start":185.22,"end":192.99,"text":"The garden was soon littered with chunks of metal which had once made up a lawn mower."},{"index":21,"start":192.99,"end":195.93,"text":"But I was extremely pleased with myself."},{"index":22,"start":195.93,"end":198.61,"text":"I had traced the cause of the trouble."},{"index":23,"start":198.61,"end":203.64,"text":"One of the links in the chain that drives the wheels had snapped."},{"index":24,"start":203.64,"end":214.7,"text":"After buying a new chain I was faced with the insurmountable task of putting the confusing jigsaw puzzle together again."},{"index":25,"start":214.7,"end":232.44,"text":"I was not surprised to find that the machine still refused to work after I had reassembled it, for the simple reason that I was left with several curiously shaped bits of metal which did not seem to fit anywhere."},{"index":26,"start":232.44,"end":235.01,"text":"I gave up in despair."},{"index":27,"start":235.01,"end":238.12,"text":"The weeks passed and the grass grew."},{"index":28,"start":238.12,"end":246.91,"text":"When my wife nagged me to do something about it, I told her that either I would have to buy a new mower or let the grass grow."},{"index":29,"start":246.91,"end":251.75,"text":"Needless to say our house is now surrounded by a jungle."},{"index":30,"start":251.75,"end":258.06,"text":"Buried somewhere in deep grass there is a rusting lawn mower which I have promised to repair one day."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

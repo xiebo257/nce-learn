@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 32 - A Lost Ship</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 32 - A Lost Ship</h1>
+      <p class="meta">Generated from 32－A Lost Ship.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.38" data-end="19.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> salvage operation <span class="weak">had</span> <span class="weak linking">been</span> <span class="weak">a</span> complete failure.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈsælvɪdʒ<span class="linking">‿</span>ˌɑpəˈreɪʃən hæd bɪn<span class="linking">‿</span><span class="weak">ə</span> kəmˈplit ˈfeɪljɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsælvɪdʒ‿ˌɑpəˈreɪʃən、bɪn‿ə 连读；ðə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；complete failure 作表语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时，交代故事开始前已经形成的结果。</p></div>
+    <div class="field cn"><span>中</span><p>这次打捞行动已经彻底失败了。</p></div>
+    <div class="field words"><span>词</span><p>salvage operation 打捞行动； complete failure 彻底失败；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.2" data-end="26.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> small <span class="linking">ship</span>, Elkor, which <span class="weak">had</span> <span class="weak">been</span> searching <span class="weak">the</span> Barents Sea <span class="weak">for</span> weeks, <span class="weak linking">was</span> <span class="linking">on</span> <span class="weak">its</span> way home.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> smɔl ʃɪp<span class="linking">‿</span>ˈɛlkɔr wɪtʃ hæd bɪn ˈsɝtʃɪŋ <span class="weak">ðə</span> ˈbærənts si <span class="weak">fɚ</span> wiks <span class="weak">wəz</span><span class="linking">‿</span>ɑn<span class="linking">‿</span>ɪts weɪ hoʊm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃɪp‿ˈɛlkɔr、wəz‿ɑn‿ɪts 连读；ðə、fɚ、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Elkor 为同位语；which 引导非限制性定语从句；be on one's way home 表“在回家路上”。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成进行时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>小船“埃尔科”号在巴伦支海搜寻了数周，正驶回家。</p></div>
+    <div class="field words"><span>词</span><p>Barents Sea 巴伦支海； for weeks 数周； be on one's way home 在回家路上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="26.72" data-end="34.53">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">A</span> radio message <span class="weak">from</span> <span class="weak">the</span> mainland <span class="weak">had</span> <span class="weak">been</span> received by <span class="weak">the</span> ship's <span class="linking">captain</span> instructing <span class="weak">him</span> <span class="weak">to</span> give up <span class="weak">the</span> search.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈreɪdioʊ ˈmɛsɪdʒ <span class="weak">frəm</span> <span class="weak">ðə</span> ˈmeɪnˌlænd hæd bɪn rɪˈsivd baɪ <span class="weak">ðə</span> ʃɪps ˈkæptən<span class="linking">‿</span>ɪnˈstrʌktɪŋ <span class="weak">hɪm</span> <span class="weak">tə</span> ɡɪv<span class="linking">‿</span>ʌp <span class="weak">ðə</span> sɝtʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkæptən‿ɪnˈstrʌktɪŋ、ɡɪv‿ʌp 连读；ə、frəm、ðə、hɪm、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主句为过去完成时被动；instructing... 为现在分词短语，说明 message 的内容。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>船长收到了来自大陆的无线电报，指示他放弃搜索。</p></div>
+    <div class="field words"><span>词</span><p>radio message 无线电报； mainland 大陆； instruct sb to do 指示某人做； give up the search 放弃搜索；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="34.53" data-end="45.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> captain knew <span class="weak linking">that</span> <span class="linking">another</span> attempt <span class="weak">would</span> <span class="weak">be</span> made later, <span class="weak">for</span> <span class="weak">the</span> sunken ship he <span class="weak">was</span> trying <span class="weak">to</span> find <span class="weak">had</span> <span class="weak">been</span> <span class="linking">carrying</span> <span class="weak">a</span> precious cargo <span class="weak">of</span> gold bullion.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkæptən nu ðæɾ<span class="linking">‿</span>əˈnʌðɚ əˈtɛmpt wʊd bi meɪd ˈleɪɾɚ <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsʌŋkən ʃɪp hi <span class="weak">wəz</span> ˈtraɪɪŋ <span class="weak">tə</span> faɪnd hæd bɪn ˈkærɪɪŋ<span class="linking">‿</span><span class="weak">ə</span> ˈprɛʃəs ˈkɑrɡoʊ <span class="weak">əv</span> ɡoʊld ˈbʊljən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿əˈnʌðɚ、ˈkærɪɪŋ‿ə 连读；ðə、fɚ、wəz、tə、ə、əv 弱读/弱化；ðæɾ‿əˈnʌðɚ、ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>knew 后接 that 宾语从句；for 引导原因分句；he was trying to find 为省略关系词的定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be made 为过去将来时被动；had been carrying 为过去完成进行时。</p></div>
+    <div class="field cn"><span>中</span><p>船长知道以后还会再尝试，因为他试图寻找的那艘沉船载有一批珍贵的金条。</p></div>
+    <div class="field words"><span>词</span><p>attempt 尝试； sunken ship 沉船； precious 珍贵的； cargo 货物； gold bullion 金条；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="45.33" data-end="51.89">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Despite <span class="weak">the</span> message, <span class="weak">the</span> <span class="linking">captain</span> <span class="weak">of</span> <span class="weak">the</span> Elkor decided <span class="weak">to</span> <span class="linking">try</span> once more.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈspaɪt <span class="weak">ðə</span> ˈmɛsɪdʒ <span class="weak">ðə</span> ˈkæptən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span> ˈɛlkɔr dɪˈsaɪdɪd <span class="weak">tə</span> traɪ wʌns mɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkæptən‿əv 连读；ðə、əv、ði、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Despite... 作让步状语；decide to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管收到了电报，“埃尔科”号船长还是决定再试一次。</p></div>
+    <div class="field words"><span>词</span><p>despite 尽管； once more 再一次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="51.89" data-end="60.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> sea bed <span class="weak">was</span> scoured with powerful <span class="linking">nets</span> <span class="weak">and</span> <span class="weak">there</span> <span class="weak">was</span> <span class="linking">tremendous</span> <span class="linking">excitement</span> on board <span class="linking">when</span> <span class="weak">a</span> chest <span class="weak">was</span> raised <span class="weak">from</span> <span class="weak">the</span> bottom.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> si bɛd <span class="weak">wəz</span> skaʊrd wɪð ˈpaʊɚfəl nɛts<span class="linking">‿</span><span class="weak">ən</span> ðɛr <span class="weak">wəz</span> trəˈmɛndəs<span class="linking">‿</span>ɪkˈsaɪtmənt<span class="linking">‿</span>ɑn bɔrd wɛn<span class="linking">‿</span><span class="weak">ə</span> tʃɛst <span class="weak">wəz</span> reɪzd <span class="weak">frəm</span> <span class="weak">ðə</span> ˈbɑɾəm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɛts‿ən、trəˈmɛndəs‿ɪkˈsaɪtmənt‿ɑn、wɛn‿ə 连读；ðə、wəz、ən、ə、frəm 弱读/弱化；ˈbɑɾəm 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；第一分句为被动；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was scoured/was raised 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他们用强力网搜遍海床，当一只箱子从海底被捞起时，船上兴奋异常。</p></div>
+    <div class="field words"><span>词</span><p>sea bed 海床； scour 搜索/冲刷； powerful net 强力网； on board 在船上； chest 箱子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="60.76" data-end="69.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Though <span class="weak">the</span> crew <span class="weak">were</span> at <span class="linking">first</span> under <span class="weak">the</span> impression <span class="weak">that</span> <span class="weak">the</span> lost ship <span class="weak">had</span> <span class="weak">been</span> found, <span class="weak">the</span> <span class="linking">contents</span> <span class="weak">of</span> <span class="weak">the</span> chest proved them wrong.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ <span class="weak">ðə</span> kru <span class="weak">wɚ</span> æt fɝst<span class="linking">‿</span>ˈʌndɚ <span class="weak">ði</span> ɪmˈprɛʃən ðæt <span class="weak">ðə</span> lɔst ʃɪp hæd bɪn faʊnd <span class="weak">ðə</span> ˈkɑntɛnts<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> tʃɛst pruvd ðɛm rɔŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɝst‿ˈʌndɚ、ˈkɑntɛnts‿əv 连读；ðə、wɚ、ði、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；that 引导 impression 的同位语从句；prove sb wrong 表证明某人错了。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had been found 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>虽然船员们起初以为找到了那艘失踪船，但箱子里的东西证明他们错了。</p></div>
+    <div class="field words"><span>词</span><p>crew 船员； be under the impression that 以为； contents 内容物； prove sb wrong 证明某人错了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="69.52" data-end="75.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">What they <span class="weak linking">had</span> <span class="weak">in</span> fact found <span class="weak linking">was</span> <span class="weak">a</span> ship which <span class="weak">had</span> <span class="weak">been</span> sunk many years before.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌt ðeɪ hæd<span class="linking">‿</span><span class="weak">ɪn</span> fækt faʊnd <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ʃɪp wɪtʃ hæd bɪn sʌŋk ˈmɛni jɪrz bɪˈfɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæd‿ɪn、wəz‿ə 连读；ɪn、wəz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>What 引导主语从句；which 引导定语从句修饰 ship。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时；had been sunk 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>他们实际上发现的是一艘许多年前沉没的船。</p></div>
+    <div class="field words"><span>词</span><p>in fact 实际上； many years before 多年前；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="75.62" data-end="80.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> chest contained <span class="weak">the</span> personal <span class="linking">belongings</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">seaman</span>, Alan Fielding.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> tʃɛst kənˈteɪnd <span class="weak">ðə</span> ˈpɝsənəl bɪˈlɔŋɪŋz<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈsimən<span class="linking">‿</span>ˈælən ˈfildɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈlɔŋɪŋz‿əv‿ə、ˈsimən‿ˈælən 连读；ðə、əv、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；Alan Fielding 为 a seaman 的同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>箱子里装着一名海员艾伦・菲尔丁的个人物品。</p></div>
+    <div class="field words"><span>词</span><p>personal belongings 个人物品； seaman 海员；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="80.76" data-end="88.34">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">There</span> <span class="weak">were</span> books, <span class="linking">clothing</span> <span class="weak">and</span> photographs, together with letters which <span class="weak">the</span> seaman <span class="weak linking">had</span> once received <span class="weak">from</span> <span class="weak">his</span> wife.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wɚ</span> bʊks ˈkloʊðɪŋ<span class="linking">‿</span><span class="weak">ən</span> ˈfoʊɾəˌɡræfs təˈɡɛðɚ wɪð ˈlɛɾɚz wɪtʃ <span class="weak">ðə</span> ˈsimən hæd wʌns rɪˈsivd <span class="weak">frəm</span> <span class="weak">hɪz</span> waɪf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkloʊðɪŋ‿ən 连读；wɚ、ən、ðə、frəm、hɪz 弱读/弱化；ˈfoʊɾəˌɡræfs、ˈlɛɾɚz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；together with... 作附加成分；which 引导定语从句修饰 letters。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had received 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>里面有书、衣物和照片，还有这名海员曾经从妻子那里收到的信。</p></div>
+    <div class="field words"><span>词</span><p>clothing 衣物； photograph 照片； together with 连同；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="88.34" data-end="94.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> <span class="linking">captain</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">Elkor</span> ordered <span class="weak">his</span> men <span class="weak">to</span> salvage <span class="weak">as</span> <span class="linking">much</span> <span class="weak">as</span> possible <span class="weak">from</span> <span class="weak">the</span> wreck.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkæptən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span> ˈɛlkɔr<span class="linking">‿</span>ˈɔrdɚd <span class="weak">hɪz</span> mɛn <span class="weak">tə</span> ˈsælvɪdʒ<span class="linking">‿</span>æz mʌtʃ<span class="linking">‿</span>æz ˈpɑsəbəl <span class="weak">frəm</span> <span class="weak">ðə</span> rɛk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkæptən‿əv、ˈɛlkɔr‿ˈɔrdɚd、ˈsælvɪdʒ‿æz、mʌtʃ‿æz 连读；ðə、əv、ði、hɪz、tə、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>order sb to do；as much as possible 表“尽可能多”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“埃尔科”号船长命令手下尽可能多地从沉船中打捞物品。</p></div>
+    <div class="field words"><span>词</span><p>order sb to do 命令某人做； salvage 打捞； as much as possible 尽可能多； wreck 沉船/残骸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="94.32" data-end="101.75">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">Nothing</span> <span class="weak">of</span> value <span class="weak">was</span> found, but <span class="weak">the</span> <span class="linking">numerous</span> items which <span class="weak">were</span> brought <span class="weak">to</span> <span class="weak">the</span> surface proved <span class="weak">to</span> <span class="weak">be</span> <span class="weak">of</span> <span class="linking">great</span> interest.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈnʌθɪŋ<span class="linking">‿</span><span class="weak">əv</span> ˈvælju <span class="weak">wəz</span> faʊnd bət <span class="weak">ðə</span> ˈnumərəs ˈaɪɾəmz wɪtʃ <span class="weak">wɚ</span> brɔt <span class="weak">tə</span> <span class="weak">ðə</span> ˈsɝfəs pruvd <span class="weak">tə</span> bi <span class="weak">əv</span> ɡreɪɾ<span class="linking">‿</span>ˈɪntrəst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈnʌθɪŋ‿əv、ɡreɪɾ‿ˈɪntrəst 连读；əv、wəz、ðə、wɚ、tə 弱读/弱化；ˈaɪɾəmz、ɡreɪɾ‿ˈɪntrəst 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；which 引导定语从句；of great interest = very interesting。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was found/were brought 为被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>没有发现值钱的东西，但被带到水面的众多物品证明极有价值。</p></div>
+    <div class="field words"><span>词</span><p>of value 有价值的； numerous 众多的； item 物品； bring to the surface 带到水面； of great interest 很有意义；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="101.75" data-end="108.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak linking">From</span> <span class="weak">a</span> heavy gun <span class="weak">that</span> <span class="weak">was</span> raised, <span class="weak">the</span> captain realized <span class="weak">that</span> <span class="weak">the</span> ship must <span class="weak">have</span> <span class="weak linking">been</span> <span class="weak">a</span> cruiser.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span><span class="linking">‿</span><span class="weak">ə</span> ˈhɛvi ɡʌn ðæt <span class="weak">wəz</span> reɪzd <span class="weak">ðə</span> ˈkæptən ˈriəˌlaɪzd ðæt <span class="weak">ðə</span> ʃɪp mʌst hæv bɪn<span class="linking">‿</span><span class="weak">ə</span> ˈkruzɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>frəm‿ə、bɪn‿ə 连读；frəm、ə、wəz、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>From... 作依据状语；that was raised 修饰 gun；realized 后接 that 宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；must have been 表对过去的肯定推断。</p></div>
+    <div class="field cn"><span>中</span><p>从捞起的一门重炮上，船长意识到这艘船一定是一艘巡洋舰。</p></div>
+    <div class="field words"><span>词</span><p>heavy gun 重炮； realize 意识到； cruiser 巡洋舰； must have been 一定曾是；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="108.01" data-end="120.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak linking">In</span> another chest which contained <span class="weak">the</span> <span class="linking">belongings</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">ship's</span> officer, <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak linking">an</span> unfinished letter which <span class="weak">had</span> <span class="weak">been</span> <span class="linking">written</span> on March 14th, 1943.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span><span class="linking">‿</span>əˈnʌðɚ tʃɛst wɪtʃ kənˈteɪnd <span class="weak">ðə</span> bɪˈlɔŋɪŋz<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ʃɪps<span class="linking">‿</span>ˈɔfəsɚ ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ənˈfɪnɪʃt ˈlɛɾɚ wɪtʃ hæd bɪn ˈrɪɾən<span class="linking">‿</span>ɑn mɑrtʃ fɔrˈtinθ ˌnaɪnˈtin ˈfɔrdi θri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn‿əˈnʌðɚ、bɪˈlɔŋɪŋz‿əv‿ə、ʃɪps‿ˈɔfəsɚ、wəz‿ən‿ənˈfɪnɪʃt、ˈrɪɾən‿ɑn 连读；ɪn、ðə、əv、ə、wəz、ən 弱读/弱化；ˈlɛɾɚ、ˈrɪɾən‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which contained... 修饰 chest；there be 句型；第二个 which 修饰 letter。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had been written 为过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在另一个装有船上军官物品的箱子里，有一封未写完的信，写于 1943 年 3 月 14 日。</p></div>
+    <div class="field words"><span>词</span><p>ship's officer 船上军官； unfinished 未完成的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="120.01" data-end="125.21">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> captain learnt <span class="weak">from</span> <span class="weak">the</span> letter <span class="weak">that</span> <span class="weak">the</span> name <span class="weak">of</span> <span class="weak">the</span> lost ship <span class="weak">was</span> <span class="weak">the</span> Karen.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkæptən lɝnt <span class="weak">frəm</span> <span class="weak">ðə</span> ˈlɛɾɚ ðæt <span class="weak">ðə</span> neɪm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> lɔst ʃɪp <span class="weak">wəz</span> <span class="weak">ðə</span> ˈkærən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>neɪm‿əv 连读；ðə、frəm、əv、wəz 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>learnt from...that...；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>船长从信中得知那艘失踪船名叫“卡伦”号。</p></div>
+    <div class="field words"><span>词</span><p>learn from 从……得知； lost ship 失踪船；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="125.21" data-end="133.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> most valuable <span class="linking">find</span> <span class="weak linking">of</span> all <span class="weak">was</span> <span class="weak">the</span> ship's log book, <span class="linking">parts</span> <span class="weak">of</span> <span class="linking">which</span> <span class="weak">it</span> <span class="weak">was</span> still possible <span class="weak">to</span> read.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> moʊst ˈvæljuəbəl faɪnd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl <span class="weak">wəz</span> <span class="weak">ðə</span> ʃɪps lɔɡ bʊk pɑrts<span class="linking">‿</span><span class="weak">əv</span> wɪtʃ<span class="linking">‿</span>ɪt <span class="weak">wəz</span> stɪl ˈpɑsəbəl <span class="weak">tə</span> rid/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faɪnd‿əv‿ɔl、pɑrts‿əv、wɪtʃ‿ɪt 连读；ðə、əv、wəz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；parts of which 引导非限制性定语从句；it 作形式主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>最有价值的发现是这艘船的航海日志，其中部分内容仍可辨读。</p></div>
+    <div class="field words"><span>词</span><p>valuable 有价值的； find 发现物； log book 航海日志；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="133.41" data-end="139.06">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">From</span> this <span class="weak">the</span> captain <span class="weak linking">was</span> able <span class="weak">to</span> piece <span class="linking">together</span> all <span class="weak">the</span> information <span class="weak">that</span> <span class="weak">had</span> come <span class="weak">to</span> light.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> ðɪs <span class="weak">ðə</span> ˈkæptən <span class="weak">wəz</span><span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> pis təˈɡɛðɚ ɔl <span class="weak">ði</span> ˌɪnfɚˈmeɪʃən ðæt hæd kʌm <span class="weak">tə</span> laɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ˈeɪbəl 连读；frəm、ðə、wəz、tə、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>be able to do；piece together 表“拼凑”；that 引导定语从句修饰 information。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had come to light 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>由此，船长得以把所有已显露出来的信息拼凑起来。</p></div>
+    <div class="field words"><span>词</span><p>piece together 拼凑； come to light 显露/被发现； information 信息；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="139.06" data-end="145.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">The</span> Karen <span class="weak">had</span> <span class="weak">been</span> <span class="linking">sailing</span> <span class="weak linking">in</span> <span class="weak">a</span> convoy <span class="weak">to</span> Russia when she <span class="weak">was</span> torpedoed <span class="linking">by</span> <span class="weak linking">an</span> enemy submarine.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkærən hæd bɪn ˈseɪlɪŋ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈkɑnvɔɪ <span class="weak">tə</span> ˈrʌʃə wɛn ʃi <span class="weak">wəz</span> tɔrˈpidoʊd baɪ <span class="weak">ən</span><span class="linking">‿</span>ˈɛnəmi ˈsʌbməˌrin/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈseɪlɪŋ‿ɪn‿ə、ən‿ˈɛnəmi 连读；ðə、ɪn、ə、tə、wəz、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>when 引导时间状语从句；主句过去完成进行时；从句被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成进行时；一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>“卡伦”号当时正随船队驶往俄国，途中被敌方潜艇鱼雷击沉。</p></div>
+    <div class="field words"><span>词</span><p>convoy 护航船队； torpedo 用鱼雷攻击； enemy submarine 敌方潜艇；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="145.63" data-end="153.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">This <span class="weak">was</span> later confirmed <span class="linking">by</span> <span class="weak">a</span> <span class="linking">naval</span> <span class="linking">official</span> at <span class="weak">the</span> <span class="linking">Ministry</span> <span class="weak">of</span> Defence after <span class="weak">the</span> Elkor <span class="weak">had</span> returned home.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs <span class="weak">wəz</span> ˈleɪɾɚ kənˈfɝmd baɪ <span class="weak">ə</span> ˈneɪvəl<span class="linking">‿</span>əˈfɪʃəl<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈmɪnɪstri <span class="weak">əv</span> dɪˈfɛns<span class="linking">‿</span>ˈæftɚ <span class="weak">ði</span> ˈɛlkɔr hæd rɪˈtɝnd hoʊm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈneɪvəl‿əˈfɪʃəl‿æt、dɪˈfɛns‿ˈæftɚ 连读；wəz、ə、ðə、əv、ði 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句为被动语态；after 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动；after 从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>在“埃尔科”号返航后，国防部一名海军官员后来证实了这一点。</p></div>
+    <div class="field words"><span>词</span><p>confirm 证实； naval 海军的； official 官员； Ministry of Defence 国防部；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="153.16" data-end="156.7">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">All <span class="weak">the</span> items <span class="weak">that</span> <span class="weak">were</span> found <span class="weak">were</span> sent <span class="weak">to</span> <span class="weak">the</span> War Museum.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɔl <span class="weak">ði</span> ˈaɪɾəmz ðæt <span class="weak">wɚ</span> faʊnd <span class="weak">wɚ</span> sɛnt <span class="weak">tə</span> <span class="weak">ðə</span> wɔr mjuˈziəm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði、wɚ、tə、ðə 弱读/弱化；ˈaɪɾəmz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that were found 为定语从句；主句为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>所有找到的物品都被送到了战争博物馆。</p></div>
+    <div class="field words"><span>词</span><p>item 物品； War Museum 战争博物馆；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>海上打捞: salvage operation 打捞行动； sea bed 海床； net 网； chest 箱子； wreck 沉船残骸； bring to the surface 带到水面；</p>
+    <p>船只与战争: cruiser 巡洋舰； convoy 护航船队； submarine 潜艇； torpedo 用鱼雷攻击； naval official 海军官员； Ministry of Defence 国防部；</p>
+    <p>物品与证据: personal belongings 个人物品； log book 航海日志； unfinished letter 未写完的信； cargo 货物； gold bullion 金条；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>which had been searching...</code>: 非限制性定语从句补充说明。</p>
+    <p><code>instructing him to...</code>: 现在分词短语说明 message 内容。</p>
+    <p><code>be under the impression that...</code>: 以为……。</p>
+    <p><code>What they had found was...</code>: what 引导主语从句。</p>
+    <p><code>must have been</code>: 对过去事实作肯定推断。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>过去完成时贯穿全课背景：<code>had been a failure</code>, <code>had been searching</code>, <code>had been carrying</code>, <code>had been sunk</code>。</p>
+    <p>一般过去时用于现场发现过程：<code>decided</code>, <code>raised</code>, <code>contained</code>, <code>ordered</code>, <code>realized</code>。</p>
+    <p>过去完成进行时强调沉船之前的持续动作：<code>had been sailing</code>。</p>
+    <p>被动语态用于打捞和证实：<code>was scoured</code>, <code>was raised</code>, <code>were brought</code>, <code>was confirmed</code>, <code>were sent</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>would be made later</code> 表过去视角下未来还会再试。</p>
+    <p><code>must have been a cruiser</code> 表船长根据重炮推断过去事实。</p>
+    <p><code>was able to piece together</code> 表通过证据成功拼合信息。</p>
+    <p>全文语气从“失败”转向“意外发现”，重点不在黄金，而在历史线索。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>give up</code> -&gt; /ɡɪv‿ʌp/；<code>try once more</code> -&gt; /traɪ wʌns mɔr/；<code>raised from</code> 连读；<code>come to light</code> -&gt; /kʌm tə laɪt/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>that</code>, <code>from</code> 在长句中轻读，如 <code>cargo of gold bullion</code>。</p>
+    <p>意群停顿: 第 4 句按 <code>The captain knew... / for the sunken ship... / had been carrying...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 32 - A Lost Ship</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../32－A Lost Ship.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.38,"end":19.2,"text":"The salvage operation had been a complete failure."},{"index":2,"start":19.2,"end":26.72,"text":"The small ship, Elkor, which had been searching the Barents Sea for weeks, was on its way home."},{"index":3,"start":26.72,"end":34.53,"text":"A radio message from the mainland had been received by the ship's captain instructing him to give up the search."},{"index":4,"start":34.53,"end":45.33,"text":"The captain knew that another attempt would be made later, for the sunken ship he was trying to find had been carrying a precious cargo of gold bullion."},{"index":5,"start":45.33,"end":51.89,"text":"Despite the message, the captain of the Elkor decided to try once more."},{"index":6,"start":51.89,"end":60.76,"text":"The sea bed was scoured with powerful nets and there was tremendous excitement on board when a chest was raised from the bottom."},{"index":7,"start":60.76,"end":69.52,"text":"Though the crew were at first under the impression that the lost ship had been found, the contents of the chest proved them wrong."},{"index":8,"start":69.52,"end":75.62,"text":"What they had in fact found was a ship which had been sunk many years before."},{"index":9,"start":75.62,"end":80.76,"text":"The chest contained the personal belongings of a seaman, Alan Fielding."},{"index":10,"start":80.76,"end":88.34,"text":"There were books, clothing and photographs, together with letters which the seaman had once received from his wife."},{"index":11,"start":88.34,"end":94.32,"text":"The captain of the Elkor ordered his men to salvage as much as possible from the wreck."},{"index":12,"start":94.32,"end":101.75,"text":"Nothing of value was found, but the numerous items which were brought to the surface proved to be of great interest."},{"index":13,"start":101.75,"end":108.01,"text":"From a heavy gun that was raised, the captain realized that the ship must have been a cruiser."},{"index":14,"start":108.01,"end":120.01,"text":"In another chest which contained the belongings of a ship's officer, there was an unfinished letter which had been written on March 14th, 1943."},{"index":15,"start":120.01,"end":125.21,"text":"The captain learnt from the letter that the name of the lost ship was the Karen."},{"index":16,"start":125.21,"end":133.41,"text":"The most valuable find of all was the ship's log book, parts of which it was still possible to read."},{"index":17,"start":133.41,"end":139.06,"text":"From this the captain was able to piece together all the information that had come to light."},{"index":18,"start":139.06,"end":145.63,"text":"The Karen had been sailing in a convoy to Russia when she was torpedoed by an enemy submarine."},{"index":19,"start":145.63,"end":153.16,"text":"This was later confirmed by a naval official at the Ministry of Defence after the Elkor had returned home."},{"index":20,"start":153.16,"end":156.7,"text":"All the items that were found were sent to the War Museum."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

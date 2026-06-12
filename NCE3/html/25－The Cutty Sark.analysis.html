@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 25 - The Cutty Sark</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 25 - The Cutty Sark</h1>
+      <p class="meta">Generated from 25－The Cutty Sark.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.14" data-end="24.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">One <span class="weak">of</span> <span class="weak">the</span> most famous sailing <span class="linking">ships</span> <span class="weak">of</span> <span class="weak">the</span> nineteenth century, <span class="weak">the</span> Cutty Sark, <span class="weak">can</span> still <span class="weak">be</span> <span class="linking">seen</span> at Greenwich.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> moʊst ˈfeɪməs ˈseɪlɪŋ ʃɪps<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˌnaɪnˈtinθ ˈsɛntʃəri <span class="weak">ðə</span> ˈkʌɾi sɑrk kæn stɪl bi sin<span class="linking">‿</span>æt ˈɡrɛnɪtʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、ʃɪps‿əv、sin‿æt 连读；əv、ðə 弱读/弱化；ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>the Cutty Sark 为同位语；can be seen 为情态被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>19 世纪最著名的帆船之一“卡蒂萨克”号，如今仍能在格林尼治看到。</p></div>
+    <div class="field words"><span>词</span><p>sailing ship 帆船； century 世纪； Greenwich 格林尼治；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="24.39" data-end="30.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">She <span class="linking">stands</span> on dry <span class="linking">land</span> <span class="weak linking">and</span> <span class="weak">is</span> visited by <span class="linking">thousands</span> <span class="weak">of</span> people each year.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi stændz<span class="linking">‿</span>ɑn draɪ lænd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ɪz</span> ˈvɪzɪɾɪd baɪ ˈθaʊzəndz<span class="linking">‿</span><span class="weak">əv</span> ˈpipəl<span class="linking">‿</span>itʃ jɪr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>stændz‿ɑn、lænd‿ən‿ɪz、ˈθaʊzəndz‿əv、ˈpipəl‿itʃ 连读；ən、ɪz、əv 弱读/弱化；ˈvɪzɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>stands 和 is visited 为并列谓语；第二个为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>她停放在陆地上，每年有成千上万人参观。</p></div>
+    <div class="field words"><span>词</span><p>dry land 陆地； thousands of 成千上万；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.28" data-end="36.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">She <span class="linking">serves</span> <span class="weak linking">as</span> <span class="weak linking">an</span> impressive <span class="linking">reminder</span> <span class="weak">of</span> <span class="weak">the</span> great <span class="linking">ships</span> <span class="weak">of</span> <span class="weak">the</span> past.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi sɝvz<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪmˈprɛsɪv rɪˈmaɪndɚ <span class="weak">əv</span> <span class="weak">ðə</span> ɡreɪt ʃɪps<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pæst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɝvz‿æz‿ən‿ɪmˈprɛsɪv、ʃɪps‿əv 连读；ən、əv、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>serve as 表“作为”；of the past 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>她令人印象深刻地提醒人们记起过去的伟大船只。</p></div>
+    <div class="field words"><span>词</span><p>serve as 作为； impressive 令人印象深刻的； reminder 提醒物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="36.09" data-end="47.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Before they <span class="weak">were</span> replaced by steamships, sailing vessels like <span class="weak">the</span> Cutty Sark <span class="weak">were</span> used <span class="weak">to</span> carry tea <span class="weak">from</span> China <span class="weak">and</span> wool <span class="weak linking">from</span> Australia.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈfɔr ðeɪ <span class="weak">wɚ</span> rɪˈpleɪst baɪ ˈstimˌʃɪps ˈseɪlɪŋ ˈvɛsəlz laɪk <span class="weak">ðə</span> ˈkʌɾi sɑrk <span class="weak">wɚ</span> juzd <span class="weak">tə</span> ˈkæri ti <span class="weak">frəm</span> ˈtʃaɪnə <span class="weak">ən</span> wʊl <span class="weak">frəm</span><span class="linking">‿</span>ɔˈstreɪljə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>frəm‿ɔˈstreɪljə 连读；wɚ、ðə、tə、frəm、ən 弱读/弱化；ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Before 引导时间状语从句；主句为被动结构 <code>were used to carry</code>。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在被蒸汽船取代之前，像“卡蒂萨克”这样的帆船曾被用来从中国运茶、从澳大利亚运羊毛。</p></div>
+    <div class="field words"><span>词</span><p>replace 取代； steamship 蒸汽船； vessel 船只； wool 羊毛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="47.25" data-end="53.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">The</span> Cutty Sark <span class="weak linking">was</span> one <span class="weak">of</span> <span class="weak">the</span> fastest sailing ships <span class="weak">that</span> <span class="weak linking">has</span> ever <span class="weak">been</span> built.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkʌɾi sɑrk <span class="weak">wəz</span> wʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈfæstəst ˈseɪlɪŋ ʃɪps ðæt hæz<span class="linking">‿</span>ˈɛvɚ bɪn bɪlt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、hæz‿ˈɛvɚ 连读；ðə、wəz、əv 弱读/弱化；ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>one of the fastest...；that 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；定语从句现在完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>“卡蒂萨克”号是有史以来建造过的最快帆船之一。</p></div>
+    <div class="field words"><span>词</span><p>fastest 最快的； be built 被建造；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="53.22" data-end="58.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> only other ship <span class="weak">to</span> match <span class="weak">her</span> <span class="weak">was</span> <span class="weak">the</span> Thermopylae.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span> ˈoʊnli ˈʌðɚ ʃɪp <span class="weak">tə</span> mætʃ <span class="weak">hɚ</span> <span class="weak">wəz</span> <span class="weak">ðə</span> θɚˈmɑpəli/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði、tə、hɚ、wəz、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>to match her 作后置定语修饰 ship。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>唯一能与她匹敌的另一艘船是“塞莫皮莱”号。</p></div>
+    <div class="field words"><span>词</span><p>match 匹敌； the only other 唯一另一个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="58.15" data-end="67.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Both these ships <span class="linking">set</span> out <span class="weak">from</span> Shanghai on June 18<span class="linking">th</span>, 1872 <span class="linking">on</span> <span class="weak linking">an</span> exciting race <span class="weak">to</span> England.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/boʊθ ðiz ʃɪps sɛt aʊt <span class="weak">frəm</span> ʃæŋˈhaɪ ɑn dʒun<span class="linking">‿</span>eɪˈtinθ<span class="linking">‿</span>ˌeɪˈtin ˈsɛvənti <span class="weak">tu</span> ɑn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪkˈsaɪɾɪŋ reɪs <span class="weak">tə</span> ˈɪŋɡlənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dʒun‿eɪˈtinθ‿ˌeɪˈtin、ɑn‿ən‿ɪkˈsaɪɾɪŋ 连读；frəm、tu、ən、tə 弱读/弱化；ɑn‿ən‿ɪkˈsaɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>set out from...on...；on an exciting race 表目的/任务。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这两艘船于 1872 年 6 月 18 日从上海出发，展开一场驶往英格兰的激动人心的比赛。</p></div>
+    <div class="field words"><span>词</span><p>set out 出发； race to England 去英格兰的比赛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="67.82" data-end="74.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">This race, which <span class="linking">went</span> on <span class="weak linking">for</span> exactly four months, <span class="weak">was</span> <span class="weak">the</span> <span class="linking">last</span> <span class="weak linking">of</span> <span class="weak">its</span> kind.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs reɪs wɪtʃ wɛnt<span class="linking">‿</span>ɑn <span class="weak">fɚ</span> ɪɡˈzæktli fɔr mʌnθs <span class="weak">wəz</span> <span class="weak">ðə</span> læst<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪts kaɪnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛnt‿ɑn、læst‿əv‿ɪts 连读；fɚ、wəz、ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这场比赛整整持续四个月，是同类比赛中的最后一次。</p></div>
+    <div class="field words"><span>词</span><p>go on 持续； exactly 正好； the last of its kind 同类中的最后一个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="74.61" data-end="82.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">It</span> marked <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> great <span class="linking">tradition</span> <span class="weak">of</span> ships with <span class="linking">sails</span> <span class="weak">and</span> <span class="weak">the</span> <span class="linking">beginning</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">new</span> era.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt mɑrkt <span class="weak">ði</span> ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ɡreɪt trəˈdɪʃən<span class="linking">‿</span><span class="weak">əv</span> ʃɪps wɪð seɪlz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> bɪˈɡɪnɪŋ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> nu ˈɪrə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɛnd‿əv、trəˈdɪʃən‿əv、seɪlz‿ən、bɪˈɡɪnɪŋ‿əv‿ə 连读；ði、əv、ðə、ən、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>marked 后接两个并列宾语：the end 和 the beginning。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>它标志着帆船伟大传统的结束和新时代的开始。</p></div>
+    <div class="field words"><span>词</span><p>mark 标志着； tradition 传统； era 时代；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="82.51" data-end="93.88">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> <span class="linking">first</span> <span class="weak">of</span> <span class="weak">the</span> two ships <span class="weak">to</span> reach Java after <span class="weak">the</span> race <span class="weak">had</span> begun <span class="weak">was</span> <span class="weak">the</span> Thermopylae, <span class="linking">but</span> on <span class="weak">the</span> <span class="linking">Indian</span> Ocean, <span class="weak">the</span> Cutty Sark took <span class="weak">the</span> lead.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> fɝst<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> <span class="weak">tu</span> ʃɪps <span class="weak">tə</span> ritʃ ˈdʒɑvə ˈæftɚ <span class="weak">ðə</span> reɪs hæd bɪˈɡʌn <span class="weak">wəz</span> <span class="weak">ðə</span> θɚˈmɑpəli bəɾ<span class="linking">‿</span>ɑn <span class="weak">ði</span> ˈɪndiən<span class="linking">‿</span>ˈoʊʃən <span class="weak">ðə</span> ˈkʌɾi sɑrk tʊk <span class="weak">ðə</span> lid/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɝst‿əv、bəɾ‿ɑn、ˈɪndiən‿ˈoʊʃən 连读；ðə、əv、tu、tə、wəz、ði 弱读/弱化；bəɾ‿ɑn、ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>to reach Java 修饰 ships；after 引导时间状语从句；but 连接转折分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；after 从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>比赛开始后，最先到达爪哇的是“塞莫皮莱”号，但在印度洋上，“卡蒂萨克”号领先了。</p></div>
+    <div class="field words"><span>词</span><p>reach 到达； take the lead 领先； Indian Ocean 印度洋；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="93.88" data-end="101.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">It</span> seemed certain <span class="weak">that</span> she <span class="weak">would</span> <span class="weak">be</span> <span class="weak">the</span> first ship home, but during <span class="weak">the</span> race she <span class="weak linking">had</span> <span class="weak">a</span> <span class="linking">lot</span> <span class="weak">of</span> bad luck.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt simd ˈsɝɾən ðæt ʃi wʊd bi <span class="weak">ðə</span> fɝst ʃɪp hoʊm bət ˈdʊrɪŋ <span class="weak">ðə</span> reɪs ʃi hæd<span class="linking">‿</span><span class="weak">ə</span> lɑɾ<span class="linking">‿</span><span class="weak">əv</span> bæd lʌk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæd‿ə、lɑɾ‿əv 连读；ðə、ə、əv 弱读/弱化；ˈsɝɾən、lɑɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It seemed certain that...；but 连接转折。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be 表过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>看起来她肯定会成为第一艘回到英国的船，但比赛中她运气很差。</p></div>
+    <div class="field words"><span>词</span><p>seem certain 看起来确定； bad luck 坏运气；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="101.86" data-end="109.43">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak linking">In</span> August, she <span class="weak">was</span> struck <span class="linking">by</span> <span class="weak">a</span> very heavy storm during which <span class="weak">her</span> rudder <span class="weak">was</span> <span class="linking">torn</span> away.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span><span class="linking">‿</span>ˈɔɡəst ʃi <span class="weak">wəz</span> strʌk baɪ <span class="weak">ə</span> ˈvɛri ˈhɛvi stɔrm ˈdʊrɪŋ wɪtʃ <span class="weak">hɚ</span> ˈrʌdɚ <span class="weak">wəz</span> tɔrn<span class="linking">‿</span>əˈweɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn‿ˈɔɡəst、tɔrn‿əˈweɪ 连读；ɪn、wəz、ə、hɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主句被动；during which 引导定语从句修饰 storm；从句也为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>八月，她遭遇一场猛烈风暴，舵在风暴中被扯掉了。</p></div>
+    <div class="field words"><span>词</span><p>be struck by 遭遇/被袭击； heavy storm 暴风雨； rudder 舵； tear away 扯掉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="109.43" data-end="115.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> Cutty Sark rolled <span class="weak">from</span> side <span class="weak">to</span> side <span class="weak linking">and</span> <span class="weak">it</span> became impossible <span class="weak">to</span> steer <span class="weak">her</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkʌɾi sɑrk roʊld <span class="weak">frəm</span> saɪd <span class="weak">tə</span> saɪd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt bɪˈkeɪm<span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">tə</span> stɪr <span class="weak">hɚ</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>saɪd‿ən‿ɪt、bɪˈkeɪm‿ɪmˈpɑsəbəl 连读；ðə、frəm、tə、ən、hɚ 弱读/弱化；ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；it 作形式主语，to steer her 为真正主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“卡蒂萨克”号左右摇晃，已经无法操纵。</p></div>
+    <div class="field words"><span>词</span><p>roll from side to side 左右摇晃； steer 操纵；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="115.93" data-end="123.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">A</span> temporary rudder <span class="weak">was</span> made on board <span class="weak">from</span> spare <span class="linking">planks</span> <span class="weak linking">and</span> <span class="weak">it</span> <span class="weak">was</span> fitted with great difficulty.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈtɛmpəˌrɛri ˈrʌdɚ <span class="weak">wəz</span> meɪd<span class="linking">‿</span>ɑn bɔrd <span class="weak">frəm</span> spɛr plæŋks<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt <span class="weak">wəz</span> ˈfɪɾɪd wɪð ɡreɪt ˈdɪfəkəlti/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿ɑn、plæŋks‿ən‿ɪt 连读；ə、wəz、frəm、ən 弱读/弱化；ˈfɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接两个被动分句；with great difficulty 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>船上用备用木板做了一个临时舵，并费了很大劲才装上。</p></div>
+    <div class="field words"><span>词</span><p>temporary 临时的； on board 在船上； spare planks 备用木板； fit 安装； with great difficulty 很困难地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="123.64" data-end="134.6">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">This greatly reduced <span class="weak">the</span> <span class="linking">speed</span> <span class="weak">of</span> <span class="weak">the</span> ship, <span class="weak">for</span> <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> danger <span class="weak linking">that</span> if she travelled too quickly, this rudder <span class="weak">would</span> <span class="weak">be</span> <span class="linking">torn</span> <span class="linking">away</span> <span class="weak">as</span> well.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs ˈɡreɪtli rɪˈdust <span class="weak">ðə</span> spid<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ʃɪp <span class="weak">fɚ</span> ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈdeɪndʒɚ ðæɾ<span class="linking">‿</span>ɪf ʃi ˈtrævəld <span class="weak">tu</span> ˈkwɪkli ðɪs ˈrʌdɚ wʊd bi tɔrn<span class="linking">‿</span>əˈweɪ æz wɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>spid‿əv、wəz‿ə、ðæɾ‿ɪf、tɔrn‿əˈweɪ 连读；ðə、əv、fɚ、wəz、ə、tu 弱读/弱化；ðæɾ‿ɪf 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句；that 引导同位语从句解释 danger；if 引导条件从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would be torn 为过去将来被动。</p></div>
+    <div class="field cn"><span>中</span><p>这大大降低了船速，因为如果她航行过快，这个舵也有被扯掉的危险。</p></div>
+    <div class="field words"><span>词</span><p>reduce speed 降低速度； danger 危险； as well 也；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="134.6" data-end="138.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Because <span class="weak">of</span> this, <span class="weak">the</span> Cutty Sark lost <span class="weak">her</span> lead.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈkɔz<span class="linking">‿</span><span class="weak">əv</span> ðɪs <span class="weak">ðə</span> ˈkʌɾi sɑrk lɔst <span class="weak">hɚ</span> lid/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkɔz‿əv 连读；əv、ðə、hɚ 弱读/弱化；ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Because of this 作原因状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>因此，“卡蒂萨克”号失去了领先地位。</p></div>
+    <div class="field words"><span>词</span><p>lose one's lead 失去领先；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="138.74" data-end="150.98">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">After crossing <span class="weak">the</span> Equator, <span class="weak">the</span> captain <span class="linking">called</span> <span class="weak linking">in</span> <span class="linking">at</span> <span class="weak">a</span> port <span class="weak">to</span> <span class="weak">have</span> <span class="weak">a</span> new rudder fitted, but by now <span class="weak">the</span> Thermopylae <span class="weak linking">was</span> over five hundred <span class="linking">miles</span> ahead.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈkrɔsɪŋ <span class="weak">ði</span> ɪˈkweɪɾɚ <span class="weak">ðə</span> ˈkæptən kɔld<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>æɾ<span class="linking">‿</span><span class="weak">ə</span> pɔrt <span class="weak">tə</span> hæv<span class="linking">‿</span><span class="weak">ə</span> nu ˈrʌdɚ ˈfɪɾɪd bət baɪ naʊ <span class="weak">ðə</span> θɚˈmɑpəli <span class="weak">wəz</span><span class="linking">‿</span>ˈoʊvɚ faɪv ˈhʌndrəd maɪlz<span class="linking">‿</span>əˈhɛd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kɔld‿ɪn‿æɾ‿ə、hæv‿ə、wəz‿ˈoʊvɚ、maɪlz‿əˈhɛd 连读；ði、ðə、ɪn、ə、tə、wəz 弱读/弱化；ɪˈkweɪɾɚ、kɔld‿ɪn‿æɾ‿ə、ˈfɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>After crossing... 作时间状语；have sth fitted 表让人安装；but 转折。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>越过赤道后，船长停靠港口安装新舵，但此时“塞莫皮莱”号已经领先五百多英里。</p></div>
+    <div class="field words"><span>词</span><p>cross the Equator 越过赤道； call in at a port 停靠港口； have sth fitted 安装某物； ahead 领先；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="150.98" data-end="159.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Though <span class="weak">the</span> new rudder <span class="weak">was</span> <span class="linking">fitted</span> at tremendous <span class="linking">speed</span>, <span class="weak">it</span> <span class="weak linking">was</span> impossible <span class="weak">for</span> <span class="weak">the</span> Cutty Sark <span class="weak">to</span> win.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ <span class="weak">ðə</span> nu ˈrʌdɚ <span class="weak">wəz</span> ˈfɪɾɪd<span class="linking">‿</span>æt trəˈmɛndəs spid<span class="linking">‿</span>ɪt <span class="weak">wəz</span><span class="linking">‿</span>ɪmˈpɑsəbəl <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈkʌɾi sɑrk <span class="weak">tə</span> wɪn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfɪɾɪd‿æt、spid‿ɪt、wəz‿ɪmˈpɑsəbəl 连读；ðə、wəz、fɚ、tə 弱读/弱化；ˈfɪɾɪd‿æt、ˈkʌɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步从句；it 作形式主语，to win 为真正主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was fitted 为被动。</p></div>
+    <div class="field cn"><span>中</span><p>尽管新舵以惊人的速度装好了，“卡蒂萨克”号已经不可能获胜了。</p></div>
+    <div class="field words"><span>词</span><p>tremendous speed 惊人速度； impossible 不可能的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="159.18" data-end="163.39">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">She <span class="linking">arrived</span> <span class="weak linking">in</span> <span class="linking">England</span> <span class="weak">a</span> <span class="linking">week</span> after <span class="weak">the</span> Thermopylae.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi əˈraɪvd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ˈɪŋɡlənd<span class="linking">‿</span><span class="weak">ə</span> wik<span class="linking">‿</span>ˈæftɚ <span class="weak">ðə</span> θɚˈmɑpəli/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈraɪvd‿ɪn‿ˈɪŋɡlənd‿ə、wik‿ˈæftɚ 连读；ɪn、ə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；a week after... 作时间状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她比“塞莫皮莱”号晚一周抵达英格兰。</p></div>
+    <div class="field words"><span>词</span><p>arrive in 到达； a week after 晚一周；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="163.39" data-end="169.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">Even this <span class="weak">was</span> remarkable, considering <span class="weak">that</span> she <span class="weak">had</span> <span class="weak">had</span> so many delays.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈivən ðɪs <span class="weak">wəz</span> rɪˈmɑrkəbəl kənˈsɪdərɪŋ ðæt ʃi hæd hæd soʊ ˈmɛni dɪˈleɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>considering that... 作状语，表示“考虑到……”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had had 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>考虑到她经历了这么多延误，即便如此也很了不起。</p></div>
+    <div class="field words"><span>词</span><p>remarkable 了不起的； considering that 考虑到； delay 延误；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="169.29" data-end="174.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">There</span> <span class="weak">is</span> no doubt <span class="weak linking">that</span> if she <span class="weak">had</span> not lost <span class="weak">her</span> rudder she <span class="weak">would</span> <span class="weak">have</span> won <span class="weak">the</span> race easily.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ɪz</span> noʊ daʊt ðæɾ<span class="linking">‿</span>ɪf ʃi hæd nɑt lɔst <span class="weak">hɚ</span> ˈrʌdɚ ʃi wʊd hæv wʌn <span class="weak">ðə</span> reɪs<span class="linking">‿</span>ˈizəli/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɪz、ðæɾ‿ɪf、reɪs‿ˈizəli 连读；ɪz、hɚ、ðə 弱读/弱化；ðæɾ‿ɪf 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>There is no doubt that...；that 从句中含与过去事实相反的虚拟条件句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；过去完成时 + would have done。</p></div>
+    <div class="field cn"><span>中</span><p>毫无疑问，如果她没有失去舵，她会轻松赢得比赛。</p></div>
+    <div class="field words"><span>词</span><p>there is no doubt 毫无疑问； win the race 赢得比赛；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>船只与航行: sailing ship 帆船； steamship 蒸汽船； vessel 船只； rudder 舵； plank 木板； port 港口； Equator 赤道；</p>
+      <p>比赛与速度: race 比赛； take the lead 领先； lose one's lead 失去领先； tremendous speed 惊人速度； delay 延误；</p>
+      <p>动作短语: serve as 作为； be used to carry 被用来运输； set out 出发； be struck by 遭遇； have sth fitted 安装某物；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>one of the fastest...that has ever been built</code>: 最高级 + 定语从句。</p>
+      <p><code>during which...</code>: 介词 + which 引导定语从句。</p>
+      <p><code>There was a danger that...</code>: that 引导同位语从句。</p>
+      <p><code>It was impossible for...to...</code>: it 形式主语。</p>
+      <p><code>if she had not..., she would have...</code>: 与过去事实相反的虚拟条件句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时用于介绍保存现状：<code>can still be seen</code>, <code>stands</code>, <code>serves</code>。</p>
+      <p>一般过去时用于比赛叙事：<code>set out</code>, <code>marked</code>, <code>took</code>, <code>lost</code>, <code>arrived</code>。</p>
+      <p>被动语态突出船只遭遇和修理：<code>was struck</code>, <code>was torn away</code>, <code>was made</code>, <code>was fitted</code>。</p>
+      <p>过去完成时和虚拟语气用于假设结果：<code>had not lost</code>, <code>would have won</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>can still be seen</code> 表现在仍能被看到。</p>
+      <p><code>would be torn away</code> 表当时担心的可能结果。</p>
+      <p><code>would have won</code> 表对过去未发生结果的肯定推断。</p>
+      <p>文章语气对“卡蒂萨克”号虽败犹荣。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>set out</code> -&gt; /sɛt‿aʊt/；<code>fitted with</code>、<code>called in at</code>、<code>lost her</code> 注意弱读衔接。</p>
+      <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>that</code>, <code>as</code> 要轻读，如 <code>the beginning of a new era</code>。</p>
+      <p>意群停顿: 第 15 句按 <code>This greatly reduced... / for there was a danger / that if... / this rudder...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 25 - The Cutty Sark</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../25－The Cutty Sark.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.14,"end":24.39,"text":"One of the most famous sailing ships of the nineteenth century, the Cutty Sark, can still be seen at Greenwich."},{"index":2,"start":24.39,"end":30.28,"text":"She stands on dry land and is visited by thousands of people each year."},{"index":3,"start":30.28,"end":36.09,"text":"She serves as an impressive reminder of the great ships of the past."},{"index":4,"start":36.09,"end":47.25,"text":"Before they were replaced by steamships, sailing vessels like the Cutty Sark were used to carry tea from China and wool from Australia."},{"index":5,"start":47.25,"end":53.22,"text":"The Cutty Sark was one of the fastest sailing ships that has ever been built."},{"index":6,"start":53.22,"end":58.15,"text":"The only other ship to match her was the Thermopylae."},{"index":7,"start":58.15,"end":67.82,"text":"Both these ships set out from Shanghai on June 18th, 1872 on an exciting race to England."},{"index":8,"start":67.82,"end":74.61,"text":"This race, which went on for exactly four months, was the last of its kind."},{"index":9,"start":74.61,"end":82.51,"text":"It marked the end of the great tradition of ships with sails and the beginning of a new era."},{"index":10,"start":82.51,"end":93.88,"text":"The first of the two ships to reach Java after the race had begun was the Thermopylae, but on the Indian Ocean, the Cutty Sark took the lead."},{"index":11,"start":93.88,"end":101.86,"text":"It seemed certain that she would be the first ship home, but during the race she had a lot of bad luck."},{"index":12,"start":101.86,"end":109.43,"text":"In August, she was struck by a very heavy storm during which her rudder was torn away."},{"index":13,"start":109.43,"end":115.93,"text":"The Cutty Sark rolled from side to side and it became impossible to steer her."},{"index":14,"start":115.93,"end":123.64,"text":"A temporary rudder was made on board from spare planks and it was fitted with great difficulty."},{"index":15,"start":123.64,"end":134.6,"text":"This greatly reduced the speed of the ship, for there was a danger that if she travelled too quickly, this rudder would be torn away as well."},{"index":16,"start":134.6,"end":138.74,"text":"Because of this, the Cutty Sark lost her lead."},{"index":17,"start":138.74,"end":150.98,"text":"After crossing the Equator, the captain called in at a port to have a new rudder fitted, but by now the Thermopylae was over five hundred miles ahead."},{"index":18,"start":150.98,"end":159.18,"text":"Though the new rudder was fitted at tremendous speed, it was impossible for the Cutty Sark to win."},{"index":19,"start":159.18,"end":163.39,"text":"She arrived in England a week after the Thermopylae."},{"index":20,"start":163.39,"end":169.29,"text":"Even this was remarkable, considering that she had had so many delays."},{"index":21,"start":169.29,"end":174.67,"text":"There is no doubt that if she had not lost her rudder she would have won the race easily."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 57 - Back in the Old Country</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 57 - Back in the Old Country</h1>
+      <p class="meta">Generated from 57－Back in the Old Country.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+      <a href="#sentence-30">30</a>
+      <a href="#sentence-31">31</a>
+      <a href="#sentence-32">32</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="13.98" data-end="18.28">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">I stopped <span class="weak">to</span> let <span class="weak">the</span> car <span class="linking">cool</span> <span class="linking">off</span> <span class="weak">and</span> <span class="weak">to</span> study <span class="weak">the</span> map.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ stɑpt <span class="weak">tə</span> lɛt <span class="weak">ðə</span> kɑr kul<span class="linking">‿</span>ɔf<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> ˈstʌdi <span class="weak">ðə</span> mæp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kul‿ɔf‿ən 连读；tə、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>stopped 后接两个并列不定式目的状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我停下来让汽车冷却，并研究地图。</p></div>
+    <div class="field words"><span>词</span><p>stop to do 停下来去做； cool off 冷却； study the map 研究地图；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="18.28" data-end="25.73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">I <span class="weak linking">had</span> expected <span class="weak">to</span> <span class="weak">be</span> near <span class="linking">my</span> objective by now, <span class="linking">but</span> everything still <span class="linking">seemed</span> alien <span class="weak">to</span> me.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ hæd<span class="linking">‿</span>ɪkˈspɛktɪd <span class="weak">tə</span> bi nɪr maɪ<span class="linking">‿</span>əbˈdʒɛktɪv baɪ naʊ bəɾ<span class="linking">‿</span>ˈɛvriˌθɪŋ stɪl simd<span class="linking">‿</span>ˈeɪliən <span class="weak">tə</span> mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæd‿ɪkˈspɛktɪd、maɪ‿əbˈdʒɛktɪv、bəɾ‿ˈɛvriˌθɪŋ、simd‿ˈeɪliən 连读；tə 弱读/弱化；bəɾ‿ˈɛvriˌθɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句；to be near... 为 expected 的宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>had expected 为过去完成时；seemed 为一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我本以为现在应该接近目的地了，但一切对我来说仍然很陌生。</p></div>
+    <div class="field words"><span>词</span><p>expect 预期； objective 目的地/目标； alien 陌生的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="25.73" data-end="32.35">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">I <span class="weak linking">was</span> only five when my father <span class="weak">had</span> taken me <span class="linking">abroad</span>, <span class="weak">and</span> <span class="weak">that</span> <span class="weak linking">was</span> eighteen <span class="linking">years</span> ago.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ <span class="weak">wəz</span><span class="linking">‿</span>ˈoʊnli faɪv wɛn maɪ ˈfɑðɚ hæd ˈteɪkən mi<span class="linking">‿</span>əˈbrɔd<span class="linking">‿</span><span class="weak">ən</span> ðæt <span class="weak">wəz</span><span class="linking">‿</span>ˌeɪˈtin jɪrz<span class="linking">‿</span>əˈɡoʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ˈoʊnli、mi‿əˈbrɔd‿ən、wəz‿ˌeɪˈtin、jɪrz‿əˈɡoʊ 连读；wəz、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>when 引导时间状语从句；and 连接补充说明。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；had taken 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>父亲带我出国时我只有五岁，那已经是十八年前的事了。</p></div>
+    <div class="field words"><span>词</span><p>abroad 到国外； years ago ……年前；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="32.35" data-end="40.37">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">When my mother <span class="weak">had</span> <span class="linking">died</span> <span class="linking">after</span> <span class="weak">a</span> <span class="linking">tragic</span> accident, he did not quickly recover <span class="weak">from</span> <span class="weak">the</span> <span class="linking">shock</span> <span class="weak">and</span> loneliness.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn maɪ ˈmʌðɚ hæd daɪd<span class="linking">‿</span>ˈæftɚ<span class="linking">‿</span><span class="weak">ə</span> ˈtrædʒɪk<span class="linking">‿</span>ˈæksədənt hi dɪd nɑt ˈkwɪkli rɪˈkʌvɚ <span class="weak">frəm</span> <span class="weak">ðə</span> ʃɑk<span class="linking">‿</span><span class="weak">ən</span> ˈloʊnlinəs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>daɪd‿ˈæftɚ‿ə、ˈtrædʒɪk‿ˈæksədənt、ʃɑk‿ən 连读；ə、frəm、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；recover from 表从……中恢复。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去完成时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>母亲在一场悲惨事故后去世，父亲没有很快从震惊和孤独中恢复过来。</p></div>
+    <div class="field words"><span>词</span><p>tragic accident 悲惨事故； recover from 从……恢复； shock 震惊； loneliness 孤独；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="40.37" data-end="46.02">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Everything</span> around <span class="weak">him</span> <span class="weak">was</span> <span class="linking">full</span> <span class="weak">of</span> <span class="weak">her</span> presence, continually reopening <span class="weak">the</span> wound.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈɛvriˌθɪŋ<span class="linking">‿</span>əˈraʊnd <span class="weak">hɪm</span> <span class="weak">wəz</span> fʊl<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɚ</span> ˈprɛzəns kənˈtɪnjuəli riˈoʊpənɪŋ <span class="weak">ðə</span> wund/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈɛvriˌθɪŋ‿əˈraʊnd、fʊl‿əv 连读；hɪm、wəz、əv、hɚ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；continually reopening... 为现在分词短语作结果/伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他周围的一切都充满了她的影子，不断重新揭开伤口。</p></div>
+    <div class="field words"><span>词</span><p>presence 存在/身影； continually 不断地； reopen the wound 重新揭开伤口；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="46.02" data-end="48.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">So he decided <span class="weak">to</span> emigrate.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/soʊ hi dɪˈsaɪdɪd <span class="weak">tə</span> ˈɛməˌɡreɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so 表结果；decide to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>于是他决定移民。</p></div>
+    <div class="field words"><span>词</span><p>emigrate 移居国外；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="48.41" data-end="57.04">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> new country he became <span class="linking">absorbed</span> <span class="weak">in</span> <span class="linking">making</span> <span class="weak">a</span> new life <span class="weak">for</span> <span class="weak">the</span> two <span class="weak linking">of</span> us, so <span class="weak">that</span> he gradually ceased <span class="weak">to</span> grieve.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> nu ˈkʌntri hi bɪˈkeɪm<span class="linking">‿</span>əbˈzɔrbd<span class="linking">‿</span><span class="weak">ɪn</span> ˈmeɪkɪŋ<span class="linking">‿</span><span class="weak">ə</span> nu laɪf <span class="weak">fɚ</span> <span class="weak">ðə</span> <span class="weak">tu</span><span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs soʊ ðæt hi ˈɡrædʒuəli sist <span class="weak">tə</span> ɡriv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkeɪm‿əbˈzɔrbd‿ɪn、ˈmeɪkɪŋ‿ə、tu‿əv‿ʌs 连读；ɪn、ðə、ə、fɚ、tu、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>become absorbed in doing；so that 引导结果状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在新的国家里，他全心投入为我们两人建立新生活，于是逐渐停止了悲伤。</p></div>
+    <div class="field words"><span>词</span><p>become absorbed in 专心于； make a new life 建立新生活； cease to do 停止做； grieve 悲伤；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="57.04" data-end="66.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">He did not <span class="linking">marry</span> <span class="linking">again</span> <span class="weak linking">and</span> I <span class="weak">was</span> <span class="linking">brought</span> up <span class="linking">without</span> <span class="weak">a</span> woman's care; <span class="linking">but</span> I lacked <span class="weak">for</span> nothing, <span class="weak">for</span> he <span class="weak">was</span> both <span class="linking">father</span> <span class="weak">and</span> mother <span class="weak">to</span> me.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi dɪd nɑt ˈmæri<span class="linking">‿</span>əˈɡɛn<span class="linking">‿</span><span class="weak">ən</span> aɪ <span class="weak">wəz</span> brɔɾ<span class="linking">‿</span>ʌp wɪˈðaʊɾ<span class="linking">‿</span><span class="weak">ə</span> ˈwʊmənz ker bət aɪ lækt <span class="weak">fɚ</span> ˈnʌθɪŋ <span class="weak">fɚ</span> hi <span class="weak">wəz</span> boʊθ ˈfɑðɚ<span class="linking">‿</span><span class="weak">ən</span> ˈmʌðɚ <span class="weak">tə</span> mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmæri‿əˈɡɛn‿ən、brɔɾ‿ʌp、wɪˈðaʊɾ‿ə、ˈfɑðɚ‿ən 连读；ən、wəz、ə、fɚ、tə 弱读/弱化；brɔɾ‿ʌp、wɪˈðaʊɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and/but/for 连接多个分句；was brought up 为被动语态；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他没有再婚，我在没有女性照料的环境中长大；但我什么也不缺，因为他对我来说既是父亲也是母亲。</p></div>
+    <div class="field words"><span>词</span><p>bring up 抚养； care 照料； lack for nothing 什么也不缺；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="66.9" data-end="70.65">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">He always meant <span class="weak">to</span> go back one day, but not <span class="weak">to</span> stay.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈɔlweɪz mɛnt <span class="weak">tə</span> ɡoʊ bæk wʌn deɪ bət nɑt <span class="weak">tə</span> steɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>mean to do 表打算；but not to stay 省略结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他一直打算有一天回去，但不是留下。</p></div>
+    <div class="field words"><span>词</span><p>mean to do 打算做； go back 回去；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="70.65" data-end="75.54">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">His</span> <span class="linking">roots</span> <span class="weak">and</span> mine <span class="weak">had</span> become too <span class="linking">firmly</span> <span class="linking">embedded</span> <span class="weak">in</span> <span class="weak">the</span> new land.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">hɪz</span> ruts<span class="linking">‿</span><span class="weak">ən</span> maɪn hæd bɪˈkʌm <span class="weak">tu</span> ˈfɝmli ɪmˈbɛdɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> nu lænd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ruts‿ən、ɪmˈbɛdɪd‿ɪn 连读；hɪz、ən、tu、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；too... 表程度。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>他和我的根已经太牢固地扎在了新土地里。</p></div>
+    <div class="field words"><span>词</span><p>roots 根/根基； firmly 牢固地； embedded 扎根的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="75.54" data-end="80.32">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">But he wanted <span class="weak">to</span> see <span class="weak">the</span> old <span class="linking">folk</span> <span class="linking">again</span> <span class="weak">and</span> <span class="weak">to</span> visit my mother's grave.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət hi ˈwɑntɪd <span class="weak">tə</span> si <span class="weak">ði</span><span class="linking">‿</span>oʊld foʊk<span class="linking">‿</span>əˈɡɛn<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> ˈvɪzɪt maɪ ˈmʌðɚz ɡreɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ði‿oʊld、foʊk‿əˈɡɛn‿ən 连读；tə、ði、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>wanted 后接两个并列不定式。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>但他想再见见故乡的老人们，并去看我母亲的坟墓。</p></div>
+    <div class="field words"><span>词</span><p>old folk 故乡旧识/老人们； grave 坟墓；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="80.32" data-end="91.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">He became <span class="linking">mortally</span> <span class="linking">ill</span> <span class="weak">a</span> few months before we <span class="weak">had</span> planned <span class="weak">to</span> go <span class="weak">and</span>, when he knew <span class="weak">that</span> he <span class="weak">was</span> dying, he made me promise <span class="weak">to</span> go on <span class="linking">my</span> own.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi bɪˈkeɪm ˈmɔrtəli<span class="linking">‿</span>ɪl<span class="linking">‿</span><span class="weak">ə</span> fju mʌnθs bɪˈfɔr wi hæd plænd <span class="weak">tə</span> ɡoʊ<span class="linking">‿</span><span class="weak">ən</span> wɛn hi nu ðæt hi <span class="weak">wəz</span> ˈdaɪɪŋ hi meɪd mi ˈprɑmɪs <span class="weak">tə</span> ɡoʊ<span class="linking">‿</span>ɑn maɪ<span class="linking">‿</span>oʊn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmɔrtəli‿ɪl‿ə、ɡoʊ‿ən、ɡoʊ‿ɑn、maɪ‿oʊn 连读；ə、tə、ən、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>before 引导时间状语从句；when 引导时间状语从句；make sb do 结构。</p></div>
+    <div class="field tense"><span>时态</span><p>became/knew/made 为一般过去时；had planned 为过去完成时；was dying 为过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>就在我们计划出发前几个月，他病得很重；当他知道自己快要死时，他让我答应独自前往。</p></div>
+    <div class="field words"><span>词</span><p>mortally ill 病危； make sb promise 让某人答应； on my own 独自；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="91.44" data-end="104.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">I <span class="linking">hired</span> <span class="weak">a</span> car <span class="weak">the</span> <span class="linking">day</span> after <span class="linking">landing</span> <span class="weak">and</span> <span class="linking">bought</span> <span class="weak">a</span> comprehensive <span class="linking">book</span> <span class="weak">of</span> maps, <span class="linking">which</span> I found most <span class="linking">helpful</span> on <span class="weak">the</span> cross-country journey, but <span class="linking">which</span> I did not <span class="linking">think</span> I <span class="weak">should</span> <span class="linking">need</span> on <span class="weak">the</span> last stage.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ˈhaɪɚd<span class="linking">‿</span><span class="weak">ə</span> kɑr <span class="weak">ðə</span> deɪ ˈæftɚ ˈlændɪŋ<span class="linking">‿</span><span class="weak">ən</span> bɔɾ<span class="linking">‿</span><span class="weak">ə</span> ˌkɑmprɪˈhɛnsɪv bʊk<span class="linking">‿</span><span class="weak">əv</span> mæps wɪtʃ<span class="linking">‿</span>aɪ faʊnd moʊst ˈhɛlpfəl<span class="linking">‿</span>ɑn <span class="weak">ðə</span> krɔs ˈkʌntri ˈdʒɝni bət wɪtʃ<span class="linking">‿</span>aɪ dɪd nɑt θɪŋk<span class="linking">‿</span>aɪ ʃʊd nid<span class="linking">‿</span>ɑn <span class="weak">ðə</span> læst steɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhaɪɚd‿ə、ˈlændɪŋ‿ən、bɔɾ‿ə、bʊk‿əv、wɪtʃ‿aɪ 连读；ə、ðə、ən、əv 弱读/弱化；bɔɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列谓语；两个 which 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；should need 表过去看将来/认为会需要。</p></div>
+    <div class="field cn"><span>中</span><p>抵达后的第二天我租了车，买了一本详尽的地图册，途中穿越乡村时我觉得它非常有用，但我以为最后一段路不会需要它。</p></div>
+    <div class="field words"><span>词</span><p>hire 租用； comprehensive 详尽的； cross-country 横穿乡村的； stage 阶段/路段；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="104.62" data-end="108.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> not <span class="weak linking">that</span> I actually <span class="linking">remembered</span> <span class="linking">anything</span> <span class="linking">at</span> all.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> nɑt ðæt<span class="linking">‿</span>aɪ ˈæktʃuəli rɪˈmɛmbɚd<span class="linking">‿</span>ˈɛniˌθɪŋ<span class="linking">‿</span>æɾ<span class="linking">‿</span>ɔl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿aɪ、rɪˈmɛmbɚd‿ˈɛniˌθɪŋ‿æɾ‿ɔl 连读；wəz 弱读/弱化；rɪˈmɛmbɚd‿ˈɛniˌθɪŋ‿æɾ‿ɔl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It was not that... 表“并不是因为……”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>并不是说我实际上记得任何东西。</p></div>
+    <div class="field words"><span>词</span><p>actually 实际上； at all 根本；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="108.56" data-end="122.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">But my father <span class="weak">had</span> <span class="linking">described</span> <span class="linking">over</span> <span class="weak linking">and</span> <span class="linking">over</span> again what we <span class="weak">should</span> see <span class="linking">at</span> every milestone after leaving <span class="weak">the</span> nearest town, so <span class="weak linking">that</span> I <span class="weak">was</span> positive I <span class="weak">should</span> recognize <span class="weak linking">it</span> <span class="weak">as</span> familiar territory.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət maɪ ˈfɑðɚ hæd dɪˈskraɪbd<span class="linking">‿</span>ˈoʊvɚ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈoʊvɚ<span class="linking">‿</span>əˈɡɛn wʌt wi ʃʊd si<span class="linking">‿</span>æɾ<span class="linking">‿</span>ˈɛvri ˈmaɪlˌstoʊn<span class="linking">‿</span>ˈæftɚ ˈlivɪŋ <span class="weak">ðə</span> ˈnɪrəst taʊn soʊ ðæt<span class="linking">‿</span>aɪ <span class="weak">wəz</span> ˈpɑzəɾɪv<span class="linking">‿</span>aɪ ʃʊd ˈrɛkəɡˌnaɪz<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>æz fəˈmɪljɚ ˈtɛrəˌtɔri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪˈskraɪbd‿ˈoʊvɚ‿ən‿ˈoʊvɚ‿əˈɡɛn、si‿æɾ‿ˈɛvri、ˈmaɪlˌstoʊn‿ˈæftɚ、ðæt‿aɪ、ˈpɑzəɾɪv‿aɪ 连读；ən、ðə、wəz 弱读/弱化；si‿æɾ‿ˈɛvri、ˈpɑzəɾɪv‿aɪ、ˈrɛkəɡˌnaɪz‿ɪɾ‿æz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>what 引导 described 的宾语从句；so that 引导结果状语从句；as familiar territory 作宾补。</p></div>
+    <div class="field tense"><span>时态</span><p>had described 为过去完成时；should see/recognize 为过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>但父亲一遍又一遍地描述过离开最近城镇后每个里程碑处我们会看到什么，所以我确信我会认出那片熟悉的地方。</p></div>
+    <div class="field words"><span>词</span><p>over and over again 一遍又一遍； milestone 里程碑； be positive 确信； familiar territory 熟悉的地方；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="122.93" data-end="127.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="linking">Well</span>, I <span class="weak">had</span> <span class="weak">been</span> wrong, <span class="weak linking">for</span> I <span class="weak">was</span> now lost.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛl aɪ hæd bɪn rɔŋ <span class="weak">fɚ</span><span class="linking">‿</span>aɪ <span class="weak">wəz</span> naʊ lɔst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ‿aɪ 连读；fɚ、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>had been 为过去完成时；was 为一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，我错了，因为我现在迷路了。</p></div>
+    <div class="field words"><span>词</span><p>be wrong 错了； be lost 迷路；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="127.74" data-end="131.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">I <span class="linking">looked</span> at <span class="weak">the</span> <span class="linking">map</span> <span class="weak">and</span> <span class="linking">then</span> at <span class="weak">the</span> milometer.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ lʊkt<span class="linking">‿</span>æt <span class="weak">ðə</span> mæp<span class="linking">‿</span><span class="weak">ən</span> ðɛn<span class="linking">‿</span>æt <span class="weak">ðə</span> maɪˈlɑməɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lʊkt‿æt、mæp‿ən、ðɛn‿æt 连读；ðə、ən 弱读/弱化；maɪˈlɑməɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and then 连接动作；第二个 looked at 省略。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我看了看地图，然后又看了看里程表。</p></div>
+    <div class="field words"><span>词</span><p>milometer 里程表；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="131.33" data-end="147.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">I <span class="weak">had</span> come ten miles since leaving <span class="weak">the</span> <span class="linking">town</span> <span class="weak linking">and</span> at this <span class="linking">point</span>, according <span class="weak">to</span> my <span class="linking">father</span>, I <span class="weak">should</span> <span class="weak">be</span> <span class="linking">looking</span> at <span class="linking">farms</span> <span class="weak">and</span> <span class="linking">cottages</span> <span class="weak linking">in</span> <span class="weak">a</span> valley, with <span class="weak">the</span> spire <span class="weak">of</span> <span class="weak">the</span> <span class="linking">church</span> <span class="weak linking">of</span> our village <span class="linking">showing</span> <span class="weak">in</span> <span class="weak">the</span> far distance.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ hæd kʌm tɛn maɪlz sɪns ˈlivɪŋ <span class="weak">ðə</span> taʊn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>æt ðɪs pɔɪnt<span class="linking">‿</span>əˈkɔrdɪŋ <span class="weak">tə</span> maɪ ˈfɑðɚ aɪ ʃʊd bi ˈlʊkɪŋ<span class="linking">‿</span>æt fɑrmz<span class="linking">‿</span><span class="weak">ən</span> ˈkɑɾɪdʒɪz<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈvæli wɪð <span class="weak">ðə</span> spaɪɚ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> tʃɝtʃ<span class="linking">‿</span><span class="weak">əv</span> aʊr ˈvɪlɪdʒ ˈʃoʊɪŋ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> fɑr ˈdɪstəns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>taʊn‿ən‿æt、pɔɪnt‿əˈkɔrdɪŋ、ˈlʊkɪŋ‿æt、fɑrmz‿ən、ˈkɑɾɪdʒɪz‿ɪn‿ə 连读；ðə、ən、tə、ɪn、ə、əv 弱读/弱化；ˈkɑɾɪdʒɪz‿ɪn‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；according to... 插入状语；with + 宾语 + doing 为复合结构。</p></div>
+    <div class="field tense"><span>时态</span><p>had come 为过去完成时；should be looking 表按预期此刻应正在看到。</p></div>
+    <div class="field cn"><span>中</span><p>离开小镇后我已经走了十英里，按父亲的说法，此时我应当看到山谷里的农场和村舍，远处还有我们村教堂的尖塔。</p></div>
+    <div class="field words"><span>词</span><p>according to 根据； cottage 村舍； valley 山谷； spire 尖塔； in the far distance 在远处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="147.63" data-end="154.88">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">I <span class="weak">could</span> see no valley, no farms, no <span class="linking">cottages</span> <span class="weak">and</span> no church spire--<span class="linking">only</span> <span class="weak">a</span> lake.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ kʊd si noʊ ˈvæli noʊ fɑrmz noʊ ˈkɑɾɪdʒɪz<span class="linking">‿</span><span class="weak">ən</span> noʊ tʃɝtʃ spaɪr<span class="linking">‿</span>ˈoʊnli<span class="linking">‿</span><span class="weak">ə</span> leɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkɑɾɪdʒɪz‿ən、spaɪr‿ˈoʊnli‿ə 连读；ən、ə 弱读/弱化；ˈkɑɾɪdʒɪz‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>no...no...no... 并列否定，破折号后补充 only a lake。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表能力。</p></div>
+    <div class="field cn"><span>中</span><p>我看不到山谷、农场、村舍，也看不到教堂尖塔，只有一片湖。</p></div>
+    <div class="field words"><span>词</span><p>church spire 教堂尖塔； lake 湖；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="154.88" data-end="159.19">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">I decided <span class="weak linking">that</span> I must <span class="weak">have</span> <span class="linking">taken</span> <span class="weak">a</span> wrong turning somewhere.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ dɪˈsaɪdɪd ðæt<span class="linking">‿</span>aɪ mʌst <span class="weak">həv</span> ˈteɪkən<span class="linking">‿</span><span class="weak">ə</span> rɔŋ ˈtɝnɪŋ ˈsʌmˌwer/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿aɪ、ˈteɪkən‿ə 连读；həv、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；must have done 表对过去的肯定推测。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；从句 must have taken。</p></div>
+    <div class="field cn"><span>中</span><p>我断定自己一定是在某处转错了弯。</p></div>
+    <div class="field words"><span>词</span><p>wrong turning 错误转弯； somewhere 某处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="159.19" data-end="166.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">So I drove back <span class="weak">to</span> <span class="weak">the</span> <span class="linking">town</span> <span class="weak">and</span> began <span class="weak">to</span> retrace <span class="weak">the</span> route, taking frequent <span class="linking">glances</span> at <span class="weak">the</span> map.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/soʊ<span class="linking">‿</span>aɪ droʊv bæk <span class="weak">tə</span> <span class="weak">ðə</span> taʊn<span class="linking">‿</span><span class="weak">ən</span> bɪˈɡæn <span class="weak">tə</span> riˈtreɪs <span class="weak">ðə</span> rut ˈteɪkɪŋ ˈfrikwənt ˈɡlænsɪz<span class="linking">‿</span>æt <span class="weak">ðə</span> mæp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>soʊ‿aɪ、taʊn‿ən、ˈɡlænsɪz‿æt 连读；tə、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列谓语；taking... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>于是我开车回到镇上，开始沿原路返回，并频繁地看地图。</p></div>
+    <div class="field words"><span>词</span><p>retrace the route 沿原路返回； frequent 频繁的； glance 一瞥；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="166.44" data-end="169.18">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">I <span class="linking">landed</span> <span class="linking">up</span> at <span class="weak">the</span> same corner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ˈlændɪd<span class="linking">‿</span>ʌp<span class="linking">‿</span>æt <span class="weak">ðə</span> seɪm ˈkɔrnɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈlændɪd‿ʌp‿æt 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；land up at 表结果到达。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>结果我又到了同一个拐角处。</p></div>
+    <div class="field words"><span>词</span><p>land up 结果到达； corner 拐角；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="169.18" data-end="173.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">The</span> curious thing <span class="weak">was</span> <span class="weak">that</span> <span class="weak">the</span> lake <span class="weak">was</span> not <span class="linking">marked</span> on <span class="weak">the</span> map.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkjʊriəs θɪŋ <span class="weak">wəz</span> ðæt <span class="weak">ðə</span> leɪk <span class="weak">wəz</span> nɑt mɑrkt<span class="linking">‿</span>ɑn <span class="weak">ðə</span> mæp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>mɑrkt‿ɑn 连读；ðə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导表语从句；was marked 为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>奇怪的是，地图上并没有标出这片湖。</p></div>
+    <div class="field words"><span>词</span><p>curious 奇怪的； mark 标出；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="173.27" data-end="179.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">I <span class="linking">felt</span> <span class="weak linking">as</span> <span class="linking">if</span> I <span class="weak">had</span> <span class="linking">stumbled</span> into <span class="weak">a</span> nightmare <span class="linking">country</span>, <span class="weak">as</span> <span class="weak">you</span> sometimes do <span class="weak">in</span> dreams.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ fɛlt<span class="linking">‿</span>æz<span class="linking">‿</span>ɪf<span class="linking">‿</span>aɪ hæd ˈstʌmbəld<span class="linking">‿</span>ˈɪntu<span class="linking">‿</span><span class="weak">ə</span> ˈnaɪtˌmer ˈkʌntri æz ju ˈsʌmtaɪmz du<span class="linking">‿</span><span class="weak">ɪn</span> drimz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɛlt‿æz‿ɪf‿aɪ、ˈstʌmbəld‿ˈɪntu‿ə、du‿ɪn 连读；ə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>as if 引导表语/方式从句；as you sometimes do 作比较从句。</p></div>
+    <div class="field tense"><span>时态</span><p>felt 为一般过去时；had stumbled 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>我觉得自己仿佛跌进了一个噩梦般的国度，就像人有时在梦中那样。</p></div>
+    <div class="field words"><span>词</span><p>as if 好像； stumble into 偶然进入/跌入； nightmare 噩梦；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="179.55" data-end="184.43">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak linking">And</span>, <span class="weak linking">as</span> <span class="weak linking">in</span> <span class="weak">a</span> nightmare, <span class="weak">there</span> <span class="weak">was</span> <span class="linking">nobody</span> <span class="weak">in</span> sight <span class="weak">to</span> help me.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈnaɪtˌmer ðer <span class="weak">wəz</span> ˈnoʊˌbɑdi<span class="linking">‿</span><span class="weak">ɪn</span> saɪt <span class="weak">tə</span> hɛlp mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿æz‿ɪn‿ə、ˈnoʊˌbɑdi‿ɪn 连读；ən、ɪn、ə、wəz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>there be 句型；to help me 为后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>而且就像在噩梦中一样，视野里没有人能帮我。</p></div>
+    <div class="field words"><span>词</span><p>in sight 在视野内；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="184.43" data-end="194.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text">Fortunately <span class="weak">for</span> me, <span class="weak linking">as</span> I <span class="weak">was</span> wondering what <span class="weak">to</span> do next, <span class="weak">there</span> <span class="linking">appeared</span> on <span class="weak">the</span> <span class="linking">horizon</span> <span class="weak">a</span> <span class="linking">man</span> on horseback, <span class="linking">riding</span> <span class="weak">in</span> my direction.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈfɔrtʃənətli <span class="weak">fɚ</span> mi æz<span class="linking">‿</span>aɪ <span class="weak">wəz</span> ˈwʌndərɪŋ wʌt <span class="weak">tə</span> du nɛkst ðer<span class="linking">‿</span>əˈpɪrd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> həˈraɪzən<span class="linking">‿</span><span class="weak">ə</span> mæn<span class="linking">‿</span>ɑn ˈhɔrsˌbæk ˈraɪdɪŋ<span class="linking">‿</span><span class="weak">ɪn</span> maɪ dɪˈrɛkʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>æz‿aɪ、ðer‿əˈpɪrd‿ɑn、həˈraɪzən‿ə、mæn‿ɑn、ˈraɪdɪŋ‿ɪn 连读；fɚ、wəz、tə、ðə、ə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>as 引导时间状语从句；there appeared 倒装存在结构；riding... 为现在分词短语作定语/伴随。</p></div>
+    <div class="field tense"><span>时态</span><p>was wondering 为过去进行时；appeared 为一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>对我来说幸运的是，当我正想着下一步该怎么办时，地平线上出现了一个骑马朝我方向来的人。</p></div>
+    <div class="field words"><span>词</span><p>fortunately 幸运地； wonder 想知道； horizon 地平线； on horseback 骑马； in my direction 朝我的方向；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="194.01" data-end="199.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text">I waited till he came near, <span class="linking">then</span> I asked <span class="weak">him</span> <span class="weak">the</span> way <span class="weak">to</span> <span class="linking">our</span> old village.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ ˈweɪɾɪd tɪl hi keɪm nɪr ðɛn<span class="linking">‿</span>aɪ æskt <span class="weak">hɪm</span> <span class="weak">ðə</span> weɪ <span class="weak">tə</span> aʊr<span class="linking">‿</span>oʊld ˈvɪlɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛn‿aɪ、aʊr‿oʊld 连读；hɪm、ðə、tə 弱读/弱化；ˈweɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>till 引导时间状语从句；then 连接后续动作；ask sb the way to...</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我等他走近，然后问他去我们老村子的路。</p></div>
+    <div class="field words"><span>词</span><p>ask the way to 问去……的路；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="199.45" data-end="202.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text">He said <span class="weak">that</span> <span class="weak">there</span> <span class="weak">was</span> now no village.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi sɛd ðæt ðer <span class="weak">wəz</span> naʊ noʊ ˈvɪlɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；there be 句型。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他说现在已经没有村子了。</p></div>
+    <div class="field words"><span>词</span><p>no village 没有村子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="202.51" data-end="208.08">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text">I thought he must <span class="weak">have</span> misunderstood me, so I <span class="linking">repeated</span> <span class="weak">its</span> name.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ θɔt hi mʌst <span class="weak">həv</span> ˌmɪsʌndɚˈstʊd mi soʊ<span class="linking">‿</span>aɪ rɪˈpiɾɪd<span class="linking">‿</span>ɪts neɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>soʊ‿aɪ、rɪˈpiɾɪd‿ɪts 连读；həv 弱读/弱化；rɪˈpiɾɪd‿ɪts 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>must have misunderstood 表对过去的推测；so 连接结果分句。</p></div>
+    <div class="field tense"><span>时态</span><p>thought/repeated 为一般过去时；must have done 表过去推测。</p></div>
+    <div class="field cn"><span>中</span><p>我以为他一定误解了我，于是重复了村名。</p></div>
+    <div class="field words"><span>词</span><p>misunderstand 误解； repeat 重复；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-30" data-start="208.08" data-end="211.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="30" aria-label="Play sentence 30">▶</button><span class="sentence-num">30</span><p class="en-text">This time he pointed <span class="weak">to</span> <span class="weak">the</span> lake.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs taɪm hi ˈpɔɪntɪd <span class="weak">tə</span> <span class="weak">ðə</span> leɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这一次，他指向了那片湖。</p></div>
+    <div class="field words"><span>词</span><p>point to 指向；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-31" data-start="211.15" data-end="218.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="31" aria-label="Play sentence 31">▶</button><span class="sentence-num">31</span><p class="en-text"><span class="weak">The</span> village no <span class="linking">longer</span> existed because <span class="weak">it</span> <span class="weak">had</span> <span class="weak">been</span> <span class="linking">submerged</span>, <span class="weak linking">and</span> all <span class="weak">the</span> valley too.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈvɪlɪdʒ noʊ ˈlɔŋɡɚ<span class="linking">‿</span>ɪɡˈzɪstɪd bɪˈkɔz<span class="linking">‿</span>ɪt hæd bɪn səbˈmɝdʒd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɔl <span class="weak">ðə</span> ˈvæli <span class="weak">tu</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈlɔŋɡɚ‿ɪɡˈzɪstɪd、bɪˈkɔz‿ɪt、səbˈmɝdʒd‿ən‿ɔl 连读；ðə、ən、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>because 引导原因状语从句；and all the valley too 为省略补充。</p></div>
+    <div class="field tense"><span>时态</span><p>existed 为一般过去时；had been submerged 为过去完成时被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>村子已不复存在，因为它已经被淹没了，整个山谷也一样。</p></div>
+    <div class="field words"><span>词</span><p>no longer 不再； exist 存在； submerged 被淹没的； valley 山谷；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-32" data-start="218.49" data-end="221.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="32" aria-label="Play sentence 32">▶</button><span class="sentence-num">32</span><p class="en-text"><span class="weak">The</span> lake <span class="weak">was</span> <span class="linking">not</span> <span class="weak">a</span> <span class="linking">natural</span> one, <span class="linking">but</span> <span class="weak">a</span> man-made reservoir.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> leɪk <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span> ˈnætʃərəl wʌn bəɾ<span class="linking">‿</span><span class="weak">ə</span> mæn meɪd ˈrɛzɚˌvwɑr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɑɾ‿ə、bəɾ‿ə 连读；ðə、wəz、ə 弱读/弱化；nɑɾ‿ə、bəɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not...but... 对比结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这片湖不是天然湖，而是一座人工水库。</p></div>
+    <div class="field words"><span>词</span><p>natural 天然的； man-made 人造的； reservoir 水库；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>回乡与记忆: objective 目的地； alien 陌生的； old folk 故乡旧识； grave 坟墓； familiar territory 熟悉的地方； roots 根基；</p>
+    <p>路线与地图: map 地图； milometer 里程表； milestone 里程碑； retrace the route 沿原路返回； wrong turning 错误转弯；</p>
+    <p>情绪与状态: shock 震惊； loneliness 孤独； grieve 悲伤； nightmare 噩梦； be lost 迷路； fortunately 幸运地；</p>
+    <p>地貌变化: valley 山谷； church spire 教堂尖塔； lake 湖； submerged 被淹没的； man-made reservoir 人工水库；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>stop to do</code> 表停下来去做。</p>
+    <p><code>had expected to...but...</code> 表预期落空。</p>
+    <p><code>make sb promise to do</code> 使某人答应做。</p>
+    <p><code>It was not that...</code> 表“并不是因为……”。</p>
+    <p><code>so that I was positive...</code> 结果状语从句。</p>
+    <p><code>must have done</code> 表对过去的推测。</p>
+    <p><code>as if I had...</code> 表好像已经……。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般过去时为叙事主线：<code>stopped</code>, <code>decided</code>, <code>looked</code>, <code>asked</code>。</p>
+    <p>过去完成时表示更早的背景：<code>had expected</code>, <code>had taken</code>, <code>had died</code>, <code>had planned</code>, <code>had described</code>。</p>
+    <p>过去进行时描写当时状态：<code>was wondering</code>, <code>was dying</code>。</p>
+    <p>被动语态用于地貌变化：<code>had been submerged</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>could not make</code> 在前文中是含蓄条件，这课里 <code>could see</code> 表能力。</p>
+    <p><code>should be looking</code> 表按预期应当正在看到。</p>
+    <p><code>must have taken/misunderstood</code> 表对过去的强推测。</p>
+    <p><code>should need</code> 表过去看将来的需要。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>cool off</code> -&gt; /kul‿ɔf/；<code>had expected</code> -&gt; /hæd‿ɪkˈspɛktɪd/；<code>taken me abroad</code> -&gt; /ˈteɪkən mi‿əˈbrɔd/；<code>marked on</code> -&gt; /mɑrkt‿ɑn/；<code>repeated its</code> -&gt; /rɪˈpitɪd‿ɪts/。</p>
+    <p>元音 + 元音滑读: <code>my objective</code> -&gt; /maɪ‿əbˈdʒɛktɪv/；<code>the old</code> -&gt; /ði‿oʊld/；<code>our old village</code> -&gt; /aʊr‿oʊld ˈvɪlɪdʒ/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>a</code> 多弱读：<code>two of us</code> -&gt; /tu‿əv‿ʌs/；<code>book of maps</code> -&gt; /bʊk‿əv mæps/；<code>as in a nightmare</code> -&gt; /æz‿ɪn‿ə/。</p>
+    <p>美音闪音 /ɾ/: <code>got</code>, <code>water</code>, <code>city</code> 类词常见闪音；本课 <code>at all</code>, <code>at the map</code>, <code>at the same corner</code> 中 /t/ 要轻收并连到后词。</p>
+    <p>意群停顿: 第 13 句按 <code>I hired...and bought... / which... / but which...</code> 分组；第 18 句按 <code>I had come... / according to my father / I should be looking...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 57 - Back in the Old Country</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../57－Back in the Old Country.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":13.98,"end":18.28,"text":"I stopped to let the car cool off and to study the map."},{"index":2,"start":18.28,"end":25.73,"text":"I had expected to be near my objective by now, but everything still seemed alien to me."},{"index":3,"start":25.73,"end":32.35,"text":"I was only five when my father had taken me abroad, and that was eighteen years ago."},{"index":4,"start":32.35,"end":40.37,"text":"When my mother had died after a tragic accident, he did not quickly recover from the shock and loneliness."},{"index":5,"start":40.37,"end":46.02,"text":"Everything around him was full of her presence, continually reopening the wound."},{"index":6,"start":46.02,"end":48.41,"text":"So he decided to emigrate."},{"index":7,"start":48.41,"end":57.04,"text":"In the new country he became absorbed in making a new life for the two of us, so that he gradually ceased to grieve."},{"index":8,"start":57.04,"end":66.9,"text":"He did not marry again and I was brought up without a woman's care; but I lacked for nothing, for he was both father and mother to me."},{"index":9,"start":66.9,"end":70.65,"text":"He always meant to go back one day, but not to stay."},{"index":10,"start":70.65,"end":75.54,"text":"His roots and mine had become too firmly embedded in the new land."},{"index":11,"start":75.54,"end":80.32,"text":"But he wanted to see the old folk again and to visit my mother's grave."},{"index":12,"start":80.32,"end":91.44,"text":"He became mortally ill a few months before we had planned to go and, when he knew that he was dying, he made me promise to go on my own."},{"index":13,"start":91.44,"end":104.62,"text":"I hired a car the day after landing and bought a comprehensive book of maps, which I found most helpful on the cross-country journey, but which I did not think I should need on the last stage."},{"index":14,"start":104.62,"end":108.56,"text":"It was not that I actually remembered anything at all."},{"index":15,"start":108.56,"end":122.93,"text":"But my father had described over and over again what we should see at every milestone after leaving the nearest town, so that I was positive I should recognize it as familiar territory."},{"index":16,"start":122.93,"end":127.74,"text":"Well, I had been wrong, for I was now lost."},{"index":17,"start":127.74,"end":131.33,"text":"I looked at the map and then at the milometer."},{"index":18,"start":131.33,"end":147.63,"text":"I had come ten miles since leaving the town and at this point, according to my father, I should be looking at farms and cottages in a valley, with the spire of the church of our village showing in the far distance."},{"index":19,"start":147.63,"end":154.88,"text":"I could see no valley, no farms, no cottages and no church spire--only a lake."},{"index":20,"start":154.88,"end":159.19,"text":"I decided that I must have taken a wrong turning somewhere."},{"index":21,"start":159.19,"end":166.44,"text":"So I drove back to the town and began to retrace the route, taking frequent glances at the map."},{"index":22,"start":166.44,"end":169.18,"text":"I landed up at the same corner."},{"index":23,"start":169.18,"end":173.27,"text":"The curious thing was that the lake was not marked on the map."},{"index":24,"start":173.27,"end":179.55,"text":"I felt as if I had stumbled into a nightmare country, as you sometimes do in dreams."},{"index":25,"start":179.55,"end":184.43,"text":"And, as in a nightmare, there was nobody in sight to help me."},{"index":26,"start":184.43,"end":194.01,"text":"Fortunately for me, as I was wondering what to do next, there appeared on the horizon a man on horseback, riding in my direction."},{"index":27,"start":194.01,"end":199.45,"text":"I waited till he came near, then I asked him the way to our old village."},{"index":28,"start":199.45,"end":202.51,"text":"He said that there was now no village."},{"index":29,"start":202.51,"end":208.08,"text":"I thought he must have misunderstood me, so I repeated its name."},{"index":30,"start":208.08,"end":211.15,"text":"This time he pointed to the lake."},{"index":31,"start":211.15,"end":218.49,"text":"The village no longer existed because it had been submerged, and all the valley too."},{"index":32,"start":218.49,"end":221.87,"text":"The lake was not a natural one, but a man-made reservoir."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 7 - Mutilated Ladies</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 7 - Mutilated Ladies</h1>
+      <p class="meta">Generated from 07－Mutilated Ladies.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="12.78" data-end="15.17">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak linking">Has</span> <span class="weak linking">it</span> ever happened <span class="weak">to</span> <span class="weak">you</span>?</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">həz</span><span class="linking">‿</span>ɪt ˈɛvɚ ˈhæpənd <span class="weak">tə</span> ju/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>həz‿ɪt 连读；həz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>现在完成时一般疑问句；it 作形式主语/事件指代。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>这种事曾经发生在你身上吗？</p></div>
+    <div class="field words"><span>词</span><p>happen to 发生在……身上；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="15.17" data-end="23.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">Have</span> <span class="weak">you</span> ever put <span class="weak">your</span> <span class="linking">trousers</span> <span class="weak">in</span> <span class="weak">the</span> washing machine <span class="weak">and</span> then remembered <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> large bank note <span class="weak">in</span> <span class="weak">your</span> back pocket?</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">həv</span> ju ˈɛvɚ pʊt <span class="weak">jɚ</span> ˈtraʊzɚz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈwɑʃɪŋ məˈʃin<span class="linking">‿</span><span class="weak">ən</span> ðɛn rɪˈmɛmbɚd ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ bæŋk noʊt<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">jɚ</span> bæk ˈpɑkət/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtraʊzɚz‿ɪn、məˈʃin‿ən、wəz‿ə、noʊt‿ɪn 连读；həv、jɚ、ɪn、ðə、ən、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Have you ever... 现在完成时疑问句；put 和 remembered 并列；there was... 为宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时；宾语从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>你是否曾把裤子放进洗衣机后，才想起后袋里有一张大额钞票？</p></div>
+    <div class="field words"><span>词</span><p>trousers 裤子； washing machine 洗衣机； bank note 钞票； back pocket 后袋；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="23.29" data-end="29.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">When <span class="weak">you</span> rescued <span class="weak">your</span> trousers, did <span class="weak">you</span> find <span class="weak">the</span> note <span class="weak">was</span> whiter <span class="weak">than</span> white?</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn ju ˈrɛskjud <span class="weak">jɚ</span> ˈtraʊzɚz dɪd ju faɪnd <span class="weak">ðə</span> noʊt <span class="weak">wəz</span> ˈwaɪɾɚ ðən waɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɚ、ðə、wəz 弱读/弱化；ˈwaɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；find 后接宾语从句；whiter than white 比较级。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>当你抢救出裤子时，是否发现那张钞票白得不能再白了？</p></div>
+    <div class="field words"><span>词</span><p>rescue 抢救； whiter than white 洗得雪白；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="29.1" data-end="36.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">People who live <span class="weak">in</span> Britain needn't despair when they make mistakes like <span class="linking">this</span>, <span class="weak linking">and</span> <span class="weak">a</span> <span class="linking">lot</span> <span class="weak">of</span> people do!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈpipəl hu lɪv<span class="linking">‿</span><span class="weak">ɪn</span> ˈbrɪtən ˈnidənt dɪˈspɛr wɛn ðeɪ meɪk mɪˈsteɪks laɪk ðɪs<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> lɑt<span class="linking">‿</span><span class="weak">əv</span> ˈpipəl du/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɪv‿ɪn、ðɪs‿ən‿ə、lɑt‿əv 连读；ɪn、ən、ə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句；when 引导时间状语从句；and 后 do 代替 make mistakes like this。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；needn't 表不必。</p></div>
+    <div class="field cn"><span>中</span><p>住在英国的人犯这种错误时不必绝望，而且许多人确实会犯这种错误！</p></div>
+    <div class="field words"><span>词</span><p>needn't 不必； despair 绝望； mistake 错误；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="36.62" data-end="48.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Fortunately <span class="weak">for</span> them, <span class="weak">the</span> <span class="linking">Bank</span> <span class="weak linking">of</span> England <span class="weak linking">has</span> <span class="weak">a</span> team called Mutilated Ladies which deals with claims <span class="weak">from</span> people who fed their money <span class="weak">to</span> <span class="weak">a</span> machine or <span class="weak">to</span> their dog.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈfɔrtʃənətli <span class="weak">fɚ</span> ðəm <span class="weak">ðə</span> bæŋk<span class="linking">‿</span><span class="weak">əv</span> ˈɪŋɡlənd <span class="weak">həz</span><span class="linking">‿</span><span class="weak">ə</span> tim kɔld ˈmjuɾəˌleɪɾɪd ˈleɪdiz wɪtʃ dilz wɪð kleɪmz <span class="weak">frəm</span> ˈpipəl hu fɛd ðɛr ˈmʌni <span class="weak">tʊ</span><span class="linking">‿</span><span class="weak">ə</span> məˈʃin ɔr <span class="weak">tə</span> ðɛr dɔɡ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bæŋk‿əv、həz‿ə、tʊ‿ə 连读；fɚ、ðə、əv、həz、ə、frəm 弱读/弱化；ˈmjuɾəˌleɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>called... 为过去分词定语；which 引导定语从句；who 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般现在时；who 从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>对他们来说幸运的是，英格兰银行有一个叫“残钞女士”的小组，负责处理那些把钱“喂”给机器或狗的人提出的索赔。</p></div>
+    <div class="field words"><span>词</span><p>fortunately 幸运地； Bank of England 英格兰银行； mutilated 残缺的； claim 索赔； feed money to 把钱喂给/塞给；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="48.62" data-end="52.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="linking">Dogs</span>, <span class="weak">it</span> seems, love <span class="weak">to</span> <span class="linking">chew</span> up money!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɔɡz<span class="linking">‿</span>ɪt simz lʌv <span class="weak">tə</span> tʃu<span class="linking">‿</span>ʌp ˈmʌni/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɔɡz‿ɪt、tʃu‿ʌp 连读；tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>it seems 为插入语；love to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>看来，狗喜欢把钱嚼碎！</p></div>
+    <div class="field words"><span>词</span><p>chew up 嚼碎；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="52.94" data-end="61.06">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">A</span> recent case concerns Jane Butlin whose fiance, John, <span class="linking">runs</span> <span class="weak">a</span> successful furniture business.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈrisənt keɪs kənˈsɝnz dʒeɪn ˈbʌtlɪn huz fiˈɑnseɪ dʒɑn rʌnz<span class="linking">‿</span><span class="weak">ə</span> səkˈsɛsfəl ˈfɝnɪtʃɚ ˈbɪznəs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rʌnz‿ə 连读；ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>whose 引导定语从句；John 为同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>最近的一个案例涉及简·巴特林，她的未婚夫约翰经营着一家成功的家具公司。</p></div>
+    <div class="field words"><span>词</span><p>recent 最近的； concern 涉及； fiance 未婚夫； furniture business 家具生意；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="61.06" data-end="69.99">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">John <span class="weak linking">had</span> <span class="weak">a</span> very good <span class="linking">day</span> <span class="weak">and</span> put <span class="weak">his</span> wallet <span class="linking">containing</span> £3,000 into <span class="weak">the</span> microwave oven <span class="weak">for</span> safekeeping.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dʒɑn hæd<span class="linking">‿</span><span class="weak">ə</span> ˈvɛri ɡʊd deɪ<span class="linking">‿</span><span class="weak">ən</span> pʊt <span class="weak">hɪz</span> ˈwɑlət kənˈteɪnɪŋ θri ˈθaʊzənd paʊndz ˈɪntu <span class="weak">ðə</span> ˈmaɪkrəˌweɪv ˈʌvən <span class="weak">fɚ</span> ˈseɪfˌkipɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæd‿ə、deɪ‿ən 连读；ə、ən、hɪz、ðə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>had 和 put 为并列谓语；containing... 为现在分词短语作定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>约翰那天生意很好，他把装有 3000 英镑的钱包放进微波炉里保管。</p></div>
+    <div class="field words"><span>词</span><p>wallet 钱包； contain 装有； microwave oven 微波炉； safekeeping 保管；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="69.99" data-end="72.63">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Then he <span class="weak">and</span> Jane went horse-riding.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛn hi<span class="linking">‿</span><span class="weak">ən</span> dʒeɪn wɛnt ˈhɔrsˌraɪdɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hi‿ən 连读；ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；go horse-riding 固定搭配。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然后他和简去骑马了。</p></div>
+    <div class="field words"><span>词</span><p>go horse-riding 去骑马；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="72.63" data-end="82.99">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">When they got home, Jane cooked their <span class="linking">dinner</span> <span class="weak">in</span> <span class="weak">the</span> microwave <span class="linking">oven</span> <span class="weak">and</span> without <span class="linking">realizing</span> <span class="weak">it</span>, cooked <span class="weak">her</span> fiance's <span class="linking">wallet</span> <span class="weak">as</span> well.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn ðeɪ ɡɑt hoʊm dʒeɪn kʊkt ðɛr ˈdɪnɚ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈmaɪkrəˌweɪv ˈʌvən<span class="linking">‿</span><span class="weak">ən</span> wɪˈðaʊt ˈriəˌlaɪzɪŋ<span class="linking">‿</span>ɪt kʊkt <span class="weak">hɚ</span> fiˈɑnseɪz ˈwɑlət<span class="linking">‿</span>æz wɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdɪnɚ‿ɪn、ˈʌvən‿ən、ˈriəˌlaɪzɪŋ‿ɪt、ˈwɑlət‿æz 连读；ɪn、ðə、ən、hɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；cooked 和 cooked 并列；without doing 作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们回家后，简用微波炉做晚饭，在没有意识到的情况下，也把未婚夫的钱包煮了。</p></div>
+    <div class="field words"><span>词</span><p>without realizing it 没意识到； as well 也；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.99" data-end="91.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Imagine their dismay when they <span class="linking">found</span> <span class="weak">a</span> beautifully-cooked <span class="linking">wallet</span> <span class="weak">and</span> notes turned <span class="weak">to</span> ash!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪˈmædʒɪn ðɛr dɪsˈmeɪ wɛn ðeɪ faʊnd<span class="linking">‿</span><span class="weak">ə</span> ˈbjutəfəli kʊkt ˈwɑlət<span class="linking">‿</span><span class="weak">ən</span> noʊts tɝnd <span class="weak">tʊ</span><span class="linking">‿</span>æʃ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faʊnd‿ə、ˈwɑlət‿ən、tʊ‿æʃ 连读；ə、ən、tʊ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>祈使句；when 引导时间状语从句；turned to ash 作宾补/结果。</p></div>
+    <div class="field tense"><span>时态</span><p>祈使语气；从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>想象一下，当他们发现一个煮得漂亮的钱包和化为灰烬的钞票时有多么沮丧！</p></div>
+    <div class="field words"><span>词</span><p>imagine 想象； dismay 沮丧/惊愕； turn to ash 化为灰烬；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="91.09" data-end="102.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">John went <span class="weak">to</span> see <span class="weak">his</span> bank manager who sent <span class="weak">the</span> <span class="linking">remains</span> <span class="weak">of</span> <span class="linking">wallet</span> <span class="weak">and</span> <span class="weak">the</span> money <span class="weak">to</span> <span class="weak">the</span> special <span class="linking">department</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">Bank</span> <span class="weak linking">of</span> <span class="linking">England</span> <span class="weak">in</span> Newcastle: <span class="weak">the</span> Mutilated Ladies!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dʒɑn wɛnt <span class="weak">tə</span> si <span class="weak">hɪz</span> bæŋk ˈmænɪdʒɚ hu sɛnt <span class="weak">ðə</span> rɪˈmeɪnz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈwɑlət<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> ˈmʌni <span class="weak">tə</span> <span class="weak">ðə</span> ˈspɛʃəl dɪˈpɑrtmənt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> bæŋk<span class="linking">‿</span><span class="weak">əv</span> ˈɪŋɡlənd<span class="linking">‿</span><span class="weak">ɪn</span> nuˈkæsəl <span class="weak">ðə</span> ˈmjuɾəˌleɪɾɪd ˈleɪdiz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈmeɪnz‿əv、ˈwɑlət‿ən、dɪˈpɑrtmənt‿əv、bæŋk‿əv、ˈɪŋɡlənd‿ɪn 连读；tə、hɪz、ðə、əv、ən、ɪn 弱读/弱化；ˈmjuɾəˌleɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句；冒号后解释 special department。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>约翰去见银行经理，经理把钱包和钱的残余物寄到英格兰银行在纽卡斯尔的特别部门：“残钞女士”。</p></div>
+    <div class="field words"><span>词</span><p>bank manager 银行经理； remains 残余物； department 部门；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="102.82" data-end="108.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">They</span> examined <span class="weak">the</span> <span class="linking">remains</span> <span class="weak">and</span> John <span class="linking">got</span> all <span class="weak">his</span> money back.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ ɪɡˈzæmɪnd <span class="weak">ðə</span> rɪˈmeɪnz<span class="linking">‿</span><span class="weak">ən</span> dʒɑn ɡɑt ɔl <span class="weak">hɪz</span> ˈmʌni bæk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈmeɪnz‿ən 连读；ðə、ən、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她们检查了残余物，约翰拿回了全部的钱。</p></div>
+    <div class="field words"><span>词</span><p>examine 检查； get money back 拿回钱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="108.33" data-end="116.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">'So <span class="linking">long</span> <span class="weak">as</span> there's something <span class="weak">to</span> identify, we will give people their money back,' <span class="linking">said</span> <span class="weak">a</span> spokeswoman <span class="weak">for</span> <span class="weak">the</span> Bank.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/soʊ lɔŋ<span class="linking">‿</span>æz ðɛrz ˈsʌmθɪŋ <span class="weak">tʊ</span><span class="linking">‿</span>aɪˈdɛntəˌfaɪ wi wɪl ɡɪv ˈpipəl ðɛr ˈmʌni bæk sɛd<span class="linking">‿</span><span class="weak">ə</span> ˈspoʊksˌwʊmən <span class="weak">fɚ</span> <span class="weak">ðə</span> bæŋk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɔŋ‿æz、tʊ‿aɪˈdɛntəˌfaɪ、sɛd‿ə 连读；tʊ、ə、fɚ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>So long as 引导条件从句；will 表承诺；said... 为主句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 一般将来时。</p></div>
+    <div class="field cn"><span>中</span><p>银行一位女发言人说：“只要还有东西可以辨认，我们就会把钱还给人们。”</p></div>
+    <div class="field words"><span>词</span><p>so long as 只要； identify 辨认； spokeswoman 女发言人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="116.56" data-end="119.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">'Last year, we paid £1.5 <span class="linking">million</span> on 21,000 claims.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/læst jɪr wi peɪd wʌn pɔɪnt faɪv ˈmɪljən paʊndz<span class="linking">‿</span>ɑn ˈtwɛnti wʌn ˈθaʊzənd kleɪmz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>paʊndz‿ɑn 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；on claims 表支付用途。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“去年，我们为 21000 起索赔支付了 150 万英镑。”</p></div>
+    <div class="field words"><span>词</span><p>million 百万； claim 索赔；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>钱与银行: bank note 钞票； wallet 钱包； Bank of England 英格兰银行； claim 索赔； bank manager 银行经理；</p>
+      <p>损毁与处理: mutilated 残缺的； remains 残余物； chew up 嚼碎； turn to ash 化为灰烬； identify 辨认；</p>
+      <p>生活场景: washing machine 洗衣机； microwave oven 微波炉； safekeeping 保管； horse-riding 骑马；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>Have you ever...?</code> 用于询问经历。</p>
+      <p><code>needn't do</code> 表“不必”。</p>
+      <p><code>so long as...will...</code> 表条件和承诺。</p>
+      <p><code>without realizing it</code> 作伴随状语。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>现在完成时用于提问经历：<code>Has it ever happened</code>, <code>Have you ever put</code>。</p>
+      <p>一般现在时用于说明制度和一般情况。</p>
+      <p>一般过去时叙述 John 和 Jane 的事件。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>needn't despair</code> 表没有必要绝望。</p>
+      <p><code>will give people their money back</code> 表承诺。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>happened to you</code>、<code>put your trousers in</code>、<code>wallet as well</code> 的连读。</p>
+      <p>美式闪音: <code>mutilated</code> /ˈmjuɾəˌleɪɾɪd/、<code>whiter</code> /ˈwaɪɾɚ/。</p>
+      <p>引语部分注意条件从句和主句的停顿。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 7 - Mutilated Ladies</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../07－Mutilated Ladies.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":12.78,"end":15.17,"text":"Has it ever happened to you?"},{"index":2,"start":15.17,"end":23.29,"text":"Have you ever put your trousers in the washing machine and then remembered there was a large bank note in your back pocket?"},{"index":3,"start":23.29,"end":29.1,"text":"When you rescued your trousers, did you find the note was whiter than white?"},{"index":4,"start":29.1,"end":36.62,"text":"People who live in Britain needn't despair when they make mistakes like this, and a lot of people do!"},{"index":5,"start":36.62,"end":48.62,"text":"Fortunately for them, the Bank of England has a team called Mutilated Ladies which deals with claims from people who fed their money to a machine or to their dog."},{"index":6,"start":48.62,"end":52.94,"text":"Dogs, it seems, love to chew up money!"},{"index":7,"start":52.94,"end":61.06,"text":"A recent case concerns Jane Butlin whose fiance, John, runs a successful furniture business."},{"index":8,"start":61.06,"end":69.99,"text":"John had a very good day and put his wallet containing £3,000 into the microwave oven for safekeeping."},{"index":9,"start":69.99,"end":72.63,"text":"Then he and Jane went horse-riding."},{"index":10,"start":72.63,"end":82.99,"text":"When they got home, Jane cooked their dinner in the microwave oven and without realizing it, cooked her fiance's wallet as well."},{"index":11,"start":82.99,"end":91.09,"text":"Imagine their dismay when they found a beautifully-cooked wallet and notes turned to ash!"},{"index":12,"start":91.09,"end":102.82,"text":"John went to see his bank manager who sent the remains of wallet and the money to the special department of the Bank of England in Newcastle: the Mutilated Ladies!"},{"index":13,"start":102.82,"end":108.33,"text":"They examined the remains and John got all his money back."},{"index":14,"start":108.33,"end":116.56,"text":"'So long as there's something to identify, we will give people their money back,' said a spokeswoman for the Bank."},{"index":15,"start":116.56,"end":119.33,"text":"'Last year, we paid £1.5 million on 21,000 claims.'"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

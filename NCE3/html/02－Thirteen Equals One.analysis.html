@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 2 - Thirteen Equals One</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 2 - Thirteen Equals One</h1>
+      <p class="meta">Generated from 02－Thirteen Equals One.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.63" data-end="26.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Our <span class="linking">vicar</span> <span class="weak linking">is</span> always raising money <span class="weak linking">for</span> one cause <span class="linking">or</span> another, but he <span class="weak">has</span> never managed <span class="weak">to</span> <span class="linking">get</span> enough money <span class="weak">to</span> <span class="weak">have</span> <span class="weak">the</span> church clock repaired.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aʊr ˈvɪkɚ<span class="linking">‿</span><span class="weak">ɪz</span> ˈɔlweɪz ˈreɪzɪŋ ˈmʌni <span class="weak">fɚ</span> wʌn kɔz ɔr<span class="linking">‿</span>əˈnʌðɚ bət hi <span class="weak">həz</span> ˈnɛvɚ ˈmænɪdʒd <span class="weak">tə</span> ɡɛt<span class="linking">‿</span>ɪˈnʌf ˈmʌni <span class="weak">tə</span> hæv <span class="weak">ðə</span> tʃɝtʃ klɑk rɪˈpɛrd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈvɪkɚ‿ɪz、ɔr‿əˈnʌðɚ、ɡɛt‿ɪˈnʌf 连读；ɪz、fɚ、həz、tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；to have...repaired 为不定式目的；have sth done 表请人修理。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在进行时表示反复行为；现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>我们的牧师总是在为这样那样的事业筹钱，但他一直没能筹到足够的钱请人修好教堂的钟。</p></div>
+    <div class="field words"><span>词</span><p>vicar 牧师； raise money 筹钱； cause 事业； manage to do 设法做到； have sth repaired 请人修理；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.49" data-end="36.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> big clock <span class="linking">which</span> used <span class="weak">to</span> strike <span class="weak">the</span> hours <span class="linking">day</span> <span class="weak">and</span> night <span class="weak">was</span> damaged many <span class="linking">years</span> ago <span class="weak">and</span> <span class="weak">has</span> <span class="weak">been</span> <span class="linking">silent</span> ever since.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> bɪɡ klɑk wɪtʃ jus <span class="weak">tə</span> straɪk <span class="weak">ði</span> ˈaʊɚz deɪ<span class="linking">‿</span><span class="weak">ən</span> naɪt <span class="weak">wəz</span> ˈdæmɪdʒd ˈmɛni jɪrz<span class="linking">‿</span>əˈɡoʊ<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">həz</span> bɪn ˈsaɪlənt ˈɛvɚ sɪns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>deɪ‿ən、jɪrz‿əˈɡoʊ‿ən 连读；ðə、tə、ði、ən、wəz、həz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句；was damaged 与 has been silent 并列。</p></div>
+    <div class="field tense"><span>时态</span><p>used to 表过去习惯；一般过去时被动；现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>那座过去日日夜夜报时的大钟多年前损坏了，从那以后一直沉默无声。</p></div>
+    <div class="field words"><span>词</span><p>used to 过去常常； strike the hours 报时； be damaged 损坏； ever since 从那以后；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="36.38" data-end="43.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">One night, <span class="linking">however</span>, our vicar woke up <span class="linking">with</span> <span class="weak">a</span> start: <span class="weak">the</span> clock <span class="weak">was</span> striking <span class="weak">the</span> hours!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn naɪt haʊˈɛvɚ aʊr ˈvɪkɚ woʊk<span class="linking">‿</span>ʌp wɪð<span class="linking">‿</span><span class="weak">ə</span> stɑrt <span class="weak">ðə</span> klɑk <span class="weak">wəz</span> ˈstraɪkɪŋ <span class="weak">ði</span> ˈaʊɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>woʊk‿ʌp、wɪð‿ə 连读；ə、ðə、wəz、ði 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>however 插入转折；冒号后解释惊醒原因。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>然而有一天夜里，我们的牧师猛地惊醒：钟正在报时！</p></div>
+    <div class="field words"><span>词</span><p>wake up 醒来； with a start 猛地一惊； strike the hours 报时；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.48" data-end="51.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="linking">Looking</span> at <span class="weak">his</span> watch, he saw <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak linking">was</span> one o'clock, but <span class="weak">the</span> bell struck thirteen times before <span class="weak">it</span> stopped.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈlʊkɪŋ<span class="linking">‿</span>æt <span class="weak">hɪz</span> wɑtʃ hi sɔ ðæt<span class="linking">‿</span>ɪt <span class="weak">wəz</span> wʌn<span class="linking">‿</span>əˈklɑk bət <span class="weak">ðə</span> bɛl strʌk ˌθɝˈtin taɪmz bɪˈfɔr<span class="linking">‿</span>ɪt stɑpt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈlʊkɪŋ‿æt、ðæt‿ɪt、wʌn‿əˈklɑk、bɪˈfɔr‿ɪt 连读；hɪz、wəz、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Looking... 为现在分词状语；that 引导宾语从句；but 连接转折；before 引导时间从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他看了看表，发现是一点钟，但钟在停下前敲了 13 下。</p></div>
+    <div class="field words"><span>词</span><p>bell 钟； strike 敲响； thirteen times 十三下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="51.91" data-end="58.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Armed <span class="linking">with</span> <span class="weak">a</span> torch, <span class="weak">the</span> vicar <span class="linking">went</span> <span class="linking">up</span> into <span class="weak">the</span> clock tower <span class="weak">to</span> see what <span class="weak">was</span> <span class="linking">going</span> on.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɑrmd wɪð<span class="linking">‿</span><span class="weak">ə</span> tɔrtʃ <span class="weak">ðə</span> ˈvɪkɚ wɛnt<span class="linking">‿</span>ʌp ˈɪntu <span class="weak">ðə</span> klɑk ˈtaʊɚ <span class="weak">tə</span> si wʌt <span class="weak">wəz</span> ˈɡoʊɪŋ<span class="linking">‿</span>ɑn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɪð‿ə、wɛnt‿ʌp、ˈɡoʊɪŋ‿ɑn 连读；ə、ðə、tə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Armed with... 为过去分词短语作伴随状语；to see 表目的；what 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；宾语从句过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>牧师带着手电筒上到钟楼去看看发生了什么。</p></div>
+    <div class="field words"><span>词</span><p>armed with 带着/配备着； torch 手电筒； clock tower 钟楼； go on 发生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="58.03" data-end="66.24">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> torchlight, he caught <span class="linking">sight</span> <span class="weak linking">of</span> <span class="weak">a</span> figure whom he immediately <span class="linking">recognized</span> <span class="weak">as</span> Bill <span class="linking">Wilkins</span>, our local grocer.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> ˈtɔrtʃˌlaɪt hi kɔt saɪt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈfɪɡjɚ hum hi<span class="linking">‿</span>ɪˈmidiətli ˈrɛkəɡˌnaɪzd<span class="linking">‿</span>æz bɪl ˈwɪlkɪnz aʊr ˈloʊkəl ˈɡroʊsɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>saɪt‿əv‿ə、hi‿ɪˈmidiətli、ˈrɛkəɡˌnaɪzd‿æz 连读；ɪn、ðə、əv、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>whom 引导定语从句；recognize...as... 固定结构；our local grocer 为同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在手电筒光下，他看见一个人影，立刻认出是比尔·威尔金斯，我们当地的杂货商。</p></div>
+    <div class="field words"><span>词</span><p>torchlight 手电光； catch sight of 看见； figure 人影； recognize as 认出是； grocer 杂货商；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="66.24" data-end="71.57">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">'<span class="linking">Whatever</span> <span class="weak">are</span> <span class="weak">you</span> <span class="linking">doing</span> up here, <span class="linking">Bill</span>?' asked <span class="weak">the</span> <span class="linking">vicar</span> <span class="weak">in</span> surprise.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌtˈɛvɚ<span class="linking">‿</span><span class="weak">ɑr</span> ju ˈduɪŋ<span class="linking">‿</span>ʌp hɪr bɪl æskt <span class="weak">ðə</span> ˈvɪkɚ<span class="linking">‿</span><span class="weak">ɪn</span> sɚˈpraɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌtˈɛvɚ‿ɑr、ˈduɪŋ‿ʌp、ˈvɪkɚ‿ɪn 连读；ɑr、ðə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>直接引语 + 倒装主句；whatever 加强疑问语气。</p></div>
+    <div class="field tense"><span>时态</span><p>现在进行时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“比尔，你到底在这上面干什么？”牧师惊讶地问。</p></div>
+    <div class="field words"><span>词</span><p>whatever 到底/究竟； in surprise 惊讶地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="71.57" data-end="75.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">'I'm trying <span class="weak">to</span> repair <span class="weak">the</span> bell,' answered Bill.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪm ˈtraɪɪŋ <span class="weak">tə</span> rɪˈpɛr <span class="weak">ðə</span> bɛl ˈænsɚd bɪl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>直接引语 + 主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>现在进行时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“我在设法修钟。”比尔回答。</p></div>
+    <div class="field words"><span>词</span><p>repair 修理； bell 钟；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="75.23" data-end="78.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">'I've <span class="weak">been</span> <span class="linking">coming</span> up here <span class="linking">night</span> after night <span class="weak">for</span> weeks now.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪv bɪn ˈkʌmɪŋ<span class="linking">‿</span>ʌp hɪr naɪt ˈæftɚ naɪt <span class="weak">fɚ</span> wiks naʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkʌmɪŋ‿ʌp 连读；fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>现在完成进行时；night after night 作频率状语。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成进行时。</p></div>
+    <div class="field cn"><span>中</span><p>“这几个星期来，我每天夜里都到这里来。”</p></div>
+    <div class="field words"><span>词</span><p>night after night 一夜又一夜； for weeks 好几个星期；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="78.64" data-end="82.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">'<span class="weak">You</span> see, I <span class="weak">was</span> hoping <span class="weak">to</span> give <span class="weak">you</span> <span class="weak">a</span> surprise.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ju si aɪ <span class="weak">wəz</span> ˈhoʊpɪŋ <span class="weak">tə</span> ɡɪv ju<span class="linking">‿</span><span class="weak">ə</span> sɚˈpraɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ju‿ə 连读；wəz、tə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>You see 为话语标记；was hoping to do 表过去打算。</p></div>
+    <div class="field tense"><span>时态</span><p>过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>“你知道，我本来想给你一个惊喜。”</p></div>
+    <div class="field words"><span>词</span><p>you see 你知道； give sb a surprise 给某人惊喜；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.4" data-end="85.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">'<span class="weak">You</span> certainly did give me <span class="weak">a</span> surprise!' said <span class="weak">the</span> vicar.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ju ˈsɝtənli dɪd ɡɪv mi<span class="linking">‿</span><span class="weak">ə</span> sɚˈpraɪz sɛd <span class="weak">ðə</span> ˈvɪkɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>mi‿ə 连读；ə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>did + 动词原形加强语气；直接引语 + 主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时强调式。</p></div>
+    <div class="field cn"><span>中</span><p>“你确实给了我一个惊喜！”牧师说。</p></div>
+    <div class="field words"><span>词</span><p>certainly 确实； did give 的确给了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="85.82" data-end="89.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">'You've probably <span class="linking">woken</span> <span class="linking">up</span> everyone <span class="weak">in</span> <span class="weak">the</span> village <span class="weak">as</span> well.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/juv ˈprɑbəbli ˈwoʊkən<span class="linking">‿</span>ʌp ˈɛvriˌwʌn<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈvɪlɪdʒ<span class="linking">‿</span>æz wɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈwoʊkən‿ʌp、ˈɛvriˌwʌn‿ɪn、ˈvɪlɪdʒ‿æz 连读；ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>现在完成时；as well 表“也”。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>“你大概也把村里所有人都吵醒了。”</p></div>
+    <div class="field words"><span>词</span><p>wake up 叫醒； as well 也；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="89.51" data-end="93.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">'<span class="linking">Still</span>, I'm glad <span class="weak">the</span> <span class="linking">bell</span> <span class="weak">is</span> <span class="linking">working</span> again.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/stɪl aɪm ɡlæd <span class="weak">ðə</span> bɛl<span class="linking">‿</span><span class="weak">ɪz</span> ˈwɝkɪŋ<span class="linking">‿</span>əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɛl‿ɪz、ˈwɝkɪŋ‿əˈɡɛn 连读；ðə、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>glad 后省略 that 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；is working 为现在进行时表示恢复运作。</p></div>
+    <div class="field cn"><span>中</span><p>“不过，我很高兴钟又能工作了。”</p></div>
+    <div class="field words"><span>词</span><p>still 不过/尽管如此； work 运转；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="93.01" data-end="96.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">'That's <span class="weak">the</span> trouble, vicar,' answered Bill.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðæts <span class="weak">ðə</span> ˈtrʌbəl ˈvɪkɚ ˈænsɚd bɪl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；直接引语 + 主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>“问题就在这儿，牧师。”比尔回答。</p></div>
+    <div class="field words"><span>词</span><p>trouble 问题；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="96.25" data-end="105.01">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">'It's <span class="linking">working</span> all right, <span class="linking">but</span> <span class="linking">I'm</span> afraid <span class="weak linking">that</span> <span class="linking">at</span> one <span class="linking">o'clock</span> <span class="weak">it</span> will strike thirteen <span class="linking">times</span> <span class="weak">and</span> there's <span class="linking">nothing</span> I <span class="weak">can</span> do <span class="linking">about</span> <span class="weak">it</span>.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪts ˈwɝkɪŋ ɔl raɪt bət aɪm əˈfreɪd ðæt<span class="linking">‿</span>æt wʌn<span class="linking">‿</span>əˈklɑk<span class="linking">‿</span>ɪt wɪl straɪk ˌθɝˈtin taɪmz<span class="linking">‿</span><span class="weak">ən</span> ðɛrz ˈnʌθɪŋ aɪ <span class="weak">kən</span> du<span class="linking">‿</span>əˈbaʊt<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæt‿æt、wʌn‿əˈklɑk‿ɪt、taɪmz‿ən、du‿əˈbaʊt‿ɪt 连读；ən、kən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；that 引导宾语从句；there is nothing... 为存在句。</p></div>
+    <div class="field tense"><span>时态</span><p>现在进行时；一般将来时；一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>“它确实能走了，但恐怕到一点钟时它会敲 13 下，而我对此无能为力。”</p></div>
+    <div class="field words"><span>词</span><p>all right 正常； be afraid that 恐怕； do about 处理；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="105.01" data-end="108.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">'We'll get used <span class="weak">to</span> <span class="weak">that</span>, Bill,' said <span class="weak">the</span> vicar.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wil ɡɛt just <span class="weak">tə</span> ðæt bɪl sɛd <span class="weak">ðə</span> ˈvɪkɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>will 表将来；get used to 表习惯。</p></div>
+    <div class="field tense"><span>时态</span><p>一般将来时。</p></div>
+    <div class="field cn"><span>中</span><p>“我们会习惯的，比尔。”牧师说。</p></div>
+    <div class="field words"><span>词</span><p>get used to 习惯于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="108.05" data-end="112.95">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">'<span class="linking">Thirteen</span> <span class="weak">is</span> <span class="linking">not</span> <span class="weak">as</span> <span class="linking">good</span> <span class="weak linking">as</span> one, <span class="linking">but</span> it's better <span class="weak">than</span> nothing.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˌθɝˈtin<span class="linking">‿</span><span class="weak">ɪz</span> nɑt<span class="linking">‿</span>æz ɡʊd<span class="linking">‿</span>æz wʌn bət<span class="linking">‿</span>ɪts ˈbɛɾɚ ðən ˈnʌθɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌθɝˈtin‿ɪz、nɑt‿æz、ɡʊd‿æz、bət‿ɪts 连读；ɪz 弱读/弱化；ˈbɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not as...as... 原级比较；better than... 比较级。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>“十三虽不如一好，但总比没有强。”</p></div>
+    <div class="field words"><span>词</span><p>not as good as 不如； better than nothing 比没有强；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="112.95" data-end="115.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">'Now let's go <span class="linking">downstairs</span> <span class="weak">and</span> <span class="weak">have</span> <span class="weak">a</span> <span class="linking">cup</span> <span class="weak">of</span> tea.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/naʊ lɛts ɡoʊ ˌdaʊnˈstɛrz<span class="linking">‿</span><span class="weak">ən</span> hæv<span class="linking">‿</span><span class="weak">ə</span> kʌp<span class="linking">‿</span><span class="weak">əv</span> ti/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˌdaʊnˈstɛrz‿ən、hæv‿ə、kʌp‿əv 连读；ən、ə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>let’s + 动词原形表示建议；go 和 have 并列。</p></div>
+    <div class="field tense"><span>时态</span><p>祈使/建议语气。</p></div>
+    <div class="field cn"><span>中</span><p>“现在我们下楼去喝杯茶吧。”</p></div>
+    <div class="field words"><span>词</span><p>downstairs 楼下； have a cup of tea 喝杯茶；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>教堂与钟: vicar 牧师； church clock 教堂钟； bell 钟； clock tower 钟楼； strike the hours 报时；</p>
+      <p>动作短语: raise money 筹钱； have sth repaired 请人修理； wake up 醒来/叫醒； catch sight of 看见； get used to 习惯；</p>
+      <p>语气表达: with a start 猛然一惊； in surprise 惊讶地； all right 正常； better than nothing 总比没有强；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>be always doing</code> 可表示反复行为并带感情色彩。</p>
+      <p><code>have sth done</code> 表请别人做某事。</p>
+      <p><code>Armed with...</code> 过去分词短语作伴随状语。</p>
+      <p><code>not as...as...</code> 和 <code>better than...</code> 用于比较。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>现在完成时表示持续结果：<code>has been silent</code>, <code>has never managed</code>。</p>
+      <p>过去进行时描写夜里正在发生的事：<code>was striking</code>。</p>
+      <p>现在完成进行时 <code>I've been coming...</code> 表持续反复动作。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>will strike</code> 表将来会发生；<code>can do about it</code> 表处理能力。</p>
+      <p><code>Let's...</code> 是建议语气；<code>did give</code> 强调过去动作。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>wake up</code>、<code>went up into</code>、<code>woken up everyone</code> 的连读。</p>
+      <p>美式闪音: <code>better</code> /ˈbɛɾɚ/、<code>at one</code> 可轻读连起来。</p>
+      <p>直接引语要读出惊讶、解释和安慰的语气。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 2 - Thirteen Equals One</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../02－Thirteen Equals One.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.63,"end":26.49,"text":"Our vicar is always raising money for one cause or another, but he has never managed to get enough money to have the church clock repaired."},{"index":2,"start":26.49,"end":36.38,"text":"The big clock which used to strike the hours day and night was damaged many years ago and has been silent ever since."},{"index":3,"start":36.38,"end":43.48,"text":"One night, however, our vicar woke up with a start: the clock was striking the hours!"},{"index":4,"start":43.48,"end":51.91,"text":"Looking at his watch, he saw that it was one o'clock, but the bell struck thirteen times before it stopped."},{"index":5,"start":51.91,"end":58.03,"text":"Armed with a torch, the vicar went up into the clock tower to see what was going on."},{"index":6,"start":58.03,"end":66.24,"text":"In the torchlight, he caught sight of a figure whom he immediately recognized as Bill Wilkins, our local grocer."},{"index":7,"start":66.24,"end":71.57,"text":"'Whatever are you doing up here, Bill?' asked the vicar in surprise."},{"index":8,"start":71.57,"end":75.23,"text":"'I'm trying to repair the bell,' answered Bill."},{"index":9,"start":75.23,"end":78.64,"text":"'I've been coming up here night after night for weeks now.'"},{"index":10,"start":78.64,"end":82.4,"text":"'You see, I was hoping to give you a surprise.'"},{"index":11,"start":82.4,"end":85.82,"text":"'You certainly did give me a surprise!' said the vicar."},{"index":12,"start":85.82,"end":89.51,"text":"'You've probably woken up everyone in the village as well.'"},{"index":13,"start":89.51,"end":93.01,"text":"'Still, I'm glad the bell is working again.'"},{"index":14,"start":93.01,"end":96.25,"text":"'That's the trouble, vicar,' answered Bill."},{"index":15,"start":96.25,"end":105.01,"text":"'It's working all right, but I'm afraid that at one o'clock it will strike thirteen times and there's nothing I can do about it.'"},{"index":16,"start":105.01,"end":108.05,"text":"'We'll get used to that, Bill,' said the vicar."},{"index":17,"start":108.05,"end":112.95,"text":"'Thirteen is not as good as one, but it's better than nothing.'"},{"index":18,"start":112.95,"end":115.64,"text":"'Now let's go downstairs and have a cup of tea.'"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

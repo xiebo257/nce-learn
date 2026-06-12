@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 33 - A Day to Remember</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 33 - A Day to Remember</h1>
+      <p class="meta">Generated from 33－A Day to Remember.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.47" data-end="19.83">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">We <span class="weak">have</span> <span class="linking">all</span> experienced days <span class="linking">when</span> everything goes wrong.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi hæv<span class="linking">‿</span>ɔl<span class="linking">‿</span>ɪkˈspɪriənst deɪz wɛn<span class="linking">‿</span>ˈɛvriˌθɪŋ ɡoʊz rɔŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæv‿ɔl‿ɪkˈspɪriənst、wɛn‿ˈɛvriˌθɪŋ 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；when 引导定语从句修饰 days。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时；定语从句一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>我们都经历过事事不顺的日子。</p></div>
+    <div class="field words"><span>词</span><p>experience 经历； go wrong 出问题；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.83" data-end="25.98">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">A</span> day may begin <span class="linking">well</span> enough, but <span class="linking">suddenly</span> everything seems <span class="weak">to</span> <span class="linking">get</span> <span class="linking">out</span> <span class="weak">of</span> control.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> deɪ meɪ bɪˈɡɪn wɛl<span class="linking">‿</span>ɪˈnʌf bət ˈsʌdənli ˈɛvriˌθɪŋ simz <span class="weak">tə</span> ɡɛt aʊɾ<span class="linking">‿</span><span class="weak">əv</span> kənˈtroʊl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛl‿ɪˈnʌf、aʊɾ‿əv 连读；ə、tə、əv 弱读/弱化；aʊɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；seem to do 表“似乎”；get out of control 表状态变化。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；may 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>一天开始时也许还不错，但突然一切似乎都失控了。</p></div>
+    <div class="field words"><span>词</span><p>well enough 还不错； get out of control 失控；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="25.98" data-end="33.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">What</span> invariably <span class="linking">happens</span> <span class="weak">is</span> <span class="weak linking">that</span> <span class="weak">a</span> great <span class="linking">number</span> <span class="weak">of</span> things choose <span class="weak">to</span> go <span class="linking">wrong</span> at precisely <span class="weak">the</span> same moment.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌɾ<span class="linking">‿</span>ɪnˈvɛriəbli ˈhæpənz<span class="linking">‿</span><span class="weak">ɪz</span> ðæɾ<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt ˈnʌmbɚ <span class="weak">əv</span> θɪŋz tʃuz <span class="weak">tə</span> ɡoʊ rɔŋ<span class="linking">‿</span>æt prɪˈsaɪsli <span class="weak">ðə</span> seɪm ˈmoʊmənt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌɾ‿ɪnˈvɛriəbli、ˈhæpənz‿ɪz、ðæɾ‿ə、rɔŋ‿æt 连读；ɪz、ə、əv、tə、ðə 弱读/弱化；wʌɾ‿ɪnˈvɛriəbli、ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>What 引导主语从句；that 引导表语从句；choose to go wrong 为拟人化表达。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>通常发生的情况是，大量事情偏偏选择在完全同一时刻出问题。</p></div>
+    <div class="field words"><span>词</span><p>invariably 总是； a great number of 大量； precisely 精确地/恰好； at the same moment 同一时刻；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="33.97" data-end="39.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="weak linking">as</span> <span class="linking">if</span> <span class="weak">a</span> single <span class="linking">unimportant</span> event <span class="linking">set</span> <span class="linking">up</span> <span class="weak">a</span> <span class="linking">chain</span> <span class="weak">of</span> reactions.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>æz<span class="linking">‿</span>ɪf<span class="linking">‿</span><span class="weak">ə</span> ˈsɪŋɡəl<span class="linking">‿</span>ˌʌnɪmˈpɔrtənt<span class="linking">‿</span>ɪˈvɛnt sɛɾ<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ə</span> tʃeɪn<span class="linking">‿</span><span class="weak">əv</span> riˈækʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾ‿ɪz‿æz‿ɪf‿ə、ˈsɪŋɡəl‿ˌʌnɪmˈpɔrtənt‿ɪˈvɛnt、sɛɾ‿ʌp‿ə、tʃeɪn‿əv 连读；ɪz、ə、əv 弱读/弱化；ɪɾ‿ɪz‿æz‿ɪf‿ə、sɛɾ‿ʌp‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>as if 引导表语从句；set up 表“引发/建立”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 一般过去时形式，as if 带假设色彩。</p></div>
+    <div class="field cn"><span>中</span><p>这就好像一个微不足道的事件引发了一连串反应。</p></div>
+    <div class="field words"><span>词</span><p>as if 好像； single 单个的； set up 引发； chain of reactions 连锁反应；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="39.93" data-end="47.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Let</span> us suppose <span class="weak">that</span> <span class="weak">you</span> <span class="weak">are</span> <span class="linking">preparing</span> <span class="weak">a</span> <span class="linking">meal</span> <span class="weak">and</span> <span class="linking">keeping</span> <span class="weak linking">an</span> eye on <span class="weak">the</span> <span class="linking">baby</span> at <span class="weak">the</span> same time.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/lɛɾ<span class="linking">‿</span>ʌs səˈpoʊz ðæt ju <span class="weak">ɑr</span> prɪˈpɛrɪŋ<span class="linking">‿</span><span class="weak">ə</span> mil<span class="linking">‿</span><span class="weak">ən</span> ˈkipɪŋ<span class="linking">‿</span><span class="weak">ən</span> aɪ ɑn <span class="weak">ðə</span> ˈbeɪbi æt <span class="weak">ðə</span> seɪm taɪm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lɛɾ‿ʌs、prɪˈpɛrɪŋ‿ə、mil‿ən、ˈkipɪŋ‿ən 连读；ɑr、ə、ən、ðə 弱读/弱化；lɛɾ‿ʌs 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Let us suppose that... 表提出假设；are preparing 和 keeping 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>现在进行时，用于假设场景。</p></div>
+    <div class="field cn"><span>中</span><p>让我们假设你正在做饭，同时还照看着婴儿。</p></div>
+    <div class="field words"><span>词</span><p>suppose 假设； prepare a meal 做饭； keep an eye on 照看/留意； at the same time 同时；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="47.23" data-end="55.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> telephone <span class="linking">rings</span> <span class="weak">and</span> this marks <span class="weak">the</span> prelude <span class="weak">to</span> <span class="weak linking">an</span> unforeseen <span class="linking">series</span> <span class="weak">of</span> catastrophes.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈtɛləˌfoʊn rɪŋz<span class="linking">‿</span><span class="weak">ən</span> ðɪs mɑrks <span class="weak">ðə</span> ˈprɛlˌjud <span class="weak">tu</span> <span class="weak">ən</span><span class="linking">‿</span>ˌʌnfɔrˈsin ˈsɪriz<span class="linking">‿</span><span class="weak">əv</span> kəˈtæstrəfiz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪŋz‿ən、ən‿ˌʌnfɔrˈsin、ˈsɪriz‿əv 连读；ðə、ən、tu、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；prelude to... 表“……的序幕”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>电话铃响了，这就成了一连串意想不到灾难的序幕。</p></div>
+    <div class="field words"><span>词</span><p>mark 标志着； prelude 序幕； unforeseen 意想不到的； series 一连串； catastrophe 灾难；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="55.44" data-end="66.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">While <span class="weak">you</span> <span class="weak">are</span> on <span class="weak">the</span> phone, <span class="weak">the</span> baby pulls <span class="weak">the</span> <span class="linking">tablecloth</span> off <span class="weak">the</span> table, smashing half <span class="weak">your</span> best <span class="linking">crockery</span> <span class="weak">and</span> cutting <span class="linking">himself</span> <span class="weak">in</span> <span class="weak">the</span> process.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/waɪl ju <span class="weak">ɑr</span><span class="linking">‿</span>ɑn <span class="weak">ðə</span> foʊn <span class="weak">ðə</span> ˈbeɪbi pʊlz <span class="weak">ðə</span> ˈteɪbəlˌklɔθ<span class="linking">‿</span>ɔf <span class="weak">ðə</span> ˈteɪbəl ˈsmæʃɪŋ hæf jʊr bɛst ˈkrɑkəri <span class="weak">ən</span> ˈkʌɾɪŋ hɪmˈsɛlf<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈprɑsɛs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɑr‿ɑn、ˈteɪbəlˌklɔθ‿ɔf、hɪmˈsɛlf‿ɪn 连读；ɑr、ðə、ən、ɪn 弱读/弱化；ˈkʌɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>While 引导时间状语从句；smashing 和 cutting 为现在分词短语作结果/伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时，用于假设场景。</p></div>
+    <div class="field cn"><span>中</span><p>你接电话时，婴儿把桌布从桌上拉下来，砸碎了一半最好的餐具，还在过程中割伤了自己。</p></div>
+    <div class="field words"><span>词</span><p>be on the phone 打电话； tablecloth 桌布； smash 打碎； crockery 陶瓷餐具； in the process 在过程中；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="66.49" data-end="71.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">You</span> <span class="linking">hang</span> up <span class="linking">hurriedly</span> <span class="weak linking">and</span> attend <span class="weak">to</span> baby, <span class="linking">crockery</span>, etc.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ju hæŋ<span class="linking">‿</span>ʌp ˈhɝidli <span class="weak">ən</span><span class="linking">‿</span>əˈtɛnd <span class="weak">tə</span> ˈbeɪbi ˈkrɑkəri ɛt ˈsɛɾərə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæŋ‿ʌp、ən‿əˈtɛnd 连读；ən、tə 弱读/弱化；ˈsɛɾərə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>hang up 和 attend to 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>你匆忙挂断电话，去处理婴儿、餐具等等。</p></div>
+    <div class="field words"><span>词</span><p>hang up 挂断电话； hurriedly 匆忙地； attend to 照料/处理； etc. 等等；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="71.9" data-end="74.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Meanwhile, <span class="weak">the</span> meal gets burnt.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl <span class="weak">ðə</span> mil ɡɛts bɝnt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>get + 过去分词，表示状态变化。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>与此同时，饭烧焦了。</p></div>
+    <div class="field words"><span>词</span><p>meanwhile 与此同时； get burnt 被烧焦；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="74.62" data-end="84.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak linking">As</span> if this <span class="weak">were</span> <span class="linking">not</span> enough <span class="weak">to</span> reduce <span class="weak">you</span> <span class="weak">to</span> tears, <span class="weak">your</span> <span class="linking">husband</span> <span class="linking">arrives</span>, unexpectedly bringing three guests <span class="weak">to</span> dinner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz<span class="linking">‿</span>ɪf ðɪs <span class="weak">wɚ</span> nɑɾ<span class="linking">‿</span>ɪˈnʌf <span class="weak">tə</span> rɪˈdus ju <span class="weak">tə</span> tɪrz jʊr ˈhʌzbənd<span class="linking">‿</span>əˈraɪvz<span class="linking">‿</span>ˌʌnɪkˈspɛktɪdli ˈbrɪŋɪŋ θri ɡɛsts <span class="weak">tə</span> ˈdɪnɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>æz‿ɪf、nɑɾ‿ɪˈnʌf、ˈhʌzbənd‿əˈraɪvz‿ˌʌnɪkˈspɛktɪdli 连读；wɚ、tə 弱读/弱化；nɑɾ‿ɪˈnʌf 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As if 引导状语从句；were 带虚拟语气；bringing... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；were 表虚拟/假设。</p></div>
+    <div class="field cn"><span>中</span><p>好像这还不足以让你哭出来似的，你丈夫回来了，还出人意料地带了三位客人来吃饭。</p></div>
+    <div class="field words"><span>词</span><p>reduce sb to tears 使某人哭出来； unexpectedly 出乎意料地； guest 客人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="84.51" data-end="93.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Things <span class="weak">can</span> go <span class="linking">wrong</span> <span class="linking">on</span> <span class="weak">a</span> big scale <span class="weak linking">as</span> <span class="weak">a</span> <span class="linking">number</span> <span class="weak">of</span> people recently <span class="linking">discovered</span> <span class="weak">in</span> Parramatta, <span class="weak">a</span> <span class="linking">suburb</span> <span class="weak">of</span> Sydney.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/θɪŋz kæn ɡoʊ rɔŋ<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> bɪɡ skeɪl<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ˈnʌmbɚ <span class="weak">əv</span> ˈpipəl ˈrisəntli dɪˈskʌvɚd<span class="linking">‿</span><span class="weak">ɪn</span> ˌpærəˈmæɾə <span class="weak">ə</span> ˈsʌbɝb<span class="linking">‿</span><span class="weak">əv</span> ˈsɪdni/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɔŋ‿ɑn‿ə、skeɪl‿æz‿ə、dɪˈskʌvɚd‿ɪn、ˈsʌbɝb‿əv 连读；ə、əv、ɪn 弱读/弱化；ˌpærəˈmæɾə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>as 引导方式/评论从句；a suburb of Sydney 为 Parramatta 的同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；as 从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>事情也可能大规模出错，正如最近悉尼郊区帕拉马塔的一些人所发现的那样。</p></div>
+    <div class="field words"><span>词</span><p>on a big scale 大规模地； suburb 郊区；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="93.52" data-end="101.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">During <span class="weak">the</span> rush <span class="linking">hour</span> one evening two cars <span class="linking">collided</span> <span class="weak">and</span> both drivers began <span class="weak">to</span> argue.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈdʊrɪŋ <span class="weak">ðə</span> rʌʃ ˈaʊɚ wʌn<span class="linking">‿</span>ˈivnɪŋ <span class="weak">tu</span> kɑrz kəˈlaɪdɪd<span class="linking">‿</span><span class="weak">ən</span> boʊθ ˈdraɪvɚz bɪˈɡæn <span class="weak">tə</span> ˈɑrɡju/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿ˈivnɪŋ、kəˈlaɪdɪd‿ən 连读；ðə、tu、ən、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>During... 作时间状语；collided 和 began 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一天傍晚交通高峰时，两辆车相撞，两名司机都开始争吵。</p></div>
+    <div class="field words"><span>词</span><p>rush hour 高峰时段； collide 相撞； argue 争吵；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="101.09" data-end="106.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> <span class="linking">woman</span> immediately behind <span class="weak">the</span> two cars happened <span class="weak">to</span> <span class="weak">be</span> <span class="weak">a</span> learner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈwʊmən<span class="linking">‿</span>ɪˈmidiətli bɪˈhaɪnd <span class="weak">ðə</span> <span class="weak">tu</span> kɑrz ˈhæpənd <span class="weak">tə</span> bi <span class="weak">ə</span> ˈlɝnɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈwʊmən‿ɪˈmidiətli 连读；ðə、tu、tə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>immediately behind... 作后置定语；happen to be 表“碰巧是”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>紧跟在这两辆车后面的女士碰巧是个新手。</p></div>
+    <div class="field words"><span>词</span><p>immediately behind 紧跟在后面； happen to be 碰巧是； learner 新手；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="106.3" data-end="110.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">She suddenly <span class="linking">got</span> into <span class="weak">a</span> <span class="linking">panic</span> <span class="weak">and</span> stopped <span class="weak">her</span> car.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi ˈsʌdənli ɡɑɾ<span class="linking">‿</span>ˈɪntu <span class="weak">ə</span> ˈpænɪk<span class="linking">‿</span><span class="weak">ən</span> stɑpt <span class="weak">hɚ</span> kɑr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɑɾ‿ˈɪntu、ˈpænɪk‿ən 连读；ə、ən、hɚ 弱读/弱化；ɡɑɾ‿ˈɪntu 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>got into 和 stopped 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她突然惊慌起来，把车停住了。</p></div>
+    <div class="field words"><span>词</span><p>get into a panic 惊慌起来； stop one's car 停车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="110.97" data-end="114.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">This made <span class="weak">the</span> driver following <span class="weak">her</span> brake hard.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs meɪd <span class="weak">ðə</span> ˈdraɪvɚ ˈfɑloʊɪŋ <span class="weak">hɚ</span> breɪk hɑrd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、hɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>make + 宾语 + 动词原形；following her 为现在分词短语修饰 driver。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这使跟在她后面的司机猛踩刹车。</p></div>
+    <div class="field words"><span>词</span><p>brake 刹车； brake hard 猛踩刹车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="114.8" data-end="119.08">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">His</span> wife <span class="weak">was</span> sitting beside <span class="weak">him</span> <span class="linking">holding</span> <span class="weak">a</span> large cake.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">hɪz</span> waɪf <span class="weak">wəz</span> ˈsɪɾɪŋ bɪˈsaɪd <span class="weak">hɪm</span> ˈhoʊldɪŋ<span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ keɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhoʊldɪŋ‿ə 连读；hɪz、wəz、hɪm、ə 弱读/弱化；ˈsɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>was sitting 为谓语；holding... 为现在分词短语作伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>他的妻子正坐在他身旁，手里拿着一个大蛋糕。</p></div>
+    <div class="field words"><span>词</span><p>beside 在……旁边； hold 拿着；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="119.08" data-end="126.53">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">As</span> she <span class="weak">was</span> thrown forward, <span class="weak">the</span> cake went right through <span class="weak">the</span> <span class="linking">windscreen</span> <span class="weak">and</span> <span class="linking">landed</span> on <span class="weak">the</span> road.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz ʃi <span class="weak">wəz</span> θroʊn ˈfɔrwɚd <span class="weak">ðə</span> keɪk wɛnt raɪt θru <span class="weak">ðə</span> ˈwɪndˌskrin<span class="linking">‿</span><span class="weak">ən</span> ˈlændɪd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> roʊd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈwɪndˌskrin‿ən、ˈlændɪd‿ɑn 连读；wəz、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导时间状语从句；went 和 landed 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was thrown 为一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>当她被向前甩去时，蛋糕径直穿过挡风玻璃，落到路上。</p></div>
+    <div class="field words"><span>词</span><p>throw forward 向前甩； windscreen 挡风玻璃； land 落下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="126.53" data-end="136.17">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="linking">Seeing</span> <span class="weak">a</span> cake flying through <span class="weak">the</span> <span class="linking">air</span>, <span class="weak">a</span> lorry driver who <span class="weak">was</span> <span class="linking">drawing</span> <span class="linking">up</span> alongside <span class="weak">the</span> car, <span class="linking">pulled</span> <span class="linking">up</span> <span class="linking">all</span> <span class="weak linking">of</span> <span class="weak">a</span> sudden.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈsiɪŋ<span class="linking">‿</span><span class="weak">ə</span> keɪk ˈflaɪɪŋ θru <span class="weak">ði</span> ɛr<span class="linking">‿</span><span class="weak">ə</span> ˈlɔri ˈdraɪvɚ hu <span class="weak">wəz</span> ˈdrɔɪŋ<span class="linking">‿</span>ʌp<span class="linking">‿</span>əˈlɔŋˌsaɪd <span class="weak">ðə</span> kɑr pʊld<span class="linking">‿</span>ʌp<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈsʌdən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsiɪŋ‿ə、ɛr‿ə、ˈdrɔɪŋ‿ʌp‿əˈlɔŋˌsaɪd、pʊld‿ʌp‿ɔl‿əv‿ə 连读；ə、ði、wəz、ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Seeing... 为现在分词短语作原因/时间状语；who 引导定语从句；pull up 表停车。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was drawing up 为过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>一个正把车开到那辆车旁边的卡车司机看见蛋糕在空中飞过，突然停了车。</p></div>
+    <div class="field words"><span>词</span><p>lorry 卡车； draw up 靠近停下； alongside 在……旁边； pull up 停车； all of a sudden 突然；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="136.17" data-end="145.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak">The</span> lorry <span class="weak">was</span> loaded <span class="linking">with</span> empty beer <span class="linking">bottles</span> <span class="weak">and</span> <span class="linking">hundreds</span> <span class="weak">of</span> them <span class="linking">slid</span> off <span class="weak">the</span> <span class="linking">back</span> <span class="weak">of</span> <span class="weak">the</span> vehicle <span class="weak linking">and</span> on <span class="weak">to</span> <span class="weak">the</span> road.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈlɔri <span class="weak">wəz</span> ˈloʊdɪd wɪð<span class="linking">‿</span>ˈɛmpti bɪr ˈbɑɾəlz<span class="linking">‿</span><span class="weak">ən</span> ˈhʌndrədz<span class="linking">‿</span><span class="weak">əv</span> ðɛm slɪd<span class="linking">‿</span>ɔf <span class="weak">ðə</span> bæk<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈviɪkəl<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɑn <span class="weak">tə</span> <span class="weak">ðə</span> roʊd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɪð‿ˈɛmpti、ˈbɑɾəlz‿ən、ˈhʌndrədz‿əv、slɪd‿ɔf、bæk‿əv 连读；ðə、wəz、ən、əv、tə 弱读/弱化；ˈbɑɾəlz‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>be loaded with 表“装满”；and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>卡车上装满了空啤酒瓶，几百个瓶子从车后滑落到路上。</p></div>
+    <div class="field words"><span>词</span><p>be loaded with 装满； empty 空的； beer bottle 啤酒瓶； slide off 滑落； vehicle 车辆；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="145.47" data-end="149.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">This led <span class="weak">to</span> <span class="linking">yet</span> <span class="linking">another</span> <span class="linking">angry</span> argument.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs lɛd <span class="weak">tə</span> jɛɾ<span class="linking">‿</span>əˈnʌðɚ ˈæŋɡri ˈɑrɡjəmənt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɛɾ‿əˈnʌðɚ 连读；tə 弱读/弱化；jɛɾ‿əˈnʌðɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>lead to 表“导致”；yet another 表“又一个”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这又引发了一场愤怒的争吵。</p></div>
+    <div class="field words"><span>词</span><p>lead to 导致； yet another 又一个； argument 争吵；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="149.47" data-end="153.46">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Meanwhile, <span class="weak">the</span> traffic <span class="linking">piled</span> up behind.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl <span class="weak">ðə</span> ˈtræfɪk paɪld<span class="linking">‿</span>ʌp bɪˈhaɪnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>paɪld‿ʌp 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；pile up 表“堆积/堵塞”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>与此同时，后面的车辆堵成了一片。</p></div>
+    <div class="field words"><span>词</span><p>meanwhile 与此同时； traffic 交通/车辆； pile up 堆积/堵塞；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="153.46" data-end="158.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">It</span> took <span class="weak">the</span> police <span class="linking">nearly</span> <span class="weak">an</span> hour <span class="weak">to</span> get <span class="weak">the</span> <span class="linking">traffic</span> on <span class="weak">the</span> move again.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt tʊk <span class="weak">ðə</span> pəˈlis ˈnɪrli <span class="weak">ən</span> ˈaʊɚ <span class="weak">tə</span> ɡɛt <span class="weak">ðə</span> ˈtræfɪk<span class="linking">‿</span>ɑn <span class="weak">ðə</span> muv<span class="linking">‿</span>əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtræfɪk‿ɑn、muv‿əˈɡɛn 连读；ðə、ən、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>It takes sb time to do；get sth on the move 表“使……动起来”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>警察花了将近一个小时才让交通重新流动起来。</p></div>
+    <div class="field words"><span>词</span><p>nearly 几乎/将近； on the move 在移动中；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="158.96" data-end="165.57">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> meantime, <span class="weak">the</span> lorry driver <span class="weak">had</span> <span class="weak">to</span> <span class="linking">sweep</span> up <span class="linking">hundreds</span> <span class="weak">of</span> broken bottles.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> ˈminˌtaɪm <span class="weak">ðə</span> ˈlɔri ˈdraɪvɚ hæd <span class="weak">tə</span> swip<span class="linking">‿</span>ʌp ˈhʌndrədz<span class="linking">‿</span><span class="weak">əv</span> ˈbroʊkən ˈbɑɾəlz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>swip‿ʌp、ˈhʌndrədz‿əv 连读；ɪn、ðə、tə、əv 弱读/弱化；ˈbɑɾəlz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In the meantime 作时间状语；had to do 表不得不。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在此期间，卡车司机不得不清扫几百个碎瓶子。</p></div>
+    <div class="field words"><span>词</span><p>in the meantime 在此期间； sweep up 清扫； broken bottle 碎瓶子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="165.57" data-end="174.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">Only two stray dogs benefited <span class="weak linking">from</span> all this confusion, <span class="weak">for</span> they greedily devoured what <span class="weak">was</span> <span class="linking">left</span> <span class="weak">of</span> <span class="weak">the</span> cake.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈoʊnli <span class="weak">tu</span> streɪ dɔɡz ˈbɛnəˌfɪɾɪd <span class="weak">frəm</span><span class="linking">‿</span>ɔl ðɪs kənˈfjuʒən <span class="weak">fɚ</span> ðeɪ ˈɡridəli dɪˈvaʊɚd wʌt <span class="weak">wəz</span> lɛft<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> keɪk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>frəm‿ɔl、lɛft‿əv 连读；tu、frəm、fɚ、wəz、əv、ðə 弱读/弱化；ˈbɛnəˌfɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>for 引导原因分句；what was left of the cake 为宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>只有两只流浪狗从这场混乱中得了好处，因为它们贪婪地吃掉了剩下的蛋糕。</p></div>
+    <div class="field words"><span>词</span><p>stray dog 流浪狗； benefit from 从……受益； confusion 混乱； greedily 贪婪地； devour 吞食；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="174.22" data-end="176.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> <span class="linking">just</span> one <span class="weak">of</span> those days!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> dʒʌst wʌn<span class="linking">‿</span><span class="weak">əv</span> ðoʊz deɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv 连读；wəz、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；one of those days 指“诸事不顺的一天”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这真是那种倒霉透顶的日子！</p></div>
+    <div class="field words"><span>词</span><p>one of those days 倒霉日子/诸事不顺的一天；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>失控与灾难: go wrong 出问题； get out of control 失控； catastrophe 灾难； panic 惊慌； confusion 混乱；</p>
+    <p>交通事故: rush hour 高峰时段； collide 相撞； learner 新手； brake hard 猛刹车； windscreen 挡风玻璃； lorry 卡车； vehicle 车辆； traffic pile up 交通堵塞；</p>
+    <p>动作短语: keep an eye on 照看； hang up 挂断； attend to 处理/照料； pull up 停车； lead to 导致； sweep up 清扫； benefit from 受益于；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>days when...</code>: when 引导定语从句。</p>
+    <p><code>What invariably happens is that...</code>: what 主语从句 + that 表语从句。</p>
+    <p><code>It is as if...</code>: 好像……，可带虚拟色彩。</p>
+    <p><code>make sb do</code>: 使某人做某事。</p>
+    <p><code>It took the police nearly an hour to...</code>: 花某人多少时间做某事。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>现在完成时用于开头连接经验：<code>have experienced</code>。</p>
+    <p>一般现在时用于假设场景：<code>rings</code>, <code>pulls</code>, <code>gets burnt</code>, <code>arrives</code>。</p>
+    <p>一般过去时用于 Parramatta 的事故叙述：<code>collided</code>, <code>stopped</code>, <code>landed</code>, <code>pulled up</code>, <code>led</code>。</p>
+    <p>过去进行时用于事故瞬间背景：<code>was sitting</code>, <code>was drawing up</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>may begin</code> 表可能性。</p>
+    <p><code>can go wrong</code> 表普遍可能发生。</p>
+    <p><code>would</code> 本课较少，重点语气在 <code>as if</code> 和一连串夸张因果中，体现幽默和无奈。</p>
+    <p><code>had to sweep up</code> 表卡车司机不得不承担后果。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>goes wrong</code> 可连读；<code>set up a</code> -&gt; /sɛt‿ʌp‿ə/；<code>hang up</code> -&gt; /hæŋ‿ʌp/；<code>pulls the tablecloth off</code> 中 /f/ 接后词。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>that</code>, <code>as</code> 多弱读，如 <code>chain of reactions</code> -&gt; /tʃeɪn əv riˈækʃənz/。</p>
+    <p>意群停顿: 第 18 句按 <code>Seeing a cake flying through the air / a lorry driver... / pulled up...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 33 - A Day to Remember</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../33－A Day to Remember.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.47,"end":19.83,"text":"We have all experienced days when everything goes wrong."},{"index":2,"start":19.83,"end":25.98,"text":"A day may begin well enough, but suddenly everything seems to get out of control."},{"index":3,"start":25.98,"end":33.97,"text":"What invariably happens is that a great number of things choose to go wrong at precisely the same moment."},{"index":4,"start":33.97,"end":39.93,"text":"It is as if a single unimportant event set up a chain of reactions."},{"index":5,"start":39.93,"end":47.23,"text":"Let us suppose that you are preparing a meal and keeping an eye on the baby at the same time."},{"index":6,"start":47.23,"end":55.44,"text":"The telephone rings and this marks the prelude to an unforeseen series of catastrophes."},{"index":7,"start":55.44,"end":66.49,"text":"While you are on the phone, the baby pulls the tablecloth off the table, smashing half your best crockery and cutting himself in the process."},{"index":8,"start":66.49,"end":71.9,"text":"You hang up hurriedly and attend to baby, crockery, etc."},{"index":9,"start":71.9,"end":74.62,"text":"Meanwhile, the meal gets burnt."},{"index":10,"start":74.62,"end":84.51,"text":"As if this were not enough to reduce you to tears, your husband arrives, unexpectedly bringing three guests to dinner."},{"index":11,"start":84.51,"end":93.52,"text":"Things can go wrong on a big scale as a number of people recently discovered in Parramatta, a suburb of Sydney."},{"index":12,"start":93.52,"end":101.09,"text":"During the rush hour one evening two cars collided and both drivers began to argue."},{"index":13,"start":101.09,"end":106.3,"text":"The woman immediately behind the two cars happened to be a learner."},{"index":14,"start":106.3,"end":110.97,"text":"She suddenly got into a panic and stopped her car."},{"index":15,"start":110.97,"end":114.8,"text":"This made the driver following her brake hard."},{"index":16,"start":114.8,"end":119.08,"text":"His wife was sitting beside him holding a large cake."},{"index":17,"start":119.08,"end":126.53,"text":"As she was thrown forward, the cake went right through the windscreen and landed on the road."},{"index":18,"start":126.53,"end":136.17,"text":"Seeing a cake flying through the air, a lorry driver who was drawing up alongside the car, pulled up all of a sudden."},{"index":19,"start":136.17,"end":145.47,"text":"The lorry was loaded with empty beer bottles and hundreds of them slid off the back of the vehicle and on to the road."},{"index":20,"start":145.47,"end":149.47,"text":"This led to yet another angry argument."},{"index":21,"start":149.47,"end":153.46,"text":"Meanwhile, the traffic piled up behind."},{"index":22,"start":153.46,"end":158.96,"text":"It took the police nearly an hour to get the traffic on the move again."},{"index":23,"start":158.96,"end":165.57,"text":"In the meantime, the lorry driver had to sweep up hundreds of broken bottles."},{"index":24,"start":165.57,"end":174.22,"text":"Only two stray dogs benefited from all this confusion, for they greedily devoured what was left of the cake."},{"index":25,"start":174.22,"end":176.72,"text":"It was just one of those days!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

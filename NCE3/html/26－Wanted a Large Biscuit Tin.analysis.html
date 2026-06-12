@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 26 - Wanted: a Large Biscuit Tin</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 26 - Wanted: a Large Biscuit Tin</h1>
+      <p class="meta">Generated from 26－Wanted a Large Biscuit Tin.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.29" data-end="19.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">No one <span class="weak linking">can</span> avoid <span class="weak linking">being</span> influenced <span class="linking">by</span> advertisements.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/noʊ wʌn kæn<span class="linking">‿</span>əˈvɔɪd ˈbiɪŋ<span class="linking">‿</span>ˈɪnfluənst baɪ ˌædvɚˈtaɪzmənts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kæn‿əˈvɔɪd、ˈbiɪŋ‿ˈɪnfluənst 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>avoid 后接动名词；being influenced 为动名词被动式。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can 表能力/可能。</p></div>
+    <div class="field cn"><span>中</span><p>没有人能避免受到广告的影响。</p></div>
+    <div class="field words"><span>词</span><p>avoid 避免； influence 影响； advertisement 广告；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.62" data-end="30.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Much</span> <span class="weak">as</span> we may pride <span class="linking">ourselves</span> <span class="linking">on</span> our good taste, we <span class="weak">are</span> no longer free <span class="weak">to</span> choose <span class="weak">the</span> things we want, <span class="weak linking">for</span> <span class="linking">advertising</span> <span class="linking">exerts</span> <span class="weak">a</span> subtle influence <span class="linking">on</span> us.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/mʌtʃ<span class="linking">‿</span>æz wi meɪ praɪd aʊrˈsɛlvz<span class="linking">‿</span>ɑn aʊr ɡʊd teɪst wi <span class="weak">ɑr</span> noʊ ˈlɔŋɡɚ fri <span class="weak">tə</span> tʃuz <span class="weak">ðə</span> θɪŋz wi wɑnt <span class="weak">fɚ</span> ˈædvɚˌtaɪzɪŋ<span class="linking">‿</span>ɪɡˈzɝts<span class="linking">‿</span><span class="weak">ə</span> ˈsʌɾəl<span class="linking">‿</span>ˈɪnfluəns<span class="linking">‿</span>ɑn<span class="linking">‿</span>ʌs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>mʌtʃ‿æz、aʊrˈsɛlvz‿ɑn、ˈædvɚˌtaɪzɪŋ‿ɪɡˈzɝts‿ə、ˈsʌɾəl‿ˈɪnfluəns‿ɑn‿ʌs 连读；ɑr、tə、ðə、fɚ、ə 弱读/弱化；ˈsʌɾəl‿ˈɪnfluəns‿ɑn‿ʌs 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Much as 引导让步状语从句；for 引导原因分句；we want 为定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；may 表让步。</p></div>
+    <div class="field cn"><span>中</span><p>尽管我们可能为自己的好品味自豪，但我们已不再能自由选择想要的东西，因为广告对我们施加着微妙影响。</p></div>
+    <div class="field words"><span>词</span><p>pride oneself on 为……自豪； good taste 好品味； no longer 不再； exert influence 施加影响； subtle 微妙的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.96" data-end="43.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">In</span> <span class="linking">their</span> efforts <span class="weak">to</span> persuade us <span class="weak">to</span> buy <span class="linking">this</span> or <span class="weak">that</span> <span class="linking">product</span>, advertisers <span class="weak">have</span> made <span class="weak">a</span> close <span class="linking">study</span> <span class="weak">of</span> human nature <span class="weak">and</span> <span class="weak">have</span> <span class="linking">classified</span> <span class="linking">all</span> our little weaknesses.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ðɛr<span class="linking">‿</span>ˈɛfɚts <span class="weak">tə</span> pɚˈsweɪd<span class="linking">‿</span>ʌs <span class="weak">tə</span> baɪ ðɪs<span class="linking">‿</span>ɔr ðæt ˈprɑdʌkt<span class="linking">‿</span>ˈædvɚˌtaɪzɚz hæv meɪd<span class="linking">‿</span><span class="weak">ə</span> kloʊs ˈstʌdi <span class="weak">əv</span> ˈhjumən ˈneɪtʃɚ <span class="weak">ən</span> hæv ˈklæsəˌfaɪd<span class="linking">‿</span>ɔl aʊr ˈlɪɾəl ˈwiknəsɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛr‿ˈɛfɚts、pɚˈsweɪd‿ʌs、ðɪs‿ɔr、ˈprɑdʌkt‿ˈædvɚˌtaɪzɚz、meɪd‿ə 连读；ɪn、tə、ə、əv、ən 弱读/弱化；ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In their efforts... 作目的/背景状语；to persuade... 修饰 efforts；两个 have done 并列。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>为了说服我们购买这种或那种产品，广告商已深入研究人性，并把我们的各种小弱点分类。</p></div>
+    <div class="field words"><span>词</span><p>persuade sb to do 说服某人做； product 产品； human nature 人性； classify 分类； weakness 弱点；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.15" data-end="48.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Advertisers discovered <span class="linking">years</span> ago <span class="weak linking">that</span> <span class="linking">all</span> <span class="weak linking">of</span> us love <span class="weak">to</span> get something <span class="weak">for</span> nothing.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈædvɚˌtaɪzɚz dɪˈskʌvɚd jɪrz<span class="linking">‿</span>əˈɡoʊ ðæɾ<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs lʌv <span class="weak">tə</span> ɡɛt ˈsʌmθɪŋ <span class="weak">fɚ</span> ˈnʌθɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɪrz‿əˈɡoʊ、ðæɾ‿ɔl‿əv‿ʌs 连读；əv、tə、fɚ 弱读/弱化；ðæɾ‿ɔl‿əv‿ʌs 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>discovered 后接 that 宾语从句；something for nothing 表“不劳而获/免费东西”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；宾语从句一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>广告商多年前就发现，我们都喜欢不花代价得到东西。</p></div>
+    <div class="field words"><span>词</span><p>advertiser 广告商； something for nothing 免费得到的东西；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="48.96" data-end="55.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak linking">An</span> advertisement which begins with <span class="weak">the</span> magic word FREE <span class="weak">can</span> rarely go wrong.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>ˌædvɚˈtaɪzmənt wɪtʃ bɪˈɡɪnz wɪð <span class="weak">ðə</span> ˈmædʒɪk wɝd fri kæn ˈrɛrli ɡoʊ rɔŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿ˌædvɚˈtaɪzmənt 连读；ən、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句；can rarely go wrong 表几乎不会失败。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>以“免费”这个魔力词开头的广告很少会出错。</p></div>
+    <div class="field words"><span>词</span><p>magic word 魔力词； free 免费； go wrong 出错/失败；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="55.87" data-end="66.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">These <span class="linking">days</span>, advertisers <span class="linking">not</span> <span class="linking">only</span> offer free samples, but free cars, free <span class="linking">houses</span>, <span class="weak">and</span> free trips round <span class="weak">the</span> <span class="linking">world</span> <span class="weak">as</span> well.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðiz deɪz<span class="linking">‿</span>ˈædvɚˌtaɪzɚz nɑɾ<span class="linking">‿</span>ˈoʊnli ˈɔfɚ fri ˈsæmpəlz bət fri kɑrz fri ˈhaʊzɪz<span class="linking">‿</span><span class="weak">ən</span> fri trɪps raʊnd <span class="weak">ðə</span> wɝld<span class="linking">‿</span>æz wɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>deɪz‿ˈædvɚˌtaɪzɚz、nɑɾ‿ˈoʊnli、ˈhaʊzɪz‿ən、wɝld‿æz 连读；ən、ðə 弱读/弱化；nɑɾ‿ˈoʊnli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not only...but...as well 连接并列宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>如今，广告商不仅提供免费样品，还提供免费汽车、免费房屋和免费环球旅行。</p></div>
+    <div class="field words"><span>词</span><p>these days 如今； sample 样品； trip round the world 环球旅行； as well 也；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="66.8" data-end="72.73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">They devise <span class="linking">hundreds</span> <span class="weak">of</span> competitions which <span class="linking">will</span> enable us <span class="weak">to</span> win huge <span class="linking">sums</span> <span class="weak">of</span> money.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ dɪˈvaɪz ˈhʌndrədz<span class="linking">‿</span><span class="weak">əv</span> ˌkɑmpəˈtɪʃənz wɪtʃ wɪl<span class="linking">‿</span>ɪˈneɪbəl<span class="linking">‿</span>ʌs <span class="weak">tə</span> wɪn hjudʒ sʌmz<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhʌndrədz‿əv、wɪl‿ɪˈneɪbəl‿ʌs、sʌmz‿əv 连读；əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 competitions；enable sb to do。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will enable 表将来/结果。</p></div>
+    <div class="field cn"><span>中</span><p>他们设计数百种竞赛，使我们有机会赢得巨额奖金。</p></div>
+    <div class="field words"><span>词</span><p>devise 设计； competition 竞赛； enable sb to do 使某人能够； huge sums 巨额；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="72.73" data-end="81.12">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Radio <span class="weak">and</span> television <span class="weak">have</span> made <span class="weak">it</span> possible <span class="weak linking">for</span> advertisers <span class="weak">to</span> capture <span class="weak">the</span> <span class="linking">attention</span> <span class="weak">of</span> <span class="linking">millions</span> <span class="weak">of</span> people <span class="weak">in</span> this way.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈreɪdioʊ <span class="weak">ən</span> ˈtɛləˌvɪʒən hæv meɪd<span class="linking">‿</span>ɪt ˈpɑsəbəl <span class="weak">fɚ</span> ˈædvɚˌtaɪzɚz <span class="weak">tə</span> ˈkæptʃɚ <span class="weak">ði</span> əˈtɛnʃən<span class="linking">‿</span><span class="weak">əv</span> ˈmɪljənz<span class="linking">‿</span><span class="weak">əv</span> ˈpipəl<span class="linking">‿</span><span class="weak">ɪn</span> ðɪs weɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪd‿ɪt、əˈtɛnʃən‿əv、ˈmɪljənz‿əv、ˈpipəl‿ɪn 连读；ən、fɚ、tə、ði、əv、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>make it possible for sb to do；it 为形式宾语。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>广播和电视使广告商能够以这种方式吸引数百万人的注意。</p></div>
+    <div class="field words"><span>词</span><p>capture attention 吸引注意； millions of 数百万； in this way 以这种方式；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="81.12" data-end="91.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">During</span> <span class="weak">a</span> radio programme, <span class="weak">a</span> <span class="linking">company</span> <span class="weak">of</span> biscuit <span class="linking">manufacturers</span> once asked listeners <span class="weak">to</span> bake <span class="linking">biscuits</span> <span class="weak">and</span> send them <span class="weak">to</span> their factory.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈdʊrɪŋ<span class="linking">‿</span><span class="weak">ə</span> ˈreɪdioʊ ˈproʊɡræm<span class="linking">‿</span><span class="weak">ə</span> ˈkʌmpəni <span class="weak">əv</span> ˈbɪskɪt ˌmænjəˈfæktʃɚɚz wʌns<span class="linking">‿</span>æskt ˈlɪsənɚz <span class="weak">tə</span> beɪk ˈbɪskɪts<span class="linking">‿</span><span class="weak">ən</span> sɛnd ðɛm <span class="weak">tə</span> ðɛr ˈfæktəri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdʊrɪŋ‿ə、ˈproʊɡræm‿ə、wʌns‿æskt、ˈbɪskɪts‿ən 连读；ə、əv、tə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>ask sb to do；bake 和 send 为并列不定式。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在一次广播节目中，一家饼干制造公司曾要求听众烤饼干并寄到他们的工厂。</p></div>
+    <div class="field words"><span>词</span><p>biscuit 饼干； manufacturer 制造商； listener 听众； bake 烘烤； factory 工厂；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="91.29" data-end="97.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">They</span> offered <span class="weak">to</span> <span class="linking">pay</span> $10 <span class="weak">a</span> pound <span class="weak">for</span> <span class="weak">the</span> biggest biscuit baked <span class="linking">by</span> <span class="weak">a</span> listener.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ ˈɔfɚd <span class="weak">tə</span> peɪ tɛn ˈdɑlɚz<span class="linking">‿</span><span class="weak">ə</span> paʊnd <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈbɪɡəst ˈbɪskɪt beɪkt baɪ <span class="weak">ə</span> ˈlɪsənɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈdɑlɚz‿ə 连读；tə、ə、fɚ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>offer to do；baked by... 为过去分词短语修饰 biscuit。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们提出为听众烤出的最大饼干按每磅 10 美元付款。</p></div>
+    <div class="field words"><span>词</span><p>offer to pay 主动提出付款； a pound 每磅；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="97.09" data-end="100.86">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> response <span class="weak">to</span> this competition <span class="weak">was</span> tremendous.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> rɪˈspɑns <span class="weak">tə</span> ðɪs ˌkɑmpəˈtɪʃən <span class="weak">wəz</span> trəˈmɛndəs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、tə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；to this competition 修饰 response。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>对这场竞赛的反响非常巨大。</p></div>
+    <div class="field words"><span>词</span><p>response 反响； tremendous 巨大的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="100.86" data-end="107.05">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Before long, <span class="linking">biscuits</span> <span class="weak linking">of</span> all <span class="linking">shapes</span> <span class="weak">and</span> sizes <span class="linking">began</span> <span class="linking">arriving</span> at <span class="weak">the</span> factory.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈfɔr lɔŋ ˈbɪskɪts<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl ʃeɪps<span class="linking">‿</span><span class="weak">ən</span> ˈsaɪzɪz bɪˈɡæn<span class="linking">‿</span>əˈraɪvɪŋ<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈfæktəri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈbɪskɪts‿əv‿ɔl、ʃeɪps‿ən、bɪˈɡæn‿əˈraɪvɪŋ‿æt 连读；əv、ən、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>begin doing 表开始做；of all shapes and sizes 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>不久，各种形状和大小的饼干开始送到工厂。</p></div>
+    <div class="field words"><span>词</span><p>before long 不久； all shapes and sizes 各种形状大小；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="107.05" data-end="110.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">One lady <span class="linking">brought</span> <span class="weak">a</span> <span class="linking">biscuit</span> <span class="linking">on</span> <span class="weak">a</span> wheelbarrow.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn ˈleɪdi brɔɾ<span class="linking">‿</span><span class="weak">ə</span> ˈbɪskɪɾ<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> ˈwilˌbæroʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>brɔɾ‿ə、ˈbɪskɪɾ‿ɑn‿ə 连读；ə 弱读/弱化；brɔɾ‿ə、ˈbɪskɪɾ‿ɑn‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；on a wheelbarrow 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一位女士用独轮车推来一块饼干。</p></div>
+    <div class="field words"><span>词</span><p>wheelbarrow 独轮车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="110.82" data-end="113.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> weighed nearly 500 pounds.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt weɪd ˈnɪrli faɪv ˈhʌndrəd paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>本句按意群自然停顿，保持美式弱读和节奏。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；weigh 表重量。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>它重近 500 磅。</p></div>
+    <div class="field words"><span>词</span><p>weigh 重； nearly 将近；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="113.41" data-end="120.71">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">A</span> little <span class="linking">later</span>, <span class="weak">a</span> man came along <span class="linking">with</span> <span class="weak">a</span> biscuit <span class="linking">which</span> occupied <span class="weak">the</span> whole <span class="linking">boot</span> <span class="weak">of</span> <span class="weak">his</span> car.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈlɪɾəl ˈleɪɾɚ <span class="weak">ə</span> mæn keɪm<span class="linking">‿</span>əˈlɔŋ wɪð<span class="linking">‿</span><span class="weak">ə</span> ˈbɪskɪt wɪtʃ<span class="linking">‿</span>ˈɑkjəˌpaɪd <span class="weak">ðə</span> hoʊl buɾ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span> kɑr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪm‿əˈlɔŋ、wɪð‿ə、wɪtʃ‿ˈɑkjəˌpaɪd、buɾ‿əv 连读；ə、ðə、əv、hɪz 弱读/弱化；ˈlɪɾəl、ˈleɪɾɚ、buɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 biscuit。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>过了一会儿，一个男人带来一块占满汽车整个行李箱的饼干。</p></div>
+    <div class="field words"><span>词</span><p>come along 出现/到来； occupy 占据； boot 后备箱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="120.71" data-end="124.3">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">All <span class="weak">the</span> biscuits <span class="weak">that</span> <span class="weak">were</span> sent <span class="weak">were</span> carefully weighed.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɔl <span class="weak">ðə</span> ˈbɪskɪts ðæt <span class="weak">wɚ</span> sɛnt <span class="weak">wɚ</span> ˈkɛrfəli weɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导定语从句；主句被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>所有送来的饼干都被仔细称重。</p></div>
+    <div class="field words"><span>词</span><p>carefully 仔细地； weigh 称重；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="124.3" data-end="127.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> largest <span class="weak">was</span> 713 pounds.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈlɑrdʒəst <span class="weak">wəz</span> ˈsɛvən ˈhʌndrəd ˌθɝˈtin paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>最大的一块重 713 磅。</p></div>
+    <div class="field words"><span>词</span><p>largest 最大的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="127.2" data-end="132.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">It</span> seemed certain <span class="weak">that</span> this <span class="weak">would</span> win <span class="weak">the</span> prize.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt simd ˈsɝɾən ðæt ðɪs wʊd wɪn <span class="weak">ðə</span> praɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化；ˈsɝɾən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It seemed certain that...；that 从句为真正内容。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would win 为过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>看起来这块饼干肯定会获奖。</p></div>
+    <div class="field words"><span>词</span><p>seem certain 看起来肯定； win the prize 获奖；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="132.33" data-end="144.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">But just before <span class="weak">the</span> competition <span class="linking">closed</span>, <span class="weak">a</span> <span class="linking">lorry</span> <span class="linking">arrived</span> at <span class="weak">the</span> factory <span class="linking">with</span> <span class="weak">a</span> truly colossal biscuit which weighed 2,400 pounds.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət dʒʌst bɪˈfɔr <span class="weak">ðə</span> ˌkɑmpəˈtɪʃən kloʊzd<span class="linking">‿</span><span class="weak">ə</span> ˈlɔri əˈraɪvd<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈfæktəri wɪð<span class="linking">‿</span><span class="weak">ə</span> ˈtruli kəˈlɑsəl ˈbɪskɪt wɪtʃ weɪd <span class="weak">tu</span> ˈθaʊzənd fɔr ˈhʌndrəd paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kloʊzd‿ə、əˈraɪvd‿æt、wɪð‿ə 连读；ðə、ə、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>before 引导时间状语从句；which 引导定语从句修饰 biscuit。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>但就在竞赛结束前，一辆卡车带着一块真正巨大的饼干来到工厂，那块饼干重 2400 磅。</p></div>
+    <div class="field words"><span>词</span><p>lorry 卡车； colossal 巨大的； competition closed 竞赛结束；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="144.44" data-end="158.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">It</span> <span class="weak">had</span> <span class="weak">been</span> baked <span class="linking">by</span> <span class="weak">a</span> college student who <span class="weak linking">had</span> <span class="linking">used</span> over 1,000 <span class="linking">pounds</span> <span class="weak">of</span> flour, 800 <span class="linking">pounds</span> <span class="weak">of</span> sugar, 200 <span class="linking">pounds</span> <span class="weak">of</span> <span class="linking">fat</span>, <span class="weak">and</span> 400 <span class="linking">pounds</span> <span class="weak">of</span> <span class="linking">various</span> <span class="linking">other</span> ingredients.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt hæd bɪn beɪkt baɪ <span class="weak">ə</span> ˈkɑlɪdʒ ˈstudənt hu hæd juzd<span class="linking">‿</span>ˈoʊvɚ wʌn ˈθaʊzənd paʊndz<span class="linking">‿</span><span class="weak">əv</span> flaʊɚ eɪt ˈhʌndrəd paʊndz<span class="linking">‿</span><span class="weak">əv</span> ˈʃʊɡɚ <span class="weak">tu</span> ˈhʌndrəd paʊndz<span class="linking">‿</span><span class="weak">əv</span> fæɾ<span class="linking">‿</span><span class="weak">ən</span> fɔr ˈhʌndrəd paʊndz<span class="linking">‿</span><span class="weak">əv</span> ˈvɛriəs<span class="linking">‿</span>ˈʌðɚ ɪnˈɡridiənts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>juzd‿ˈoʊvɚ、paʊndz‿əv、paʊndz‿əv、paʊndz‿əv、fæɾ‿ən 连读；ə、əv、tu、ən 弱读/弱化；fæɾ‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主句过去完成时被动；who 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时；过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>它是由一名大学生烤制的，他用了 1000 多磅面粉、800 磅糖、200 磅脂肪和 400 磅各种其他配料。</p></div>
+    <div class="field words"><span>词</span><p>college student 大学生； flour 面粉； sugar 糖； fat 脂肪； ingredient 配料；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="158.26" data-end="163.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> so heavy <span class="weak linking">that</span> <span class="weak">a</span> crane <span class="weak">had</span> <span class="weak">to</span> <span class="weak">be</span> used <span class="weak">to</span> remove <span class="weak">it</span> <span class="weak">from</span> <span class="weak">the</span> lorry.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> soʊ ˈhɛvi ðæɾ<span class="linking">‿</span><span class="weak">ə</span> kreɪn hæd <span class="weak">tə</span> bi juzd <span class="weak">tə</span> rɪˈmuv<span class="linking">‿</span>ɪt <span class="weak">frəm</span> <span class="weak">ðə</span> ˈlɔri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ə、rɪˈmuv‿ɪt 连读；wəz、ə、tə、frəm、ðə 弱读/弱化；ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that 引导结果状语从句；had to be used 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had to be used 为半情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>它太重了，必须用起重机才能把它从卡车上卸下来。</p></div>
+    <div class="field words"><span>词</span><p>crane 起重机； remove 移走； lorry 卡车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="163.97" data-end="171.66">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">The</span> manufacturers <span class="weak">had</span> <span class="weak">to</span> pay more money <span class="weak">than</span> they <span class="weak linking">had</span> anticipated, <span class="weak">for</span> they bought <span class="weak">the</span> biscuit <span class="weak">from</span> <span class="weak">the</span> student <span class="weak">for</span> $24,000.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˌmænjəˈfæktʃɚɚz hæd <span class="weak">tə</span> peɪ mɔr ˈmʌni ðæn ðeɪ hæd<span class="linking">‿</span>ænˈtɪsəˌpeɪɾɪd <span class="weak">fɚ</span> ðeɪ bɔt <span class="weak">ðə</span> ˈbɪskɪt <span class="weak">frəm</span> <span class="weak">ðə</span> ˈstudənt <span class="weak">fɚ</span> ˌtwɛnti fɔr ˈθaʊzənd ˈdɑlɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæd‿ænˈtɪsəˌpeɪɾɪd 连读；ðə、tə、fɚ、frəm 弱读/弱化；hæd‿ænˈtɪsəˌpeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>more...than... 比较；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had anticipated 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>制造商不得不支付比预期更多的钱，因为他们以 24000 美元从那名学生手中买下了饼干。</p></div>
+    <div class="field words"><span>词</span><p>anticipate 预料； buy sth for... 以……买下； manufacturer 制造商；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>广告与心理: advertisement 广告； advertiser 广告商； subtle influence 微妙影响； human nature 人性； weakness 弱点；</p>
+      <p>免费与竞赛: free sample 免费样品； competition 竞赛； huge sums 巨额； prize 奖品； response 反响；</p>
+      <p>饼干与重量: biscuit 饼干； wheelbarrow 独轮车； lorry 卡车； crane 起重机； flour 面粉； ingredient 配料；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>avoid being influenced</code>: avoid + 动名词被动式。</p>
+      <p><code>Much as we may...</code>: 让步结构。</p>
+      <p><code>make it possible for sb to do</code>: it 作形式宾语。</p>
+      <p><code>which weighed...</code>: 定语从句说明重量。</p>
+      <p><code>so heavy that...</code>: 结果状语从句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时用于广告影响的普遍论述：<code>can avoid</code>, <code>exerts</code>, <code>offer</code>, <code>devise</code>。</p>
+      <p>现在完成时用于广告商已经形成的研究成果：<code>have made</code>, <code>have classified</code>。</p>
+      <p>一般过去时用于饼干竞赛：<code>asked</code>, <code>offered</code>, <code>arrived</code>, <code>weighed</code>。</p>
+      <p>过去完成时用于最终巨型饼干的制作和预期：<code>had been baked</code>, <code>had used</code>, <code>had anticipated</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>can avoid</code>, <code>can rarely go wrong</code> 表可能性。</p>
+      <p><code>will enable us to win</code> 表广告承诺的诱惑。</p>
+      <p><code>had to be used</code>, <code>had to pay</code> 表结果超出控制。</p>
+      <p>文章语气带讽刺：广告商利用“免费”和竞赛，最后自己付出高价。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>avoid being</code>、<code>made a</code>、<code>began arriving</code>、<code>arrived at</code>。</p>
+      <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>for</code>, <code>that</code> 要轻读，如 <code>hundreds of competitions</code>。</p>
+      <p>意群停顿: 第 20 句按配料清单分组读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 26 - Wanted: a Large Biscuit Tin</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../26－Wanted a Large Biscuit Tin.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.29,"end":19.62,"text":"No one can avoid being influenced by advertisements."},{"index":2,"start":19.62,"end":30.96,"text":"Much as we may pride ourselves on our good taste, we are no longer free to choose the things we want, for advertising exerts a subtle influence on us."},{"index":3,"start":30.96,"end":43.15,"text":"In their efforts to persuade us to buy this or that product, advertisers have made a close study of human nature and have classified all our little weaknesses."},{"index":4,"start":43.15,"end":48.96,"text":"Advertisers discovered years ago that all of us love to get something for nothing."},{"index":5,"start":48.96,"end":55.87,"text":"An advertisement which begins with the magic word FREE can rarely go wrong."},{"index":6,"start":55.87,"end":66.8,"text":"These days, advertisers not only offer free samples, but free cars, free houses, and free trips round the world as well."},{"index":7,"start":66.8,"end":72.73,"text":"They devise hundreds of competitions which will enable us to win huge sums of money."},{"index":8,"start":72.73,"end":81.12,"text":"Radio and television have made it possible for advertisers to capture the attention of millions of people in this way."},{"index":9,"start":81.12,"end":91.29,"text":"During a radio programme, a company of biscuit manufacturers once asked listeners to bake biscuits and send them to their factory."},{"index":10,"start":91.29,"end":97.09,"text":"They offered to pay Top0 a pound for the biggest biscuit baked by a listener."},{"index":11,"start":97.09,"end":100.86,"text":"The response to this competition was tremendous."},{"index":12,"start":100.86,"end":107.05,"text":"Before long, biscuits of all shapes and sizes began arriving at the factory."},{"index":13,"start":107.05,"end":110.82,"text":"One lady brought a biscuit on a wheelbarrow."},{"index":14,"start":110.82,"end":113.41,"text":"It weighed nearly 500 pounds."},{"index":15,"start":113.41,"end":120.71,"text":"A little later, a man came along with a biscuit which occupied the whole boot of his car."},{"index":16,"start":120.71,"end":124.3,"text":"All the biscuits that were sent were carefully weighed."},{"index":17,"start":124.3,"end":127.2,"text":"The largest was 713 pounds."},{"index":18,"start":127.2,"end":132.33,"text":"It seemed certain that this would win the prize."},{"index":19,"start":132.33,"end":144.44,"text":"But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."},{"index":20,"start":144.44,"end":158.26,"text":"It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."},{"index":21,"start":158.26,"end":163.97,"text":"It was so heavy that a crane had to be used to remove it from the lorry."},{"index":22,"start":163.97,"end":171.66,"text":"The manufacturers had to pay more money than they had anticipated, for they bought the biscuit from the student for $24,000."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

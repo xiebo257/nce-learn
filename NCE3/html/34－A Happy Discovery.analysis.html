@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 34 - A Happy Discovery</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 34 - A Happy Discovery</h1>
+      <p class="meta">Generated from 34－A Happy Discovery.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.53" data-end="21.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Antique <span class="linking">shops</span> <span class="linking">exert</span> <span class="weak">a</span> peculiar <span class="linking">fascination</span> <span class="linking">on</span> <span class="weak">a</span> great many people.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ænˈtik ʃɑps<span class="linking">‿</span>ɪɡˈzɝɾ<span class="linking">‿</span><span class="weak">ə</span> pɪˈkjuljɚ ˌfæsəˈneɪʃən<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt ˈmɛni ˈpipəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃɑps‿ɪɡˈzɝɾ‿ə、ˌfæsəˈneɪʃən‿ɑn‿ə 连读；ə 弱读/弱化；ʃɑps‿ɪɡˈzɝɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；exert...on... 表“对……产生……”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>古玩店对许多人有一种奇特的吸引力。</p></div>
+    <div class="field words"><span>词</span><p>antique shop 古玩店； exert 施加/产生； peculiar 奇特的； fascination 吸引力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="21.2" data-end="34.65">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> more expensive <span class="linking">kind</span> <span class="weak linking">of</span> antique shop where rare <span class="linking">objects</span> <span class="weak">are</span> beautifully <span class="linking">displayed</span> <span class="weak">in</span> glass cases <span class="weak">to</span> keep them free <span class="weak">from</span> <span class="linking">dust</span> <span class="weak linking">is</span> <span class="linking">usually</span> <span class="weak">a</span> forbidding place.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mɔr<span class="linking">‿</span>ɪkˈspɛnsɪv kaɪnd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ænˈtik ʃɑp wɛr rɛr<span class="linking">‿</span>ˈɑbdʒɪkts<span class="linking">‿</span><span class="weak">ɑr</span> ˈbjuɾəfəli dɪˈspleɪd<span class="linking">‿</span><span class="weak">ɪn</span> ɡlæs ˈkeɪsɪz <span class="weak">tə</span> kip ðɛm fri <span class="weak">frəm</span> dʌst<span class="linking">‿</span><span class="weak">ɪz</span> ˈjuʒuəli <span class="weak">ə</span> fɚˈbɪdɪŋ pleɪs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>mɔr‿ɪkˈspɛnsɪv、kaɪnd‿əv‿ænˈtik、rɛr‿ˈɑbdʒɪkts‿ɑr、dɪˈspleɪd‿ɪn、dʌst‿ɪz 连读；ðə、əv、ɑr、ɪn、tə、frəm 弱读/弱化；ˈbjuɾəfəli 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主语很长；where 引导定语从句修饰 shop；to keep... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；are displayed 为一般现在时被动。</p></div>
+    <div class="field cn"><span>中</span><p>那种更昂贵的古玩店，把稀有物品精美地陈列在玻璃柜中以免沾尘，通常是个令人望而却步的地方。</p></div>
+    <div class="field words"><span>词</span><p>rare object 稀有物品； display 陈列； glass case 玻璃柜； keep...free from dust 使……不沾灰； forbidding 令人生畏的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="34.65" data-end="41.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">But no one <span class="weak">has</span> <span class="weak">to</span> <span class="linking">muster</span> up courage <span class="weak">to</span> <span class="linking">enter</span> <span class="weak">a</span> less <span class="linking">pretentious</span> antique shop.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət noʊ wʌn hæz <span class="weak">tə</span> ˈmʌstɚ ʌp ˈkɝɪdʒ <span class="weak">tə</span> ˈɛntɚ <span class="weak">ə</span> lɛs prɪˈtɛnʃəs<span class="linking">‿</span>ænˈtik ʃɑp/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>prɪˈtɛnʃəs‿ænˈtik 连读；tə、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>has to do 表“不得不”；to enter... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>但进入一家不那么装腔作势的古玩店，就不必鼓起勇气。</p></div>
+    <div class="field words"><span>词</span><p>muster up courage 鼓起勇气； pretentious 装腔作势的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="41.64" data-end="55.1">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">There</span> <span class="weak linking">is</span> always hope <span class="weak linking">that</span> <span class="weak linking">in</span> <span class="weak">its</span> <span class="linking">labyrinth</span> <span class="weak">of</span> musty, dark, disordered <span class="linking">rooms</span> <span class="weak">a</span> real rarity will <span class="weak">be</span> <span class="linking">found</span> amongst <span class="weak">the</span> <span class="linking">piles</span> <span class="weak linking">of</span> assorted junk <span class="weak">that</span> litter <span class="weak">the</span> floors.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈɔlweɪz hoʊp ðæɾ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ɪts ˈlæbərɪnθ<span class="linking">‿</span><span class="weak">əv</span> ˈmʌsti dɑrk dɪsˈɔrdɚd rumz<span class="linking">‿</span><span class="weak">ə</span> ril ˈrɛrəɾi wɪl bi faʊnd<span class="linking">‿</span>əˈmʌŋst <span class="weak">ðə</span> paɪlz<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>əˈsɔrtɪd dʒʌŋk ðæt ˈlɪɾɚ <span class="weak">ðə</span> flɔrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɪz‿ˈɔlweɪz、ðæɾ‿ɪn‿ɪts、ˈlæbərɪnθ‿əv、rumz‿ə、faʊnd‿əˈmʌŋst 连读；ɪz、ɪn、əv、ə、ðə 弱读/弱化；ðæɾ‿ɪn‿ɪts、ˈrɛrəɾi、ˈlɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；that 引导同位语从句解释 hope；that litter... 修饰 junk。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will be found 表将来被动。</p></div>
+    <div class="field cn"><span>中</span><p>人们总抱有希望：在那迷宫般发霉、昏暗、杂乱的房间里，在散落满地的各类破烂堆中，会发现一件真正的珍品。</p></div>
+    <div class="field words"><span>词</span><p>labyrinth 迷宫； musty 发霉的； disordered 杂乱的； rarity 珍品； assorted 各种各样的； junk 破烂； litter 散落；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="55.1" data-end="59.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">No one <span class="linking">discovers</span> <span class="weak">a</span> rarity by chance.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/noʊ wʌn dɪˈskʌvɚz<span class="linking">‿</span><span class="weak">ə</span> ˈrɛrəɾi baɪ tʃæns/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪˈskʌvɚz‿ə 连读；ə 弱读/弱化；ˈrɛrəɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；by chance 作方式状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>没有人会偶然发现珍品。</p></div>
+    <div class="field words"><span>词</span><p>discover 发现； by chance 偶然；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="59.29" data-end="69.74">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">A</span> truly dedicated bargain hunter must <span class="weak">have</span> patience, <span class="weak linking">and</span> above all, <span class="weak">the</span> ability <span class="weak">to</span> recognize <span class="weak">the</span> <span class="linking">worth</span> <span class="weak">of</span> something when he <span class="linking">sees</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈtruli ˈdɛdəˌkeɪɾɪd ˈbɑrɡən ˈhʌntɚ mʌst hæv ˈpeɪʃəns<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈbʌv<span class="linking">‿</span>ɔl <span class="weak">ði</span> əˈbɪləɾi <span class="weak">tə</span> ˈrɛkəɡˌnaɪz <span class="weak">ðə</span> wɝθ<span class="linking">‿</span><span class="weak">əv</span> ˈsʌmθɪŋ wɛn hi siz<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈpeɪʃəns‿ən‿əˈbʌv‿ɔl、wɝθ‿əv、siz‿ɪt 连读；ə、ən、ði、tə、ðə、əv 弱读/弱化；ˈdɛdəˌkeɪɾɪd、əˈbɪləɾi 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>must have 后接两个宾语：patience 和 ability；to recognize... 修饰 ability；when 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；must 表必要条件。</p></div>
+    <div class="field cn"><span>中</span><p>一个真正专注的淘便宜货的人必须有耐心，最重要的是，要有一眼认出某物价值的能力。</p></div>
+    <div class="field words"><span>词</span><p>dedicated 专注的； bargain hunter 淘便宜货的人； patience 耐心； above all 最重要的是； recognize 认出； worth 价值；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="69.74" data-end="75.71">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">To</span> do this, he must <span class="weak">be</span> at <span class="linking">least</span> <span class="weak">as</span> knowledgeable <span class="weak">as</span> <span class="weak">the</span> dealer.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span> du ðɪs hi mʌst bi æt list<span class="linking">‿</span>æz ˈnɑlɪdʒəbəl<span class="linking">‿</span>æz <span class="weak">ðə</span> ˈdilɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>list‿æz、ˈnɑlɪdʒəbəl‿æz 连读；tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>To do this 作目的状语；as...as... 同级比较。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；must 表必要。</p></div>
+    <div class="field cn"><span>中</span><p>要做到这一点，他至少必须和古董商一样有学识。</p></div>
+    <div class="field words"><span>词</span><p>at least 至少； knowledgeable 有知识的； dealer 商人/古董商；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="75.71" data-end="85.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Like <span class="weak">a</span> scientist <span class="linking">bent</span> on <span class="linking">making</span> <span class="weak">a</span> discovery, he must cherish <span class="weak">the</span> hope <span class="weak linking">that</span> one day he will <span class="weak">be</span> amply rewarded.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/laɪk<span class="linking">‿</span><span class="weak">ə</span> ˈsaɪəntɪst bɛnt<span class="linking">‿</span>ɑn ˈmeɪkɪŋ<span class="linking">‿</span><span class="weak">ə</span> dɪˈskʌvəri hi mʌst ˈtʃɛrɪʃ <span class="weak">ðə</span> hoʊp ðæt wʌn deɪ hi wɪl bi ˈæmpli rɪˈwɔrdɪd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>laɪk‿ə、bɛnt‿ɑn、ˈmeɪkɪŋ‿ə 连读；ə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Like... 作比较状语；bent on... 为后置定语；that 引导同位语从句解释 hope。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will be rewarded 为一般将来时被动。</p></div>
+    <div class="field cn"><span>中</span><p>像一心想有所发现的科学家一样，他必须怀抱希望，相信有一天会得到丰厚回报。</p></div>
+    <div class="field words"><span>词</span><p>bent on 一心想要； cherish 怀有/珍视； amply 充分地/丰厚地； reward 回报；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="85.2" data-end="90.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">My</span> old friend, Frank <span class="linking">Halliday</span>, <span class="weak">is</span> just <span class="linking">such</span> <span class="weak">a</span> person.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/maɪ oʊld frɛnd fræŋk ˈhælɪdeɪ <span class="weak">ɪz</span> dʒʌst sʌtʃ<span class="linking">‿</span><span class="weak">ə</span> ˈpɝsən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sʌtʃ‿ə 连读；ɪz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Frank Halliday 为同位语；主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>我的老朋友弗兰克・哈利迪正是这样一个人。</p></div>
+    <div class="field words"><span>词</span><p>such a person 这样的人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="90.9" data-end="97.51">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">He <span class="weak linking">has</span> often described <span class="weak">to</span> me how he <span class="linking">picked</span> <span class="linking">up</span> <span class="weak">a</span> masterpiece <span class="weak linking">for</span> <span class="weak">a</span> mere £50.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi hæz<span class="linking">‿</span>ˈɔfən dɪˈskraɪbd <span class="weak">tə</span> mi haʊ hi pɪkt<span class="linking">‿</span>ʌp<span class="linking">‿</span><span class="weak">ə</span> ˈmæstɚˌpis <span class="weak">fɚ</span> <span class="weak">ə</span> mɪr ˈfɪfti paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæz‿ˈɔfən、pɪkt‿ʌp‿ə 连读；tə、ə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>has described 后接 how 宾语从句；pick up 表“偶然买到/淘到”。</p></div>
+    <div class="field tense"><span>时态</span><p>主句现在完成时；从句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他常向我讲述他如何只花 50 英镑就淘到一幅杰作。</p></div>
+    <div class="field words"><span>词</span><p>describe 描述； pick up 淘到/买到； masterpiece 杰作； mere 仅仅的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="97.51" data-end="104.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">One Saturday morning, Frank <span class="linking">visited</span> <span class="weak linking">an</span> antique <span class="linking">shop</span> <span class="weak">in</span> my neighbourhood.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn ˈsæɾɚdeɪ ˈmɔrnɪŋ fræŋk ˈvɪzɪɾɪd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ænˈtik ʃɑp<span class="linking">‿</span><span class="weak">ɪn</span> maɪ ˈneɪbɚˌhʊd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈvɪzɪɾɪd‿ən‿ænˈtik、ʃɑp‿ɪn 连读；ən、ɪn 弱读/弱化；ˈsæɾɚdeɪ、ˈvɪzɪɾɪd‿ən‿ænˈtik 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>One Saturday morning 作时间状语；in my neighbourhood 作地点状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>一个星期六上午，弗兰克去了我家附近的一家古玩店。</p></div>
+    <div class="field words"><span>词</span><p>neighbourhood 附近/街区； antique shop 古玩店；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="104.16" data-end="110.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">As</span> he <span class="weak">had</span> never <span class="weak">been</span> <span class="weak">there</span> before, he <span class="linking">found</span> <span class="weak">a</span> great deal <span class="weak">to</span> interest <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz hi hæd ˈnɛvɚ bɪn ðɛr bɪˈfɔr hi faʊnd<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt dil <span class="weak">tə</span> ˈɪntrəst <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>faʊnd‿ə 连读；ə、tə、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；to interest him 为不定式作后置定语，修饰 a great deal。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去完成时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>因为他以前从未去过那里，所以发现有许多东西使他感兴趣。</p></div>
+    <div class="field words"><span>词</span><p>a great deal 许多； interest 使感兴趣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="110.22" data-end="119.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> morning passed <span class="linking">rapidly</span> <span class="weak">and</span> Frank <span class="weak linking">was</span> about <span class="weak">to</span> leave when he <span class="linking">noticed</span> <span class="weak">a</span> large packing case <span class="linking">lying</span> on <span class="weak">the</span> floor.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈmɔrnɪŋ pæst ˈræpɪdli <span class="weak">ən</span> fræŋk <span class="weak">wəz</span><span class="linking">‿</span>əˈbaʊt <span class="weak">tə</span> liv wɛn hi ˈnoʊɾəst<span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ ˈpækɪŋ keɪs ˈlaɪɪŋ<span class="linking">‿</span>ɑn <span class="weak">ðə</span> flɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿əˈbaʊt、ˈnoʊɾəst‿ə、ˈlaɪɪŋ‿ɑn 连读；ðə、ən、wəz、tə、ə 弱读/弱化；ˈnoʊɾəst‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；be about to do...when... 表“正要……这时……”；lying... 为现在分词作宾补。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；was about to 表过去即将发生。</p></div>
+    <div class="field cn"><span>中</span><p>上午很快过去了，弗兰克正要离开时，注意到地板上有一只大包装箱。</p></div>
+    <div class="field words"><span>词</span><p>rapidly 迅速地； be about to do 正要做； packing case 包装箱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="119.25" data-end="126.29">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> dealer told <span class="weak">him</span> <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak">had</span> just come <span class="weak">in</span>, but <span class="weak">that</span> he <span class="weak">could</span> not <span class="weak">be</span> bothered <span class="weak">to</span> <span class="linking">open</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈdilɚ toʊld <span class="weak">hɪm</span> ðæɾ<span class="linking">‿</span>ɪt hæd dʒʌst kʌm<span class="linking">‿</span><span class="weak">ɪn</span> bət ðæt hi kʊd nɑt bi ˈbɑðɚd <span class="weak">tə</span> ˈoʊpən<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ɪt、kʌm‿ɪn、ˈoʊpən‿ɪt 连读；ðə、hɪm、ɪn、tə 弱读/弱化；ðæɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>told 后接两个 that 宾语从句；could not be bothered to do 表懒得做。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had come in 为过去完成时；could 表过去能力/意愿。</p></div>
+    <div class="field cn"><span>中</span><p>古董商告诉他箱子刚到，但他懒得打开。</p></div>
+    <div class="field words"><span>词</span><p>dealer 古董商； come in 到货； cannot be bothered to do 懒得做；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="126.29" data-end="132.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Frank begged <span class="weak">him</span> <span class="weak">to</span> do so <span class="weak">and</span> <span class="weak">the</span> dealer reluctantly <span class="linking">prised</span> <span class="weak linking">it</span> open.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/fræŋk bɛɡd <span class="weak">hɪm</span> <span class="weak">tə</span> du soʊ <span class="weak">ən</span> <span class="weak">ðə</span> ˈdilɚ rɪˈlʌktəntli praɪzd<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ˈoʊpən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>praɪzd‿ɪɾ‿ˈoʊpən 连读；hɪm、tə、ən、ðə 弱读/弱化；praɪzd‿ɪɾ‿ˈoʊpən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>beg sb to do；and 连接并列分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>弗兰克求他打开，于是古董商不情愿地把它撬开。</p></div>
+    <div class="field words"><span>词</span><p>beg sb to do 求某人做； reluctantly 不情愿地； prise open 撬开；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="132.14" data-end="134.85">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> contents <span class="weak">were</span> disappointing.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkɑntɛnts <span class="weak">wɚ</span> ˌdɪsəˈpɔɪntɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>里面的东西令人失望。</p></div>
+    <div class="field words"><span>词</span><p>contents 内容物； disappointing 令人失望的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="134.85" data-end="143.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Apart <span class="weak linking">from</span> <span class="weak linking">an</span> interesting-looking carved dagger, <span class="weak">the</span> box <span class="weak">was</span> <span class="linking">full</span> <span class="weak">of</span> crockery, <span class="linking">much</span> <span class="weak linking">of</span> <span class="weak">it</span> broken.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈpɑrt <span class="weak">frəm</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪntrəstɪŋ ˈlʊkɪŋ kɑrvd ˈdæɡɚ <span class="weak">ðə</span> bɑks <span class="weak">wəz</span> fʊl<span class="linking">‿</span><span class="weak">əv</span> ˈkrɑkəri mʌtʃ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪt ˈbroʊkən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>frəm‿ən‿ˈɪntrəstɪŋ、fʊl‿əv、mʌtʃ‿əv‿ɪt 连读；frəm、ən、ðə、wəz、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Apart from... 作排除状语；much of it broken 为独立主格结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>除了一把看起来有趣的雕刻匕首外，箱子里全是陶瓷器皿，其中很多已经破碎。</p></div>
+    <div class="field words"><span>词</span><p>apart from 除……之外； carved dagger 雕刻匕首； be full of 装满； crockery 陶瓷器皿；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="143.03" data-end="153.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Frank gently lifted <span class="weak">the</span> <span class="linking">crockery</span> <span class="linking">out</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">box</span> <span class="weak">and</span> suddenly <span class="linking">noticed</span> <span class="weak">a</span> miniature <span class="linking">painting</span> at <span class="weak">the</span> <span class="linking">bottom</span> <span class="weak">of</span> <span class="weak">the</span> packing case.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/fræŋk ˈdʒɛntli ˈlɪftɪd <span class="weak">ðə</span> ˈkrɑkəri aʊɾ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> bɑks<span class="linking">‿</span><span class="weak">ən</span> ˈsʌdənli ˈnoʊɾəst<span class="linking">‿</span><span class="weak">ə</span> ˈmɪniəˌtʃʊr ˈpeɪntɪŋ<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈbɑɾəm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈpækɪŋ keɪs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>aʊɾ‿əv、bɑks‿ən、ˈnoʊɾəst‿ə、ˈpeɪntɪŋ‿æt、ˈbɑɾəm‿əv 连读；ðə、əv、ən、ə 弱读/弱化；aʊɾ‿əv、ˈnoʊɾəst‿ə、ˈbɑɾəm‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>lifted 和 noticed 为并列谓语；at the bottom of... 作地点状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>弗兰克轻轻把陶瓷器皿从箱子里拿出来，突然注意到包装箱底部有一幅小画。</p></div>
+    <div class="field words"><span>词</span><p>gently 轻轻地； lift out 拿出； miniature painting 小型画； at the bottom of 在……底部；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="153.16" data-end="162.44">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak linking">As</span> <span class="weak">its</span> <span class="linking">composition</span> <span class="weak">and</span> line reminded <span class="weak linking">him</span> <span class="weak linking">of</span> <span class="weak linking">an</span> Italian painting he knew well, he decided <span class="weak">to</span> <span class="linking">buy</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz<span class="linking">‿</span>ɪts ˌkɑmpəˈzɪʃən<span class="linking">‿</span><span class="weak">ən</span> laɪn rɪˈmaɪndɪd <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪˈtæljən ˈpeɪntɪŋ hi nu wɛl hi dɪˈsaɪdɪd <span class="weak">tə</span> baɪ ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>æz‿ɪts、ˌkɑmpəˈzɪʃən‿ən、hɪm‿əv‿ən‿ɪˈtæljən 连读；ən、hɪm、əv、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；remind sb of sth；he knew well 为省略关系词的定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>因为这幅画的构图和线条使他想起一幅他很熟悉的意大利画，他决定买下它。</p></div>
+    <div class="field words"><span>词</span><p>composition 构图； line 线条； remind sb of 使某人想起；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="162.44" data-end="168.21">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="linking">Glancing</span> <span class="linking">at</span> <span class="weak">it</span> briefly, <span class="weak">the</span> dealer told <span class="weak">him</span> <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak">was</span> worth £50.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈɡlænsɪŋ<span class="linking">‿</span>æɾ<span class="linking">‿</span>ɪt ˈbrifli <span class="weak">ðə</span> ˈdilɚ toʊld <span class="weak">hɪm</span> ðæɾ<span class="linking">‿</span>ɪt <span class="weak">wəz</span> wɝθ ˈfɪfti paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈɡlænsɪŋ‿æɾ‿ɪt、ðæɾ‿ɪt 连读；ðə、hɪm、wəz 弱读/弱化；ˈɡlænsɪŋ‿æɾ‿ɪt、ðæɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Glancing... 为现在分词短语作时间/方式状语；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>古董商匆匆看了一眼，告诉他这幅画值 50 英镑。</p></div>
+    <div class="field words"><span>词</span><p>glance at 瞥一眼； briefly 短暂地； be worth 值……；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="168.21" data-end="175.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Frank <span class="weak">could</span> hardly conceal <span class="weak linking">his</span> excitement, <span class="weak">for</span> he knew <span class="weak">that</span> he <span class="weak">had</span> made <span class="weak">a</span> real discovery.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/fræŋk kʊd ˈhɑrdli kənˈsil <span class="weak">hɪz</span><span class="linking">‿</span>ɪkˈsaɪtmənt <span class="weak">fɚ</span> hi nu ðæt hi hæd meɪd<span class="linking">‿</span><span class="weak">ə</span> ril dɪˈskʌvəri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hɪz‿ɪkˈsaɪtmənt、meɪd‿ə 连读；hɪz、fɚ、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>could hardly 表“几乎不能”；for 引导原因分句；that 引导 knew 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had made 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>弗兰克几乎掩饰不住自己的兴奋，因为他知道自己有了真正的发现。</p></div>
+    <div class="field words"><span>词</span><p>conceal 掩饰； excitement 兴奋； make a discovery 有所发现；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="175.47" data-end="182.78">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">The</span> tiny painting proved <span class="weak">to</span> <span class="weak">be</span> <span class="weak linking">an</span> unknown masterpiece by Correggio <span class="weak">and</span> <span class="weak">was</span> worth <span class="linking">hundreds</span> <span class="weak">and</span> <span class="linking">thousands</span> <span class="weak">of</span> pounds.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈtaɪni ˈpeɪntɪŋ pruvd <span class="weak">tə</span> bi <span class="weak">ən</span><span class="linking">‿</span>ənˈnoʊn ˈmæstɚˌpis baɪ kɔˈrɛdʒoʊ <span class="weak">ən</span> <span class="weak">wəz</span> wɝθ ˈhʌndrədz<span class="linking">‿</span><span class="weak">ən</span> ˈθaʊzəndz<span class="linking">‿</span><span class="weak">əv</span> paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ən‿ənˈnoʊn、ˈhʌndrədz‿ən、ˈθaʊzəndz‿əv 连读；ðə、tə、ən、wəz、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>proved to be 和 was worth 为并列谓语；by Correggio 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这幅小画后来被证明是科雷乔一幅不为人知的杰作，价值数十万英镑。</p></div>
+    <div class="field words"><span>词</span><p>prove to be 证明是； unknown masterpiece 不为人知的杰作； be worth 值……； hundreds and thousands of pounds 数十万英镑；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>古玩与收藏: antique shop 古玩店； rare object 稀有物品； glass case 玻璃柜； rarity 珍品； junk 破烂； masterpiece 杰作； miniature painting 小画；</p>
+    <p>鉴赏能力: bargain hunter 淘便宜货的人； patience 耐心； knowledgeable 有知识的； worth 价值； composition 构图； line 线条；</p>
+    <p>动作短语: muster up courage 鼓起勇气； keep...free from dust 使……不沾灰； pick up 淘到； come in 到货； prise open 撬开； remind sb of 使想起； conceal excitement 掩饰兴奋；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>where rare objects are displayed...</code>: where 引导定语从句。</p>
+    <p><code>There is hope that...</code>: that 引导同位语从句解释 hope。</p>
+    <p><code>as...as...</code>: 同级比较，如 <code>as knowledgeable as the dealer</code>。</p>
+    <p><code>be about to do...when...</code>: 正要做某事，这时……。</p>
+    <p><code>much of it broken</code>: 独立主格结构。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般现在时用于开头说明古玩店和淘货者：<code>exert</code>, <code>is</code>, <code>discovers</code>, <code>must have</code>。</p>
+    <p>一般过去时用于弗兰克发现画作的过程：<code>visited</code>, <code>noticed</code>, <code>begged</code>, <code>decided</code>, <code>told</code>。</p>
+    <p>过去完成时用于先前经历：<code>had never been there</code>, <code>had just come in</code>, <code>had made a discovery</code>。</p>
+    <p>将来被动出现在设想中：<code>will be found</code>, <code>will be rewarded</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>has to</code>, <code>must have</code>, <code>must be</code> 表必要条件。</p>
+    <p><code>could not be bothered</code> 表古董商“不愿费心”。</p>
+    <p><code>could hardly conceal</code> 表弗兰克几乎无法掩饰兴奋。</p>
+    <p>课文语气从普通古玩店的混乱转向“幸福发现”的惊喜。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>exert a</code> -&gt; /ɪɡˈzɝt‿ə/；<code>muster up</code> -&gt; /ˈmʌstɚ‿ʌp/；<code>picked up</code> -&gt; /pɪkt‿ʌp/；<code>come in</code> -&gt; /kʌm‿ɪn/；<code>lifted out of</code> 连读。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>that</code>, <code>as</code> 多弱读，如 <code>piles of assorted junk</code>。</p>
+    <p>意群停顿: 第 4 句可按 <code>There is always hope / that in its labyrinth... / a real rarity will be found...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 34 - A Happy Discovery</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../34－A Happy Discovery.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.53,"end":21.2,"text":"Antique shops exert a peculiar fascination on a great many people."},{"index":2,"start":21.2,"end":34.65,"text":"The more expensive kind of antique shop where rare objects are beautifully displayed in glass cases to keep them free from dust is usually a forbidding place."},{"index":3,"start":34.65,"end":41.64,"text":"But no one has to muster up courage to enter a less pretentious antique shop."},{"index":4,"start":41.64,"end":55.1,"text":"There is always hope that in its labyrinth of musty, dark, disordered rooms a real rarity will be found amongst the piles of assorted junk that litter the floors."},{"index":5,"start":55.1,"end":59.29,"text":"No one discovers a rarity by chance."},{"index":6,"start":59.29,"end":69.74,"text":"A truly dedicated bargain hunter must have patience, and above all, the ability to recognize the worth of something when he sees it."},{"index":7,"start":69.74,"end":75.71,"text":"To do this, he must be at least as knowledgeable as the dealer."},{"index":8,"start":75.71,"end":85.2,"text":"Like a scientist bent on making a discovery, he must cherish the hope that one day he will be amply rewarded."},{"index":9,"start":85.2,"end":90.9,"text":"My old friend, Frank Halliday, is just such a person."},{"index":10,"start":90.9,"end":97.51,"text":"He has often described to me how he picked up a masterpiece for a mere £50."},{"index":11,"start":97.51,"end":104.16,"text":"One Saturday morning, Frank visited an antique shop in my neighbourhood."},{"index":12,"start":104.16,"end":110.22,"text":"As he had never been there before, he found a great deal to interest him."},{"index":13,"start":110.22,"end":119.25,"text":"The morning passed rapidly and Frank was about to leave when he noticed a large packing case lying on the floor."},{"index":14,"start":119.25,"end":126.29,"text":"The dealer told him that it had just come in, but that he could not be bothered to open it."},{"index":15,"start":126.29,"end":132.14,"text":"Frank begged him to do so and the dealer reluctantly prised it open."},{"index":16,"start":132.14,"end":134.85,"text":"The contents were disappointing."},{"index":17,"start":134.85,"end":143.03,"text":"Apart from an interesting-looking carved dagger, the box was full of crockery, much of it broken."},{"index":18,"start":143.03,"end":153.16,"text":"Frank gently lifted the crockery out of the box and suddenly noticed a miniature painting at the bottom of the packing case."},{"index":19,"start":153.16,"end":162.44,"text":"As its composition and line reminded him of an Italian painting he knew well, he decided to buy it."},{"index":20,"start":162.44,"end":168.21,"text":"Glancing at it briefly, the dealer told him that it was worth £50."},{"index":21,"start":168.21,"end":175.47,"text":"Frank could hardly conceal his excitement, for he knew that he had made a real discovery."},{"index":22,"start":175.47,"end":182.78,"text":"The tiny painting proved to be an unknown masterpiece by Correggio and was worth hundreds and thousands of pounds."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

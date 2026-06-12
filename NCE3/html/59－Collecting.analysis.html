@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 59 - Collecting</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 59 - Collecting</h1>
+      <p class="meta">Generated from 59－Collecting.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="17.12" data-end="22.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">People tend <span class="weak">to</span> amass possessions, sometimes without <span class="weak linking">being</span> aware <span class="weak">of</span> doing so.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈpipəl tɛnd <span class="weak">tə</span><span class="linking">‿</span>əˈmæs pəˈzɛʃənz ˈsʌmtaɪmz wɪˈðaʊt ˈbiɪŋ<span class="linking">‿</span>əˈwer<span class="linking">‿</span><span class="weak">əv</span> ˈduɪŋ soʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿əˈmæs、ˈbiɪŋ‿əˈwer‿əv 连读；tə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>tend to do 表倾向；without being aware of doing so 为介词短语作状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>人们往往会积聚财物，有时自己并没有意识到。</p></div>
+    <div class="field words"><span>词</span><p>tend to 倾向于； amass 积聚； possession 财物； be aware of 意识到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="22.96" data-end="30.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Indeed they <span class="weak">can</span> <span class="weak">have</span> <span class="weak">a</span> delightful surprise when they find <span class="linking">something</span> useful which they did not know <span class="linking">they</span> owned.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪnˈdid ðeɪ <span class="weak">kən</span> hæv<span class="linking">‿</span><span class="weak">ə</span> dɪˈlaɪtfəl sɚˈpraɪz wɛn ðeɪ faɪnd ˈsʌmθɪŋ ˈjusfəl wɪtʃ ðeɪ dɪd nɑt noʊ ðeɪ oʊnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæv‿ə 连读；kən、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>when 引导时间状语从句；which 引导定语从句，修饰 something useful。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；did not know/owned 表发现前的过去状态。</p></div>
+    <div class="field cn"><span>中</span><p>事实上，当他们发现某件有用的东西，而此前并不知道自己拥有它时，会感到惊喜。</p></div>
+    <div class="field words"><span>词</span><p>indeed 的确； delightful surprise 令人愉快的惊喜； useful 有用的； own 拥有；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.68" data-end="38.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Those who never <span class="weak">have</span> <span class="weak">to</span> move house become indiscriminate <span class="linking">collectors</span> <span class="weak">of</span> what <span class="weak linking">can</span> only <span class="weak">be</span> <span class="linking">described</span> <span class="weak">as</span> clutter.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊz hu ˈnɛvɚ hæf <span class="weak">tə</span> muv haʊs bɪˈkʌm<span class="linking">‿</span>ˌɪndɪˈskrɪmənət kəˈlɛktɚz<span class="linking">‿</span><span class="weak">əv</span> wʌt <span class="weak">kən</span><span class="linking">‿</span>ˈoʊnli bi dɪˈskraɪbd<span class="linking">‿</span>æz ˈklʌɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkʌm‿ˌɪndɪˈskrɪmənət、kəˈlɛktɚz‿əv、kən‿ˈoʊnli、dɪˈskraɪbd‿æz 连读；tə、əv、kən 弱读/弱化；ˈklʌɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Those who... 为主语；who 引导定语从句；what 引导介词 of 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can be described 为情态被动。</p></div>
+    <div class="field cn"><span>中</span><p>那些从不需要搬家的人会变成不加选择的收藏者，收藏的东西只能称为杂物。</p></div>
+    <div class="field words"><span>词</span><p>move house 搬家； indiscriminate 不加选择的； collector 收藏者； clutter 杂物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="38.27" data-end="48.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">They leave <span class="linking">unwanted</span> <span class="linking">objects</span> <span class="weak">in</span> drawers, <span class="linking">cupboards</span> <span class="weak linking">and</span> attics <span class="weak">for</span> <span class="linking">years</span>, <span class="weak">in</span> <span class="weak">the</span> belief <span class="weak">that</span> they <span class="linking">may</span> one day need just those very things.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðeɪ liv<span class="linking">‿</span>ənˈwɑntɪd<span class="linking">‿</span>ˈɑbdʒɛkts<span class="linking">‿</span><span class="weak">ɪn</span> drɔrz ˈkʌbɚdz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈæɾɪks <span class="weak">fɚ</span> jɪrz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> bɪˈlif ðæt ðeɪ meɪ wʌn deɪ nid dʒʌst ðoʊz ˈvɛri θɪŋz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>liv‿ənˈwɑntɪd‿ˈɑbdʒɛkts‿ɪn、ˈkʌbɚdz‿ən‿ˈæɾɪks、jɪrz‿ɪn 连读；ɪn、ən、fɚ、ðə 弱读/弱化；ˈkʌbɚdz‿ən‿ˈæɾɪks 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>in the belief that... 作原因/心理状语；that 引导同位语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；may 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>他们把不需要的东西多年放在抽屉、橱柜和阁楼里，相信有一天也许正好会需要那些东西。</p></div>
+    <div class="field words"><span>词</span><p>unwanted 不需要的； drawer 抽屉； cupboard 橱柜； attic 阁楼； in the belief that 相信；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="48.4" data-end="63.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">As</span> they <span class="linking">grow</span> old, people also accumulate belongings <span class="weak">for</span> two other reasons, <span class="linking">lack</span> <span class="weak">of</span> <span class="linking">physical</span> <span class="weak">and</span> <span class="linking">mental</span> energy, <span class="linking">both</span> <span class="weak">of</span> <span class="linking">which</span> <span class="weak">are</span> <span class="linking">essential</span> <span class="weak">in</span> <span class="linking">turning</span> <span class="linking">out</span> <span class="weak">and</span> <span class="linking">throwing</span> <span class="linking">away</span>, <span class="weak">and</span> sentiment.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz ðeɪ ɡroʊ<span class="linking">‿</span>oʊld ˈpipəl<span class="linking">‿</span>ˈɔlsoʊ<span class="linking">‿</span>əˈkjumjəˌleɪt bɪˈlɔŋɪŋz <span class="weak">fɚ</span> <span class="weak">tu</span> ˈʌðɚ ˈrizənz læk<span class="linking">‿</span><span class="weak">əv</span> ˈfɪzɪkəl<span class="linking">‿</span><span class="weak">ən</span> ˈmɛntəl<span class="linking">‿</span>ˈɛnɚdʒi boʊθ<span class="linking">‿</span><span class="weak">əv</span> wɪtʃ<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ɪˈsɛnʃəl<span class="linking">‿</span><span class="weak">ɪn</span> ˈtɝnɪŋ<span class="linking">‿</span>aʊɾ<span class="linking">‿</span><span class="weak">ən</span> ˈθroʊɪŋ<span class="linking">‿</span>əˈweɪ<span class="linking">‿</span><span class="weak">ən</span> ˈsɛntəmənt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡroʊ‿oʊld、ˈpipəl‿ˈɔlsoʊ‿əˈkjumjəˌleɪt、læk‿əv、ˈfɪzɪkəl‿ən、ˈmɛntəl‿ˈɛnɚdʒi 连读；fɚ、tu、əv、ən、ɑr、ɪn 弱读/弱化；ˈtɝnɪŋ‿aʊɾ‿ən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导时间状语从句；lack... 和 sentiment 解释 two other reasons；both of which 引导非限制性定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>随着年龄增长，人们还会因另外两个原因积累物品：缺乏清理和丢弃所必需的体力与精力，以及怀旧情感。</p></div>
+    <div class="field words"><span>词</span><p>accumulate 积累； belongings 所有物； physical and mental energy 体力和精力； essential 必不可少的； turn out 清理； sentiment 情感/怀旧；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="63.55" data-end="76.11">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="linking">Things</span> owned <span class="weak linking">for</span> <span class="weak">a</span> long time <span class="weak">are</span> <span class="linking">full</span> <span class="weak linking">of</span> associations with <span class="weak">the</span> past, perhaps with relatives who <span class="weak">are</span> <span class="linking">dead</span>, <span class="weak">and</span> so they <span class="linking">gradually</span> acquire <span class="weak">a</span> value beyond their true worth.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/θɪŋz<span class="linking">‿</span>oʊnd <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> lɔŋ taɪm<span class="linking">‿</span><span class="weak">ɑr</span> fʊl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>əˌsoʊsiˈeɪʃənz wɪð <span class="weak">ðə</span> pæst pɚˈhæps wɪð ˈrɛləɾɪvz hu<span class="linking">‿</span><span class="weak">ɑr</span> dɛd<span class="linking">‿</span><span class="weak">ən</span> soʊ ðeɪ ˈɡrædʒuəli<span class="linking">‿</span>əˈkwaɪɚ<span class="linking">‿</span><span class="weak">ə</span> ˈvælju bɪˈjɑnd ðer tru wɝθ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>θɪŋz‿oʊnd、fɚ‿ə、taɪm‿ɑr、fʊl‿əv‿əˌsoʊsiˈeɪʃənz、hu‿ɑr 连读；fɚ、ə、ɑr、əv、ðə、ən 弱读/弱化；ˈrɛləɾɪvz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>owned... 为过去分词短语作定语；who 引导定语从句；and so 连接结果分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>长期拥有的东西充满了与过去的联系，也许还与已故亲人有关，因此它们逐渐获得了超出真实价值的价值。</p></div>
+    <div class="field words"><span>词</span><p>association 联系/联想； relative 亲人； acquire 获得； beyond true worth 超出真实价值；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="76.11" data-end="81.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Some <span class="linking">things</span> <span class="weak">are</span> collected <span class="linking">deliberately</span> <span class="weak">in</span> <span class="weak">the</span> home <span class="weak linking">in</span> <span class="weak linking">an</span> attempt <span class="weak">to</span> avoid waste.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌm θɪŋz<span class="linking">‿</span><span class="weak">ɑr</span> kəˈlɛktɪd dɪˈlɪbərətli<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> hoʊm<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈtɛmpt <span class="weak">tə</span><span class="linking">‿</span>əˈvɔɪd weɪst/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>θɪŋz‿ɑr、dɪˈlɪbərətli‿ɪn、hoʊm‿ɪn‿ən‿əˈtɛmpt、tə‿əˈvɔɪd 连读；ɑr、ɪn、ðə、ən、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>被动语态；in an attempt to do 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时被动语态。</p></div>
+    <div class="field cn"><span>中</span><p>有些东西被有意收存在家中，是为了避免浪费。</p></div>
+    <div class="field words"><span>词</span><p>deliberately 故意地； in an attempt to 为了尝试/为了； avoid waste 避免浪费；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="81.49" data-end="91.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Among these I <span class="weak">would</span> list <span class="linking">string</span> <span class="weak">and</span> brown paper, kept by thrifty people <span class="linking">when</span> <span class="weak">a</span> parcel <span class="weak">has</span> <span class="weak linking">been</span> opened, <span class="weak">to</span> save buying these two requisites.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈmʌŋ ðiz aɪ wʊd lɪst strɪŋ<span class="linking">‿</span><span class="weak">ən</span> braʊn ˈpeɪpɚ kɛpt baɪ ˈθrɪfti ˈpipəl wɛn<span class="linking">‿</span><span class="weak">ə</span> ˈpɑrsəl <span class="weak">həz</span> bɪn<span class="linking">‿</span>ˈoʊpənd <span class="weak">tə</span> seɪv ˈbaɪɪŋ ðiz <span class="weak">tu</span> ˈrɛkwəzəts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>strɪŋ‿ən、wɛn‿ə、bɪn‿ˈoʊpənd 连读；ən、ə、həz、tə、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Among these 置首；kept by... 为过去分词短语作定语；when 引导时间状语从句；to save buying... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>would list 表委婉列举；has been opened 为现在完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>在这些东西中，我会列出绳子和牛皮纸，节俭的人在包裹打开后会保存它们，以免再买这两种必需品。</p></div>
+    <div class="field words"><span>词</span><p>string 绳子； brown paper 牛皮纸； thrifty 节俭的； parcel 包裹； requisite 必需品；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="91.45" data-end="95.57">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Collecting <span class="linking">small</span> items <span class="weak linking">can</span> easily become <span class="weak">a</span> mania.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kəˈlɛktɪŋ smɔl ˈaɪɾəmz <span class="weak">kən</span><span class="linking">‿</span>ˈizəli bɪˈkʌm<span class="linking">‿</span><span class="weak">ə</span> ˈmeɪniə/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kən‿ˈizəli、bɪˈkʌm‿ə 连读；kən、ə 弱读/弱化；ˈaɪɾəmz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>动名词短语作主语；can become 表可能。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；can 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>收集小物件很容易变成一种狂热。</p></div>
+    <div class="field words"><span>词</span><p>item 物品； mania 狂热；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="95.57" data-end="103.88">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">I know someone who always cuts <span class="linking">sketches</span> out <span class="weak">from</span> <span class="linking">newspapers</span> <span class="weak">of</span> model clothes <span class="weak">that</span> she <span class="weak">would</span> like <span class="weak">to</span> <span class="linking">buy</span> if she <span class="weak">had</span> <span class="weak">the</span> money.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aɪ noʊ ˈsʌmwʌn hu ˈɔlweɪz kʌts ˈskɛtʃɪz<span class="linking">‿</span>aʊt <span class="weak">frəm</span> ˈnuzˌpeɪpɚz<span class="linking">‿</span><span class="weak">əv</span> ˈmɑdəl kloʊðz ðæt ʃi wʊd laɪk <span class="weak">tə</span> baɪ<span class="linking">‿</span>ɪf ʃi hæd <span class="weak">ðə</span> ˈmʌni/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈskɛtʃɪz‿aʊt、ˈnuzˌpeɪpɚz‿əv、baɪ‿ɪf 连读；frəm、əv、tə、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句；that 引导定语从句修饰 clothes；if 引导虚拟条件句。</p></div>
+    <div class="field tense"><span>时态</span><p>know/cuts 为一般现在时；would like/had 为虚拟语气。</p></div>
+    <div class="field cn"><span>中</span><p>我认识一个人，她总是从报纸上剪下时装草图，如果有钱的话她想买这些衣服。</p></div>
+    <div class="field words"><span>词</span><p>sketch 草图； cut out 剪下； model clothes 时装；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="103.88" data-end="117.24">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">As</span> she <span class="weak">is</span> not rich, <span class="weak">the</span> chances <span class="weak">that</span> she <span class="linking">will</span> ever <span class="weak">be</span> able <span class="weak">to</span> afford such <span class="linking">purchases</span> <span class="weak">are</span> remote; but she <span class="weak">is</span> never sufficiently strong-minded <span class="weak">to</span> <span class="weak">be</span> able <span class="weak">to</span> stop <span class="weak">the</span> practice.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz ʃi<span class="linking">‿</span><span class="weak">ɪz</span> nɑt rɪtʃ <span class="weak">ðə</span> ˈtʃænsɪz ðæt ʃi wɪl<span class="linking">‿</span>ˈɛvɚ bi<span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span><span class="linking">‿</span>əˈfɔrd sʌtʃ ˈpɝtʃəsɪz<span class="linking">‿</span><span class="weak">ɑr</span> rɪˈmoʊt bət ʃi<span class="linking">‿</span><span class="weak">ɪz</span> ˈnɛvɚ səˈfɪʃəntli strɔŋ ˈmaɪndɪd <span class="weak">tə</span> bi ˈeɪbəl <span class="weak">tə</span> stɑp <span class="weak">ðə</span> ˈpræktəs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃi‿ɪz、wɪl‿ˈɛvɚ、bi‿ˈeɪbəl、tə‿əˈfɔrd、ˈpɝtʃəsɪz‿ɑr 连读；ɪz、ðə、tə、ɑr 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导原因状语从句；that 引导 chances 的同位语从句；but 连接转折；sufficiently...to do 结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；will be able to 表未来可能。</p></div>
+    <div class="field cn"><span>中</span><p>由于她并不富有，她将来能买得起这些东西的可能性很小；但她又从来没有足够坚定的意志去停止这种做法。</p></div>
+    <div class="field words"><span>词</span><p>afford 买得起； purchase 购买物； remote 可能性小的； sufficiently 足够地； strong-minded 意志坚定的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="117.24" data-end="129.31">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="weak">a</span> harmless habit, <span class="linking">but</span> <span class="weak">it</span> <span class="linking">litters</span> up <span class="weak">her</span> desk <span class="weak">to</span> <span class="linking">such</span> <span class="weak linking">an</span> extent <span class="weak linking">that</span> every time she <span class="linking">opens</span> <span class="weak">it</span>, loose <span class="linking">bits</span> <span class="weak">of</span> paper <span class="linking">fall</span> <span class="linking">out</span> <span class="weak linking">in</span> every direction.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪɾɪz<span class="linking">‿</span><span class="weak">ə</span> ˈhɑrmləs ˈhæbɪt bəɾ<span class="linking">‿</span>ɪt ˈlɪɾɚz<span class="linking">‿</span>ʌp <span class="weak">hɚ</span> dɛsk <span class="weak">tə</span> sʌtʃ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪkˈstɛnt ðæɾ<span class="linking">‿</span>ˈɛvri taɪm ʃi ˈoʊpənz<span class="linking">‿</span>ɪt lus bɪts<span class="linking">‿</span><span class="weak">əv</span> ˈpeɪpɚ fɔl<span class="linking">‿</span>aʊɾ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ˈɛvri dɪˈrɛkʃən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪɾɪz‿ə、bəɾ‿ɪt、ˈlɪɾɚz‿ʌp、sʌtʃ‿ən‿ɪkˈstɛnt、ðæɾ‿ˈɛvri 连读；ə、hɚ、tə、ən、əv、ɪn 弱读/弱化；ɪɾɪz‿ə、bəɾ‿ɪt、ˈlɪɾɚz‿ʌp、ðæɾ‿ˈɛvri 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；such...that 引导结果状语从句；every time 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这是个无害的习惯，但它把她的书桌弄得乱到这种程度：每次她打开书桌，散纸片都会四处掉落。</p></div>
+    <div class="field words"><span>词</span><p>harmless 无害的； litter up 弄乱； to such an extent that 到如此程度以至于； loose bits of paper 散纸片； in every direction 四面八方；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="129.31" data-end="135.15">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">Collecting</span> <span class="weak linking">as</span> <span class="weak">a</span> serious <span class="linking">hobby</span> <span class="weak">is</span> quite <span class="linking">different</span> <span class="weak">and</span> <span class="weak">has</span> <span class="linking">many</span> advantages.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kəˈlɛktɪŋ<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ˈsɪriəs ˈhɑbi<span class="linking">‿</span><span class="weak">ɪz</span> kwaɪt ˈdɪfrənt<span class="linking">‿</span><span class="weak">ən</span> hæz ˈmɛni ədˈvæntɪdʒɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kəˈlɛktɪŋ‿æz‿ə、ˈhɑbi‿ɪz、ˈdɪfrənt‿ən 连读；ə、ɪz、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>动名词 Collecting 作主语；is 和 has 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>把收藏作为一项严肃爱好则完全不同，并且有许多好处。</p></div>
+    <div class="field words"><span>词</span><p>serious hobby 严肃爱好； advantage 好处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="135.15" data-end="142.72">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> provides relaxation <span class="weak">for</span> leisure <span class="linking">hours</span>, <span class="weak">as</span> just <span class="linking">looking</span> <span class="linking">at</span> one's <span class="linking">treasures</span> <span class="weak linking">is</span> <span class="linking">always</span> <span class="weak">a</span> joy.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt prəˈvaɪdz ˌrilækˈseɪʃən <span class="weak">fɚ</span> ˈliʒɚ aʊɚz<span class="linking">‿</span>æz dʒʌst ˈlʊkɪŋ<span class="linking">‿</span>æt wʌnz ˈtrɛʒɚz<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈɔlweɪz<span class="linking">‿</span><span class="weak">ə</span> dʒɔɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>aʊɚz‿æz、ˈlʊkɪŋ‿æt、ˈtrɛʒɚz‿ɪz‿ˈɔlweɪz‿ə 连读；fɚ、ɪz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>as 引导原因状语从句；looking at... 动名词短语作从句主语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它为闲暇时光提供放松，因为仅仅看着自己的珍藏就是一种乐趣。</p></div>
+    <div class="field words"><span>词</span><p>relaxation 放松； leisure hours 闲暇时间； treasure 珍品； joy 乐趣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="142.72" data-end="148.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">One does not <span class="weak">have</span> <span class="weak">to</span> go outside <span class="weak linking">for</span> amusement, since <span class="weak">the</span> <span class="linking">collection</span> <span class="weak">is</span> <span class="linking">housed</span> at home.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn dʌz nɑt hæf <span class="weak">tə</span> ɡoʊ ˌaʊtˈsaɪd <span class="weak">fɚ</span><span class="linking">‿</span>əˈmjuzmənt sɪns <span class="weak">ðə</span> kəˈlɛkʃən<span class="linking">‿</span><span class="weak">ɪz</span> haʊzd<span class="linking">‿</span>æt hoʊm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ‿əˈmjuzmənt、kəˈlɛkʃən‿ɪz、haʊzd‿æt 连读；tə、fɚ、ðə、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>since 引导原因状语从句；is housed 为被动语态。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>人不必外出寻乐，因为藏品就收藏在家里。</p></div>
+    <div class="field words"><span>词</span><p>amusement 娱乐； collection 藏品； be housed 存放；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="148.8" data-end="173.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="linking">Whatever</span> <span class="weak">it</span> <span class="linking">consists</span> <span class="weak">of</span>, stamps, records, <span class="linking">first</span> <span class="linking">editions</span> <span class="weak">of</span> books, china, <span class="linking">glass</span>, antique furniture, pictures, model cars, stuffed birds, <span class="linking">toy</span> animals, <span class="weak">there</span> <span class="weak linking">is</span> always something <span class="weak">to</span> do <span class="weak">in</span> connection <span class="linking">with</span> <span class="weak">it</span>, <span class="weak">from</span> finding <span class="weak">the</span> right place <span class="weak">for</span> <span class="weak">the</span> <span class="linking">latest</span> addition, <span class="weak">to</span> verifying <span class="linking">facts</span> <span class="weak">in</span> reference books.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌɾˈɛvɚ<span class="linking">‿</span>ɪt kənˈsɪsts<span class="linking">‿</span><span class="weak">əv</span> stæmps ˈrɛkɚdz fɝst<span class="linking">‿</span>ɪˈdɪʃənz<span class="linking">‿</span><span class="weak">əv</span> bʊks ˈtʃaɪnə ɡlæs<span class="linking">‿</span>ænˈtik ˈfɝnɪtʃɚ ˈpɪktʃɚz ˈmɑdəl kɑrz stʌft bɝdz tɔɪ ˈænəməlz ðer<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈɔlweɪz ˈsʌmθɪŋ <span class="weak">tə</span> du<span class="linking">‿</span><span class="weak">ɪn</span> kəˈnɛkʃən wɪð<span class="linking">‿</span>ɪt <span class="weak">frəm</span> ˈfaɪndɪŋ <span class="weak">ðə</span> raɪt pleɪs <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈleɪɾəst<span class="linking">‿</span>əˈdɪʃən <span class="weak">tə</span> ˈvɛrəˌfaɪɪŋ fækts<span class="linking">‿</span><span class="weak">ɪn</span> ˈrɛfrəns bʊks/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌɾˈɛvɚ‿ɪt、kənˈsɪsts‿əv、fɝst‿ɪˈdɪʃənz‿əv、ɡlæs‿ænˈtik、ðer‿ɪz‿ˈɔlweɪz 连读；əv、ɪz、tə、ɪn、frəm、ðə 弱读/弱化；wʌɾˈɛvɚ‿ɪt、ˈleɪɾəst‿əˈdɪʃən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Whatever 引导让步状语从句；there be 句型；from...to... 表范围。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>无论藏品由什么组成，邮票、唱片、初版本书籍、瓷器、玻璃器皿、古董家具、图画、模型车、填充鸟、玩具动物，总有与之相关的事情可做，从为最新藏品找合适位置，到在参考书中核实事实。</p></div>
+    <div class="field words"><span>词</span><p>consist of 由……组成； first edition 初版； antique furniture 古董家具； stuffed bird 填充鸟； in connection with 与……有关； latest addition 最新增添物； verify 核实； reference book 参考书；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="173.67" data-end="182.06">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">This <span class="linking">hobby</span> <span class="linking">educates</span> one <span class="linking">not</span> <span class="linking">only</span> <span class="weak">in</span> <span class="weak">the</span> chosen subject, <span class="linking">but</span> also <span class="weak">in</span> general matters which <span class="weak">have</span> some <span class="linking">bearing</span> <span class="linking">on</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɪs ˈhɑbi ˈɛdʒəˌkeɪts wʌn nɑɾ<span class="linking">‿</span>ˈoʊnli<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈtʃoʊzən ˈsʌbdʒɪkt bəɾ<span class="linking">‿</span>ˈɔlsoʊ<span class="linking">‿</span><span class="weak">ɪn</span> ˈdʒɛnərəl ˈmæɾɚz wɪtʃ hæv səm ˈberɪŋ<span class="linking">‿</span>ɑn<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɑɾ‿ˈoʊnli‿ɪn、bəɾ‿ˈɔlsoʊ‿ɪn、ˈberɪŋ‿ɑn‿ɪt 连读；ɪn、ðə 弱读/弱化；nɑɾ‿ˈoʊnli‿ɪn、bəɾ‿ˈɔlsoʊ‿ɪn、ˈmæɾɚz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>not only...but also... 连接两个介词短语；which 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这种爱好不仅使人在所选主题方面受到教育，也使人在与之有关的一般事项上增长知识。</p></div>
+    <div class="field words"><span>词</span><p>educate 教育/增长知识； chosen subject 所选主题； general matters 一般事项； have bearing on 与……有关；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="182.06" data-end="184.94">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">There</span> <span class="weak">are</span> also other benefits.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðer<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ˈɔlsoʊ ˈʌðɚ ˈbɛnəfɪts/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðer‿ɑr‿ˈɔlsoʊ 连读；ɑr 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>there be 句型。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>还有其他好处。</p></div>
+    <div class="field words"><span>词</span><p>benefit 好处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="184.94" data-end="194.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">One wants <span class="weak">to</span> meet like-minded collectors, <span class="weak">to</span> <span class="linking">get</span> advice, <span class="weak">to</span> compare notes, <span class="weak">to</span> exchange articles, <span class="weak">to</span> <span class="linking">show</span> off <span class="weak">the</span> latest find.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn wɑnts <span class="weak">tə</span> mit laɪk ˈmaɪndɪd kəˈlɛktɚz <span class="weak">tə</span> ɡɛd<span class="linking">‿</span>ədˈvaɪs <span class="weak">tə</span> kəmˈper noʊts <span class="weak">tə</span><span class="linking">‿</span>ɪksˈtʃeɪndʒ<span class="linking">‿</span>ˈɑrtɪkəlz <span class="weak">tə</span> ʃoʊ<span class="linking">‿</span>ɔf <span class="weak">ðə</span> ˈleɪɾəst faɪnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɡɛd‿ədˈvaɪs、tə‿ɪksˈtʃeɪndʒ‿ˈɑrtɪkəlz、ʃoʊ‿ɔf 连读；tə、ðə 弱读/弱化；ˈleɪɾəst 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>wants 后接多个并列不定式，列举目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>人们想结识志趣相投的收藏者，获得建议，交流心得，交换物品，炫耀最新发现。</p></div>
+    <div class="field words"><span>词</span><p>like-minded 志趣相投的； compare notes 交流意见； exchange articles 交换物品； show off 炫耀； latest find 最新发现；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="194.33" data-end="197.07">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">So one's circle <span class="weak">of</span> friends grows.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/soʊ wʌnz ˈsɝkəl<span class="linking">‿</span><span class="weak">əv</span> frɛndz ɡroʊz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsɝkəl‿əv 连读；əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so 表结果；主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>于是一个人的朋友圈扩大了。</p></div>
+    <div class="field words"><span>词</span><p>circle of friends 朋友圈； grow 增长/扩大；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="197.07" data-end="210.33">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Soon <span class="weak">the</span> hobby leads <span class="weak">to</span> travel, perhaps <span class="weak">to</span> <span class="weak">a</span> <span class="linking">meeting</span> <span class="weak linking">in</span> another town, <span class="linking">possibly</span> <span class="weak">a</span> <span class="linking">trip</span> <span class="linking">abroad</span> <span class="weak">in</span> <span class="linking">search</span> <span class="weak linking">of</span> <span class="weak">a</span> rare specimen, <span class="weak">for</span> <span class="linking">collectors</span> <span class="weak">are</span> not confined <span class="weak">to</span> <span class="linking">any</span> one country.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sun <span class="weak">ðə</span> ˈhɑbi lidz <span class="weak">tə</span> ˈtrævəl pɚˈhæps <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> ˈmiɾɪŋ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>əˈnʌðɚ taʊn ˈpɑsəbli<span class="linking">‿</span><span class="weak">ə</span> trɪp<span class="linking">‿</span>əˈbrɔd<span class="linking">‿</span><span class="weak">ɪn</span> sɝtʃ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> rer ˈspɛsəmən <span class="weak">fɚ</span> kəˈlɛktɚz<span class="linking">‿</span><span class="weak">ɑr</span> nɑt kənˈfaɪnd <span class="weak">tə</span> ˈɛni wʌn ˈkʌntri/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tə‿ə、ˈmiɾɪŋ‿ɪn‿əˈnʌðɚ、ˈpɑsəbli‿ə、trɪp‿əˈbrɔd‿ɪn、sɝtʃ‿əv‿ə 连读；ðə、tə、ə、ɪn、əv、fɚ 弱读/弱化；ˈmiɾɪŋ‿ɪn‿əˈnʌðɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>leads to 后接多个并列名词短语；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>很快，这种爱好会带来旅行，也许是去另一个城镇参加会议，也可能是出国寻找稀有标本，因为收藏者并不局限于任何一个国家。</p></div>
+    <div class="field words"><span>词</span><p>lead to 导致/带来； trip abroad 出国旅行； in search of 寻找； rare specimen 稀有标本； be confined to 局限于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="210.33" data-end="224.84">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">Over <span class="weak">the</span> <span class="linking">years</span>, one may well become <span class="weak linking">an</span> <span class="linking">authority</span> <span class="linking">on</span> one's <span class="linking">hobby</span> <span class="weak">and</span> will very probably <span class="weak">be</span> asked <span class="weak">to</span> give informal talks <span class="weak">to</span> little <span class="linking">gatherings</span> <span class="weak">and</span> <span class="linking">then</span>, if successful, <span class="weak">to</span> <span class="linking">larger</span> audiences.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈoʊvɚ <span class="weak">ðə</span> jɪrz wʌn meɪ wɛl bɪˈkʌm<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈθɔrəɾi<span class="linking">‿</span>ɑn wʌnz ˈhɑbi<span class="linking">‿</span><span class="weak">ən</span> wɪl ˈvɛri ˈprɑbəbli bi æskt <span class="weak">tə</span> ɡɪv<span class="linking">‿</span>ɪnˈfɔrməl tɔks <span class="weak">tə</span> ˈlɪɾəl ˈɡæðərɪŋz<span class="linking">‿</span><span class="weak">ən</span> ðɛn<span class="linking">‿</span>ɪf səkˈsɛsfəl <span class="weak">tə</span> ˈlɑrdʒɚ ˈɔdiənsɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkʌm‿ən‿əˈθɔrəɾi‿ɑn、ˈhɑbi‿ən、ɡɪv‿ɪnˈfɔrməl、ˈɡæðərɪŋz‿ən、ðɛn‿ɪf 连读；ðə、ən、tə 弱读/弱化；bɪˈkʌm‿ən‿əˈθɔrəɾi‿ɑn、ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列谓语；be asked to give 为被动不定式；if successful 为省略句。</p></div>
+    <div class="field tense"><span>时态</span><p>may/will 表可能的未来发展。</p></div>
+    <div class="field cn"><span>中</span><p>多年以后，一个人很可能成为自己爱好的权威，并且很可能被邀请给小型聚会做非正式讲座，成功的话，再给更大的听众群体演讲。</p></div>
+    <div class="field words"><span>词</span><p>over the years 多年来； may well 很可能； authority 权威； informal talk 非正式讲座； gathering 聚会； audience 听众；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="224.84" data-end="233.93">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">In</span> this way self-confidence grows, first <span class="weak">from</span> <span class="linking">mastering</span> <span class="weak">a</span> subject, then <span class="weak">from</span> <span class="weak linking">being</span> able <span class="weak">to</span> <span class="linking">talk</span> <span class="linking">about</span> <span class="weak">it</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ðɪs weɪ ˌsɛlf ˈkɑnfədəns ɡroʊz fɝst <span class="weak">frəm</span> ˈmæstərɪŋ<span class="linking">‿</span><span class="weak">ə</span> ˈsʌbdʒɪkt ðɛn <span class="weak">frəm</span> ˈbiɪŋ<span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> tɔk<span class="linking">‿</span>əˈbaʊɾ<span class="linking">‿</span>ɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmæstərɪŋ‿ə、ˈbiɪŋ‿ˈeɪbəl、tɔk‿əˈbaʊɾ‿ɪt 连读；ɪn、frəm、ə、tə 弱读/弱化；tɔk‿əˈbaʊɾ‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>In this way 作方式状语；from...then from... 说明来源。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>这样，自信便增长了，先是来自掌握一个主题，然后来自能够谈论它。</p></div>
+    <div class="field words"><span>词</span><p>self-confidence 自信； master 掌握； subject 主题；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="233.93" data-end="240.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">Collecting, <span class="linking">by</span> occupying spare time so constructively, <span class="linking">makes</span> <span class="weak">a</span> person contented, with no time <span class="weak">for</span> boredom.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kəˈlɛktɪŋ baɪ ˈɑkjəˌpaɪɪŋ sper taɪm soʊ kənˈstrʌktɪvli meɪks<span class="linking">‿</span><span class="weak">ə</span> ˈpɝsən kənˈtɛntɪd wɪð noʊ taɪm <span class="weak">fɚ</span> ˈbɔrdəm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>meɪks‿ə 连读；ə、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>by occupying... 为方式状语；make + 宾语 + 宾补；with no time... 作伴随结果。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>收藏通过如此有建设性地占用闲暇时间，使人心满意足，无暇感到无聊。</p></div>
+    <div class="field words"><span>词</span><p>occupy 占用； spare time 闲暇时间； constructively 有建设性地； contented 满足的； boredom 无聊；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>收集与物品: amass 积聚； possession 财物； clutter 杂物； belongings 所有物； item 物品； collection 藏品； latest addition 最新藏品；</p>
+    <p>原因与心理: sentiment 怀旧情感； association 联系； true worth 真实价值； mania 狂热； harmless habit 无害习惯； self-confidence 自信；</p>
+    <p>收藏活动: verify facts 核实事实； reference book 参考书； compare notes 交流心得； exchange articles 交换物品； show off 炫耀；</p>
+    <p>收藏价值: relaxation 放松； benefit 好处； authority 权威； informal talk 非正式讲座； contented 满足的；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>tend to do</code> 表倾向。</p>
+    <p><code>without being aware of doing so</code> 介词 + 动名词结构。</p>
+    <p><code>Those who...</code> 表“那些……的人”。</p>
+    <p><code>in the belief that...</code> 表“相信……”。</p>
+    <p><code>both of which...</code> 非限制性定语从句。</p>
+    <p><code>Whatever it consists of...</code> 让步结构。</p>
+    <p><code>from...to...</code> 表范围。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>全文主要用一般现在时说明普遍现象：<code>People tend</code>, <code>They leave</code>, <code>Collecting provides</code>。</p>
+    <p>现在完成时出现在 <code>has been opened</code>，说明包裹打开后的结果状态。</p>
+    <p>will/may 用于收藏可能带来的未来发展：<code>will ever be able</code>, <code>may well become</code>, <code>will probably be asked</code>。</p>
+    <p>虚拟语气出现在第 10 句：<code>if she had the money</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>can have</code>, <code>can become</code> 表可能性。</p>
+    <p><code>may one day need</code> 表未来可能需要。</p>
+    <p><code>would like to buy</code> 表愿望。</p>
+    <p><code>may well become</code> 表很可能。</p>
+    <p>文章先批评无意识囤积，再肯定严肃收藏的积极价值。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>possessions, sometimes</code> 中语流不断；<code>aware of</code> -&gt; /əˈwer‿əv/；<code>described as</code> -&gt; /dɪˈskraɪbd‿æz/；<code>cuts sketches out</code> -&gt; /kʌts ˈskɛtʃɪz‿aʊt/；<code>talk about it</code> -&gt; /tɔk‿əˈbaʊt‿ɪt/。</p>
+    <p>元音 + 元音滑读: <code>go outside</code> -&gt; /ɡoʊ‿ˌaʊtˈsaɪd/；<code>to exchange</code> -&gt; /tə‿ɪksˈtʃeɪndʒ/；<code>be able</code> -&gt; /bi‿ˈeɪbəl/。</p>
+    <p>弱读词: <code>of</code>, <code>to</code>, <code>and</code>, <code>a</code> 多弱读：<code>circle of friends</code> -&gt; /ˈsɝkəl‿əv frɛndz/；<code>one of</code> -&gt; /wʌn‿əv/；<code>being able to</code> -&gt; /ˈbiɪŋ ˈeɪbəl tə/。</p>
+    <p>美音闪音 /ɾ/: <code>litter up</code> 的 /t/ 可轻化；<code>got</code>, <code>better</code>, <code>matter</code> 类词在类似环境中常闪化。本课重点是弱读和长串不定式的节奏。</p>
+    <p>意群停顿: 第 16 句藏品列表很长，要按类别分组；第 22 句按 <code>Over the years / one may... / and will... / if successful...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 59 - Collecting</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../59－Collecting.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.12,"end":22.96,"text":"People tend to amass possessions, sometimes without being aware of doing so."},{"index":2,"start":22.96,"end":30.68,"text":"Indeed they can have a delightful surprise when they find something useful which they did not know they owned."},{"index":3,"start":30.68,"end":38.27,"text":"Those who never have to move house become indiscriminate collectors of what can only be described as clutter."},{"index":4,"start":38.27,"end":48.4,"text":"They leave unwanted objects in drawers, cupboards and attics for years, in the belief that they may one day need just those very things."},{"index":5,"start":48.4,"end":63.55,"text":"As they grow old, people also accumulate belongings for two other reasons, lack of physical and mental energy, both of which are essential in turning out and throwing away, and sentiment."},{"index":6,"start":63.55,"end":76.11,"text":"Things owned for a long time are full of associations with the past, perhaps with relatives who are dead, and so they gradually acquire a value beyond their true worth."},{"index":7,"start":76.11,"end":81.49,"text":"Some things are collected deliberately in the home in an attempt to avoid waste."},{"index":8,"start":81.49,"end":91.45,"text":"Among these I would list string and brown paper, kept by thrifty people when a parcel has been opened, to save buying these two requisites."},{"index":9,"start":91.45,"end":95.57,"text":"Collecting small items can easily become a mania."},{"index":10,"start":95.57,"end":103.88,"text":"I know someone who always cuts sketches out from newspapers of model clothes that she would like to buy if she had the money."},{"index":11,"start":103.88,"end":117.24,"text":"As she is not rich, the chances that she will ever be able to afford such purchases are remote; but she is never sufficiently strong-minded to be able to stop the practice."},{"index":12,"start":117.24,"end":129.31,"text":"It is a harmless habit, but it litters up her desk to such an extent that every time she opens it, loose bits of paper fall out in every direction."},{"index":13,"start":129.31,"end":135.15,"text":"Collecting as a serious hobby is quite different and has many advantages."},{"index":14,"start":135.15,"end":142.72,"text":"It provides relaxation for leisure hours, as just looking at one's treasures is always a joy."},{"index":15,"start":142.72,"end":148.8,"text":"One does not have to go outside for amusement, since the collection is housed at home."},{"index":16,"start":148.8,"end":173.67,"text":"Whatever it consists of, stamps, records, first editions of books, china, glass, antique furniture, pictures, model cars, stuffed birds, toy animals, there is always something to do in connection with it, from finding the right place for the latest addition, to verifying facts in reference books."},{"index":17,"start":173.67,"end":182.06,"text":"This hobby educates one not only in the chosen subject, but also in general matters which have some bearing on it."},{"index":18,"start":182.06,"end":184.94,"text":"There are also other benefits."},{"index":19,"start":184.94,"end":194.33,"text":"One wants to meet like-minded collectors, to get advice, to compare notes, to exchange articles, to show off the latest find."},{"index":20,"start":194.33,"end":197.07,"text":"So one's circle of friends grows."},{"index":21,"start":197.07,"end":210.33,"text":"Soon the hobby leads to travel, perhaps to a meeting in another town, possibly a trip abroad in search of a rare specimen, for collectors are not confined to any one country."},{"index":22,"start":210.33,"end":224.84,"text":"Over the years, one may well become an authority on one's hobby and will very probably be asked to give informal talks to little gatherings and then, if successful, to larger audiences."},{"index":23,"start":224.84,"end":233.93,"text":"In this way self-confidence grows, first from mastering a subject, then from being able to talk about it."},{"index":24,"start":233.93,"end":240.62,"text":"Collecting, by occupying spare time so constructively, makes a person contented, with no time for boredom."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

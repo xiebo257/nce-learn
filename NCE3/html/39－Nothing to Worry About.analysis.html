@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 39 - Nothing to Worry About</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 39 - Nothing to Worry About</h1>
+      <p class="meta">Generated from 39－Nothing to Worry About.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.55" data-end="28.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> rough <span class="linking">road</span> across <span class="weak">the</span> plain soon became so bad <span class="weak">that</span> we tried <span class="weak">to</span> get Bruce <span class="weak">to</span> drive back <span class="weak">to</span> <span class="weak">the</span> village we <span class="weak">had</span> come <span class="weak">from</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> rʌf roʊd<span class="linking">‿</span>əˈkrɔs <span class="weak">ðə</span> pleɪn sun bɪˈkeɪm soʊ bæd ðæt wi traɪd <span class="weak">tə</span> ɡɛt brus <span class="weak">tə</span> draɪv bæk <span class="weak">tə</span> <span class="weak">ðə</span> ˈvɪlɪdʒ wi hæd kʌm <span class="weak">frəm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>roʊd‿əˈkrɔs 连读；ðə、tə、frəm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that 引导结果状语从句；get sb to do 表劝/让某人做；we had come from 为省略关系词的定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had come 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>穿过平原的崎岖道路很快变得糟糕透顶，以至于我们试图让布鲁斯开回我们来的那个村庄。</p></div>
+    <div class="field words"><span>词</span><p>rough road 崎岖道路； plain 平原； get sb to do 让某人做； drive back 开车返回；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="28.49" data-end="37.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Even though <span class="weak">the</span> road <span class="weak">was</span> littered with <span class="linking">boulders</span> <span class="weak">and</span> pitted with holes, Bruce <span class="weak">was</span> <span class="linking">not</span> <span class="weak">in</span> <span class="weak">the</span> least perturbed.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈivən ðoʊ <span class="weak">ðə</span> roʊd <span class="weak">wəz</span> ˈlɪɾɚd wɪð ˈboʊldɚz<span class="linking">‿</span><span class="weak">ən</span> ˈpɪɾɪd wɪð hoʊlz brus <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> list pɚˈtɝbd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈboʊldɚz‿ən、nɑɾ‿ɪn 连读；ðə、wəz、ən、ɪn 弱读/弱化；ˈlɪɾɚd、ˈpɪɾɪd、nɑɾ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Even though 引导让步状语从句；was littered/pitted 为被动/状态结构；not in the least 表“一点也不”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>尽管路上满是巨石、坑坑洼洼，布鲁斯却一点也不慌。</p></div>
+    <div class="field words"><span>词</span><p>be littered with 布满； boulder 巨石； be pitted with holes 坑坑洼洼； not in the least 一点也不； perturbed 不安的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="37.64" data-end="45.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Glancing</span> at <span class="weak">his</span> map, he <span class="linking">informed</span> us <span class="weak">that</span> <span class="weak">the</span> next village <span class="weak linking">was</span> <span class="weak">a</span> mere twenty <span class="linking">miles</span> away.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈɡlænsɪŋ<span class="linking">‿</span>æt <span class="weak">hɪz</span> mæp hi ɪnˈfɔrmd<span class="linking">‿</span>ʌs ðæt <span class="weak">ðə</span> nɛkst ˈvɪlɪdʒ <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> mɪr ˈtwɛnti maɪlz<span class="linking">‿</span>əˈweɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈɡlænsɪŋ‿æt、ɪnˈfɔrmd‿ʌs、wəz‿ə、maɪlz‿əˈweɪ 连读；hɪz、ðə、wəz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Glancing... 为现在分词短语作时间/方式状语；that 引导 informed 的宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他瞥了一眼地图，告诉我们下一个村子不过二十英里远。</p></div>
+    <div class="field words"><span>词</span><p>glance at 瞥一眼； inform 告知； mere 仅仅的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="45.62" data-end="49.76">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> not <span class="weak">that</span> Bruce <span class="linking">always</span> underestimated difficulties.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> nɑt ðæt brus<span class="linking">‿</span>ˈɔlweɪz<span class="linking">‿</span>ˌʌndɚˈɛstəˌmeɪɾɪd ˈdɪfəkəltiz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>brus‿ˈɔlweɪz‿ˌʌndɚˈɛstəˌmeɪɾɪd 连读；wəz 弱读/弱化；brus‿ˈɔlweɪz‿ˌʌndɚˈɛstəˌmeɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>It was not that... 表“并不是说……”；that 引导表语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>这并不是说布鲁斯总是低估困难。</p></div>
+    <div class="field words"><span>词</span><p>underestimate 低估； difficulty 困难；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.76" data-end="53.87">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">He simply <span class="weak">had</span> no sense <span class="weak">of</span> <span class="linking">danger</span> <span class="linking">at</span> all.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈsɪmpli hæd noʊ sɛns<span class="linking">‿</span><span class="weak">əv</span> ˈdeɪndʒɚ æɾ<span class="linking">‿</span>ɔl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɛns‿əv、æɾ‿ɔl 连读；əv 弱读/弱化；æɾ‿ɔl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；no...at all 加强否定。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他只是完全没有危险意识。</p></div>
+    <div class="field words"><span>词</span><p>simply 只是； have no sense of 没有……意识； danger 危险； at all 完全；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="53.87" data-end="62.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">No matter what <span class="weak">the</span> conditions <span class="weak">were</span>, he believed <span class="weak linking">that</span> <span class="weak">a</span> car <span class="weak">should</span> <span class="weak">be</span> <span class="linking">driven</span> <span class="weak">as</span> <span class="linking">fast</span> <span class="weak linking">as</span> <span class="weak">it</span> <span class="weak">could</span> possibly go.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/noʊ ˈmæɾɚ wʌt <span class="weak">ðə</span> kənˈdɪʃənz <span class="weak">wɚ</span> hi bɪˈlivd ðæɾ<span class="linking">‿</span><span class="weak">ə</span> kɑr ʃʊd bi ˈdrɪvən<span class="linking">‿</span>æz fæst<span class="linking">‿</span>æz<span class="linking">‿</span>ɪt kʊd ˈpɑsəbli ɡoʊ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðæɾ‿ə、ˈdrɪvən‿æz、fæst‿æz‿ɪt 连读；ðə、wɚ、ə 弱读/弱化；ˈmæɾɚ、ðæɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>No matter what 引导让步状语从句；that 引导宾语从句；should be driven 为情态被动；as...as... 比较。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>不管条件如何，他都认为车应该尽可能开得快。</p></div>
+    <div class="field words"><span>词</span><p>no matter what 无论什么； condition 条件； should be driven 应该被驾驶； as fast as possible 尽可能快；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="62.58" data-end="68.47">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">As</span> we <span class="linking">bumped</span> over <span class="weak">the</span> dusty track, we swerved <span class="weak">to</span> avoid large boulders.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æz wi bʌmpt<span class="linking">‿</span>ˈoʊvɚ <span class="weak">ðə</span> ˈdʌsti træk wi swɝvd <span class="weak">tə</span> əˈvɔɪd lɑrdʒ ˈboʊldɚz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bʌmpt‿ˈoʊvɚ 连读；ðə、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>As 引导时间状语从句；to avoid... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>当我们在尘土飞扬的路上颠簸前行时，我们急转躲避大石块。</p></div>
+    <div class="field words"><span>词</span><p>bump over 颠簸驶过； dusty 多尘的； track 小路； swerve 急转； avoid 避免；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="68.47" data-end="74.9">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> wheels <span class="linking">scooped</span> up stones which <span class="linking">hammered</span> <span class="linking">ominously</span> under <span class="weak">the</span> car.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> wilz skupt<span class="linking">‿</span>ʌp stoʊnz wɪtʃ ˈhæmɚd<span class="linking">‿</span>ˈɑmənəsli ˈʌndɚ <span class="weak">ðə</span> kɑr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>skupt‿ʌp、ˈhæmɚd‿ˈɑmənəsli 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导定语从句修饰 stones；scoop up 表卷起/铲起。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>车轮卷起石子，石子在车底发出不祥的敲击声。</p></div>
+    <div class="field words"><span>词</span><p>scoop up 卷起/铲起； stone 石子； hammer 敲击； ominously 不祥地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="74.9" data-end="83.6">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">We felt sure <span class="weak">that</span> <span class="linking">sooner</span> or <span class="linking">later</span> <span class="weak">a</span> stone <span class="weak">would</span> <span class="linking">rip</span> <span class="weak">a</span> hole <span class="weak linking">in</span> our petrol <span class="linking">tank</span> or damage <span class="weak">the</span> engine.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi fɛlt ʃʊr ðæt ˈsunɚ ɔr ˈleɪɾɚ <span class="weak">ə</span> stoʊn wʊd rɪp<span class="linking">‿</span><span class="weak">ə</span> hoʊl<span class="linking">‿</span><span class="weak">ɪn</span> aʊr ˈpɛtrəl tæŋk<span class="linking">‿</span>ɔr ˈdæmɪdʒ <span class="weak">ði</span> ˈɛndʒən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪp‿ə、hoʊl‿ɪn、tæŋk‿ɔr 连读；ə、ɪn、ði 弱读/弱化；ˈleɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>felt sure 后接 that 宾语从句；would 表过去视角下的将来/预料。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would + do。</p></div>
+    <div class="field cn"><span>中</span><p>我们确信迟早会有一块石子把油箱划破，或损坏发动机。</p></div>
+    <div class="field words"><span>词</span><p>sooner or later 迟早； rip a hole 撕开洞； petrol tank 油箱； damage 损坏； engine 发动机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="83.6" data-end="93.22">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Because <span class="weak">of</span> this, we kept looking back, <span class="linking">wondering</span> if we <span class="weak">were</span> <span class="linking">leaving</span> <span class="weak">a</span> <span class="linking">trail</span> <span class="weak linking">of</span> <span class="linking">oil</span> <span class="weak">and</span> petrol <span class="linking">behind</span> us.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈkɔz<span class="linking">‿</span><span class="weak">əv</span> ðɪs wi kɛpt ˈlʊkɪŋ bæk ˈwʌndərɪŋ<span class="linking">‿</span>ɪf wi <span class="weak">wɚ</span> ˈlivɪŋ<span class="linking">‿</span><span class="weak">ə</span> treɪl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔɪl<span class="linking">‿</span><span class="weak">ən</span> ˈpɛtrəl bɪˈhaɪnd<span class="linking">‿</span>ʌs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɪˈkɔz‿əv、ˈwʌndərɪŋ‿ɪf、ˈlivɪŋ‿ə、treɪl‿əv‿ɔɪl‿ən、bɪˈhaɪnd‿ʌs 连读；əv、wɚ、ə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Because of this 作原因状语；keep doing 表持续；wondering... 为伴随状语；if 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；were leaving 为过去进行时。</p></div>
+    <div class="field cn"><span>中</span><p>因此，我们不停回头看，担心是否在身后留下一路机油和汽油。</p></div>
+    <div class="field words"><span>词</span><p>keep looking back 不断回头看； trail 痕迹； oil 机油； petrol 汽油；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="93.22" data-end="104.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">What</span> <span class="weak">a</span> <span class="linking">relief</span> <span class="weak">it</span> <span class="weak">was</span> when <span class="weak">the</span> boulders suddenly disappeared, giving way <span class="weak">to</span> <span class="weak">a</span> <span class="linking">stretch</span> <span class="weak">of</span> plain where <span class="weak">the</span> <span class="linking">only</span> obstacles <span class="weak">were</span> <span class="linking">clumps</span> <span class="weak">of</span> bushes.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌɾ<span class="linking">‿</span><span class="weak">ə</span> rɪˈlif<span class="linking">‿</span>ɪt <span class="weak">wəz</span> wɛn <span class="weak">ðə</span> ˈboʊldɚz ˈsʌdənli ˌdɪsəˈpɪrd ˈɡɪvɪŋ weɪ <span class="weak">tə</span> <span class="weak">ə</span> strɛtʃ<span class="linking">‿</span><span class="weak">əv</span> pleɪn wɛr <span class="weak">ði</span> ˈoʊnli ˈɑbstəkəlz <span class="weak">wɚ</span> klʌmps<span class="linking">‿</span><span class="weak">əv</span> ˈbʊʃɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌɾ‿ə、rɪˈlif‿ɪt、strɛtʃ‿əv、klʌmps‿əv 连读；ə、wəz、ðə、tə、əv、ði 弱读/弱化；wʌɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>What a relief it was 感叹句；when 引导时间状语从句；giving way to... 为现在分词短语；where 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>当巨石突然消失，变成一片只有丛丛灌木作障碍的平原时，我们真是松了一口气。</p></div>
+    <div class="field words"><span>词</span><p>relief 宽慰； give way to 被……取代； stretch of plain 一片平原； obstacle 障碍； clump 一丛； bush 灌木；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="104.64" data-end="107.5">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">But <span class="weak">there</span> <span class="weak">was</span> worse <span class="weak">to</span> come.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət ðɛr <span class="weak">wəz</span> wɝs <span class="weak">tə</span> kʌm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>There be 句型；to come 作后置定语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>但更糟的还在后面。</p></div>
+    <div class="field words"><span>词</span><p>worse 更糟的； to come 将要发生的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="107.5" data-end="111.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">Just</span> <span class="linking">ahead</span> <span class="weak linking">of</span> us <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> huge fissure.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dʒʌst<span class="linking">‿</span>əˈhɛd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ʌs ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> hjudʒ ˈfɪʃɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dʒʌst‿əˈhɛd‿əv‿ʌs、wəz‿ə 连读；əv、wəz、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Just ahead of us 作地点状语；there be 句型。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>就在我们前方有一道巨大的裂缝。</p></div>
+    <div class="field words"><span>词</span><p>ahead of 在……前方； fissure 裂缝；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="111.8" data-end="116.77">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">In</span> response <span class="weak">to</span> renewed pleadings, Bruce stopped.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> rɪˈspɑns <span class="weak">tə</span> rɪˈnud ˈplidɪŋz brus stɑpt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ɪn、tə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>In response to... 作原因/回应状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>在我们再次恳求之下，布鲁斯停了车。</p></div>
+    <div class="field words"><span>词</span><p>in response to 回应； renewed 再次的； pleading 恳求；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="116.77" data-end="122.09">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Though we all <span class="linking">got</span> out <span class="weak">to</span> examine <span class="weak">the</span> fissure, he <span class="linking">remained</span> <span class="weak">in</span> <span class="weak">the</span> car.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðoʊ wi ɔl ɡɑt aʊt <span class="weak">tə</span> ɪɡˈzæmɪn <span class="weak">ðə</span> ˈfɪʃɚ hi rɪˈmeɪnd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> kɑr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈmeɪnd‿ɪn 连读；tə、ðə、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；to examine... 表目的。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>虽然我们都下车查看裂缝，他却仍留在车里。</p></div>
+    <div class="field words"><span>词</span><p>get out 下车； examine 检查； remain 留下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="122.09" data-end="131.31">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">We informed <span class="weak">him</span> <span class="weak">that</span> <span class="weak">the</span> fissure extended <span class="weak">for</span> fifty <span class="linking">yards</span> <span class="weak">and</span> <span class="weak">was</span> two feet wide <span class="weak">and</span> four feet deep.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wi ɪnˈfɔrmd <span class="weak">hɪm</span> ðæt <span class="weak">ðə</span> ˈfɪʃɚ ɪkˈstɛndɪd <span class="weak">fɚ</span> ˈfɪfti jɑrdz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">wəz</span> <span class="weak">tu</span> fit waɪd<span class="linking">‿</span><span class="weak">ən</span> fɔr fit dip/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>jɑrdz‿ən、waɪd‿ən 连读；hɪm、ðə、fɚ、ən、wəz、tu 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>informed 后接 that 宾语从句；extended 和 was 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我们告诉他裂缝延伸五十码，宽两英尺、深四英尺。</p></div>
+    <div class="field words"><span>词</span><p>extend 延伸； yard 码； wide 宽的； deep 深的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="131.31" data-end="134.88">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Even this <span class="weak">had</span> no effect.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈivən ðɪs hæd noʊ ɪˈfɛkt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>本句按意群自然停顿，保持美式弱读和节奏。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；Even this 表强调。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>即便如此也没有效果。</p></div>
+    <div class="field words"><span>词</span><p>have no effect 没有效果；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="134.88" data-end="147.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Bruce <span class="linking">went</span> into <span class="weak">a</span> low <span class="linking">gear</span> <span class="weak">and</span> drove <span class="linking">at</span> <span class="weak">a</span> terrifying speed, keeping <span class="weak">the</span> front <span class="linking">wheels</span> astride <span class="weak">the</span> <span class="linking">crack</span> <span class="weak">as</span> he <span class="linking">followed</span> <span class="weak">its</span> zigzag course.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/brus wɛnt<span class="linking">‿</span>ˈɪntu <span class="weak">ə</span> loʊ ɡɪr<span class="linking">‿</span><span class="weak">ən</span> droʊv<span class="linking">‿</span>æɾ<span class="linking">‿</span><span class="weak">ə</span> ˈtɛrəˌfaɪɪŋ spid ˈkipɪŋ <span class="weak">ðə</span> frʌnt wilz<span class="linking">‿</span>əˈstraɪd <span class="weak">ðə</span> kræk<span class="linking">‿</span>æz hi ˈfɑloʊd<span class="linking">‿</span>ɪts ˈzɪɡzæɡ kɔrs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛnt‿ˈɪntu、ɡɪr‿ən、droʊv‿æɾ‿ə、wilz‿əˈstraɪd、kræk‿æz 连读；ə、ən、ðə 弱读/弱化；droʊv‿æɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>went 和 drove 为并列谓语；keeping... 为现在分词短语作伴随状语；as 引导时间/方式状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>布鲁斯挂入低速挡，以可怕的速度开过去，前轮跨在裂缝两边，沿着裂缝的锯齿形走向行驶。</p></div>
+    <div class="field words"><span>词</span><p>low gear 低速挡； terrifying 可怕的； astride 跨在……两边； crack 裂缝； zigzag course 锯齿形路线；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="147.14" data-end="154.67">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">Before we <span class="weak">had</span> time <span class="weak">to</span> <span class="linking">worry</span> about what might happen, we <span class="weak">were</span> <span class="linking">back</span> on <span class="weak">the</span> <span class="linking">plain</span> again.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bɪˈfɔr wi hæd taɪm <span class="weak">tə</span> ˈwɝi əˈbaʊt wʌt maɪt ˈhæpən wi <span class="weak">wɚ</span> bæk<span class="linking">‿</span>ɑn <span class="weak">ðə</span> pleɪn<span class="linking">‿</span>əˈɡɛn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bæk‿ɑn、pleɪn‿əˈɡɛn 连读；tə、wɚ、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Before 引导时间状语从句；what might happen 为宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；might 表可能。</p></div>
+    <div class="field cn"><span>中</span><p>在我们还没来得及担心可能发生什么之前，我们又回到了平原上。</p></div>
+    <div class="field words"><span>词</span><p>have time to do 有时间做； worry about 担心；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="154.67" data-end="163.24">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">Bruce consulted <span class="weak">the</span> <span class="linking">map</span> once more <span class="weak">and</span> <span class="linking">told</span> us <span class="weak">that</span> <span class="weak">the</span> village <span class="weak">was</span> <span class="linking">now</span> only fifteen <span class="linking">miles</span> away.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/brus kənˈsʌltɪd <span class="weak">ðə</span> mæp wʌns mɔr<span class="linking">‿</span><span class="weak">ən</span> toʊld<span class="linking">‿</span>ʌs ðæt <span class="weak">ðə</span> ˈvɪlɪdʒ <span class="weak">wəz</span> naʊ ˈoʊnli ˌfɪfˈtin maɪlz<span class="linking">‿</span>əˈweɪ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>mɔr‿ən、toʊld‿ʌs、maɪlz‿əˈweɪ 连读；ðə、ən、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>consulted 和 told 为并列谓语；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>布鲁斯又查了一次地图，告诉我们村子现在只有十五英里远了。</p></div>
+    <div class="field words"><span>词</span><p>consult the map 查地图； once more 再一次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="163.24" data-end="169.12">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Our <span class="linking">next</span> obstacle <span class="weak linking">was</span> <span class="weak">a</span> shallow <span class="linking">pool</span> <span class="weak">of</span> <span class="linking">water</span> about <span class="linking">half</span> <span class="weak">a</span> mile across.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/aʊr nɛkst<span class="linking">‿</span>ˈɑbstəkəl <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈʃæloʊ pul<span class="linking">‿</span><span class="weak">əv</span> ˈwɔɾɚ əˈbaʊt hæf<span class="linking">‿</span><span class="weak">ə</span> maɪl<span class="linking">‿</span>əˈkrɔs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nɛkst‿ˈɑbstəkəl、wəz‿ə、pul‿əv、hæf‿ə、maɪl‿əˈkrɔs 连读；wəz、ə、əv 弱读/弱化；ˈwɔɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；about half a mile across 作后置说明。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>我们的下一个障碍是一片浅水洼，宽约半英里。</p></div>
+    <div class="field words"><span>词</span><p>obstacle 障碍； shallow 浅的； pool of water 水洼； across 宽；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="169.12" data-end="175.96">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">Bruce <span class="linking">charged</span> <span class="linking">at</span> <span class="weak">it</span>, <span class="linking">but</span> <span class="weak">in</span> <span class="weak">the</span> middle, <span class="weak">the</span> car came <span class="weak">to</span> <span class="weak">a</span> grinding halt.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/brus tʃɑrdʒd<span class="linking">‿</span>æɾ<span class="linking">‿</span>ɪt bəɾ<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈmɪdəl <span class="weak">ðə</span> kɑr keɪm <span class="weak">tə</span> <span class="weak">ə</span> ˈɡraɪndɪŋ hɔlt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʃɑrdʒd‿æɾ‿ɪt、bəɾ‿ɪn 连读；ɪn、ðə、tə、ə 弱读/弱化；tʃɑrdʒd‿æɾ‿ɪt、bəɾ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折分句；come to a halt 表停下。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>布鲁斯朝它冲了过去，但到了中间，车嘎吱一声停住了。</p></div>
+    <div class="field words"><span>词</span><p>charge at 向……冲去； in the middle 在中间； come to a halt 停下； grinding 刺耳摩擦的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="175.96" data-end="183.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">A</span> yellow <span class="linking">light</span> on <span class="weak">the</span> dashboard <span class="linking">flashed</span> <span class="linking">angrily</span> <span class="weak">and</span> Bruce <span class="linking">cheerfully</span> announced <span class="weak">that</span> <span class="weak">there</span> <span class="weak">was</span> no <span class="linking">oil</span> <span class="weak">in</span> <span class="weak">the</span> engine!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈjɛloʊ laɪɾ<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈdæʃˌbɔrd flæʃt<span class="linking">‿</span>ˈæŋɡrəli <span class="weak">ən</span> brus ˈtʃɪrfəli əˈnaʊnst ðæt ðɛr <span class="weak">wəz</span> noʊ ɔɪl<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈɛndʒən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>laɪɾ‿ɑn、flæʃt‿ˈæŋɡrəli、ɔɪl‿ɪn 连读；ə、ðə、ən、wəz、ɪn、ði 弱读/弱化；laɪɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>and 连接并列分句；that 引导 announced 的宾语从句；there be 结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>仪表板上一盏黄灯愤怒地闪烁着，布鲁斯却高兴地宣布发动机里没有油了！</p></div>
+    <div class="field words"><span>词</span><p>dashboard 仪表板； flash 闪烁； angrily 愤怒地； cheerfully 高兴地； announce 宣布； engine 发动机；</p></div>
+    </article>
+    <section class="summary-section">
+    <h2>词汇总结</h2>
+    <p>道路与地形: rough road 崎岖道路； plain 平原； boulder 巨石； dusty track 尘土路； fissure 裂缝； shallow pool 浅水洼； obstacle 障碍；</p>
+    <p>车辆与驾驶: petrol tank 油箱； engine 发动机； low gear 低速挡； front wheels 前轮； dashboard 仪表板； come to a halt 停下；</p>
+    <p>状态与态度: perturbed 不安的； terrifying 可怕的； ominously 不祥地； cheerfully 高兴地； no sense of danger 没有危险意识；</p>
+    <p>动作短语: get sb to do 让某人做； be littered with 布满； swerve to avoid 急转躲避； scoop up 卷起； give way to 被……取代； charge at 冲向；</p>
+    </section>
+    <section class="summary-section">
+    <h2>句型总结</h2>
+    <p><code>so...that...</code>: 结果状语从句。</p>
+    <p><code>Even though...</code>: 让步状语从句。</p>
+    <p><code>It was not that...</code>: 并不是说……。</p>
+    <p><code>No matter what...</code>: 无论什么……。</p>
+    <p><code>What a relief it was when...</code>: 感叹句。</p>
+    <p><code>keeping the front wheels...</code>: 现在分词短语作伴随状语。</p>
+    </section>
+    <section class="summary-section">
+    <h2>时态总结</h2>
+    <p>一般过去时是叙事主线：<code>became</code>, <code>informed</code>, <code>believed</code>, <code>swerved</code>, <code>stopped</code>, <code>charged</code>。</p>
+    <p>过去完成时用于来处背景：<code>we had come from</code>。</p>
+    <p>过去进行时用于担心中的持续状态：<code>were leaving a trail</code>。</p>
+    <p>情态动词用于判断和可能：<code>should be driven</code>, <code>could possibly go</code>, <code>would rip</code>, <code>might happen</code>。</p>
+    </section>
+    <section class="summary-section">
+    <h2>情态/语气总结</h2>
+    <p><code>should be driven as fast as...</code> 表布鲁斯荒唐的“原则”。</p>
+    <p><code>would rip...or damage...</code> 表乘客对即将发生危险的预料。</p>
+    <p><code>might happen</code> 表担心中的可能性。</p>
+    <p>标题 <code>Nothing to Worry About</code> 带反讽：乘客一路担心，布鲁斯却始终毫不在意。</p>
+    </section>
+    <section class="summary-section">
+    <h2>本课连读注意点</h2>
+    <p>辅音 + 元音连读: <code>became so bad that</code> 中弱读衔接；<code>littered with</code> 连读；<code>scooped up</code> -&gt; /skupt‿ʌp/；<code>came to a halt</code> -&gt; /keɪm tə‿ə hɔlt/。</p>
+    <p>弱读词: <code>to</code>, <code>of</code>, <code>and</code>, <code>that</code>, <code>as</code> 要轻读，如 <code>sense of danger</code>, <code>stretch of plain</code>。</p>
+    <p>意群停顿: 第 18 句按 <code>Bruce went into a low gear / and drove at a terrifying speed / keeping the front wheels... / as he followed...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Back to top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 39 - Nothing to Worry About</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../39－Nothing to Worry About.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.55,"end":28.49,"text":"The rough road across the plain soon became so bad that we tried to get Bruce to drive back to the village we had come from."},{"index":2,"start":28.49,"end":37.64,"text":"Even though the road was littered with boulders and pitted with holes, Bruce was not in the least perturbed."},{"index":3,"start":37.64,"end":45.62,"text":"Glancing at his map, he informed us that the next village was a mere twenty miles away."},{"index":4,"start":45.62,"end":49.76,"text":"It was not that Bruce always underestimated difficulties."},{"index":5,"start":49.76,"end":53.87,"text":"He simply had no sense of danger at all."},{"index":6,"start":53.87,"end":62.58,"text":"No matter what the conditions were, he believed that a car should be driven as fast as it could possibly go."},{"index":7,"start":62.58,"end":68.47,"text":"As we bumped over the dusty track, we swerved to avoid large boulders."},{"index":8,"start":68.47,"end":74.9,"text":"The wheels scooped up stones which hammered ominously under the car."},{"index":9,"start":74.9,"end":83.6,"text":"We felt sure that sooner or later a stone would rip a hole in our petrol tank or damage the engine."},{"index":10,"start":83.6,"end":93.22,"text":"Because of this, we kept looking back, wondering if we were leaving a trail of oil and petrol behind us."},{"index":11,"start":93.22,"end":104.64,"text":"What a relief it was when the boulders suddenly disappeared, giving way to a stretch of plain where the only obstacles were clumps of bushes."},{"index":12,"start":104.64,"end":107.5,"text":"But there was worse to come."},{"index":13,"start":107.5,"end":111.8,"text":"Just ahead of us there was a huge fissure."},{"index":14,"start":111.8,"end":116.77,"text":"In response to renewed pleadings, Bruce stopped."},{"index":15,"start":116.77,"end":122.09,"text":"Though we all got out to examine the fissure, he remained in the car."},{"index":16,"start":122.09,"end":131.31,"text":"We informed him that the fissure extended for fifty yards and was two feet wide and four feet deep."},{"index":17,"start":131.31,"end":134.88,"text":"Even this had no effect."},{"index":18,"start":134.88,"end":147.14,"text":"Bruce went into a low gear and drove at a terrifying speed, keeping the front wheels astride the crack as he followed its zigzag course."},{"index":19,"start":147.14,"end":154.67,"text":"Before we had time to worry about what might happen, we were back on the plain again."},{"index":20,"start":154.67,"end":163.24,"text":"Bruce consulted the map once more and told us that the village was now only fifteen miles away."},{"index":21,"start":163.24,"end":169.12,"text":"Our next obstacle was a shallow pool of water about half a mile across."},{"index":22,"start":169.12,"end":175.96,"text":"Bruce charged at it, but in the middle, the car came to a grinding halt."},{"index":23,"start":175.96,"end":183.27,"text":"A yellow light on the dashboard flashed angrily and Bruce cheerfully announced that there was no oil in the engine!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

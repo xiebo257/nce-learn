@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 22 - By Heart</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main {
+      padding: 22px 0 40px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p {
+      color: #581c87;
+    }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 22 - By Heart</h1>
+      <p class="meta">Generated from 22－By Heart.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="17.32" data-end="22.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Some <span class="linking">plays</span> <span class="weak">are</span> so successful <span class="weak">that</span> they run <span class="weak">for</span> <span class="linking">years</span> <span class="linking">on</span> end.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/sʌm pleɪz<span class="linking">‿</span><span class="weak">ɑr</span> soʊ səkˈsɛsfəl ðæt ðeɪ rʌn <span class="weak">fɚ</span> jɪrz<span class="linking">‿</span>ɑn<span class="linking">‿</span>ɛnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>pleɪz‿ɑr、jɪrz‿ɑn‿ɛnd 连读；ɑr、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so...that 引导结果状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>有些戏剧非常成功，以至于会连续上演多年。</p></div>
+    <div class="field words"><span>词</span><p>play 戏剧； run 上演； for years on end 连续多年；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="22.41" data-end="32.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">In</span> many ways, <span class="linking">this</span> <span class="weak linking">is</span> unfortunate <span class="weak">for</span> <span class="weak">the</span> <span class="linking">poor</span> actors who <span class="weak">are</span> required <span class="weak">to</span> go on repeating <span class="weak">the</span> same lines <span class="linking">night</span> after night.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ˈmɛni weɪz ðɪs<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ənˈfɔrtʃənət <span class="weak">fɚ</span> <span class="weak">ðə</span> pʊr<span class="linking">‿</span>ˈæktɚz hu <span class="weak">ɑr</span> rɪˈkwaɪɚd <span class="weak">tə</span> ɡoʊ ɑn rɪˈpiɾɪŋ <span class="weak">ðə</span> seɪm laɪnz naɪɾ<span class="linking">‿</span>ˈæftɚ naɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz‿ənˈfɔrtʃənət、pʊr‿ˈæktɚz、naɪɾ‿ˈæftɚ 连读；ɪn、ɪz、fɚ、ðə、ɑr、tə 弱读/弱化；rɪˈpiɾɪŋ、naɪɾ‿ˈæftɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>who 引导定语从句修饰 actors；be required to do；go on doing 表继续做。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时；are required 为被动。</p></div>
+    <div class="field cn"><span>中</span><p>从许多方面说，这对可怜的演员是不幸的，他们被要求夜复一夜地重复同样的台词。</p></div>
+    <div class="field words"><span>词</span><p>in many ways 在许多方面； be required to 被要求； go on doing 继续做； lines 台词； night after night 夜夜；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="32.97" data-end="39.12">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">One <span class="weak linking">would</span> expect them <span class="weak">to</span> know their parts by <span class="linking">heart</span> <span class="weak">and</span> never <span class="weak">have</span> cause <span class="weak">to</span> falter.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn wʊd<span class="linking">‿</span>ɪkˈspɛkt ðɛm <span class="weak">tə</span> noʊ ðɛr pɑrts baɪ hɑrt<span class="linking">‿</span><span class="weak">ən</span> ˈnɛvɚ hæv kɔz <span class="weak">tə</span> ˈfɔltɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʊd‿ɪkˈspɛkt、hɑrt‿ən 连读；tə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>expect sb to do；know by heart 表背熟；have cause to do 表有理由做。</p></div>
+    <div class="field tense"><span>时态</span><p>would 表一般推想。</p></div>
+    <div class="field cn"><span>中</span><p>人们会以为他们能把自己的角色背得滚瓜烂熟，永远不会结巴。</p></div>
+    <div class="field words"><span>词</span><p>part 角色/台词； by heart 背熟； falter 支吾/结巴；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="39.12" data-end="42.81">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Yet <span class="linking">this</span> <span class="weak">is</span> <span class="linking">not</span> always <span class="weak">the</span> case.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/jɛt ðɪs<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span>ˈɔlweɪz <span class="weak">ðə</span> keɪs/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz、nɑɾ‿ˈɔlweɪz 连读；ɪz、ðə 弱读/弱化；nɑɾ‿ˈɔlweɪz 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构；the case 表“实际情况”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>然而，事实并不总是这样。</p></div>
+    <div class="field words"><span>词</span><p>yet 然而； the case 实情；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="42.81" data-end="54.25">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">A</span> <span class="linking">famous</span> <span class="linking">actor</span> <span class="weak linking">in</span> <span class="weak">a</span> highly successful play <span class="weak linking">was</span> once <span class="linking">cast</span> <span class="weak">in</span> <span class="weak">the</span> role <span class="weak linking">of</span> <span class="weak linking">an</span> aristocrat who <span class="weak">had</span> <span class="weak linking">been</span> <span class="linking">imprisoned</span> <span class="weak">in</span> <span class="weak">the</span> Bastille <span class="weak">for</span> twenty years.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈfeɪməs<span class="linking">‿</span>ˈæktɚ <span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈhaɪli səkˈsɛsfəl pleɪ <span class="weak">wəz</span> wʌns kæst<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> roʊl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈrɪstəˌkræt hu hæd bɪn<span class="linking">‿</span>ɪmˈprɪzənd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> bæˈstil <span class="weak">fɚ</span> ˈtwɛnti jɪrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈfeɪməs‿ˈæktɚ、ɪn‿ə、kæst‿ɪn、roʊl‿əv‿ən‿əˈrɪstəˌkræt、bɪn‿ɪmˈprɪzənd‿ɪn 连读；ə、ɪn、wəz、ðə、əv、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主句被动；who 引导定语从句修饰 aristocrat。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动；过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>一位著名演员曾在一部非常成功的戏中饰演一名被囚禁在巴士底狱二十年的贵族。</p></div>
+    <div class="field words"><span>词</span><p>be cast in the role of 被分配饰演； aristocrat 贵族； imprison 监禁； Bastille 巴士底狱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="54.25" data-end="63.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> <span class="linking">last</span> <span class="linking">act</span>, <span class="weak">a</span> gaoler <span class="weak linking">would</span> always come on <span class="weak">to</span> <span class="weak">the</span> stage <span class="linking">with</span> <span class="weak">a</span> letter which he <span class="weak">would</span> hand <span class="weak">to</span> <span class="weak">the</span> prisoner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> læst<span class="linking">‿</span>ækt<span class="linking">‿</span><span class="weak">ə</span> ˈdʒeɪlɚ wʊd<span class="linking">‿</span>ˈɔlweɪz kʌm<span class="linking">‿</span>ɑn <span class="weak">tə</span> <span class="weak">ðə</span> steɪdʒ wɪð<span class="linking">‿</span><span class="weak">ə</span> ˈlɛɾɚ wɪtʃ hi wʊd hænd <span class="weak">tə</span> <span class="weak">ðə</span> ˈprɪzənɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>læst‿ækt‿ə、wʊd‿ˈɔlweɪz、kʌm‿ɑn、wɪð‿ə 连读；ɪn、ðə、ə、tə 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>would 表过去习惯；which 引导定语从句修饰 letter。</p></div>
+    <div class="field tense"><span>时态</span><p>过去习惯 would do。</p></div>
+    <div class="field cn"><span>中</span><p>在最后一幕中，狱卒总会拿着一封信上台，并把信交给囚犯。</p></div>
+    <div class="field words"><span>词</span><p>act 幕； gaoler 狱卒； come on to the stage 上台； prisoner 囚犯；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="63.38" data-end="72.81">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Even though <span class="weak">the</span> noble <span class="weak linking">was</span> expected <span class="weak">to</span> read <span class="weak">the</span> <span class="linking">letter</span> <span class="linking">at</span> each performance, he <span class="linking">always</span> insisted <span class="weak linking">that</span> <span class="weak">it</span> <span class="weak">should</span> <span class="weak">be</span> <span class="linking">written</span> <span class="linking">out</span> <span class="weak">in</span> full.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈivən ðoʊ <span class="weak">ðə</span> ˈnoʊbəl <span class="weak">wəz</span><span class="linking">‿</span>ɪkˈspɛktɪd <span class="weak">tə</span> rid <span class="weak">ðə</span> ˈlɛɾɚ æɾ<span class="linking">‿</span>itʃ pɚˈfɔrməns hi ˈɔlweɪz<span class="linking">‿</span>ɪnˈsɪstɪd ðæɾ<span class="linking">‿</span>ɪt ʃʊd bi ˈrɪɾən aʊɾ<span class="linking">‿</span><span class="weak">ɪn</span> fʊl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ɪkˈspɛktɪd、æɾ‿itʃ、ˈɔlweɪz‿ɪnˈsɪstɪd、ðæɾ‿ɪt、aʊɾ‿ɪn 连读；ðə、wəz、tə、ɪn 弱读/弱化；ˈlɛɾɚ、æɾ‿itʃ、ðæɾ‿ɪt、ˈrɪɾən 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Even though 引导让步状语从句；insisted 后接 that 从句；should be written out 为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；should be done。</p></div>
+    <div class="field cn"><span>中</span><p>尽管这位贵族每场演出都要读这封信，他总坚持信必须完整写出来。</p></div>
+    <div class="field words"><span>词</span><p>noble 贵族； performance 演出； insist 坚持； write out in full 完整写出；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="72.81" data-end="85.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">One night, <span class="weak">the</span> gaoler decided <span class="weak">to</span> <span class="linking">play</span> <span class="weak">a</span> joke on <span class="weak">his</span> colleague <span class="weak">to</span> <span class="linking">find</span> <span class="linking">out</span> <span class="linking">if</span>, after so many performances, he <span class="weak">had</span> managed <span class="weak">to</span> learn <span class="weak">the</span> <span class="linking">contents</span> <span class="weak">of</span> <span class="weak">the</span> letter by heart.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn naɪt <span class="weak">ðə</span> ˈdʒeɪlɚ dɪˈsaɪdɪd <span class="weak">tə</span> pleɪ <span class="weak">ə</span> dʒoʊk<span class="linking">‿</span>ɑn <span class="weak">hɪz</span> ˈkɑliɡ <span class="weak">tə</span> faɪnd aʊɾ<span class="linking">‿</span>ɪf<span class="linking">‿</span>ˈæftɚ soʊ ˈmɛni pɚˈfɔrmənsɪz hi hæd ˈmænɪdʒd <span class="weak">tə</span> lɝn <span class="weak">ðə</span> ˈkɑntɛnts<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈlɛɾɚ baɪ hɑrt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dʒoʊk‿ɑn、aʊɾ‿ɪf‿ˈæftɚ、ˈkɑntɛnts‿əv 连读；ðə、tə、ə、hɪz、əv 弱读/弱化；aʊɾ‿ɪf‿ˈæftɚ、ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>decide to do；to find out 表目的；if 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had managed 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>一天晚上，狱卒决定捉弄一下同事，看看这么多场演出之后，他是否已经设法把信的内容背熟了。</p></div>
+    <div class="field words"><span>词</span><p>play a joke on 捉弄； colleague 同事； find out 查明； contents 内容；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="85.45" data-end="95.16">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> curtain <span class="linking">went</span> <span class="linking">up</span> on <span class="weak">the</span> <span class="linking">final</span> <span class="linking">act</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">play</span> <span class="weak">and</span> revealed <span class="weak">the</span> aristocrat <span class="linking">sitting</span> alone behind <span class="linking">bars</span> <span class="weak">in</span> <span class="weak">his</span> dark cell.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkɝɾən wɛnt<span class="linking">‿</span>ʌp<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈfaɪnəl<span class="linking">‿</span>ækt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pleɪ <span class="weak">ən</span> rɪˈvild <span class="weak">ði</span> əˈrɪstəˌkræt ˈsɪɾɪŋ<span class="linking">‿</span>əˈloʊn bɪˈhaɪnd bɑrz<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">hɪz</span> dɑrk sɛl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɛnt‿ʌp‿ɑn、ˈfaɪnəl‿ækt‿əv、ˈsɪɾɪŋ‿əˈloʊn、bɑrz‿ɪn 连读；ðə、əv、ən、ði、ɪn、hɪz 弱读/弱化；ˈkɝɾən、ˈsɪɾɪŋ‿əˈloʊn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>went up 和 revealed 为并列谓语；sitting... 为现在分词作宾补。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>幕布在最后一幕升起，露出那位贵族独自坐在黑暗牢房的铁栏后。</p></div>
+    <div class="field words"><span>词</span><p>curtain 幕布； reveal 显露； behind bars 在铁栏后/坐牢； cell 牢房；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="95.16" data-end="100.55">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Just then, <span class="weak">the</span> gaoler appeared with <span class="weak">the</span> precious letter <span class="weak">in</span> <span class="weak">his</span> hands.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dʒʌst ðɛn <span class="weak">ðə</span> ˈdʒeɪlɚ əˈpɪrd wɪð <span class="weak">ðə</span> ˈprɛʃəs ˈlɛɾɚ <span class="weak">ɪn</span> <span class="weak">hɪz</span> hændz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、ɪn、hɪz 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>with...in his hands 为伴随状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>就在这时，狱卒手里拿着那封宝贵的信出现了。</p></div>
+    <div class="field words"><span>词</span><p>just then 就在这时； precious 宝贵的； appear 出现；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="100.55" data-end="105.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">He entered <span class="weak">the</span> <span class="linking">cell</span> <span class="weak">and</span> presented <span class="weak">the</span> letter <span class="weak">to</span> <span class="weak">the</span> aristocrat.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈɛntɚd <span class="weak">ðə</span> sɛl<span class="linking">‿</span><span class="weak">ən</span> prɪˈzɛntɪd <span class="weak">ðə</span> ˈlɛɾɚ <span class="weak">tə</span> <span class="weak">ði</span> əˈrɪstəˌkræt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>sɛl‿ən 连读；ðə、ən、tə、ði 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>entered 和 presented 为并列谓语；present sth to sb。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他走进牢房，把信交给了贵族。</p></div>
+    <div class="field words"><span>词</span><p>enter 进入； present sth to sb 把某物交给某人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="105.36" data-end="110.5">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">But <span class="weak">the</span> copy he gave <span class="weak">him</span> <span class="weak">had</span> not <span class="weak">been</span> <span class="linking">written</span> <span class="linking">out</span> <span class="weak">in</span> <span class="linking">full</span> <span class="weak linking">as</span> usual.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/bət <span class="weak">ðə</span> ˈkɑpi hi ɡeɪv <span class="weak">hɪm</span> hæd nɑt bɪn ˈrɪɾən aʊɾ<span class="linking">‿</span><span class="weak">ɪn</span> fʊl<span class="linking">‿</span>æz ˈjuʒuəl/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>aʊɾ‿ɪn、fʊl‿æz 连读；ðə、hɪm、ɪn 弱读/弱化；ˈrɪɾən、aʊɾ‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>he gave him 为省略关系词的定语从句；had not been written 为过去完成时被动。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>但他给他的那份信并没有像往常一样完整写出来。</p></div>
+    <div class="field words"><span>词</span><p>copy 一份/副本； as usual 像往常一样；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="110.5" data-end="114.14">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> <span class="linking">simply</span> <span class="weak">a</span> blank <span class="linking">sheet</span> <span class="weak">of</span> paper.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> ˈsɪmpli <span class="weak">ə</span> blæŋk ʃiɾ<span class="linking">‿</span><span class="weak">əv</span> ˈpeɪpɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃiɾ‿əv 连读；wəz、ə、əv 弱读/弱化；ʃiɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>它只是一张空白纸。</p></div>
+    <div class="field words"><span>词</span><p>simply 只是； blank sheet of paper 空白纸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="114.14" data-end="122.23">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> gaoler <span class="linking">looked</span> <span class="linking">on</span> <span class="linking">eagerly</span>, anxious <span class="weak">to</span> see if <span class="weak">his</span> <span class="linking">fellow</span> actor <span class="weak linking">had</span> at last learnt <span class="weak">his</span> lines.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈdʒeɪlɚ lʊkt<span class="linking">‿</span>ɑn<span class="linking">‿</span>ˈiɡɚli ˈæŋkʃəs <span class="weak">tə</span> si ɪf <span class="weak">hɪz</span> ˈfɛloʊ ˈæktɚ hæd<span class="linking">‿</span>æt læst lɝnt <span class="weak">hɪz</span> laɪnz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lʊkt‿ɑn‿ˈiɡɚli、hæd‿æt 连读；ðə、tə、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>anxious to see... 为形容词短语作伴随状语；if 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；had learnt 为过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>狱卒急切地在一旁看着，想知道他的同行是否终于学会了台词。</p></div>
+    <div class="field words"><span>词</span><p>look on 旁观； eagerly 急切地； anxious to do 急于做； fellow actor 同行演员；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="122.23" data-end="127.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> noble <span class="linking">stared</span> at <span class="weak">the</span> blank <span class="linking">sheet</span> <span class="weak">of</span> paper <span class="weak linking">for</span> <span class="weak">a</span> few seconds.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈnoʊbəl stɛrd<span class="linking">‿</span>æt <span class="weak">ðə</span> blæŋk ʃiɾ<span class="linking">‿</span><span class="weak">əv</span> ˈpeɪpɚ <span class="weak">fɚ</span> <span class="weak">ə</span> fju ˈsɛkəndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>stɛrd‿æt、ʃiɾ‿əv 连读；ðə、əv、fɚ、ə 弱读/弱化；ʃiɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；for a few seconds 表持续时间。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>贵族盯着那张空白纸看了几秒钟。</p></div>
+    <div class="field words"><span>词</span><p>stare at 盯着； for a few seconds 几秒钟；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="127.45" data-end="136.04">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Then, squinting <span class="weak linking">his</span> eyes, he said: '<span class="weak">The</span> <span class="linking">light</span> <span class="weak">is</span> dim. Read <span class="weak">the</span> letter <span class="weak">to</span> me.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ðɛn ˈskwɪntɪŋ <span class="weak">hɪz</span> aɪz hi sɛd <span class="weak">ðə</span> laɪɾ<span class="linking">‿</span><span class="weak">ɪz</span> dɪm rid <span class="weak">ðə</span> ˈlɛɾɚ <span class="weak">tə</span> mi/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>laɪɾ‿ɪz 连读；hɪz、ðə、ɪz、tə 弱读/弱化；laɪɾ‿ɪz、ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>squinting... 为现在分词短语作伴随状语；冒号后为直接引语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；引语一般现在时/祈使句。</p></div>
+    <div class="field cn"><span>中</span><p>然后，他眯起眼睛说：“光线太暗。把信读给我听。”</p></div>
+    <div class="field words"><span>词</span><p>squint 眯眼； dim 昏暗的； read sth to sb 读给某人听；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="136.04" data-end="140.49">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">And</span> he promptly handed <span class="weak">the</span> <span class="linking">sheet</span> <span class="weak">of</span> paper <span class="weak">to</span> <span class="weak">the</span> gaoler.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span> hi ˈprɑmptli ˈhændɪd <span class="weak">ðə</span> ʃiɾ<span class="linking">‿</span><span class="weak">əv</span> ˈpeɪpɚ <span class="weak">tə</span> <span class="weak">ðə</span> ˈdʒeɪlɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃiɾ‿əv 连读；ən、ðə、əv、tə 弱读/弱化；ʃiɾ‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构；hand sth to sb。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>说完他立刻把那张纸递给狱卒。</p></div>
+    <div class="field words"><span>词</span><p>promptly 立刻； hand sth to sb 把某物递给某人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="140.49" data-end="152.56">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Finding <span class="weak">that</span> he <span class="weak">could</span> not <span class="linking">remember</span> <span class="weak">a</span> <span class="linking">word</span> <span class="weak">of</span> <span class="weak">the</span> <span class="linking">letter</span> either, <span class="weak">the</span> gaoler replied: '<span class="weak">The</span> <span class="linking">light</span> <span class="weak linking">is</span> indeed dim, sire. I must get my glasses.'</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈfaɪndɪŋ ðæt hi kʊd nɑt rɪˈmɛmbɚ <span class="weak">ə</span> wɝd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈlɛɾɚ ˈiðɚ <span class="weak">ðə</span> ˈdʒeɪlɚ rɪˈplaɪd <span class="weak">ðə</span> laɪɾ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɪnˈdid dɪm saɪr aɪ mʌst ɡɛt maɪ ˈɡlæsɪz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɝd‿əv、laɪɾ‿ɪz‿ɪnˈdid 连读；ə、əv、ðə、ɪz 弱读/弱化；ˈlɛɾɚ、laɪɾ‿ɪz‿ɪnˈdid 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Finding... 为现在分词短语作原因状语；that 引导宾语从句；冒号后为直接引语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；could 表过去能力；must 表必须。</p></div>
+    <div class="field cn"><span>中</span><p>狱卒发现自己也一个字都记不起来，便回答：“光线确实暗，阁下。我得去拿眼镜。”</p></div>
+    <div class="field words"><span>词</span><p>not a word 一个字也不； indeed 确实； sire 阁下； glasses 眼镜；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="152.56" data-end="156.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">With this, he <span class="linking">hurried</span> off <span class="weak">the</span> stage.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɪð ðɪs hi ˈhɝid<span class="linking">‿</span>ɔf <span class="weak">ðə</span> steɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈhɝid‿ɔf 连读；ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>With this 作承接状语；hurry off 表匆匆离开。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>说完，他匆匆下台。</p></div>
+    <div class="field words"><span>词</span><p>with this 说完这话； hurry off 匆匆离开； stage 舞台；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="156.38" data-end="167.45">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">Much <span class="weak">to</span> <span class="weak">the</span> <span class="linking">aristocrat's</span> amusement, <span class="weak">the</span> gaoler <span class="linking">returned</span> <span class="weak">a</span> few moments later <span class="linking">with</span> <span class="weak">a</span> <span class="linking">pair</span> <span class="weak">of</span> <span class="linking">glasses</span> <span class="weak">and</span> <span class="weak">the</span> usual <span class="linking">copy</span> <span class="weak">of</span> <span class="weak">the</span> letter which he proceeded <span class="weak">to</span> read <span class="weak">to</span> <span class="weak">the</span> prisoner.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/mʌtʃ <span class="weak">tə</span> <span class="weak">ði</span> əˈrɪstəˌkræts<span class="linking">‿</span>əˈmjuzmənt <span class="weak">ðə</span> ˈdʒeɪlɚ rɪˈtɝnd<span class="linking">‿</span><span class="weak">ə</span> fju ˈmoʊmənts ˈleɪɾɚ wɪð<span class="linking">‿</span><span class="weak">ə</span> pɛr<span class="linking">‿</span><span class="weak">əv</span> ˈɡlæsɪz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ði</span> ˈjuʒuəl ˈkɑpi <span class="weak">əv</span> <span class="weak">ðə</span> ˈlɛɾɚ wɪtʃ hi prəˈsidɪd <span class="weak">tə</span> rid <span class="weak">tə</span> <span class="weak">ðə</span> ˈprɪzənɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈrɪstəˌkræts‿əˈmjuzmənt、rɪˈtɝnd‿ə、wɪð‿ə、pɛr‿əv、ˈɡlæsɪz‿ən 连读；tə、ði、ðə、ə、əv、ən 弱读/弱化；ˈleɪɾɚ、ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Much to... 表“令……非常……”；which 引导定语从句修饰 letter；proceed to do 表接着做。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>令贵族大为好笑的是，狱卒片刻后带着一副眼镜和那份通常的信回来了，并开始读给囚犯听。</p></div>
+    <div class="field words"><span>词</span><p>much to one's amusement 令某人大为好笑； a pair of glasses 一副眼镜； proceed to do 接着做；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>戏剧与舞台: play 戏剧； actor 演员； act 幕； stage 舞台； curtain 幕布； performance 演出； lines 台词；</p>
+      <p>角色与情节: aristocrat 贵族； gaoler 狱卒； prisoner 囚犯； cell 牢房； letter 信； blank sheet 空白纸；</p>
+      <p>动作短语: know by heart 背熟； go on repeating 继续重复； play a joke on 捉弄； look on 旁观； hand sth to sb 递给某人； proceed to do 接着做；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>so...that...</code>: 结果状语从句。</p>
+      <p><code>be required/expected to do</code>: 被要求/被期待做。</p>
+      <p><code>would always come...</code>: would 表过去习惯。</p>
+      <p><code>insist that it should be...</code>: insist 后从句用 should do。</p>
+      <p><code>Much to one's amusement</code>: 令某人大为好笑的是。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时用于开头讨论长期上演的戏：<code>are</code>, <code>run</code>, <code>is</code>。</p>
+      <p>一般过去时用于具体舞台事件：<code>decided</code>, <code>went up</code>, <code>appeared</code>, <code>said</code>, <code>returned</code>。</p>
+      <p>过去完成时用于演出前已发生的动作：<code>had been imprisoned</code>, <code>had not been written</code>, <code>had learnt</code>。</p>
+      <p>would 表过去重复上演中的固定动作：<code>would always come</code>, <code>would hand</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>would expect</code> 表常理推测。</p>
+      <p><code>could not remember</code> 表狱卒也记不住信。</p>
+      <p><code>must get my glasses</code> 是狱卒临场脱身的借口。</p>
+      <p>全文喜剧效果来自两个演员都没有背下信。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>辅音 + 元音连读: <code>went up</code> -&gt; /wɛnt‿ʌp/；<code>looked on</code> -&gt; /lʊkt‿ɑn/；<code>handed the</code> 弱读衔接。</p>
+      <p>弱读词: <code>to</code>, <code>of</code>, <code>and</code>, <code>that</code>, <code>as</code> 要轻读，如 <code>a blank sheet of paper</code>。</p>
+      <p>意群停顿: 第 8 句按 <code>One night / the gaoler decided... / to find out if...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 22 - By Heart</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../22－By Heart.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.32,"end":22.41,"text":"Some plays are so successful that they run for years on end."},{"index":2,"start":22.41,"end":32.97,"text":"In many ways, this is unfortunate for the poor actors who are required to go on repeating the same lines night after night."},{"index":3,"start":32.97,"end":39.12,"text":"One would expect them to know their parts by heart and never have cause to falter."},{"index":4,"start":39.12,"end":42.81,"text":"Yet this is not always the case."},{"index":5,"start":42.81,"end":54.25,"text":"A famous actor in a highly successful play was once cast in the role of an aristocrat who had been imprisoned in the Bastille for twenty years."},{"index":6,"start":54.25,"end":63.38,"text":"In the last act, a gaoler would always come on to the stage with a letter which he would hand to the prisoner."},{"index":7,"start":63.38,"end":72.81,"text":"Even though the noble was expected to read the letter at each performance, he always insisted that it should be written out in full."},{"index":8,"start":72.81,"end":85.45,"text":"One night, the gaoler decided to play a joke on his colleague to find out if, after so many performances, he had managed to learn the contents of the letter by heart."},{"index":9,"start":85.45,"end":95.16,"text":"The curtain went up on the final act of the play and revealed the aristocrat sitting alone behind bars in his dark cell."},{"index":10,"start":95.16,"end":100.55,"text":"Just then, the gaoler appeared with the precious letter in his hands."},{"index":11,"start":100.55,"end":105.36,"text":"He entered the cell and presented the letter to the aristocrat."},{"index":12,"start":105.36,"end":110.5,"text":"But the copy he gave him had not been written out in full as usual."},{"index":13,"start":110.5,"end":114.14,"text":"It was simply a blank sheet of paper."},{"index":14,"start":114.14,"end":122.23,"text":"The gaoler looked on eagerly, anxious to see if his fellow actor had at last learnt his lines."},{"index":15,"start":122.23,"end":127.45,"text":"The noble stared at the blank sheet of paper for a few seconds."},{"index":16,"start":127.45,"end":136.04,"text":"Then, squinting his eyes, he said: 'The light is dim. Read the letter to me.'"},{"index":17,"start":136.04,"end":140.49,"text":"And he promptly handed the sheet of paper to the gaoler."},{"index":18,"start":140.49,"end":152.56,"text":"Finding that he could not remember a word of the letter either, the gaoler replied: 'The light is indeed dim, sire. I must get my glasses.'"},{"index":19,"start":152.56,"end":156.38,"text":"With this, he hurried off the stage."},{"index":20,"start":156.38,"end":167.45,"text":"Much to the aristocrat's amusement, the gaoler returned a few moments later with a pair of glasses and the usual copy of the letter which he proceeded to read to the prisoner."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

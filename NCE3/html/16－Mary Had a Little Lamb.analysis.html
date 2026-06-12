@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 16 - Mary Had a Little Lamb</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main { padding: 22px 0 40px; }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p { color: #581c87; }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 16 - Mary Had a Little Lamb</h1>
+      <p class="meta">Generated from 16－Mary Had a Little Lamb.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.03" data-end="25.07">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Mary</span> <span class="weak">and</span> <span class="weak">her</span> husband Dimitri <span class="linking">lived</span> <span class="weak">in</span> <span class="weak">the</span> tiny village <span class="weak">of</span> Perachora <span class="weak">in</span> southern Greece.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɛri<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">hɚ</span> ˈhʌzbənd dɪˈmitri lɪvd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> ˈtaɪni ˈvɪlɪdʒ<span class="linking">‿</span><span class="weak">əv</span> ˌpɛrəˈkɔrə<span class="linking">‿</span><span class="weak">ɪn</span> ˈsʌðɚn ɡris/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈmɛri‿ən、lɪvd‿ɪn、ˈvɪlɪdʒ‿əv、ˌpɛrəˈkɔrə‿ɪn 连读；ən、hɚ、ɪn、ðə、əv 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓结构；两个介词短语说明地点。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>玛丽和她的丈夫迪米特里住在希腊南部一个叫佩拉霍拉的小村庄里。</p></div>
+    <div class="field words"><span>词</span><p>husband 丈夫； tiny 小的； village 村庄； southern Greece 希腊南部；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="25.07" data-end="31.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">One <span class="weak">of</span> Mary's prize possessions <span class="weak linking">was</span> <span class="weak">a</span> little white lamb which <span class="weak">her</span> husband <span class="weak">had</span> given <span class="weak">her</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn<span class="linking">‿</span><span class="weak">əv</span> ˈmɛriz praɪz pəˈzɛʃənz <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> ˈlɪɾəl waɪt læm wɪtʃ <span class="weak">hɚ</span> ˈhʌzbənd <span class="weak">həd</span> ˈɡɪvən <span class="weak">hɚ</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wʌn‿əv、wəz‿ə 连读；əv、wəz、ə、hɚ、həd 弱读/弱化；ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>One of... 作主语；which 引导定语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；定语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>玛丽最珍贵的财产之一是一只丈夫送给她的小白羊。</p></div>
+    <div class="field words"><span>词</span><p>prize possession 珍贵财产； lamb 小羊；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="31.82" data-end="39.4">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">She <span class="linking">kept</span> <span class="weak">it</span> tied <span class="weak">to</span> <span class="weak">a</span> tree <span class="weak linking">in</span> <span class="weak">a</span> field during <span class="weak">the</span> <span class="linking">day</span> <span class="weak">and</span> went <span class="weak">to</span> <span class="linking">fetch</span> <span class="weak linking">it</span> <span class="linking">every</span> evening.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi kɛpt<span class="linking">‿</span>ɪt taɪd <span class="weak">tə</span><span class="linking">‿</span><span class="weak">ə</span> tri<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> fild ˈdʊrɪŋ <span class="weak">ðə</span> deɪ<span class="linking">‿</span><span class="weak">ən</span> wɛnt <span class="weak">tə</span> fɛtʃ<span class="linking">‿</span>ɪt ˈɛvri ˈivnɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>kɛpt‿ɪt、tə‿ə、tri‿ɪn‿ə、deɪ‿ən、fɛtʃ‿ɪt 连读；tə、ə、ɪn、ðə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>kept 和 went 为并列谓语；tied to a tree 为宾补。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>白天她把它拴在田里的一棵树上，每天傍晚去把它牵回来。</p></div>
+    <div class="field words"><span>词</span><p>keep sth tied 把某物拴着； field 田地； fetch 取回；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="39.4" data-end="43.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">One evening, however <span class="weak">the</span> lamb <span class="weak">was</span> missing.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn ˈivnɪŋ haʊˈɛvɚ <span class="weak">ðə</span> læm <span class="weak">wəz</span> ˈmɪsɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>however 为转折插入语；主系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而有一天傍晚，小羊不见了。</p></div>
+    <div class="field words"><span>词</span><p>missing 失踪的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="43.27" data-end="49.52">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">The</span> rope <span class="weak">had</span> <span class="weak">been</span> cut, so <span class="weak">it</span> <span class="weak linking">was</span> obvious <span class="weak">that</span> <span class="weak">the</span> lamb <span class="weak">had</span> <span class="weak">been</span> stolen.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> roʊp <span class="weak">həd</span> bɪn kʌt soʊ<span class="linking">‿</span>ɪt <span class="weak">wəz</span> ˈɑbviəs ðæt <span class="weak">ðə</span> læm <span class="weak">həd</span> bɪn ˈstoʊlən/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>soʊ‿ɪt 连读；ðə、həd、wəz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>so 连接结果；it 作形式主语；that 从句为真正主语。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>绳子被割断了，所以很明显小羊被偷了。</p></div>
+    <div class="field words"><span>词</span><p>rope 绳子； obvious 明显的； steal 偷；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="49.52" data-end="54.17">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">When Dimitri came <span class="weak">in</span> <span class="weak">from</span> <span class="weak">the</span> fields, <span class="weak">his</span> wife told <span class="weak">him</span> what <span class="weak">had</span> happened.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn dɪˈmitri keɪm<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">frəm</span> <span class="weak">ðə</span> fildz <span class="weak">hɪz</span> waɪf toʊld <span class="weak">hɪm</span> wʌt <span class="weak">həd</span> ˈhæpənd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>keɪm‿ɪn 连读；ɪn、frəm、ðə、hɪz、hɪm、həd 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；what 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；宾语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>迪米特里从田里回来时，妻子告诉了他发生的事。</p></div>
+    <div class="field words"><span>词</span><p>come in 进来/回来； field 田地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="54.17" data-end="58.91">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Dimitri <span class="linking">at</span> once <span class="linking">set</span> out <span class="weak">to</span> find <span class="weak">the</span> thief.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈmitri<span class="linking">‿</span>æt wʌns sɛɾ<span class="linking">‿</span>aʊt <span class="weak">tə</span> faɪnd <span class="weak">ðə</span> θif/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪˈmitri‿æt、sɛɾ‿aʊt 连读；tə、ðə 弱读/弱化；sɛɾ‿aʊt 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>at once 作时间状语；to find... 作目的状语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>迪米特里立刻出发去找小偷。</p></div>
+    <div class="field words"><span>词</span><p>at once 立刻； set out 出发； thief 小偷；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="58.91" data-end="64.21">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">He <span class="linking">knew</span> <span class="weak">it</span> <span class="weak">would</span> not prove <span class="linking">difficult</span> <span class="weak">in</span> <span class="linking">such</span> <span class="weak">a</span> small village.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi nu<span class="linking">‿</span>ɪt wʊd nɑt pruv ˈdɪfəkəlt<span class="linking">‿</span><span class="weak">ɪn</span> sʌtʃ<span class="linking">‿</span><span class="weak">ə</span> smɔl ˈvɪlɪdʒ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>nu‿ɪt、ˈdɪfəkəlt‿ɪn、sʌtʃ‿ə 连读；ɪn、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>knew 后省略 that 的宾语从句；prove difficult 作系表结构。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；从句过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>他知道在这样一个小村庄里，这不会太难。</p></div>
+    <div class="field words"><span>词</span><p>prove difficult 证明困难； such a 如此一个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="64.21" data-end="75.19">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">After telling <span class="linking">several</span> <span class="weak">of</span> <span class="weak">his</span> <span class="linking">friends</span> about <span class="weak">the</span> theft, Dimitri <span class="linking">found</span> out <span class="weak">that</span> <span class="weak">his</span> <span class="linking">neighbour</span>, Aleko, <span class="weak">had</span> <span class="linking">suddenly</span> <span class="linking">acquired</span> <span class="weak">a</span> new lamb.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈtɛlɪŋ ˈsɛvrəl<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">hɪz</span> frɛndz<span class="linking">‿</span>əˈbaʊt <span class="weak">ðə</span> θɛft dɪˈmitri faʊnd<span class="linking">‿</span>aʊt ðæt <span class="weak">hɪz</span> ˈneɪbɚ əˈlekoʊ <span class="weak">həd</span> ˈsʌdənli əˈkwaɪrd<span class="linking">‿</span><span class="weak">ə</span> nu læm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈsɛvrəl‿əv、frɛndz‿əˈbaʊt、faʊnd‿aʊt、əˈkwaɪrd‿ə 连读；əv、hɪz、ðə、həd、ə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>After + 动名词短语作时间状语；that 引导宾语从句；Aleko 为同位语。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；宾语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>在把盗窃的事告诉几个朋友后，迪米特里发现邻居阿列科突然得到了一只新羊。</p></div>
+    <div class="field words"><span>词</span><p>theft 盗窃； neighbour 邻居； acquire 获得；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="75.19" data-end="82.68">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Dimitri immediately went <span class="weak">to</span> Aleko's house <span class="weak linking">and</span> <span class="linking">angrily</span> accused <span class="weak linking">him</span> <span class="weak">of</span> stealing <span class="weak">the</span> lamb.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/dɪˈmitri ɪˈmidiətli wɛnt <span class="weak">tʊ</span><span class="linking">‿</span>əˈlekoʊz haʊs<span class="linking">‿</span><span class="weak">ən</span> ˈæŋɡrəli əˈkjuzd <span class="weak">hɪm</span><span class="linking">‿</span><span class="weak">əv</span> ˈstilɪŋ <span class="weak">ðə</span> læm/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʊ‿əˈlekoʊz、haʊs‿ən、hɪm‿əv 连读；tʊ、ən、hɪm、əv、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>went 和 accused 为并列谓语；accuse sb of doing。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>迪米特里立即去了阿列科家，愤怒地指责他偷了小羊。</p></div>
+    <div class="field words"><span>词</span><p>immediately 立即； accuse sb of doing 指控某人做某事；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.68" data-end="87.61">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">He told <span class="weak">him</span> he <span class="weak">had</span> better <span class="linking">return</span> <span class="weak linking">it</span> or he <span class="weak">would</span> call <span class="weak">the</span> police.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi toʊld <span class="weak">hɪm</span> hi hæd ˈbɛɾɚ rɪˈtɝn<span class="linking">‿</span>ɪt ɔr hi wʊd kɔl <span class="weak">ðə</span> pəˈlis/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈtɝn‿ɪt 连读；hɪm、ðə 弱读/弱化；ˈbɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>told 后接宾语从句；had better...or... 表警告。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；would 表过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>他告诉他最好把羊还回来，否则他就报警。</p></div>
+    <div class="field words"><span>词</span><p>had better 最好； return 归还； call the police 报警；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="87.61" data-end="93.03">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Aleko denied <span class="linking">taking</span> <span class="weak linking">it</span> <span class="weak">and</span> led Dimitri into <span class="weak">his</span> backyard.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈlekoʊ dɪˈnaɪd ˈteɪkɪŋ<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ən</span> lɛd dɪˈmitri ˈɪntu <span class="weak">hɪz</span> ˌbækˈjɑrd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈteɪkɪŋ‿ɪt‿ən 连读；ən、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>denied 和 led 为并列谓语；deny doing。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>阿列科否认拿了羊，并把迪米特里领进后院。</p></div>
+    <div class="field words"><span>词</span><p>deny doing 否认做； backyard 后院；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="93.03" data-end="100.35">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> true <span class="weak">that</span> he <span class="weak">had</span> just <span class="linking">bought</span> <span class="weak">a</span> lamb he explained, but <span class="weak">his</span> lamb <span class="weak">was</span> black.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> tru ðæt hi <span class="weak">həd</span> dʒʌst bɔt<span class="linking">‿</span><span class="weak">ə</span> læm hi ɪkˈspleɪnd bət <span class="weak">hɪz</span> læm <span class="weak">wəz</span> blæk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bɔt‿ə 连读；wəz、həd、ə、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>It 作形式主语；that 从句为真正主语；but 连接转折。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；that 从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>他解释说，他确实刚买了一只羊，但他的羊是黑色的。</p></div>
+    <div class="field words"><span>词</span><p>explain 解释； black 黑色的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="100.35" data-end="108.26">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="linking">Ashamed</span> <span class="weak">of</span> <span class="linking">having</span> acted so rashly, Dimitri apologized <span class="weak">to</span> Aleko <span class="weak">for</span> <span class="linking">having</span> accused <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/əˈʃeɪmd<span class="linking">‿</span><span class="weak">əv</span> ˈhævɪŋ ˈæktɪd soʊ ˈræʃli dɪˈmitri əˈpɑlədʒaɪzd <span class="weak">tʊ</span><span class="linking">‿</span>əˈlekoʊ <span class="weak">fɚ</span> ˈhævɪŋ əˈkjuzd <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>əˈʃeɪmd‿əv、tʊ‿əˈlekoʊ 连读；əv、tʊ、fɚ、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Ashamed of... 为形容词短语作原因状语；for having accused... 表道歉原因。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；having done 表先前动作。</p></div>
+    <div class="field cn"><span>中</span><p>迪米特里为自己如此鲁莽而感到羞愧，因指责阿列科向他道歉。</p></div>
+    <div class="field words"><span>词</span><p>ashamed 羞愧的； act rashly 鲁莽行事； apologize to 向……道歉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="108.26" data-end="116.11">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">While they <span class="weak">were</span> <span class="linking">talking</span> <span class="weak">it</span> began <span class="weak">to</span> <span class="linking">rain</span> <span class="weak">and</span> Dimitri <span class="linking">stayed</span> <span class="weak linking">in</span> Aleko's house until <span class="weak">the</span> rain stopped.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/waɪl ðeɪ <span class="weak">wɚ</span> ˈtɔkɪŋ<span class="linking">‿</span>ɪt bɪˈɡæn <span class="weak">tə</span> reɪn<span class="linking">‿</span><span class="weak">ən</span> dɪˈmitri steɪd<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>əˈlekoʊz haʊs<span class="linking">‿</span>ənˈtɪl <span class="weak">ðə</span> reɪn stɑpt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈtɔkɪŋ‿ɪt、reɪn‿ən、steɪd‿ɪn‿əˈlekoʊz、haʊs‿ənˈtɪl 连读；wɚ、tə、ən、ɪn、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>While 引导时间状语从句；and 连接后续动作；until 引导时间状语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>从句过去进行时；主句一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>他们谈话时开始下雨，迪米特里便待在阿列科家直到雨停。</p></div>
+    <div class="field words"><span>词</span><p>while 当……时； stay 待； until 直到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="116.11" data-end="125.48">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">When he <span class="linking">went</span> outside <span class="linking">half</span> <span class="weak">an</span> hour later, he <span class="weak linking">was</span> astonished <span class="weak">to</span> find <span class="weak">that</span> <span class="weak">the</span> little black lamb <span class="weak linking">was</span> almost white.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wɛn hi wɛnt ˌaʊtˈsaɪd hæf<span class="linking">‿</span><span class="weak">ən</span> ˈaʊɚ ˈleɪɾɚ hi <span class="weak">wəz</span><span class="linking">‿</span>əˈstɑnɪʃt <span class="weak">tə</span> faɪnd ðæt <span class="weak">ðə</span> ˈlɪɾəl blæk læm <span class="weak">wəz</span> ˈɔlmoʊst waɪt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæf‿ən、wəz‿əˈstɑnɪʃt 连读；ən、wəz、tə、ðə 弱读/弱化；ˈleɪɾɚ、ˈlɪɾəl 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>When 引导时间状语从句；to find... 表原因；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>半小时后他出去时，惊讶地发现那只小黑羊几乎变白了。</p></div>
+    <div class="field words"><span>词</span><p>astonished 惊讶的； almost 几乎；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="125.48" data-end="129.71">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">Its</span> wool, which <span class="weak">had</span> <span class="weak">been</span> dyed black, <span class="weak">had</span> <span class="weak">been</span> washed clean by <span class="weak">the</span> rain!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ɪts wʊl wɪtʃ <span class="weak">həd</span> bɪn daɪd blæk <span class="weak">həd</span> bɪn wɑʃt klin baɪ <span class="weak">ðə</span> reɪn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>həd、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>which 引导非限制性定语从句；主句和从句均为被动。</p></div>
+    <div class="field tense"><span>时态</span><p>过去完成时被动。</p></div>
+    <div class="field cn"><span>中</span><p>它的羊毛原本被染成黑色，现在被雨水冲洗干净了！</p></div>
+    <div class="field words"><span>词</span><p>wool 羊毛； dye 染色； wash clean 洗干净；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>乡村与动物: lamb 小羊； wool 羊毛； field 田地； backyard 后院； village 村庄；</p>
+      <p>调查与指责: thief 小偷； theft 盗窃； find out 发现； accuse sb of 指控； deny doing 否认；</p>
+      <p>态度与结果: ashamed 羞愧的； rashly 鲁莽地； apologize 道歉； astonished 惊讶的；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>It was obvious that...</code> 形式主语句。</p>
+      <p><code>accuse sb of doing</code> 指控某人做某事。</p>
+      <p><code>had better...or...</code> 表警告。</p>
+      <p><code>Ashamed of having done...</code> 形容词短语作原因状语。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般过去时叙述寻找小羊的经过。</p>
+      <p>过去完成时说明先前发生的事：<code>had given</code>, <code>had been cut</code>, <code>had acquired</code>。</p>
+      <p>过去完成时被动突出“被偷、被染色、被洗净”的结果。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>would not prove difficult</code> 表从过去看将来的判断。</p>
+      <p><code>had better return it</code> 带强烈警告语气。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>set out</code> /sɛɾ‿aʊt/、<code>found out</code> /faʊnd‿aʊt/。</p>
+      <p>美式闪音: <code>little</code> /ˈlɪɾəl/、<code>better</code> /ˈbɛɾɚ/、<code>later</code> /ˈleɪɾɚ/。</p>
+      <p>第 14 句按原因状语和主句分开读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 16 - Mary Had a Little Lamb</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../16－Mary Had a Little Lamb.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.03,"end":25.07,"text":"Mary and her husband Dimitri lived in the tiny village of Perachora in southern Greece."},{"index":2,"start":25.07,"end":31.82,"text":"One of Mary's prize possessions was a little white lamb which her husband had given her."},{"index":3,"start":31.82,"end":39.4,"text":"She kept it tied to a tree in a field during the day and went to fetch it every evening."},{"index":4,"start":39.4,"end":43.27,"text":"One evening, however the lamb was missing."},{"index":5,"start":43.27,"end":49.52,"text":"The rope had been cut, so it was obvious that the lamb had been stolen."},{"index":6,"start":49.52,"end":54.17,"text":"When Dimitri came in from the fields, his wife told him what had happened."},{"index":7,"start":54.17,"end":58.91,"text":"Dimitri at once set out to find the thief."},{"index":8,"start":58.91,"end":64.21,"text":"He knew it would not prove difficult in such a small village."},{"index":9,"start":64.21,"end":75.19,"text":"After telling several of his friends about the theft, Dimitri found out that his neighbour, Aleko, had suddenly acquired a new lamb."},{"index":10,"start":75.19,"end":82.68,"text":"Dimitri immediately went to Aleko's house and angrily accused him of stealing the lamb."},{"index":11,"start":82.68,"end":87.61,"text":"He told him he had better return it or he would call the police."},{"index":12,"start":87.61,"end":93.03,"text":"Aleko denied taking it and led Dimitri into his backyard."},{"index":13,"start":93.03,"end":100.35,"text":"It was true that he had just bought a lamb he explained, but his lamb was black."},{"index":14,"start":100.35,"end":108.26,"text":"Ashamed of having acted so rashly, Dimitri apologized to Aleko for having accused him."},{"index":15,"start":108.26,"end":116.11,"text":"While they were talking it began to rain and Dimitri stayed in Aleko's house until the rain stopped."},{"index":16,"start":116.11,"end":125.48,"text":"When he went outside half an hour later, he was astonished to find that the little black lamb was almost white."},{"index":17,"start":125.48,"end":129.71,"text":"Its wool, which had been dyed black, had been washed clean by the rain!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

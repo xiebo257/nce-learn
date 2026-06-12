@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE3 Lesson 19 - A Very Dear Cat</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: #1f2937;
+      background: #f3f4f6;
+      line-height: 1.65;
+    }
+    .page-header {
+      background: #111827;
+      color: #fff;
+      padding: 28px 18px 24px;
+      border-bottom: 4px solid #2563eb;
+    }
+    .page-header .inner,
+    main {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #93c5fd;
+      font-size: 13px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .meta {
+      margin: 10px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
+    }
+    main { padding: 22px 0 40px; }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    }
+    .toc a {
+      color: #1d4ed8;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      background: #eff6ff;
+    }
+    .sentence-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .sentence-head {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 12px;
+    }
+    .sentence-num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      background: #2563eb;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .en-text {
+      margin: 0;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 10px;
+      padding: 9px 0;
+      border-top: 1px solid #f1f5f9;
+    }
+    .field span {
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .field p {
+      margin: 0;
+      color: #374151;
+      font-size: 15px;
+    }
+    .ipa p {
+      color: #0f766e;
+      font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif;
+      font-size: 16px;
+    }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p {
+      color: #7c2d12;
+      font-weight: 600;
+    }
+    .words p { color: #581c87; }
+    .summary-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .summary-section h2 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .summary-section p {
+      margin: 8px 0;
+      color: #374151;
+    }
+    code {
+      color: #0f766e;
+      background: #ecfdf5;
+      border: 1px solid #ccfbf1;
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: #111827;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    }
+    @media (max-width: 640px) {
+      .page-header .inner,
+      main { width: min(100% - 20px, 1080px); }
+      .sentence-card,
+      .summary-section { padding: 14px; }
+      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-num { width: 30px; height: 30px; }
+      .en-text { font-size: 16px; }
+      .field { grid-template-columns: 1fr; gap: 2px; }
+      .back-top { display: none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 3</p>
+      <h1>NCE3 Lesson 19 - A Very Dear Cat</h1>
+      <p class="meta">Generated from 19－A Very Dear Cat.analysis.md</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.88" data-end="26.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Kidnappers</span> <span class="weak">are</span> <span class="linking">rarely</span> <span class="linking">interested</span> <span class="weak linking">in</span> animals, but they recently took considerable <span class="linking">interest</span> <span class="weak">in</span> <span class="linking">Mrs</span>. Eleanor Ramsay's cat.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈkɪdˌnæpɚz<span class="linking">‿</span><span class="weak">ɑr</span> ˈrɛrli ˈɪntrəstɪd<span class="linking">‿</span><span class="weak">ɪn</span> ˈænəməlz bət ðeɪ ˈrisəntli tʊk kənˈsɪdɚəbəl ˈɪntrəst<span class="linking">‿</span><span class="weak">ɪn</span> ˈmɪsɪz ˈɛlənɚ ˈræmzi z kæt/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈkɪdˌnæpɚz‿ɑr、ˈɪntrəstɪd‿ɪn、ˈɪntrəst‿ɪn 连读；ɑr、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折并列句；take interest in 表“对……感兴趣”。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时 + 一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>绑匪很少对动物感兴趣，但最近他们对埃莉诺·拉姆齐夫人的猫产生了相当大的兴趣。</p></div>
+    <div class="field words"><span>词</span><p>kidnapper 绑匪； rarely 很少； considerable 相当大的； take interest in 对……感兴趣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.36" data-end="36.36">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Mrs</span>. Eleanor <span class="linking">Ramsay</span>, <span class="weak">a</span> very <span class="linking">wealthy</span> old lady, <span class="weak">has</span> <span class="linking">shared</span> <span class="weak">a</span> flat with <span class="weak">her</span> cat, Rastus, <span class="weak linking">for</span> <span class="weak">a</span> great many years.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz ˈɛlənɚ ˈræmzi <span class="weak">ə</span> ˈvɛri ˈwɛlθi oʊld ˈleɪdi <span class="weak">həz</span> ʃɛrd<span class="linking">‿</span><span class="weak">ə</span> flæt wɪð <span class="weak">hɚ</span> kæt ˈræstəs <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> ɡreɪt ˈmɛni jɪrz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃɛrd‿ə、fɚ‿ə 连读；ə、həz、hɚ、fɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>a very wealthy old lady 和 Rastus 为同位语；for... 表持续时间。</p></div>
+    <div class="field tense"><span>时态</span><p>现在完成时。</p></div>
+    <div class="field cn"><span>中</span><p>埃莉诺·拉姆齐夫人是一位非常富有的老妇人，多年来一直和她的猫拉斯特斯同住一套公寓。</p></div>
+    <div class="field words"><span>词</span><p>wealthy 富有的； share a flat with 与……合住公寓； a great many years 许多年；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="36.36" data-end="38.82">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Rastus <span class="linking">leads</span> <span class="weak linking">an</span> orderly life.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈræstəs lidz<span class="linking">‿</span><span class="weak">ən</span> ˈɔrdɚli laɪf/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>lidz‿ən 连读；ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>拉斯特斯生活很有规律。</p></div>
+    <div class="field words"><span>词</span><p>lead a life 过生活； orderly 有规律的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="38.82" data-end="45.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">He usually <span class="linking">takes</span> <span class="weak">a</span> short <span class="linking">walk</span> <span class="weak">in</span> <span class="weak">the</span> <span class="linking">evenings</span> <span class="weak linking">and</span> <span class="weak linking">is</span> always home by <span class="linking">seven</span> o'clock.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi ˈjuʒuəli teɪks<span class="linking">‿</span><span class="weak">ə</span> ʃɔrt wɔk<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈivnɪŋz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ɪz</span> ˈɔlweɪz hoʊm baɪ ˈsɛvən<span class="linking">‿</span>əˈklɑk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>teɪks‿ə、wɔk‿ɪn、ˈivnɪŋz‿ən‿ɪz、ˈsɛvən‿əˈklɑk 连读；ə、ɪn、ði、ən、ɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>takes 和 is 为并列谓语；by seven o'clock 表最迟时间。</p></div>
+    <div class="field tense"><span>时态</span><p>一般现在时。</p></div>
+    <div class="field cn"><span>中</span><p>它通常晚上出去短暂散步，并总是在 7 点前回家。</p></div>
+    <div class="field words"><span>词</span><p>take a walk 散步； by seven o'clock 到 7 点前；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="45.58" data-end="49.8">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">One evening, however he failed <span class="weak">to</span> arrive.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/wʌn ˈivnɪŋ haʊˈɛvɚ hi feɪld <span class="weak">tʊ</span><span class="linking">‿</span>əˈraɪv/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>tʊ‿əˈraɪv 连读；tʊ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>however 为转折插入语；fail to do 表未能做。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>然而有一天晚上，它没能回来。</p></div>
+    <div class="field words"><span>词</span><p>fail to do 没能做； arrive 到达；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="49.8" data-end="52.41">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Mrs. Ramsay got very worried.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz ˈræmzi ɡɑt ˈvɛri ˈwɝid/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>本句按意群自然停顿，保持美式弱读和节奏。</p></div>
+    <div class="field structure"><span>结构</span><p>get + 形容词，表示状态变化。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>拉姆齐夫人非常担心。</p></div>
+    <div class="field words"><span>词</span><p>worried 担心的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="52.41" data-end="57.2">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">She looked everywhere <span class="weak">for</span> <span class="weak">him</span> but <span class="weak">could</span> not find <span class="weak">him</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi lʊkt ˈɛvriˌwɛr <span class="weak">fɚ</span> <span class="weak">hɪm</span> bət kʊd nɑt faɪnd <span class="weak">hɪm</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>fɚ、hɪm 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；could not 表能力否定。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她到处找它，但找不到。</p></div>
+    <div class="field words"><span>词</span><p>everywhere 到处； look for 寻找；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="57.2" data-end="64.34">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Three <span class="linking">days</span> after Rastus' disappearance, Mrs. Ramsay <span class="linking">received</span> <span class="weak linking">an</span> anonymous letter.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/θri deɪz ˈæftɚ ˈræstəs dɪsəˈpɪrəns ˈmɪsɪz ˈræmzi rɪˈsivd<span class="linking">‿</span><span class="weak">ən</span> əˈnɑnəməs ˈlɛɾɚ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>rɪˈsivd‿ən 连读；ən 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>Three days after... 作时间状语；主谓宾结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>拉斯特斯失踪三天后，拉姆齐夫人收到一封匿名信。</p></div>
+    <div class="field words"><span>词</span><p>disappearance 失踪； anonymous 匿名的； receive 收到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="64.34" data-end="75.73">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> writer stated <span class="weak">that</span> Rastus <span class="weak linking">was</span> <span class="weak">in</span> safe <span class="linking">hands</span> <span class="weak">and</span> <span class="weak">would</span> <span class="weak">be</span> <span class="linking">returned</span> <span class="linking">immediately</span> if Mrs. Ramsay <span class="linking">paid</span> <span class="weak">a</span> <span class="linking">ransom</span> <span class="weak">of</span> £1,000.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈraɪɾɚ ˈsteɪɾɪd ðæt ˈræstəs <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ɪn</span> seɪf hændz<span class="linking">‿</span><span class="weak">ən</span> wʊd bi rɪˈtɝnd<span class="linking">‿</span>ɪˈmidiətli<span class="linking">‿</span>ɪf ˈmɪsɪz ˈræmzi peɪd<span class="linking">‿</span><span class="weak">ə</span> ˈrænsəm<span class="linking">‿</span><span class="weak">əv</span> wʌn ˈθaʊzənd paʊndz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ɪn、hændz‿ən、rɪˈtɝnd‿ɪˈmidiətli‿ɪf、peɪd‿ə、ˈrænsəm‿əv 连读；ðə、wəz、ɪn、ən、ə、əv 弱读/弱化；ˈraɪɾɚ、ˈsteɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句；and 连接两个从句谓语；if 引导条件从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时；宾语从句过去时和过去将来被动。</p></div>
+    <div class="field cn"><span>中</span><p>写信人声称拉斯特斯在安全的人手里，如果拉姆齐夫人支付 1000 英镑赎金，它会立即被送回。</p></div>
+    <div class="field words"><span>词</span><p>state 声称； in safe hands 在安全的人手中； ransom 赎金； immediately 立即；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="75.73" data-end="82.62">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Mrs. Ramsay <span class="weak linking">was</span> instructed <span class="weak">to</span> place <span class="weak">the</span> <span class="linking">money</span> <span class="weak linking">in</span> <span class="weak">a</span> cardboard <span class="linking">box</span> <span class="weak">and</span> <span class="weak">to</span> leave <span class="weak linking">it</span> outside <span class="weak">her</span> door.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz ˈræmzi <span class="weak">wəz</span><span class="linking">‿</span>ɪnˈstrʌktɪd <span class="weak">tə</span> pleɪs <span class="weak">ðə</span> ˈmʌni<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈkɑrdˌbɔrd bɑks<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> liv<span class="linking">‿</span>ɪt ˌaʊtˈsaɪd <span class="weak">hɚ</span> dɔr/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz‿ɪnˈstrʌktɪd、ˈmʌni‿ɪn‿ə、bɑks‿ən、liv‿ɪt 连读；wəz、tə、ðə、ɪn、ə、ən 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>was instructed to do 被动；两个不定式并列。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时被动。</p></div>
+    <div class="field cn"><span>中</span><p>拉姆齐夫人被指示把钱放进一个纸板盒，并把盒子留在门外。</p></div>
+    <div class="field words"><span>词</span><p>instruct 指示； place 放置； cardboard box 纸板盒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="82.62" data-end="96.31">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">At first, she decided <span class="weak">to</span> go <span class="weak">to</span> <span class="weak">the</span> police, but fearing <span class="weak">that</span> she <span class="weak">would</span> never see <span class="linking">Rastus</span> again--<span class="weak">the</span> letter <span class="weak">had</span> made <span class="weak">that</span> quite clear--she changed <span class="weak">her</span> mind.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/æt fɝst ʃi dɪˈsaɪdɪd <span class="weak">tə</span> ɡoʊ <span class="weak">tə</span> <span class="weak">ðə</span> pəˈlis bət ˈfɪrɪŋ ðæt ʃi wʊd ˈnɛvɚ si ˈræstəs<span class="linking">‿</span>əˈɡɛn <span class="weak">ðə</span> ˈlɛɾɚ <span class="weak">həd</span> meɪd ðæt kwaɪt klɪr ʃi tʃeɪndʒd <span class="weak">hɚ</span> maɪnd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ˈræstəs‿əˈɡɛn 连读；tə、ðə、həd、hɚ 弱读/弱化；ˈlɛɾɚ 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>but 后 fearing... 为原因状语；that 引导宾语从句；破折号插入说明。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时；宾语从句过去将来；插入句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>起初她决定报警，但由于害怕再也见不到拉斯特斯，信里已经把这一点说得很清楚，她改变了主意。</p></div>
+    <div class="field words"><span>词</span><p>at first 起初； go to the police 报警； fear 害怕； change one's mind 改变主意；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="96.31" data-end="101.97">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">She withdrew £1000 <span class="weak">from</span> <span class="weak">her</span> <span class="linking">bank</span> <span class="weak">and</span> followed <span class="weak">the</span> <span class="linking">kidnapper's</span> instructions.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi wɪðˈdru wʌn ˈθaʊzənd paʊndz <span class="weak">frəm</span> <span class="weak">hɚ</span> bæŋk<span class="linking">‿</span><span class="weak">ən</span> ˈfɑloʊd <span class="weak">ðə</span> ˈkɪdˌnæpɚz<span class="linking">‿</span>ɪnˈstrʌkʃənz/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>bæŋk‿ən、ˈkɪdˌnæpɚz‿ɪnˈstrʌkʃənz 连读；frəm、hɚ、ən、ðə 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>withdrew 和 followed 为并列谓语。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她从银行取出 1000 英镑，并按绑匪的指示行事。</p></div>
+    <div class="field words"><span>词</span><p>withdraw 取出； instruction 指示；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="101.97" data-end="110.27">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> next morning, <span class="weak">the</span> box <span class="weak">had</span> disappeared but Mrs. Ramsay <span class="weak">was</span> sure <span class="weak">that</span> <span class="weak">the</span> kidnapper <span class="weak">would</span> keep <span class="weak">his</span> word.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> nɛkst ˈmɔrnɪŋ <span class="weak">ðə</span> bɑks <span class="weak">həd</span> ˌdɪsəˈpɪrd bət ˈmɪsɪz ˈræmzi <span class="weak">wəz</span> ʃʊr ðæt <span class="weak">ðə</span> ˈkɪdˌnæpɚ wʊd kip <span class="weak">hɪz</span> wɝd/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ðə、həd、wəz、hɪz 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>but 连接转折；that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>前半句过去完成时；后半句一般过去时 + 过去将来。</p></div>
+    <div class="field cn"><span>中</span><p>第二天早上，盒子不见了，但拉姆齐夫人确信绑匪会守信。</p></div>
+    <div class="field words"><span>词</span><p>disappear 消失； be sure 确信； keep one's word 守信；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="110.27" data-end="116.58">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">Sure enough, <span class="linking">Rastus</span> arrived <span class="linking">punctually</span> at <span class="linking">seven</span> o'clock <span class="weak linking">that</span> evening.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃʊr<span class="linking">‿</span>ɪˈnʌf ˈræstəs<span class="linking">‿</span>əˈraɪvd ˈpʌŋktʃuəli<span class="linking">‿</span>æt ˈsɛvən<span class="linking">‿</span>əˈklɑk ðæt ˈivnɪŋ/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>ʃʊr‿ɪˈnʌf、ˈræstəs‿əˈraɪvd、ˈpʌŋktʃuəli‿æt、ˈsɛvən‿əˈklɑk 连读。</p></div>
+    <div class="field structure"><span>结构</span><p>Sure enough 作句首状语；主谓结构。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>果然，那天晚上拉斯特斯准时在 7 点回来了。</p></div>
+    <div class="field words"><span>词</span><p>sure enough 果然； punctually 准时地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="116.58" data-end="124.04">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">He looked very well, though he <span class="weak">was</span> rather thirsty, <span class="weak">for</span> he drank <span class="linking">half</span> <span class="weak">a</span> bottle <span class="weak">of</span> milk.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/hi lʊkt ˈvɛri wɛl ðoʊ hi <span class="weak">wəz</span> ˈræðɚ ˈθɝsti <span class="weak">fɚ</span> hi dræŋk hæf<span class="linking">‿</span><span class="weak">ə</span> ˈbɑɾəl<span class="linking">‿</span><span class="weak">əv</span> mɪlk/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>hæf‿ə、ˈbɑɾəl‿əv 连读；wəz、fɚ、ə、əv 弱读/弱化；ˈbɑɾəl‿əv 中 /ɾ/ 为美式闪音。</p></div>
+    <div class="field structure"><span>结构</span><p>though 引导让步从句；for 引导原因分句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>它看起来很好，虽然相当口渴，因为它喝了半瓶牛奶。</p></div>
+    <div class="field words"><span>词</span><p>look well 看起来健康； thirsty 口渴的； half a bottle 半瓶；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="124.04" data-end="129.64">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> police <span class="weak">were</span> astounded when Mrs. Ramsay told them what she <span class="weak">had</span> done.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> pəˈlis <span class="weak">wɚ</span><span class="linking">‿</span>əˈstaʊndɪd wɛn ˈmɪsɪz ˈræmzi toʊld ðəm wʌt ʃi <span class="weak">həd</span> dʌn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wɚ‿əˈstaʊndɪd 连读；ðə、wɚ、həd 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>when 引导时间状语从句；what 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>主句一般过去时被动；宾语从句过去完成时。</p></div>
+    <div class="field cn"><span>中</span><p>当拉姆齐夫人告诉警察她做了什么时，警察大为吃惊。</p></div>
+    <div class="field words"><span>词</span><p>astounded 大吃一惊的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="129.64" data-end="133.38">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">She explained <span class="weak">that</span> Rastus <span class="weak">was</span> very dear <span class="weak">to</span> <span class="weak">her</span>.</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/ʃi ɪkˈspleɪnd ðæt ˈræstəs <span class="weak">wəz</span> ˈvɛri dɪr <span class="weak">tə</span> <span class="weak">hɚ</span>/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>wəz、tə、hɚ 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>that 引导宾语从句。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>她解释说拉斯特斯对她非常珍贵。</p></div>
+    <div class="field words"><span>词</span><p>dear 珍贵的/亲爱的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="133.38" data-end="137.46">
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Considering <span class="weak">the</span> amount she paid, he <span class="weak">was</span> <span class="linking">dear</span> <span class="weak">in</span> more ways <span class="weak linking">than</span> one!</p></div>
+    <div class="field ipa"><span>美音发音</span><p>/kənˈsɪdɚɪŋ <span class="weak">ði</span> əˈmaʊnt ʃi peɪd hi <span class="weak">wəz</span> dɪr<span class="linking">‿</span><span class="weak">ɪn</span> mɔr weɪz ðən wʌn/</p></div>
+    <div class="field liaison"><span>连读分析</span><p>dɪr‿ɪn 连读；ði、wəz、ɪn 弱读/弱化。</p></div>
+    <div class="field structure"><span>结构</span><p>Considering... 为介词/分词短语作状语；she paid 为定语从句，省略关系词。</p></div>
+    <div class="field tense"><span>时态</span><p>一般过去时。</p></div>
+    <div class="field cn"><span>中</span><p>考虑到她付的金额，它可不止一种意义上“昂贵/珍贵”！</p></div>
+    <div class="field words"><span>词</span><p>considering 考虑到； amount 金额； in more ways than one 不止一种意义上； dear 昂贵的/珍贵的；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>绑架与赎金: kidnapper 绑匪； ransom 赎金； anonymous letter 匿名信； instruction 指示； in safe hands 安全；</p>
+      <p>猫的生活: orderly life 有规律的生活； take a walk 散步； arrive punctually 准时到达； thirsty 口渴的；</p>
+      <p>金钱与态度: wealthy 富有的； withdraw 取款； keep one's word 守信； dear 珍贵的/昂贵的；</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>take interest in...</code> 表“对……感兴趣”。</p>
+      <p><code>be instructed to do</code> 被动指示。</p>
+      <p><code>fearing that...</code> 分词短语作原因状语。</p>
+      <p><code>in more ways than one</code> 一语双关。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>一般现在时描述 Rastus 的日常规律。</p>
+      <p>现在完成时说明长期共同生活：<code>has shared</code>。</p>
+      <p>一般过去时叙述绑架事件。</p>
+      <p>过去完成时用于先发生的动作：<code>had disappeared</code>, <code>had made</code>, <code>had done</code>。</p>
+    </section>
+    <section class="summary-section">
+      <h2>情态/语气总结</h2>
+      <p><code>would be returned</code>, <code>would never see</code>, <code>would keep his word</code> 都是过去将来，表示信中承诺、担忧和预期。</p>
+      <p>结尾 <code>dear</code> 一词双关，既指“亲爱的”，也指“昂贵的”。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>注意 <code>interested in</code>、<code>received an</code>、<code>paid a ransom</code> 的连读。</p>
+      <p>美式闪音: <code>letter</code> /ˈlɛɾɚ/、<code>bottle</code> /ˈbɑɾəl/。</p>
+      <p>第 11 句长，可按 <code>At first... / but fearing... / she changed...</code> 分组。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">NCE3 Lesson 19 - A Very Dear Cat</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../19－A Very Dear Cat.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.88,"end":26.36,"text":"Kidnappers are rarely interested in animals, but they recently took considerable interest in Mrs. Eleanor Ramsay's cat."},{"index":2,"start":26.36,"end":36.36,"text":"Mrs. Eleanor Ramsay, a very wealthy old lady, has shared a flat with her cat, Rastus, for a great many years."},{"index":3,"start":36.36,"end":38.82,"text":"Rastus leads an orderly life."},{"index":4,"start":38.82,"end":45.58,"text":"He usually takes a short walk in the evenings and is always home by seven o'clock."},{"index":5,"start":45.58,"end":49.8,"text":"One evening, however he failed to arrive."},{"index":6,"start":49.8,"end":52.41,"text":"Mrs. Ramsay got very worried."},{"index":7,"start":52.41,"end":57.2,"text":"She looked everywhere for him but could not find him."},{"index":8,"start":57.2,"end":64.34,"text":"Three days after Rastus' disappearance, Mrs. Ramsay received an anonymous letter."},{"index":9,"start":64.34,"end":75.73,"text":"The writer stated that Rastus was in safe hands and would be returned immediately if Mrs. Ramsay paid a ransom of £1,000."},{"index":10,"start":75.73,"end":82.62,"text":"Mrs. Ramsay was instructed to place the money in a cardboard box and to leave it outside her door."},{"index":11,"start":82.62,"end":96.31,"text":"At first, she decided to go to the police, but fearing that she would never see Rastus again--the letter had made that quite clear--she changed her mind."},{"index":12,"start":96.31,"end":101.97,"text":"She withdrew £1000 from her bank and followed the kidnapper's instructions."},{"index":13,"start":101.97,"end":110.27,"text":"The next morning, the box had disappeared but Mrs. Ramsay was sure that the kidnapper would keep his word."},{"index":14,"start":110.27,"end":116.58,"text":"Sure enough, Rastus arrived punctually at seven o'clock that evening."},{"index":15,"start":116.58,"end":124.04,"text":"He looked very well, though he was rather thirsty, for he drank half a bottle of milk."},{"index":16,"start":124.04,"end":129.64,"text":"The police were astounded when Mrs. Ramsay told them what she had done."},{"index":17,"start":129.64,"end":133.38,"text":"She explained that Rastus was very dear to her."},{"index":18,"start":133.38,"end":137.46,"text":"Considering the amount she paid, he was dear in more ways than one!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function whenAudioReady(callback) {
+      if (audio.readyState >= 2) {
+        callback();
+        return;
+      }
+      let done = false;
+      const runOnce = () => {
+        if (done) return;
+        done = true;
+        callback();
+      };
+      audio.addEventListener("canplay", runOnce, { once: true });
+      audio.addEventListener("loadedmetadata", runOnce, { once: true });
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+  </script>
+</body>
+</html>

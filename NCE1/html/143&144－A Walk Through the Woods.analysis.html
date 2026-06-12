@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE1 Lessons 143-144 - A Walk Through the Woods</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 1</p>
+      <h1>NCE1 Lessons 143-144 - A Walk Through the Woods</h1>
+      <p class="meta">Generated from 143&amp;144－A Walk Through the Woods.lrc</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">I</span> live <span class="linking">in</span> <span class="weak">a</span> very <span class="linking">old</span> town which <span class="weak">is</span> surrounded by beautiful woods.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ lɪv<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> ˈvɛri oʊld taʊn wɪtʃ<span class="linking">‿</span>ɪz səˈraʊnd baɪ ˈbjudəfəl wʊd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>live in、in a、which is 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句；who/which/that 引导从句修饰前面的名词。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>我住在一个非常古老的城镇，周围环绕着美丽的树林。</p></div>
+      <div class="field words"><span>词</span><p>beautiful 漂亮的； woods 树林；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">It</span> <span class="weak">is</span> <span class="weak">a</span> famous beauty spot.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ə</span> ˈfeɪməs ˈbjudi spɑt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>It is、is a 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>是著名的风景区。</p></div>
+      <div class="field words"><span>词</span><p>famous 著名的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">On</span> Sundays, hundreds <span class="linking">of</span> people come from <span class="weak">the</span> city <span class="weak">to</span> see <span class="weak">our</span> town <span class="weak">and</span> <span class="weak">to</span> walk through <span class="weak">the</span> woods.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɑn ˈsənˌdeɪ ˈhəndrəd<span class="linking">‿</span>əv ˈpipl kʌm frəm ð<span class="weak">ə</span> ˈsɪdi <span class="weak">tə</span> si aʊɚ taʊn<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> wɔk θru ð<span class="weak">ə</span> wʊd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hundreds of、from the、city to、town and、and to 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>周日，数百人从城市来到我们的小镇，并在树林里散步。</p></div>
+      <div class="field words"><span>词</span><p>city 城市； woods 树林；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Visitors have been <span class="linking">asked</span> <span class="weak">to</span> keep <span class="weak">the</span> woods clean <span class="weak">and</span> tidy.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈvɪzədər hæv bɪn<span class="linking">‿</span>æsk <span class="weak">tə</span> kip ð<span class="weak">ə</span> wʊd klin<span class="linking">‿</span><span class="weak">ən</span> ˈtaɪdi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>been asked、asked to、keep the、clean and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时或现在完成被动；强调动作到现在的结果。</p></div>
+      <div class="field cn"><span>中</span><p>游客被要求保持树林干净整洁。</p></div>
+      <div class="field words"><span>词</span><p>Visitors 游客； woods 树林； clean 干净的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Litter baskets have been placed <span class="linking">under</span> <span class="weak">the</span> trees, but people still throw <span class="weak">their</span> rubbish <span class="linking">everywhere.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈlɪdər ˈbæskət hæv bɪn pleɪs<span class="linking">‿</span>ˈʌndɚ ð<span class="weak">ə</span> tri bət ˈpipl stɪl θroʊ ðɛr ˈrəbɪʃ<span class="linking">‿</span>ˈɛvriˌwɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>placed under、under the、rubbish everywhere 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>被动语态；be/have been + 过去分词，强调动作承受者。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时或现在完成被动；强调动作到现在的结果。</p></div>
+      <div class="field cn"><span>中</span><p>树下已经放置了垃圾筐，但人们仍然把垃圾扔得到处都是。</p></div>
+      <div class="field words"><span>词</span><p>Litter 垃圾； rubbish 垃圾； everywhere 到处；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Last Wednesday, <span class="linking">I</span> went for <span class="weak">a</span> walk <span class="linking">in</span> <span class="weak">the</span> woods.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/læst ˈwɛnzˌdeɪ aɪ wɛnt fɚ<span class="linking">‿</span><span class="weak">ə</span> wɔk<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> wʊd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>for a、walk in、in the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>上周三，我去树林里散步。</p></div>
+      <div class="field words"><span>词</span><p>woods 树林；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">What <span class="linking">I</span> saw made me very sad.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wʌt aɪ sɔ meɪd mi ˈvɛri sæd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 what / saw / made。</p></div>
+      <div class="field structure"><span>结构</span><p>疑问句；助动词/be 动词或疑问词置于句首。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>我所看到的让我非常难过。</p></div>
+      <div class="field words"><span>词</span><p>what； saw； made； very； sad 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">I</span> counted seven <span class="linking">old</span> cars <span class="weak">and</span> three <span class="linking">old</span> refrigerators.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ kaʊnt ˈsɛvən<span class="linking">‿</span>oʊld kɑr<span class="linking">‿</span><span class="weak">ən</span> θri oʊld rəˈfrɪdʒ<span class="weak">ə</span>ˌreɪdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>seven old、cars and、and three 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>我数了一下有七辆旧汽车和三台旧冰箱。</p></div>
+      <div class="field words"><span>词</span><p>refrigerator 冰箱； counted 数了； refrigerators 冰箱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> little baskets were <span class="linking">empty</span> <span class="weak">and</span> <span class="weak">the</span> ground was covered with pieces <span class="linking">of</span> paper,</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> ˈlɪdl ˈbæskət wər<span class="linking">‿</span>ˈɛmpti <span class="weak">ən</span> ð<span class="weak">ə</span> ɡraʊnd wəz ˈkəvərd wɪð pis<span class="linking">‿</span>əv ˈpeɪpɚ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>were empty、empty and、and the、pieces of 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>被动语态；be/have been + 过去分词，强调动作承受者。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>小篮子空了，地上铺满了纸片，</p></div>
+      <div class="field words"><span>词</span><p>empty 空的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">cigarette <span class="linking">ends,</span> <span class="linking">old</span> tyres, <span class="linking">empty</span> bottles <span class="weak">and</span> rusty tins.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˌsɪɡ<span class="weak">ə</span>ˈrɛt<span class="linking">‿</span>ɛnd<span class="linking">‿</span>oʊld ˈtaɪr<span class="linking">‿</span>ˈɛmpti ˈbɑdl<span class="linking">‿</span><span class="weak">ən</span> ˈrəsti tɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>cigarette ends、ends old、tyres empty、bottles and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>烟头、旧轮胎、空瓶子和生锈的罐头。</p></div>
+      <div class="field words"><span>词</span><p>bottle 瓶子； tyres 轮胎； empty 空的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">Among</span> <span class="weak">the</span> rubbish, <span class="linking">I</span> found <span class="weak">a</span> sign which said, 'Anyone who leaves litter <span class="linking">in</span> these woods will be prosecuted!'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span>ˈməŋ ð<span class="weak">ə</span> ˈrəbɪʃ aɪ found<span class="linking">‿</span><span class="weak">ə</span> sign wɪtʃ sɛd 'anyone hu livz ˈlɪdər<span class="linking">‿</span>ɪn ðiz wʊd wɪl bi ˈprɑsəˌkjut '/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Among the、found a、litter in 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
+      <div class="field tense"><span>时态</span><p>将来/情态表达；will、be going to、may/might/would 表示将来、可能或转述中的将来。</p></div>
+      <div class="field cn"><span>中</span><p>在垃圾中，我发现了一块牌子，上面写着：“任何在这片树林里乱扔垃圾的人都会受到起诉！”</p></div>
+      <div class="field words"><span>词</span><p>rubbish 垃圾； sign 牌子； litter 垃圾； woods 树林； prosecuted 被起诉；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>本页重点是 NCE1 初级口语：问候、介绍、身份、物品归属、国籍、职业和状态表达。</p>
+      <p>高频词包括 this/that/these、my/your/our/their、am/is/are、not、too、please、thank you。</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>This is...</code> 用来介绍人或物；<code>Is this your...?</code> 用来询问归属。</p>
+      <p><code>Are you...?</code> 和 <code>What are/is...?</code> 是本阶段最重要的 be 动词疑问句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>主要使用一般现在时，重点不是复杂时态，而是 be 动词 am/is/are 与主语的一致。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>短句也要弱读功能词：<code>to</code> /tə/、<code>and</code> /ən/、<code>a/an</code> /ə, ən/、<code>are</code> /ɑr/。</p>
+      <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">A Walk Through the Woods</div>
+      </div>
+      <audio id="lesson-audio" preload="metadata" src="../143&amp;144－A Walk Through the Woods.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":19.84,"end":28,"text":"I live in a very old town which is surrounded by beautiful woods."},{"index":2,"start":28,"end":32.06,"text":"It is a famous beauty spot."},{"index":3,"start":32.06,"end":42.5,"text":"On Sundays, hundreds of people come from the city to see our town and to walk through the woods."},{"index":4,"start":42.5,"end":49.55,"text":"Visitors have been asked to keep the woods clean and tidy."},{"index":5,"start":49.55,"end":58.99,"text":"Litter baskets have been placed under the trees, but people still throw their rubbish everywhere."},{"index":6,"start":58.99,"end":65.51,"text":"Last Wednesday, I went for a walk in the woods."},{"index":7,"start":65.51,"end":70.74,"text":"What I saw made me very sad."},{"index":8,"start":70.74,"end":78.12,"text":"I counted seven old cars and three old refrigerators."},{"index":9,"start":78.12,"end":85.8,"text":"The little baskets were empty and the ground was covered with pieces of paper,"},{"index":10,"start":85.8,"end":94.49,"text":"cigarette ends, old tyres, empty bottles and rusty tins."},{"index":11,"start":94.49,"end":98.49,"text":"Among the rubbish, I found a sign which said, 'Anyone who leaves litter in these woods will be prosecuted!'"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      const startPlayback = () => {
+        seekTo(item.start);
+        audio.play();
+      };
+      if (audio.readyState >= 1) {
+        startPlayback();
+      } else {
+        audio.addEventListener("loadedmetadata", startPlayback, { once: true });
+      }
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+
+    audio.load();
+  </script>
+</body>
+</html>

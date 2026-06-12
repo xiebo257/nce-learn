@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE1 Lessons 115-116 - Knock, Knock!</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 1</p>
+      <h1>NCE1 Lessons 115-116 - Knock, Knock!</h1>
+      <p class="meta">Generated from 115&amp;116－Knock, Knock.lrc</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Isn't</span> there <span class="linking">anyone</span> <span class="linking">at</span> home?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɪzənt ðɛr<span class="linking">‿</span>ˈɛniˌwən<span class="linking">‿</span>ət hoʊm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>there anyone、anyone at 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>家里没人吗？</p></div>
+      <div class="field words"><span>词</span><p>at home 在家； anyone 任何人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">I'll</span> knock <span class="linking">again,</span> Helen.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/i'll nɑk<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛn ˈhɛlən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>knock again 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>将来/情态表达；will、be going to、may/might/would 表示将来、可能或转述中的将来。</p></div>
+      <div class="field cn"><span>中</span><p>我会再敲门，海伦。</p></div>
+      <div class="field words"><span>词</span><p>i'll； knock； again； helen 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Everything's</span> very quiet.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/everything's ˈvɛri ˈkwaɪət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 everything's / very / quiet。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>一切都很安静。</p></div>
+      <div class="field words"><span>词</span><p>everything's； very； quiet 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="linking">I'm</span> sure there's no <span class="linking">one</span> <span class="linking">at</span> home.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪm ʃʊr ðɛrz noʊ wʌn<span class="linking">‿</span>ət hoʊm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>one at 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>我确信家里没人。</p></div>
+      <div class="field words"><span>词</span><p>at home 在家；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">But that's <span class="linking">impossible.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət ðæts<span class="linking">‿</span>ɪmˈpɑsəbl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>that's impossible 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>但这是不可能的。</p></div>
+      <div class="field words"><span>词</span><p>who/which/that 引导定语从句；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Carol <span class="weak">and</span> Tom <span class="linking">invited</span> <span class="linking">us</span> <span class="weak">to</span> lunch.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈkɛrəl<span class="linking">‿</span><span class="weak">ən</span> tɑm<span class="linking">‿</span>ɪnˈvaɪt<span class="linking">‿</span>əs <span class="weak">tə</span> lʌntʃ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Carol and、Tom invited、invited us、us to 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>卡罗尔和汤姆邀请我们共进午餐。</p></div>
+      <div class="field words"><span>词</span><p>lunch 午饭； invited 邀请了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Look through <span class="weak">the</span> window.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/lʊk θru ð<span class="weak">ə</span> ˈwɪndoʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>日常交际/祈使或省略句；省略主语或用于固定寒暄。</p></div>
+      <div class="field tense"><span>时态</span><p>祈使/交际用语，无明显时态变化。</p></div>
+      <div class="field cn"><span>中</span><p>透过窗户看看。</p></div>
+      <div class="field words"><span>词</span><p>window 窗户；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Can <span class="weak">you</span> see <span class="linking">anything?</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/kæn<span class="linking">‿</span><span class="weak">jə</span> si ˈɛniˌθɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Can you 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
+      <div class="field tense"><span>时态</span><p>情态动词结构；must/can/can’t/have to 后接动词原形。</p></div>
+      <div class="field cn"><span>中</span><p>你能看到什么吗？</p></div>
+      <div class="field words"><span>词</span><p>anything 任何事物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Nothing <span class="linking">at</span> <span class="linking">all.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈnəθɪŋ<span class="linking">‿</span>ət<span class="linking">‿</span>ɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Nothing at、at all 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>什么都没有。</p></div>
+      <div class="field words"><span>词</span><p>nothing； at； all 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Let's try <span class="weak">the</span> back door.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/let's traɪ ð<span class="weak">ə</span> bæk dɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>我们试试走后门吧。</p></div>
+      <div class="field words"><span>词</span><p>let's； try； back； door 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Look! <span class="linking">Everyone's</span> <span class="linking">in</span> <span class="weak">the</span> garden.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/lʊk everyone's<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈɡɑrdən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Everyone's in、in the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>日常交际/祈使或省略句；省略主语或用于固定寒暄。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>看！大家都在花园里。</p></div>
+      <div class="field words"><span>词</span><p>garden 花园；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Hello, Helen. Hello, Jim.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/həˈloʊ ˈhɛlən həˈloʊ dʒɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 hello / helen / hello。</p></div>
+      <div class="field structure"><span>结构</span><p>日常交际/祈使或省略句；省略主语或用于固定寒暄。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>你好，海伦。你好，吉姆。</p></div>
+      <div class="field words"><span>词</span><p>hello； helen； hello； jim 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">Everybody</span> wants <span class="weak">to</span> have lunch <span class="linking">in</span> <span class="weak">the</span> garden.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɛvribədi wɑnt <span class="weak">tə</span> hæv lʌntʃ<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈɡɑrdən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wants to、lunch in、in the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>每个人都想在花园里吃午餐。</p></div>
+      <div class="field words"><span>词</span><p>lunch 午饭； garden 花园；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="linking">It's</span> nice <span class="weak">and</span> warm <span class="linking">out</span> here.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪts naɪs<span class="linking">‿</span><span class="weak">ən</span> wɔrm aʊt hɪr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>nice and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>这里又好又温暖。</p></div>
+      <div class="field words"><span>词</span><p>nice 好的/漂亮的； warm 暖和的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Come <span class="weak">and</span> have something <span class="weak">to</span> drink.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/kʌm<span class="linking">‿</span><span class="weak">ən</span> hæv ˈsəmˌθɪŋ <span class="weak">tə</span> drɪŋk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Come and、something to 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>日常交际/祈使或省略句；省略主语或用于固定寒暄。</p></div>
+      <div class="field tense"><span>时态</span><p>祈使/交际用语，无明显时态变化。</p></div>
+      <div class="field cn"><span>中</span><p>过来喝点东西吧。</p></div>
+      <div class="field words"><span>词</span><p>come； something； drink 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Thanks, Carol.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/θæŋks ˈkɛrəl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 thanks / carol。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>谢谢，卡罗尔。</p></div>
+      <div class="field words"><span>词</span><p>thanks； carol 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">May <span class="linking">I</span> have <span class="weak">a</span> glass <span class="linking">of</span> beer please?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/meɪ aɪ hæv<span class="linking">‿</span><span class="weak">ə</span> ɡlæs<span class="linking">‿</span>əv bɪr pliz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>have a、glass of 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
+      <div class="field tense"><span>时态</span><p>将来/情态表达；will、be going to、may/might/would 表示将来、可能或转述中的将来。</p></div>
+      <div class="field cn"><span>中</span><p>请给我一杯啤酒好吗？</p></div>
+      <div class="field words"><span>词</span><p>beer 啤酒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Beer?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bɪr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 beer。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>啤酒？</p></div>
+      <div class="field words"><span>词</span><p>Beer 啤酒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">There's none left.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛrz nən lɛft/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 there's / none / left。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>没有了。</p></div>
+      <div class="field words"><span>词</span><p>left 左边的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">You</span> can have some lemonade.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ju kæn hæv sʌm ˌlɛməˈneɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
+      <div class="field tense"><span>时态</span><p>情态动词结构；must/can/can’t/have to 后接动词原形。</p></div>
+      <div class="field cn"><span>中</span><p>你可以喝点柠檬水。</p></div>
+      <div class="field words"><span>词</span><p>can have 可以喝/可以有；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Lemonade!</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˌlɛməˈneɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 lemonade。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>柠檬水！</p></div>
+      <div class="field words"><span>词</span><p>lemonade 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">Don't believe her, Jim.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/doʊnt bəˈliv hɚ dʒɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 don't / believe / jim。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>别相信她，吉姆。</p></div>
+      <div class="field words"><span>词</span><p>believe 相信；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">She's <span class="linking">only</span> joking.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃiz<span class="linking">‿</span>ˈoʊnli ˈdʒoʊkɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>She's only 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>她只是在开玩笑。</p></div>
+      <div class="field words"><span>词</span><p>she's； only； joking 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text">Have some beer!</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hæv sʌm bɪr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 some / beer。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>喝点啤酒吧！</p></div>
+      <div class="field words"><span>词</span><p>beer 啤酒；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>本页重点是 NCE1 初级口语：问候、介绍、身份、物品归属、国籍、职业和状态表达。</p>
+      <p>高频词包括 this/that/these、my/your/our/their、am/is/are、not、too、please、thank you。</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>This is...</code> 用来介绍人或物；<code>Is this your...?</code> 用来询问归属。</p>
+      <p><code>Are you...?</code> 和 <code>What are/is...?</code> 是本阶段最重要的 be 动词疑问句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>主要使用一般现在时，重点不是复杂时态，而是 be 动词 am/is/are 与主语的一致。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>短句也要弱读功能词：<code>to</code> /tə/、<code>and</code> /ən/、<code>a/an</code> /ə, ən/、<code>are</code> /ɑr/。</p>
+      <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Knock, Knock!</div>
+      </div>
+      <audio id="lesson-audio" preload="metadata" src="../115&amp;116－Knock, Knock.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.07,"end":21.56,"text":"Isn't there anyone at home?"},{"index":2,"start":21.56,"end":24.61,"text":"I'll knock again, Helen."},{"index":3,"start":24.61,"end":27.6,"text":"Everything's very quiet."},{"index":4,"start":27.6,"end":30.9,"text":"I'm sure there's no one at home."},{"index":5,"start":30.9,"end":33.61,"text":"But that's impossible."},{"index":6,"start":33.61,"end":37.8,"text":"Carol and Tom invited us to lunch."},{"index":7,"start":37.8,"end":40.7,"text":"Look through the window."},{"index":8,"start":40.7,"end":43.71,"text":"Can you see anything?"},{"index":9,"start":43.71,"end":45.78,"text":"Nothing at all."},{"index":10,"start":45.78,"end":49.22,"text":"Let's try the back door."},{"index":11,"start":49.22,"end":53.22,"text":"Look! Everyone's in the garden."},{"index":12,"start":53.22,"end":57.31,"text":"Hello, Helen. Hello, Jim."},{"index":13,"start":57.31,"end":61.36,"text":"Everybody wants to have lunch in the garden."},{"index":14,"start":61.36,"end":64.91,"text":"It's nice and warm out here."},{"index":15,"start":64.91,"end":68.73,"text":"Come and have something to drink."},{"index":16,"start":68.73,"end":70.77,"text":"Thanks, Carol."},{"index":17,"start":70.77,"end":74.58,"text":"May I have a glass of beer please?"},{"index":18,"start":74.58,"end":75.72,"text":"Beer?"},{"index":19,"start":75.72,"end":77.87,"text":"There's none left."},{"index":20,"start":77.87,"end":81.04,"text":"You can have some lemonade."},{"index":21,"start":81.04,"end":82.67,"text":"Lemonade!"},{"index":22,"start":82.67,"end":84.71,"text":"Don't believe her, Jim."},{"index":23,"start":84.71,"end":86.59,"text":"She's only joking."},{"index":24,"start":86.59,"end":90.59,"text":"Have some beer!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      const startPlayback = () => {
+        seekTo(item.start);
+        audio.play();
+      };
+      if (audio.readyState >= 1) {
+        startPlayback();
+      } else {
+        audio.addEventListener("loadedmetadata", startPlayback, { once: true });
+      }
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+
+    audio.load();
+  </script>
+</body>
+</html>

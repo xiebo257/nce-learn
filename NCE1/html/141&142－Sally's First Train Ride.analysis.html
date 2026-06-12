@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE1 Lessons 141-142 - Sally's First Train Ride</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 1</p>
+      <h1>NCE1 Lessons 141-142 - Sally's First Train Ride</h1>
+      <p class="meta">Generated from 141&amp;142－Sally's First Train Ride.lrc</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Last week, <span class="weak">my</span> four-year-old daughter, Sally, was <span class="linking">invited</span> <span class="weak">to</span> <span class="weak">a</span> children's party.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/læst wik maɪ fouryearold ˈdɔtɚ ˈsæli wəz<span class="linking">‿</span>ɪnˈvaɪt <span class="weak">tə</span> <span class="weak">ə</span> children's ˈpɑrdi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>was invited、invited to、to a 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>被动语态；be/have been + 过去分词，强调动作承受者。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>上周，我四岁的女儿莎莉受邀参加一个儿童聚会。</p></div>
+      <div class="field words"><span>词</span><p>daughter 女儿； invited 邀请了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">I</span> decided <span class="weak">to</span> take her by train.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ dəˈsaɪdəd <span class="weak">tə</span> teɪk hɚ baɪ treɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>我决定带她坐火车。</p></div>
+      <div class="field words"><span>词</span><p>by train 乘火车； decided 决定了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Sally was very <span class="linking">excited</span> because <span class="weak">she</span> had never travelled <span class="linking">on</span> <span class="weak">a</span> train before.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsæli wəz ˈvɛri ɪkˈsaɪdəd bəˈkəz ʃi hæd ˈnɛvər ˈtrævəld<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> treɪn bəˈfɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>travelled on、on a 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时；表示过去某个时间之前已经发生的动作。</p></div>
+      <div class="field cn"><span>中</span><p>莎莉非常兴奋，因为她以前从未乘坐过火车。</p></div>
+      <div class="field words"><span>词</span><p>excited 兴奋的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">She</span> sat near <span class="weak">the</span> window <span class="weak">and</span> <span class="linking">asked</span> questions <span class="linking">about</span> <span class="linking">everything</span> <span class="weak">she</span> saw.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃi sæt nɪr ð<span class="weak">ə</span> ˈwɪndoʊ <span class="weak">ən</span><span class="linking">‿</span>æsk ˈkwɛstʃn<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt<span class="linking">‿</span>ˈɛvriˌθɪŋ ʃi sɔ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>near the、window and、and asked、questions about、about everything 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>她坐在靠近窗户的地方，对她所看到的一切提出问题。</p></div>
+      <div class="field words"><span>词</span><p>window 窗户；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Suddenly, <span class="weak">a</span> middle-age lady got <span class="linking">on</span> <span class="weak">the</span> train <span class="weak">and</span> sat <span class="linking">opposite</span> Sally.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsədnli <span class="weak">ə</span> middleage ˈleɪdi ɡɑt<span class="linking">‿</span>ɑn ð<span class="weak">ə</span> treɪn<span class="linking">‿</span><span class="weak">ən</span> sæɾ<span class="linking">‿</span>ˈɑpəzət ˈsæli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>Suddenly a、got on、on the、train and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。 两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>突然，一位中年女士上了火车，坐在莎莉对面。</p></div>
+      <div class="field words"><span>词</span><p>opposite 在对面；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">'Hello, little girl,' <span class="weak">she</span> said.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/'hello ˈlɪdl ɡərl ' ʃi sɛd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 'hello / little / girl。</p></div>
+      <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>“你好，小女孩，”她说。</p></div>
+      <div class="field words"><span>词</span><p>'hello； little； girl； '； said 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Sally did not <span class="linking">answer,</span> but looked <span class="linking">at</span> her curiously.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsæli dɪd nɑt<span class="linking">‿</span>ˈænsər bət looked<span class="linking">‿</span>ət hɚ ˈkjʊriəsli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>not answer、looked at 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>莎莉没有回答，只是好奇地看着她。</p></div>
+      <div class="field words"><span>词</span><p>curiously 好奇地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> lady was dressed <span class="linking">in</span> <span class="weak">a</span> blue coat <span class="weak">and</span> <span class="weak">a</span> large, funny hat.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> ˈleɪdi wəz drɛs<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> blu koʊt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ ˈfəni hæt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dressed in、in a、coat and、and a 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>这位女士穿着一件蓝色外套，戴着一顶滑稽的大帽子。</p></div>
+      <div class="field words"><span>词</span><p>blue 蓝色的； coat 外套； large 大的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">After</span> <span class="weak">the</span> train had left <span class="weak">the</span> station, <span class="weak">the</span> lady <span class="linking">opened</span> her handbag <span class="weak">and</span> took <span class="linking">out</span> her powder compact.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ð<span class="weak">ə</span> treɪn hæd lɛft ð<span class="weak">ə</span> ˈsteɪʃ<span class="weak">ən</span> ð<span class="weak">ə</span> ˈleɪdi ˈoʊpn hɚ ˈhændˌbæɡ<span class="linking">‿</span><span class="weak">ən</span> tʊk aʊt hɚ ˈpaʊdər ˈkɑmˌpæk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>After the、left the、station the、handbag and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时；表示过去某个时间之前已经发生的动作。</p></div>
+      <div class="field cn"><span>中</span><p>火车离开车站后，这位女士打开手提包，拿出了粉饼。</p></div>
+      <div class="field words"><span>词</span><p>left 左边的； station 车站； handbag 手提包； compact 粉盒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">She</span> then began <span class="weak">to</span> make <span class="linking">up</span> her face.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃi ðɛn bəˈɡæn <span class="weak">tə</span> meɪk<span class="linking">‿</span>ʌp hɚ face/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>began to、make up 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在语境或固定口语表达。</p></div>
+      <div class="field cn"><span>中</span><p>然后她开始化妆。</p></div>
+      <div class="field words"><span>词</span><p>make up her face 化妆；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">'Why <span class="weak">are</span> <span class="weak">you</span> doing that?' Sally <span class="linking">asked.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/'why <span class="weak">ɑr</span> ju ˈduɪŋ ðæt ' ˈsæli æsk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>“你为什么要这么做？”莎莉问道。</p></div>
+      <div class="field words"><span>词</span><p>who/which/that 引导定语从句；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">'To make myself beautiful,' <span class="weak">the</span> lady <span class="linking">answered.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/'to meɪk maɪˈsɛlf ˈbjudəfəl ' ð<span class="weak">ə</span> ˈleɪdi ˈænsər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>“为了让自己变得美丽，”女士回答道。</p></div>
+      <div class="field words"><span>词</span><p>beautiful 漂亮的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">She</span> put <span class="linking">away</span> her compact <span class="weak">and</span> smiled kindly.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃi pʊt<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ hɚ ˈkɑmˌpæk<span class="linking">‿</span><span class="weak">ən</span> smaɪl ˈkaɪnli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>put away、compact and 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>她收起粉盒，露出友善的微笑。</p></div>
+      <div class="field words"><span>词</span><p>put away 收起来； compact 粉盒；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">'But <span class="weak">you</span> <span class="weak">are</span> still <span class="linking">ugly,'</span> Sally said.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/'but ju <span class="weak">ɑr</span> stɪl<span class="linking">‿</span>ˈ<span class="weak">ə</span>ɡli ' ˈsæli sɛd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>you are、still ugly 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>“但你还是很丑，”莎莉说。</p></div>
+      <div class="field words"><span>词</span><p>ugly 难看的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Sally was <span class="linking">amused,</span> but <span class="linking">I</span> was very <span class="linking">embarrassed!</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsæli wəz<span class="linking">‿</span><span class="weak">ə</span>ˈmuz bət aɪ wəz ˈvɛri <span class="weak">əm</span>ˈbɛrəst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>was amused、was very 发生连读，IPA 中用 <code>‿</code> 标出。</p></div>
+      <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时；叙述过去发生的动作或状态。</p></div>
+      <div class="field cn"><span>中</span><p>莎莉觉得好笑，但我却很尴尬！</p></div>
+      <div class="field words"><span>词</span><p>bar 条； amused 觉得好笑的； embarrassed 尴尬的；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>本页重点是 NCE1 初级口语：问候、介绍、身份、物品归属、国籍、职业和状态表达。</p>
+      <p>高频词包括 this/that/these、my/your/our/their、am/is/are、not、too、please、thank you。</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>This is...</code> 用来介绍人或物；<code>Is this your...?</code> 用来询问归属。</p>
+      <p><code>Are you...?</code> 和 <code>What are/is...?</code> 是本阶段最重要的 be 动词疑问句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>主要使用一般现在时，重点不是复杂时态，而是 be 动词 am/is/are 与主语的一致。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>短句也要弱读功能词：<code>to</code> /tə/、<code>and</code> /ən/、<code>a/an</code> /ə, ən/、<code>are</code> /ɑr/。</p>
+      <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Sally's First Train Ride</div>
+      </div>
+      <audio id="lesson-audio" preload="metadata" src="../141&amp;142－Sally's First Train Ride.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.91,"end":26.47,"text":"Last week, my four-year-old daughter, Sally, was invited to a children's party."},{"index":2,"start":26.47,"end":30.67,"text":"I decided to take her by train."},{"index":3,"start":30.67,"end":39.52,"text":"Sally was very excited because she had never travelled on a train before."},{"index":4,"start":39.52,"end":48.09,"text":"She sat near the window and asked questions about everything she saw."},{"index":5,"start":48.09,"end":58.15,"text":"Suddenly, a middle-age lady got on the train and sat opposite Sally."},{"index":6,"start":58.15,"end":62.42,"text":"'Hello, little girl,' she said."},{"index":7,"start":62.42,"end":68.69,"text":"Sally did not answer, but looked at her curiously."},{"index":8,"start":68.69,"end":76.2,"text":"The lady was dressed in a blue coat and a large, funny hat."},{"index":9,"start":76.2,"end":87.12,"text":"After the train had left the station, the lady opened her handbag and took out her powder compact."},{"index":10,"start":87.12,"end":92.76,"text":"She then began to make up her face."},{"index":11,"start":92.76,"end":97.49,"text":"'Why are you doing that?' Sally asked."},{"index":12,"start":97.49,"end":103.31,"text":"'To make myself beautiful,' the lady answered."},{"index":13,"start":103.31,"end":109.49,"text":"She put away her compact and smiled kindly."},{"index":14,"start":109.49,"end":114.63,"text":"'But you are still ugly,' Sally said."},{"index":15,"start":114.63,"end":118.63,"text":"Sally was amused, but I was very embarrassed!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      const startPlayback = () => {
+        seekTo(item.start);
+        audio.play();
+      };
+      if (audio.readyState >= 1) {
+        startPlayback();
+      } else {
+        audio.addEventListener("loadedmetadata", startPlayback, { once: true });
+      }
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+
+    audio.load();
+  </script>
+</body>
+</html>

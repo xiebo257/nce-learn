@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE1 Lessons 25-26 - Mrs. Smith's Kitchen</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 1</p>
+      <h1>NCE1 Lessons 25-26 - Mrs. Smith's Kitchen</h1>
+      <p class="meta">Generated from 025&amp;026－Mrs. Smith's Kitchen.lrc</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Mrs. Smith's kitchen <span class="weak">is</span> small.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz smɪθs ˈkɪtʃ<span class="weak">ən</span><span class="linking">‿</span>ɪz smɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kitchen is 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>史密斯太太的厨房很小。</p></div>
+      <div class="field words"><span>词</span><p>kitchen 厨房； small 小的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">There <span class="weak">is</span> <span class="weak">a</span> refrigerator <span class="linking">in</span> <span class="weak">the</span> kitchen.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ə</span> rɪˈfrɪdʒ<span class="weak">ə</span>ˌreɪɾɚ<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈkɪtʃ<span class="weak">ən</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>There is、is a、refrigerator in、in the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。 两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>厨房里有一台冰箱。</p></div>
+      <div class="field words"><span>词</span><p>kitchen 厨房； refrigerator 冰箱；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> refrigerator <span class="weak">is</span> white.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> rɪˈfrɪdʒ<span class="weak">ə</span>ˌreɪɾɚ<span class="linking">‿</span>ɪz waɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>refrigerator is 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。 两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>冰箱是白色的。</p></div>
+      <div class="field words"><span>词</span><p>refrigerator 冰箱； white 白色的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">It</span> <span class="weak">is</span> <span class="linking">on</span> <span class="weak">the</span> right.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ɪz<span class="linking">‿</span>ɑn ð<span class="weak">ə</span> raɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>It is、is on、on the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>它在右边。</p></div>
+      <div class="field words"><span>词</span><p>right 本句关键词；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">There <span class="weak">is</span> <span class="weak">an</span> <span class="linking">electric</span> cooker <span class="linking">in</span> <span class="weak">the</span> kitchen.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪˈlɛktrɪk ˈkʊkɚ<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈkɪtʃ<span class="weak">ən</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>There is、is an、an electric、cooker in、in the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>厨房里有一个电饭锅。</p></div>
+      <div class="field words"><span>词</span><p>cooker 炉子； electric cooker 电炉； kitchen 厨房；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> cooker <span class="weak">is</span> blue.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> ˈkʊkɚ<span class="linking">‿</span>ɪz blu/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>cooker is 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>炊具是蓝色的。</p></div>
+      <div class="field words"><span>词</span><p>cooker 炉子； blue 蓝色的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">It</span> <span class="weak">is</span> <span class="linking">on</span> <span class="weak">the</span> left.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ɪz<span class="linking">‿</span>ɑn ð<span class="weak">ə</span> lɛft/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>It is、is on、on the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>它在左边。</p></div>
+      <div class="field words"><span>词</span><p>left 左边的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">There <span class="weak">is</span> <span class="weak">a</span> table <span class="linking">in</span> <span class="weak">the</span> middle <span class="linking">of</span> <span class="weak">the</span> room.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ə</span> ˈteɪbəl<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈmɪdəl<span class="linking">‿</span>əv ð<span class="weak">ə</span> rum/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>There is、is a、table in、in the、middle of 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>房间中间有一张桌子。</p></div>
+      <div class="field words"><span>词</span><p>table 桌子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">There <span class="weak">is</span> <span class="weak">a</span> bottle <span class="linking">on</span> <span class="weak">the</span> table.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ə</span> ˈbɑɾəl<span class="linking">‿</span>ɑn ð<span class="weak">ə</span> ˈteɪbəl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>There is、is a、bottle on、on the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。 两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>桌子上有一瓶。</p></div>
+      <div class="field words"><span>词</span><p>bottle 瓶子； table 桌子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> bottle <span class="weak">is</span> <span class="linking">empty.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> ˈbɑɾəl<span class="linking">‿</span>ɪz<span class="linking">‿</span>ˈɛmpti/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bottle is、is empty 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。 两个元音之间的 /t/、/d/ 用美式闪音 /ɾ/ 轻快带过。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>瓶子是空的。</p></div>
+      <div class="field words"><span>词</span><p>bottle 瓶子； empty 空的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">There <span class="weak">is</span> <span class="weak">a</span> cup <span class="linking">on</span> <span class="weak">the</span> table, too.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span>ɪz<span class="linking">‿</span><span class="weak">ə</span> kʌp<span class="linking">‿</span>ɑn ð<span class="weak">ə</span> ˈteɪbəl tu/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>There is、is a、cup on、on the 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>桌子上也有一个杯子。</p></div>
+      <div class="field words"><span>词</span><p>table 桌子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> cup <span class="weak">is</span> clean.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ð<span class="weak">ə</span> kʌp<span class="linking">‿</span>ɪz klin/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>cup is 发生连读，IPA 中用 <code>‿</code> 标出。 功能词按美式口语弱读处理，如 a/an、and、to、are、you。</p></div>
+      <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时，重点是 be 动词的人称变化。</p></div>
+      <div class="field cn"><span>中</span><p>杯子很干净。</p></div>
+      <div class="field words"><span>词</span><p>clean 干净的；</p></div>
+    </article>
+    <section class="summary-section">
+      <h2>词汇总结</h2>
+      <p>本页重点是 NCE1 初级口语：问候、介绍、身份、物品归属、国籍、职业和状态表达。</p>
+      <p>高频词包括 this/that/these、my/your/our/their、am/is/are、not、too、please、thank you。</p>
+    </section>
+    <section class="summary-section">
+      <h2>句型总结</h2>
+      <p><code>This is...</code> 用来介绍人或物；<code>Is this your...?</code> 用来询问归属。</p>
+      <p><code>Are you...?</code> 和 <code>What are/is...?</code> 是本阶段最重要的 be 动词疑问句。</p>
+    </section>
+    <section class="summary-section">
+      <h2>时态总结</h2>
+      <p>主要使用一般现在时，重点不是复杂时态，而是 be 动词 am/is/are 与主语的一致。</p>
+    </section>
+    <section class="summary-section">
+      <h2>本课连读注意点</h2>
+      <p>短句也要弱读功能词：<code>to</code> /tə/、<code>and</code> /ən/、<code>a/an</code> /ə, ən/、<code>are</code> /ɑr/。</p>
+      <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
+    </section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Mrs. Smith's Kitchen</div>
+      </div>
+      <audio id="lesson-audio" preload="metadata" src="../025&amp;026－Mrs. Smith's Kitchen.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.31,"end":23.12,"text":"Mrs. Smith's kitchen is small."},{"index":2,"start":23.12,"end":27.71,"text":"There is a refrigerator in the kitchen."},{"index":3,"start":27.71,"end":31.62,"text":"The refrigerator is white."},{"index":4,"start":31.62,"end":35.03,"text":"It is on the right."},{"index":5,"start":35.03,"end":39.62,"text":"There is an electric cooker in the kitchen."},{"index":6,"start":39.62,"end":42.95,"text":"The cooker is blue."},{"index":7,"start":42.95,"end":46.22,"text":"It is on the left."},{"index":8,"start":46.22,"end":51.54,"text":"There is a table in the middle of the room."},{"index":9,"start":51.54,"end":55.27,"text":"There is a bottle on the table."},{"index":10,"start":55.27,"end":59.1,"text":"The bottle is empty."},{"index":11,"start":59.1,"end":63.83,"text":"There is a cup on the table, too."},{"index":12,"start":63.83,"end":67.83,"text":"The cup is clean."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return minutes + ":" + seconds;
+    }
+
+    function activeSubtitle(time) {
+      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
+    }
+
+    function setActiveSentence(item) {
+      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
+      if (item) subtitleEl.textContent = item.text;
+    }
+
+    function updateProgress(time) {
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      currentEl.textContent = formatTime(time);
+      durationEl.textContent = formatTime(duration);
+      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
+      const item = activeSubtitle(time);
+      if (item) setActiveSentence(item);
+    }
+
+    function seekTo(time) {
+      audio.currentTime = time;
+      updateProgress(time);
+    }
+
+    function playFrom(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      setActiveSentence(item);
+      const startPlayback = () => {
+        seekTo(item.start);
+        audio.play();
+      };
+      if (audio.readyState >= 1) {
+        startPlayback();
+      } else {
+        audio.addEventListener("loadedmetadata", startPlayback, { once: true });
+      }
+    }
+
+    document.querySelectorAll(".sentence-play").forEach((button) => {
+      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    dockPlay.addEventListener("click", () => {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    audio.addEventListener("play", () => {
+      dockPlay.textContent = "Ⅱ";
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlay.textContent = "▶";
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+      durationEl.textContent = formatTime(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      updateProgress(audio.currentTime);
+    });
+
+    trackEl.addEventListener("click", (event) => {
+      const rect = trackEl.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
+      audio.currentTime = ratio * duration;
+      updateProgress(audio.currentTime);
+    });
+
+    audio.load();
+  </script>
+</body>
+</html>

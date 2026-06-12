@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新概念英语分析 HTML 导航</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --page: #050505;
+            --panel: #232323;
+            --panel-2: #171717;
+            --text: #f8fafc;
+            --muted: #a1a1aa;
+            --line: rgba(255, 255, 255, 0.1);
+            --blue: #7c93ff;
+            --blue-bg: #303345;
+            --green: #22c55e;
+            --brown: #b7791f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--page);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .shell {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 56px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .brand {
+            min-width: 0;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(26px, 4vw, 44px);
+            font-weight: 760;
+            letter-spacing: 0;
+        }
+
+        .brand p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .home-link {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 0 14px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: #e5e7eb;
+            background: rgba(255, 255, 255, 0.04);
+            font-size: 14px;
+        }
+
+        .books {
+            display: grid;
+            gap: 18px;
+            margin-bottom: 34px;
+        }
+
+        .book-card {
+            display: grid;
+            grid-template-columns: minmax(230px, 42%) 1fr;
+            min-height: 286px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--panel);
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .book-card[href]:hover,
+        .book-card[href]:focus-visible {
+            border-color: rgba(124, 147, 255, 0.65);
+            transform: translateY(-2px);
+            transition: border-color 160ms ease, transform 160ms ease;
+        }
+
+        .book-card.is-disabled {
+            opacity: 0.58;
+        }
+
+        .cover-wrap {
+            background: #111;
+            min-height: 260px;
+        }
+
+        .cover-wrap img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            padding: clamp(26px, 5vw, 54px);
+        }
+
+        .book-number {
+            color: #e7e7e7;
+            font-size: clamp(23px, 3vw, 40px);
+            font-weight: 760;
+            letter-spacing: 0;
+        }
+
+        .book-title {
+            color: #ffffff;
+            font-size: clamp(22px, 3.8vw, 46px);
+            font-weight: 820;
+            letter-spacing: 0;
+            line-height: 1.08;
+            overflow-wrap: anywhere;
+        }
+
+        .book-subtitle {
+            color: #d4d4d8;
+            font-size: clamp(17px, 2vw, 25px);
+        }
+
+        .book-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 34px;
+            padding: 0 14px;
+            border-radius: 999px;
+            background: var(--blue-bg);
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pill.available {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+        }
+
+        .pill.pending {
+            background: rgba(180, 83, 9, 0.16);
+            color: #fbbf24;
+        }
+
+        .section {
+            margin-top: 36px;
+            padding-top: 6px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: clamp(22px, 3vw, 32px);
+            letter-spacing: 0;
+        }
+
+        .section-title p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .lesson-card {
+            display: flex;
+            min-height: 92px;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel-2);
+        }
+
+        .lesson-card:hover,
+        .lesson-card:focus-visible {
+            border-color: rgba(124, 147, 255, 0.72);
+            background: #1f1f24;
+        }
+
+        .lesson-no {
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 760;
+        }
+
+        .lesson-name {
+            color: #f4f4f5;
+            font-size: 15px;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+        .note {
+            margin: 28px 0 0;
+            padding: 14px 16px;
+            border: 1px solid rgba(124, 147, 255, 0.22);
+            border-radius: 12px;
+            background: rgba(124, 147, 255, 0.08);
+            color: #dbe3ff;
+            font-size: 14px;
+        }
+
+        .linking {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .weak {
+            color: var(--brown);
+            font-weight: 700;
+        }
+
+        footer {
+            margin-top: 42px;
+            padding-top: 22px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 720px) {
+            .shell {
+                width: min(100% - 22px, 1120px);
+                padding-top: 18px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .book-card {
+                grid-template-columns: 1fr;
+                border-radius: 20px;
+            }
+
+            .cover-wrap {
+                height: 58vw;
+                min-height: 250px;
+                max-height: 380px;
+            }
+
+            .book-info {
+                padding: 24px;
+            }
+
+            .section-head {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<main class="shell">
+    <header class="topbar">
+        <div class="brand">
+            <h1>新概念英语分析导航</h1>
+            <p>Browse generated HTML lessons with American pronunciation and connected-speech notes.</p>
+        </div>
+        <a class="home-link" href="../../index.html">返回首页</a>
+    </header>
+
+    <section class="books" aria-label="全四册导航">
+        <a class="book-card" href="#nce1-lessons">
+            <div class="cover-wrap">
+                <img src="../../images/NCE1.jpg" alt="New Concept English First Things First">
+            </div>
+            <div class="book-info">
+                <div class="book-number">第一册</div>
+                <div class="book-title">First Things First</div>
+                <div class="book-subtitle">英语初阶</div>
+                <div class="book-meta">
+                    <span class="pill">144课</span>
+                    <span class="pill available">已生成 1-144</span>
+                </div>
+            </div>
+        </a>
+
+        <div class="book-card is-disabled" aria-disabled="true">
+            <div class="cover-wrap">
+                <img src="../../images/NCE2.jpg" alt="New Concept English Practice and Progress">
+            </div>
+            <div class="book-info">
+                <div class="book-number">第二册</div>
+                <div class="book-title">Practice and Progress</div>
+                <div class="book-subtitle">实践与进步</div>
+                <div class="book-meta">
+                    <span class="pill">96课</span>
+                    <span class="pill pending">分析 HTML 未生成</span>
+                </div>
+            </div>
+        </div>
+
+        <a class="book-card" href="#nce3-lessons">
+            <div class="cover-wrap">
+                <img src="../../images/NCE3.jpg" alt="New Concept English Developing Skills">
+            </div>
+            <div class="book-info">
+                <div class="book-number">第三册</div>
+                <div class="book-title">Developing Skills</div>
+                <div class="book-subtitle">培养技能</div>
+                <div class="book-meta">
+                    <span class="pill">60课</span>
+                    <span class="pill available">已生成 1-60</span>
+                </div>
+            </div>
+        </a>
+
+        <div class="book-card is-disabled" aria-disabled="true">
+            <div class="cover-wrap">
+                <img src="../../images/NCE4.jpg" alt="New Concept English Fluency in English">
+            </div>
+            <div class="book-info">
+                <div class="book-number">第四册</div>
+                <div class="book-title">Fluency in English</div>
+                <div class="book-subtitle">流利英语</div>
+                <div class="book-meta">
+                    <span class="pill">48课</span>
+                    <span class="pill pending">分析 HTML 未生成</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <p class="note">
+        发音页说明：美音单词底稿按 macOS Dictionary AmE 校对，再在整句中保留
+        <span class="linking">连读</span>、<span class="weak">弱读</span>、美式闪音等口语现象。
+    </p>
+
+    <section class="section" id="nce1-lessons">
+        <div class="section-head">
+            <div class="section-title">
+                <h2>第一册分析 HTML</h2>
+                <p>Lessons 1-144, grouped as paired NCE1 lessons.</p>
+            </div>
+            <span class="pill available" id="nce1-count">0 pages</span>
+        </div>
+        <div class="lesson-grid" id="nce1-grid"></div>
+    </section>
+
+    <section class="section" id="nce3-lessons">
+        <div class="section-head">
+            <div class="section-title">
+                <h2>第三册分析 HTML</h2>
+                <p>Lessons 1-60, sentence-by-sentence analysis pages.</p>
+            </div>
+            <span class="pill available" id="nce3-count">0 pages</span>
+        </div>
+        <div class="lesson-grid" id="nce3-grid"></div>
+    </section>
+
+    <footer>
+        <p>Static browse page for local/mobile access.</p>
+    </footer>
+</main>
+
+<script>
+    const nce1Files = [
+        "001&002－Excuse Me.analysis.html",
+        "003&004－Sorry, Sir..analysis.html",
+        "005&006－Nice to Meet You..analysis.html",
+        "007&008－Are You a Teacher.analysis.html",
+        "009&010－How Are You Today.analysis.html",
+        "011&012－Is This Your Shirt.analysis.html",
+        "013&014－A New Dress.analysis.html",
+        "015&016－Your Passports, Please..analysis.html",
+        "017&018－How do you do.analysis.html",
+        "019&020－Tired and Thirsty.analysis.html",
+        "021&022－Which Book.analysis.html",
+        "023&024－Which Glasses.analysis.html",
+        "025&026－Mrs. Smith's Kitchen.analysis.html",
+        "027&028－Mrs. Smith's Living Room.analysis.html",
+        "029&030－Come In, Amy..analysis.html",
+        "031&032－Where's Sally.analysis.html",
+        "033&034－A Fine Day.analysis.html",
+        "035&036－Our Village.analysis.html",
+        "037&038－Making a Bookcase.analysis.html",
+        "039&040－Don't Drop It.analysis.html",
+        "041&042－Penny's Bag.analysis.html",
+        "043&044－Hurry Up.analysis.html",
+        "045&046－The Boss's Letter.analysis.html",
+        "047&048－A Cup of Coffee.analysis.html",
+        "049&050－At the Butcher's.analysis.html",
+        "051&052－A Pleasant Climate.analysis.html",
+        "053&054－An Interesting Climate.analysis.html",
+        "055&056－The Sawyer Family.analysis.html",
+        "057&058－An Unusual Day.analysis.html",
+        "059&060－Is That All.analysis.html",
+        "061&062－A Bad Cold.analysis.html",
+        "063&064－Thank You, Doctor..analysis.html",
+        "065&066－Not a Baby.analysis.html",
+        "067&068－The Weekend.analysis.html",
+        "069&070－The Car Race.analysis.html",
+        "071&072－He's Awful.analysis.html",
+        "073&074－The Way to King Street.analysis.html",
+        "075&076－Uncomfortable Shoes.analysis.html",
+        "077&078－Terrible Toothache.analysis.html",
+        "079&080－Carol's Shopping List.analysis.html",
+        "081&082－Roast Beef and Potatoes.analysis.html",
+        "083&084－Going on Holiday.analysis.html",
+        "085&086－Paris in the Spring..analysis.html",
+        "087&088－A Car Crash.analysis.html",
+        "089&090－For Sale.analysis.html",
+        "091&092－Poor Ian.analysis.html",
+        "093&094－Our New Neighbour.analysis.html",
+        "095&096－Tickets, Please..analysis.html",
+        "097&098－A Small Blue Case.analysis.html",
+        "099&100－Ow.analysis.html",
+        "101&102－A Card From Jimmy.analysis.html",
+        "103&104－The French Test.analysis.html",
+        "105&106－Full of Mistakes.analysis.html",
+        "107&108－It's Too Small..analysis.html",
+        "109&110－A Good Idea.analysis.html",
+        "111&112－The Most Expensive Model.analysis.html",
+        "113&114－Small Change.analysis.html",
+        "115&116－Knock, Knock.analysis.html",
+        "117&118－Tommy's Breakfast.analysis.html",
+        "119&120－A True Story.analysis.html",
+        "121&122－The Man in a Hat.analysis.html",
+        "123&124－A Trip to Australia.analysis.html",
+        "125&126－Tea for Two.analysis.html",
+        "127&128－A Famous Actress.analysis.html",
+        "129&130－Seventy Miles an Hour.analysis.html",
+        "131&132－Don't be So Sure.analysis.html",
+        "133&134－Sensational News.analysis.html",
+        "135&136－The Latest Report.analysis.html",
+        "137&138－A Pleasant Dream.analysis.html",
+        "139&140－Is That You, John.analysis.html",
+        "141&142－Sally's First Train Ride.analysis.html",
+        "143&144－A Walk Through the Woods.analysis.html"
+    ];
+
+    const nce3Files = [
+        "01－A Puma at Large.analysis.html",
+        "02－Thirteen Equals One.analysis.html",
+        "03－An Unknown Goddess.analysis.html",
+        "04－The Double Life of Alfred Bloggs.analysis.html",
+        "05－The Facts.analysis.html",
+        "06－Smash-and-Grab.analysis.html",
+        "07－Mutilated Ladies.analysis.html",
+        "08－A Famous Monastery.analysis.html",
+        "09－Flying Cats.analysis.html",
+        "10－The Loss of the Titanic.analysis.html",
+        "11－Not Guilty.analysis.html",
+        "12－Life on a Desert Island.analysis.html",
+        "13－It's Only Me.analysis.html",
+        "14－A Noble Gangster.analysis.html",
+        "15－Fifty Pence Worth of Trouble.analysis.html",
+        "16－Mary Had a Little Lamb.analysis.html",
+        "17－The Longest Suspension Bridge in the World.analysis.html",
+        "18－Electric Currents in Modern Art.analysis.html",
+        "19－A Very Dear Cat.analysis.html",
+        "20－Pioneer Pilots.analysis.html",
+        "21－Daniel Mendoza.analysis.html",
+        "22－By Heart.analysis.html",
+        "23－One Man's Meat is Another Man's Poison.analysis.html",
+        "24－A Skeleton in the Cupboard.analysis.html",
+        "25－The Cutty Sark.analysis.html",
+        "26－Wanted a Large Biscuit Tin.analysis.html",
+        "27－Nothing to Sell and Nothing to Buy.analysis.html",
+        "28－Five Pounds Too Dear.analysis.html",
+        "29－Funny or Not.analysis.html",
+        "30－The Death of a Ghost.analysis.html",
+        "31－A Lovable Eccentric.analysis.html",
+        "32－A Lost Ship.analysis.html",
+        "33－A Day to Remember.analysis.html",
+        "34－A Happy Discovery.analysis.html",
+        "35－Justice was Done.analysis.html",
+        "36－A Chance in a Million.analysis.html",
+        "37－The Westhaven Express.analysis.html",
+        "38－The First Calendar.analysis.html",
+        "39－Nothing to Worry About.analysis.html",
+        "40－Who's Who.analysis.html",
+        "41－Illusions of Pastoral Peace.analysis.html",
+        "42－Modern Cavemen.analysis.html",
+        "43－Fully Insured.analysis.html",
+        "44－Speed and Comfort.analysis.html",
+        "45－The Power of the Press.analysis.html",
+        "46－Do It Yourself.analysis.html",
+        "47－Too High a Price.analysis.html",
+        "48－The Silent Village.analysis.html",
+        "49－The Ideal Servant.analysis.html",
+        "50－New Year Resolutions.analysis.html",
+        "51－Predicting the Future.analysis.html",
+        "52－Mud is Mud.analysis.html",
+        "53－In the Public Interest.analysis.html",
+        "54－Instinct or Cleverness.analysis.html",
+        "55－From the Earth Greetings.analysis.html",
+        "56－Our Neighbour, the River.analysis.html",
+        "57－Back in the Old Country.analysis.html",
+        "58－A Spot of Bother.analysis.html",
+        "59－Collecting.analysis.html",
+        "60－Too Early and Too Late.analysis.html"
+    ];
+
+    function lessonParts(fileName) {
+        const clean = fileName.replace(".analysis.html", "");
+        const splitAt = clean.indexOf("－");
+        if (splitAt === -1) {
+            return { no: clean, title: clean };
+        }
+        return {
+            no: clean.slice(0, splitAt),
+            title: clean.slice(splitAt + 1)
+        };
+    }
+
+    function renderLessons(gridId, countId, files, prefix) {
+        const grid = document.getElementById(gridId);
+        const count = document.getElementById(countId);
+        count.textContent = `${files.length} pages`;
+
+        const fragment = document.createDocumentFragment();
+        files.forEach((file) => {
+            const item = lessonParts(file);
+            const link = document.createElement("a");
+            link.className = "lesson-card";
+            link.href = `${prefix}${file}`;
+            link.innerHTML = `
+                <span class="lesson-no">Lesson ${item.no}</span>
+                <span class="lesson-name">${item.title}</span>
+            `;
+            fragment.appendChild(link);
+        });
+        grid.appendChild(fragment);
+    }
+
+    renderLessons("nce1-grid", "nce1-count", nce1Files, "");
+    renderLessons("nce3-grid", "nce3-count", nce3Files, "../../NCE3/html/");
+</script>
+</body>
+</html>

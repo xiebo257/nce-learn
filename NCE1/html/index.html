@@ -335,7 +335,7 @@
             </div>
         </a>
 
-        <div class="book-card is-disabled" aria-disabled="true">
+        <a class="book-card" href="#nce2-lessons">
             <div class="cover-wrap">
                 <img src="../../images/NCE2.jpg" alt="New Concept English Practice and Progress">
             </div>
@@ -345,10 +345,10 @@
                 <div class="book-subtitle">实践与进步</div>
                 <div class="book-meta">
                     <span class="pill">96课</span>
-                    <span class="pill pending">分析 HTML 未生成</span>
+                    <span class="pill available">已生成 1-96</span>
                 </div>
             </div>
-        </div>
+        </a>
 
         <a class="book-card" href="#nce3-lessons">
             <div class="cover-wrap">
@@ -395,6 +395,17 @@
             <span class="pill available" id="nce1-count">0 pages</span>
         </div>
         <div class="lesson-grid" id="nce1-grid"></div>
+    </section>
+
+    <section class="section" id="nce2-lessons">
+        <div class="section-head">
+            <div class="section-title">
+                <h2>第二册分析 HTML</h2>
+                <p>Lessons 1-96, sentence-by-sentence analysis pages.</p>
+            </div>
+            <span class="pill available" id="nce2-count">0 pages</span>
+        </div>
+        <div class="lesson-grid" id="nce2-grid"></div>
     </section>
 
     <section class="section" id="nce3-lessons">
@@ -552,6 +563,105 @@
         "60－Too Early and Too Late.analysis.html"
     ];
 
+    const nce2Files = [
+        "01－A Private Conversation.analysis.html",
+        "02－Breakfast or Lunch.analysis.html",
+        "03－Please Send Me a Card.analysis.html",
+        "04－An Exciting Trip.analysis.html",
+        "05－No Wrong Numbers.analysis.html",
+        "06－Percy Buttons.analysis.html",
+        "07－Too Late.analysis.html",
+        "08－The Best and the Worst.analysis.html",
+        "09－A Cold Welcome.analysis.html",
+        "10－Not for Jazz.analysis.html",
+        "11－One Good Turn Deserves Another.analysis.html",
+        "12－Goodbye and Good Luck.analysis.html",
+        "13－The Greenwood Boys.analysis.html",
+        "14－Do You Speak English.analysis.html",
+        "15－Good News.analysis.html",
+        "16－A Polite Request.analysis.html",
+        "17－Always Young.analysis.html",
+        "18－He Often does This.analysis.html",
+        "19－Sold Out.analysis.html",
+        "20－One Man in a Boat.analysis.html",
+        "21－Mad or Not.analysis.html",
+        "22－A Glass Envelope.analysis.html",
+        "23－A New House.analysis.html",
+        "24－It Could be Worse.analysis.html",
+        "25－Do the English Speak English.analysis.html",
+        "26－The Best Art Critics.analysis.html",
+        "27－A Wet Night.analysis.html",
+        "28－No Parking.analysis.html",
+        "29－Taxi.analysis.html",
+        "30－Football or Polo.analysis.html",
+        "31－Success Story.analysis.html",
+        "32－Shopping Made Easy.analysis.html",
+        "33－Out of the Darkness.analysis.html",
+        "34－Quick Work.analysis.html",
+        "35－Stop Thief.analysis.html",
+        "36－Across the Channel.analysis.html",
+        "37－The Olympic Games.analysis.html",
+        "38－Everything Except the Weather.analysis.html",
+        "39－Am I All Right.analysis.html",
+        "40－Food and Talk.analysis.html",
+        "41－Do You Call That a Hat.analysis.html",
+        "42－Not Very Musical.analysis.html",
+        "43－Over the South Pole.analysis.html",
+        "44－Through the Forest.analysis.html",
+        "45－A Clear Conscience.analysis.html",
+        "46－Expensive and Uncomfortable.analysis.html",
+        "47－A Thirsty Ghost.analysis.html",
+        "48－Did You Want to Tell Me Something.analysis.html",
+        "49－The End of a Dream.analysis.html",
+        "50－Taken for a Ride.analysis.html",
+        "51－Reward for Virtue.analysis.html",
+        "52－A Pretty Carpet.analysis.html",
+        "53－Hot Snake.analysis.html",
+        "54－Sticky Fingers.analysis.html",
+        "55－Not a Gold Mine.analysis.html",
+        "56－Faster Than Sound.analysis.html",
+        "57－Can I Help You, Madam.analysis.html",
+        "58－A Blessing in Disguise.analysis.html",
+        "59－In or Out.analysis.html",
+        "60－The Future.analysis.html",
+        "61－Trouble with the Hubble.analysis.html",
+        "62－After the Fire.analysis.html",
+        "63－She Was Not Amused.analysis.html",
+        "64－The Channel Tunnel.analysis.html",
+        "65－Jumbo Versus the Police.analysis.html",
+        "66－Sweet as Honey.analysis.html",
+        "67－Volcanoes.analysis.html",
+        "68－Persistent.analysis.html",
+        "69－But not Murder.analysis.html",
+        "70－Red for Danger.analysis.html",
+        "71－A Famous Clock.analysis.html",
+        "72－A Car Called Bluebird.analysis.html",
+        "73－The Record-Holder.analysis.html",
+        "74－Out of the Limelight.analysis.html",
+        "75－SOS.analysis.html",
+        "76－April Fools' Day.analysis.html",
+        "77－A Successful Operation.analysis.html",
+        "78－The Last One.analysis.html",
+        "79－By Air.analysis.html",
+        "80－The Crystal Palace.analysis.html",
+        "81－Escape.analysis.html",
+        "82－Monster or Fish.analysis.html",
+        "83－After the Elections.analysis.html",
+        "84－On Strike.analysis.html",
+        "85－Never Too Old To Learn.analysis.html",
+        "86－Out of Control.analysis.html",
+        "87－A Perfect Alibi.analysis.html",
+        "88－Trapped in a Mine.analysis.html",
+        "89－A Slip of the Tongue.analysis.html",
+        "90－What's for Supper.analysis.html",
+        "91－Three Men in a Basket.analysis.html",
+        "92－Asking for Trouble.analysis.html",
+        "93－A Noble Gift.analysis.html",
+        "94－Future Champions.analysis.html",
+        "95－A Fantasy.analysis.html",
+        "96－The Dead Return.analysis.html"
+    ];
+
     function lessonParts(fileName) {
         const clean = fileName.replace(".analysis.html", "");
         const splitAt = clean.indexOf("－");
@@ -585,6 +695,7 @@
     }
 
     renderLessons("nce1-grid", "nce1-count", nce1Files, "");
+    renderLessons("nce2-grid", "nce2-count", nce2Files, "../../NCE2/html/");
     renderLessons("nce3-grid", "nce3-count", nce3Files, "../../NCE3/html/");
 </script>
 </body>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 94 - Future Champions</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 94 - Future Champions</h1>
+      <p class="meta">问题: What kind of race do the children compete in?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.63" data-end="25.1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Experiments <span class="weak">have</span> proved <span class="weak">that</span> children <span class="weak">can</span> <span class="weak">be</span> <span class="linking">instructed</span> <span class="weak linking">in</span> <span class="linking">swimming</span> <span class="weak linking">at</span> <span class="weak linking">a</span> very early age.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪkˈspɛrəmənt <span class="weak">həv</span> pruv ðæt ˈtʃɪldrn <span class="weak">kən</span> bi ɪnˈstrək<span class="linking">‿</span>ɪn ˈswɪmɪŋ<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> ˈvɛri ˈərli eɪdʒ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪnˈstrək‿ɪn、ˈswɪmɪŋ‿ət‿ə 连读；ə、ət、kən、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>实验证明，孩子很小的时候就可以接受游泳训练。</p></div>
+      <div class="field words"><span>词</span><p>experiments 实验； proved 证明了； children 孩子们； instructed 指示；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="25.1" data-end="36.5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak linking">At</span> <span class="weak linking">a</span> special swimming <span class="linking">pool</span> <span class="weak linking">in</span> Los Angeles, children <span class="linking">become</span> <span class="linking">expert</span> <span class="weak linking">at</span> holding <span class="weak">their</span> <span class="linking">breath</span> <span class="linking">under</span> <span class="linking">water</span> <span class="linking">even</span> before <span class="weak">they</span> <span class="weak">can</span> walk.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> ˈspɛʃl ˈswɪmɪŋ pul<span class="linking">‿</span>ɪn los ˈeɪndʒəlz ˈtʃɪldrn bəˈkəm<span class="linking">‿</span>ˈɛkˌspərt<span class="linking">‿</span><span class="weak">ət</span> ˈhoʊldɪŋ ðɛr brɛθ<span class="linking">‿</span>ˈəndər ˈwɔdər<span class="linking">‿</span>ˈivən bəˈfɔr ðeɪ <span class="weak">kən</span> wɔk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ət‿ə、pul‿ɪn、bəˈkəm‿ˈɛkˌspərt‿ət、brɛθ‿ˈəndər、ˈwɔdər‿ˈivən 连读；ə、ət、kən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>在洛杉矶的一个特殊游泳池里，孩子们在学会走路之前就已经成为在水下屏住呼吸的专家。</p></div>
+      <div class="field words"><span>词</span><p>special 特别的； swimming 游泳； pool 水池； angeles 安吉利斯；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="36.5" data-end="42.95">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Babies</span> <span class="weak linking">of</span> two <span class="linking">months</span> <span class="linking">old</span> <span class="weak">do</span> <span class="linking">not</span> <span class="linking">appear</span> <span class="weak">to</span> <span class="weak">be</span> reluctant <span class="weak">to</span> enter <span class="weak">the</span> water.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈbeɪbi <span class="weak">əv</span> tu mənθ<span class="linking">‿</span>oʊld du nɑɾ<span class="linking">‿</span><span class="weak">ə</span>ˈpɪr <span class="weak">tə</span> bi rəˈləktnt <span class="weak">tə</span> ˈɛnər <span class="weak">ðə</span> ˈwɔdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mənθ‿oʊld、nɑɾ‿əˈpɪr 连读；ðə、tə、əv 弱读/弱化；nɑɾ‿əˈpɪr 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>两个月大的婴儿似乎并不不愿意下水。</p></div>
+      <div class="field words"><span>词</span><p>babies 婴儿； months 月； appear 出现； reluctant 不情愿的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="42.95" data-end="51.71">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> not long before <span class="weak linking">they</span> <span class="weak linking">are</span> so accustomed <span class="weak">to</span> swimming <span class="weak">that</span> <span class="weak">they</span> <span class="weak">can</span> <span class="linking">pick</span> <span class="linking">up</span> weights <span class="weak">from</span> <span class="weak">the</span> <span class="linking">floor</span> <span class="weak linking">of</span> <span class="weak">the</span> pool.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> nɑt long bəˈfɔr ðeɪ <span class="weak">ɑr</span> soʊ <span class="weak">ə</span>ˈkəstəmd <span class="weak">tə</span> ˈswɪmɪŋ ðæt ðeɪ <span class="weak">kən</span> pɪk<span class="linking">‿</span>əp weɪt <span class="weak">frəm</span> <span class="weak">ðə</span> flɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pul/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、pɪk‿əp、flɔr‿əv 连读；ðə、tə、kən、əv、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>没过多久，他们就习惯了游泳，可以从泳池的地板上拿起重物。</p></div>
+      <div class="field words"><span>词</span><p>long 长的； before 前； accustomed 习惯了； swimming 游泳；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="51.71" data-end="59.56">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">A</span> game <span class="weak linking">that</span> <span class="weak linking">is</span> very popular with these young <span class="linking">swimmers</span> <span class="weak linking">is</span> <span class="weak">the</span> underwater tricycle race.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> game ðæt<span class="linking">‿</span><span class="weak">ɪz</span> ˈvɛri ˈpɑpjələr wɪð ðiz jʌŋ ˈswɪmər<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ði</span><span class="linking">‿</span>ˌəndərˈwɔdər ˈtraɪsəkl reɪs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪz、ˈswɪmər‿ɪz、ði‿ˌəndərˈwɔdər 连读；ði、ə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>水下三轮车比赛是非常受这些年轻游泳运动员欢迎的游戏。</p></div>
+      <div class="field words"><span>词</span><p>game 游戏； very 非常； popular 受欢迎的； with 和；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="59.56" data-end="66.26">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="linking">Tricycles</span> <span class="weak linking">are</span> <span class="linking">lined</span> <span class="linking">up</span> <span class="linking">on</span> <span class="weak">the</span> <span class="linking">floor</span> <span class="weak linking">of</span> <span class="weak">the</span> pool seven <span class="linking">feet</span> <span class="linking">under</span> water.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈtraɪsəkl<span class="linking">‿</span><span class="weak">ɑr</span> laɪnd<span class="linking">‿</span>əp<span class="linking">‿</span>ɔn <span class="weak">ðə</span> flɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pul ˈsɛvən fit<span class="linking">‿</span>ˈəndər ˈwɔdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈtraɪsəkl‿ɑr、laɪnd‿əp‿ɔn、flɔr‿əv、fit‿ˈəndər 连读；ðə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>三轮车排列在水下七英尺的泳池地板上。</p></div>
+      <div class="field words"><span>词</span><p>tricycles 三轮车； lined 衬里； floor 地面； pool 水池；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="66.26" data-end="72.26">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">The</span> children <span class="linking">compete</span> <span class="linking">against</span> <span class="linking">each</span> <span class="linking">other</span> <span class="weak">to</span> reach <span class="weak">the</span> <span class="linking">other</span> <span class="linking">end</span> <span class="weak linking">of</span> <span class="weak">the</span> pool.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈtʃɪldrn kəmˈpit<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛnst<span class="linking">‿</span>itʃ<span class="linking">‿</span>ˈəðər <span class="weak">tə</span> ritʃ <span class="weak">ði</span><span class="linking">‿</span>ˈəðər<span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pul/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kəmˈpit‿əˈɡɛnst‿itʃ‿ˈəðər、ði‿ˈəðər‿ɛnd‿əv 连读；ðə、ði、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>孩子们互相竞争，以到达泳池的另一端。</p></div>
+      <div class="field words"><span>词</span><p>children 孩子们； compete 竞争； against 反对； each 每个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="72.26" data-end="79.68">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Many pedal <span class="weak">their</span> tricycles <span class="weak">but</span> <span class="linking">most</span> <span class="weak linking">of</span> <span class="weak">them</span> prefer <span class="weak">to</span> <span class="linking">push</span> <span class="linking">or</span> drag <span class="weak">them.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈmɛni ˈpɛdl ðɛr ˈtraɪsəkl bət moʊst<span class="linking">‿</span><span class="weak">əv</span> ðəm priˈfər <span class="weak">tə</span> pʊʃ<span class="linking">‿</span>ɔr dræɡ ðəm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moʊst‿əv、pʊʃ‿ɔr 连读；tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>许多人骑三轮车，但大多数人更喜欢推或拖三轮车。</p></div>
+      <div class="field words"><span>词</span><p>many 许多； pedal 踏板； tricycles 三轮车； most 最多；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="79.68" data-end="88.12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Some children <span class="weak">can</span> cover <span class="weak">the</span> whole <span class="linking">length</span> <span class="weak linking">of</span> <span class="weak">the</span> pool without <span class="linking">coming</span> <span class="linking">up</span> <span class="weak">for</span> <span class="linking">breath</span> <span class="linking">even</span> once.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/səm ˈtʃɪldrn <span class="weak">kən</span> ˈkəvər <span class="weak">ðə</span> hoʊl lɛŋθ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pul wəˈðaʊt ˈkəmɪŋ<span class="linking">‿</span>əp <span class="weak">fɚ</span> brɛθ<span class="linking">‿</span>ˈivən wəns/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>lɛŋθ‿əv、ˈkəmɪŋ‿əp、brɛθ‿ˈivən 连读；ðə、kən、əv、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>有些孩子甚至可以跑完整个泳池而一次都没有上来喘气。</p></div>
+      <div class="field words"><span>词</span><p>some 一些； children 孩子们； cover 覆盖； whole 整个的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="88.12" data-end="94.5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Whether <span class="weak">they</span> <span class="weak linking">will</span> <span class="linking">ever</span> become <span class="linking">future</span> <span class="linking">Olympic</span> <span class="linking">champions,</span> <span class="linking">only</span> time <span class="weak">will</span> tell.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈwɛðər ðeɪ wɪl<span class="linking">‿</span>ˈɛvər bəˈkəm ˈfjutʃər<span class="linking">‿</span><span class="weak">ə</span>ˈlɪmpɪk ˈtʃæmpiən<span class="linking">‿</span>ˈoʊnli time wɪl tɛl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɪl‿ˈɛvər、ˈfjutʃər‿əˈlɪmpɪk、ˈtʃæmpiən‿ˈoʊnli 连读。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>他们是否会成为未来的奥运会冠军，只有时间才能证明。</p></div>
+      <div class="field words"><span>词</span><p>whether 无论； ever 曾经； become 变得； future 未来；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="94.5" data-end="103.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Meanwhile, <span class="weak">they</span> <span class="linking">should</span> <span class="linking">encourage</span> <span class="linking">those</span> <span class="linking">among</span> <span class="linking">us</span> who cannot swim five yards before <span class="weak linking">they</span> <span class="weak linking">are</span> gasping <span class="weak">for</span> air.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl ðeɪ ʃʊd<span class="linking">‿</span>ɪnˈkərɪdʒ ðoʊz<span class="linking">‿</span><span class="weak">ə</span>ˈməŋ<span class="linking">‿</span>əs who ˈkæˌnɑt swɪm faɪv jɑrd bəˈfɔr ðeɪ <span class="weak">ɑr</span> ɡæsp <span class="weak">fɚ</span> air/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ʃʊd‿ɪnˈkərɪdʒ、ðoʊz‿əˈməŋ‿əs 连读；ɑr、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>与此同时，他们应该鼓励我们当中那些无法游出五码的人，然后他们就会喘不过气来。</p></div>
+      <div class="field words"><span>词</span><p>meanwhile 与此同时； should 应该； encourage 鼓励； those 那些；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>experiments 实验； proved 证明了； children 孩子们； instructed 指示； special 特别的； swimming 游泳； pool 水池； angeles 安吉利斯； babies 婴儿； months 月； appear 出现； reluctant 不情愿的； long 长的； before 前； accustomed 习惯了； swimming 游泳； game 游戏； very 非常；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>含定语从句或名词性从句； 含被动结构； 时间状语从句交代动作先后； 不定式短语补充目的、结果或宾语； 原因或结果关系连接分句； 主语 + 谓语 + 宾语/补足语的基础叙述句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 一般现在时或基础事实陈述； 将来结构表示预期或安排。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>1. Experiments have proved that children can be instructed in swimming at a very early age.； 2. At a special swimming pool in Los Angeles, children become expert at holding their breath under water even before they can walk.； 4. It is not long before they are so accustomed to swimming that they can pick up weights from the floor of the pool.； 9. Some children can cover the whole length of the pool without coming up for breath even once.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ɪnˈstrək‿ɪn、ˈswɪmɪŋ‿ət‿ə 连读；ə、ət、kən、həv 弱读/弱化； ət‿ə、pul‿ɪn、bəˈkəm‿ˈɛkˌspərt‿ət、brɛθ‿ˈəndər、ˈwɔdər‿ˈivən 连读；ə、ət、kən 弱读/弱化； mənθ‿oʊld、nɑɾ‿əˈpɪr 连读；ðə、tə、əv 弱读/弱化；nɑɾ‿əˈpɪr 中 /ɾ/ 为美式闪音； ɪt‿ɪz、pɪk‿əp、flɔr‿əv 连读；ðə、tə、kən、əv、ɑr、ɪz 弱读/弱化； ðæt‿ɪz、ˈswɪmər‿ɪz、ði‿ˌəndərˈwɔdər 连读；ði、ə、ɪz 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Future Champions</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../94－Future Champions.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.63,"end":25.1,"text":"Experiments have proved that children can be instructed in swimming at a very early age."},{"index":2,"start":25.1,"end":36.5,"text":"At a special swimming pool in Los Angeles, children become expert at holding their breath under water even before they can walk."},{"index":3,"start":36.5,"end":42.95,"text":"Babies of two months old do not appear to be reluctant to enter the water."},{"index":4,"start":42.95,"end":51.71,"text":"It is not long before they are so accustomed to swimming that they can pick up weights from the floor of the pool."},{"index":5,"start":51.71,"end":59.56,"text":"A game that is very popular with these young swimmers is the underwater tricycle race."},{"index":6,"start":59.56,"end":66.26,"text":"Tricycles are lined up on the floor of the pool seven feet under water."},{"index":7,"start":66.26,"end":72.26,"text":"The children compete against each other to reach the other end of the pool."},{"index":8,"start":72.26,"end":79.68,"text":"Many pedal their tricycles but most of them prefer to push or drag them."},{"index":9,"start":79.68,"end":88.12,"text":"Some children can cover the whole length of the pool without coming up for breath even once."},{"index":10,"start":88.12,"end":94.5,"text":"Whether they will ever become future Olympic champions, only time will tell."},{"index":11,"start":94.5,"end":103.42,"text":"Meanwhile, they should encourage those among us who cannot swim five yards before they are gasping for air."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

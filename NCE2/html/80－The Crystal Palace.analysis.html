@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 80 - The Crystal Palace</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 80 - The Crystal Palace</h1>
+      <p class="meta">问题: How many people visited the Great Exhibition of 1851?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.2" data-end="33.43">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Perhaps <span class="weak">the</span> <span class="linking">most</span> <span class="linking">extraordinary</span> <span class="linking">building</span> <span class="weak linking">of</span> <span class="weak">the</span> 19th century <span class="weak">was</span> <span class="weak">the</span> Crystal Palace which <span class="weak">was</span> <span class="linking">built</span> <span class="weak linking">in</span> Hyde Park <span class="weak">for</span> <span class="weak">the</span> <span class="linking">Great</span> <span class="linking">Exhibition</span> <span class="weak linking">of</span> 1851.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/pərˈæps <span class="weak">ðə</span> moʊst<span class="linking">‿</span>ɪkˈstrɔrdnˌɛri ˈbɪldɪŋ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈθɔriəm ˈsɛnʃri <span class="weak">wəz</span> <span class="weak">ðə</span> ˈkrɪstl ˈpæləs wɪtʃ <span class="weak">wəz</span> bɪlt<span class="linking">‿</span>ɪn hyde pɑrk <span class="weak">fɚ</span> <span class="weak">ðə</span> ɡreɪt<span class="linking">‿</span>ˌɛksəˈbɪʃən<span class="linking">‿</span><span class="weak">əv</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moʊst‿ɪkˈstrɔrdnˌɛri、ˈbɪldɪŋ‿əv、bɪlt‿ɪn、ɡreɪt‿ˌɛksəˈbɪʃən‿əv 连读；ðə、əv、wəz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>也许 19 世纪最非凡的建筑是为 1851 年万国博览会而在海德公园建造的水晶宫。</p></div>
+      <div class="field words"><span>词</span><p>perhaps 也许； most 最多； extraordinary 非凡的； building 建筑；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="33.43" data-end="43.01">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> Crystal Palace <span class="weak">was</span> different <span class="weak linking">from</span> <span class="linking">all</span> <span class="linking">other</span> <span class="linking">buildings</span> <span class="weak linking">in</span> <span class="weak">the</span> world, <span class="weak linking">for</span> <span class="weak linking">it</span> <span class="weak">was</span> <span class="linking">made</span> <span class="weak linking">of</span> <span class="linking">iron</span> <span class="weak linking">and</span> glass.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkrɪstl ˈpæləs <span class="weak">wəz</span> ˈdɪfrənt <span class="weak">frəm</span><span class="linking">‿</span>ɔl<span class="linking">‿</span>ˈəðər ˈbɪldɪŋ<span class="linking">‿</span>ɪn <span class="weak">ðə</span> wərld <span class="weak">fɚ</span><span class="linking">‿</span>ɪt <span class="weak">wəz</span> meɪd<span class="linking">‿</span><span class="weak">əv</span> ˈaɪrn<span class="linking">‿</span><span class="weak">ən</span> ɡlæs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>frəm‿ɔl‿ˈəðər、ˈbɪldɪŋ‿ɪn、fɚ‿ɪt、meɪd‿əv、ˈaɪrn‿ən 连读；ðə、ən、əv、wəz、fɚ、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>水晶宫与世界上所有其他建筑不同，它是由铁和玻璃制成的。</p></div>
+      <div class="field words"><span>词</span><p>crystal 水晶； palace 宫殿； different 不同的； other 其他；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="43.01" data-end="52.23">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> biggest <span class="linking">buildings</span> <span class="weak linking">of</span> <span class="linking">all</span> <span class="linking">time</span> <span class="weak linking">and</span> <span class="weak linking">a</span> <span class="linking">lot</span> <span class="weak linking">of</span> people <span class="weak">from</span> many countries came <span class="weak">to</span> <span class="linking">see</span> <span class="weak linking">it.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> biggest ˈbɪldɪŋ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl time <span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> lɑt<span class="linking">‿</span><span class="weak">əv</span> ˈpipl <span class="weak">frəm</span> ˈmɛni ˈkəntri keɪm <span class="weak">tə</span> si ɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿one、ˈbɪldɪŋ‿əv‿ɔl、ən‿ə、lɑt‿əv 连读；ðə、ə、ən、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>它是有史以来最大的建筑之一，许多国家的人们前来参观。</p></div>
+      <div class="field words"><span>词</span><p>biggest 最大； buildings 建筑物； time 时间； people 人们；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="52.23" data-end="58.38">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">A</span> great many goods <span class="weak">were</span> sent <span class="weak">to</span> <span class="weak">the</span> exhibition <span class="weak">from</span> various <span class="linking">parts</span> <span class="weak linking">of</span> <span class="weak">the</span> world.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ɡreɪt ˈmɛni ɡʊdz <span class="weak">wɚ</span> sɛnt <span class="weak">tə</span> <span class="weak">ði</span><span class="linking">‿</span>ˌɛksəˈbɪʃən <span class="weak">frəm</span> ˈvɛriəs pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> wərld/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˌɛksəˈbɪʃən、pɑrt‿əv 连读；ðə、ði、ə、tə、əv、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>展会上有来自世界各地的大量货物。</p></div>
+      <div class="field words"><span>词</span><p>great 伟大的； many 许多； goods 商品； sent 发送；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="58.38" data-end="63.67">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">There</span> <span class="weak linking">was</span> <span class="linking">also</span> <span class="weak linking">a</span> great <span class="linking">deal</span> <span class="weak linking">of</span> machinery on display.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlsoʊ <span class="weak">ə</span> ɡreɪt dil<span class="linking">‿</span><span class="weak">əv</span> məˈʃinri ɔn display/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿ˈɔlsoʊ、dil‿əv 连读；ə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>现场还展出了大量机械设备。</p></div>
+      <div class="field words"><span>词</span><p>also 还； great 伟大的； deal 交易； machinery 机械；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="63.67" data-end="71.5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> most wonderful <span class="linking">piece</span> <span class="weak linking">of</span> machinery on show <span class="weak">was</span> Nasmyth's steam hammer.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> moʊst ˈwəndərfl pis<span class="linking">‿</span><span class="weak">əv</span> məˈʃinri ɔn ʃoʊ <span class="weak">wəz</span> nasmyth's stim ˈhæmər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>pis‿əv 连读；ðə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>展出的最精彩的机械是纳斯米斯的蒸汽锤。</p></div>
+      <div class="field words"><span>词</span><p>most 最多； wonderful 精彩的； piece 片； machinery 机械；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="71.5" data-end="83.94">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Though</span> <span class="weak linking">in</span> those days travelling <span class="weak">was</span> <span class="linking">not</span> <span class="weak linking">as</span> <span class="linking">easy</span> <span class="weak linking">as</span> <span class="weak linking">it</span> <span class="weak linking">is</span> today, steam boats carried <span class="linking">thousands</span> <span class="weak linking">of</span> <span class="linking">visitors</span> <span class="linking">across</span> <span class="weak">the</span> Channel <span class="weak">from</span> Europe.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðoʊ ɪn ðoʊz deɪ ˈtrævlɪŋ <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ˈizi <span class="weak">əz</span><span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">tə</span>ˈdeɪ stim boʊt ˈkɛri ˈθaʊzn<span class="linking">‿</span><span class="weak">əv</span> ˈvɪzədər<span class="linking">‿</span><span class="weak">ə</span>ˈkrɔs <span class="weak">ðə</span> ˈtʃænl <span class="weak">frəm</span> ˈjʊrəp/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>nɑɾ‿əz‿ˈizi、əz‿ɪt‿ɪz、ˈθaʊzn‿əv、ˈvɪzədər‿əˈkrɔs 连读；ðə、əz、əv、ɪz、wəz、frəm 弱读/弱化；nɑɾ‿əz‿ˈizi 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>尽管当时的旅行并不像今天那么容易，但蒸汽船却载着成千上万的游客从欧洲穿越英吉利海峡。</p></div>
+      <div class="field words"><span>词</span><p>though 尽管； those 那些； days 天； travelling 旅行；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="83.94" data-end="90.34">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">On</span> <span class="linking">arriving</span> <span class="weak linking">in</span> <span class="linking">England,</span> <span class="weak">they</span> <span class="weak">were,</span> taken <span class="weak">to</span> <span class="weak">the</span> Crystal Palace by train.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɔn<span class="linking">‿</span><span class="weak">ə</span>ˈraɪv<span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɪŋlənd ðeɪ <span class="weak">wɚ</span> ˈteɪkən <span class="weak">tə</span> <span class="weak">ðə</span> ˈkrɪstl ˈpæləs baɪ treɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɔn‿əˈraɪv‿ɪn‿ˈɪŋlənd 连读；ðə、tə、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>抵达英国后，他们乘火车前往水晶宫。</p></div>
+      <div class="field words"><span>词</span><p>arriving 到达； england 英格兰； taken 采取； crystal 水晶；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="90.34" data-end="99.94">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">There</span> <span class="weak">were</span> six million <span class="linking">visitors</span> <span class="weak linking">in</span> <span class="linking">all,</span> <span class="weak linking">and</span> <span class="weak">the</span> profits <span class="weak">from</span> <span class="weak">the</span> exhibition <span class="weak">were</span> used <span class="weak">to</span> build <span class="linking">museums</span> <span class="weak linking">and</span> colleges.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wɚ</span> sɪks ˈmɪljən ˈvɪzədər<span class="linking">‿</span>ɪn<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> ˈprɑfət <span class="weak">frəm</span> <span class="weak">ði</span><span class="linking">‿</span>ˌɛksəˈbɪʃən <span class="weak">wɚ</span> just <span class="weak">tə</span> bɪld mjuˈziəm<span class="linking">‿</span><span class="weak">ən</span> ˈkɑlɪdʒ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈvɪzədər‿ɪn‿ɔl‿ən、ði‿ˌɛksəˈbɪʃən、mjuˈziəm‿ən 连读；ðə、ði、ən、tə、wɚ、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构；不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>总共有六百万参观者，展览的利润被用来建造博物馆和大学。</p></div>
+      <div class="field words"><span>词</span><p>million 百万； visitors 访客； profits 利润； exhibition 展览；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="99.94" data-end="104.67">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Later, <span class="weak">the</span> Crystal Palace <span class="weak">was</span> moved <span class="weak">to</span> South London.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈleɪdər <span class="weak">ðə</span> ˈkrɪstl ˈpæləs <span class="weak">wəz</span> moved <span class="weak">tə</span> saʊθ ˈləndən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>后来，水晶宫迁至伦敦南部。</p></div>
+      <div class="field words"><span>词</span><p>later 之后； crystal 水晶； palace 宫殿； moved 搬家了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="104.67" data-end="112.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">It</span> <span class="linking">remained</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> most famous <span class="linking">buildings</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">world</span> <span class="linking">until</span> <span class="weak linking">it</span> <span class="weak">was</span> burnt <span class="linking">down</span> <span class="weak linking">in</span> 1936.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt rəˈmeɪn<span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> moʊst ˈfeɪməs ˈbɪldɪŋ<span class="linking">‿</span>ɪn <span class="weak">ðə</span> wərld<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈtɪl<span class="linking">‿</span>ɪt <span class="weak">wəz</span> bərnt daʊn<span class="linking">‿</span>ɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rəˈmeɪn‿one、ˈbɪldɪŋ‿ɪn、wərld‿ˌənˈtɪl‿ɪt、daʊn‿ɪn 连读；ðə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>它一直是世界上最著名的建筑之一，直到 1936 年被烧毁。</p></div>
+      <div class="field words"><span>词</span><p>remained 留下来； most 最多； famous 著名的； buildings 建筑物；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>perhaps 也许； most 最多； extraordinary 非凡的； building 建筑； crystal 水晶； palace 宫殿； different 不同的； other 其他； biggest 最大； buildings 建筑物； time 时间； people 人们； great 伟大的； many 许多； goods 商品； sent 发送； also 还； great 伟大的；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>原因或结果关系连接分句； 含定语从句或名词性从句； 并列结构连接动作或信息； 不定式短语补充目的、结果或宾语； 主语 + 谓语 + 宾语/补足语的基础叙述句； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般过去时叙述故事主线。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>moʊst‿ɪkˈstrɔrdnˌɛri、ˈbɪldɪŋ‿əv、bɪlt‿ɪn、ɡreɪt‿ˌɛksəˈbɪʃən‿əv 连读；ðə、əv、wəz、fɚ 弱读/弱化； frəm‿ɔl‿ˈəðər、ˈbɪldɪŋ‿ɪn、fɚ‿ɪt、meɪd‿əv、ˈaɪrn‿ən 连读；ðə、ən、əv、wəz、fɚ、frəm 弱读/弱化； wəz‿one、ˈbɪldɪŋ‿əv‿ɔl、ən‿ə、lɑt‿əv 连读；ðə、ə、ən、tə、əv、wəz 弱读/弱化； ði‿ˌɛksəˈbɪʃən、pɑrt‿əv 连读；ðə、ði、ə、tə、əv、wɚ 弱读/弱化； wəz‿ˈɔlsoʊ、dil‿əv 连读；ə、əv、wəz 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">The Crystal Palace</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../80－The Crystal Palace.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.2,"end":33.43,"text":"Perhaps the most extraordinary building of the 19th century was the Crystal Palace which was built in Hyde Park for the Great Exhibition of 1851."},{"index":2,"start":33.43,"end":43.01,"text":"The Crystal Palace was different from all other buildings in the world, for it was made of iron and glass."},{"index":3,"start":43.01,"end":52.23,"text":"It was one of the biggest buildings of all time and a lot of people from many countries came to see it."},{"index":4,"start":52.23,"end":58.38,"text":"A great many goods were sent to the exhibition from various parts of the world."},{"index":5,"start":58.38,"end":63.67,"text":"There was also a great deal of machinery on display."},{"index":6,"start":63.67,"end":71.5,"text":"The most wonderful piece of machinery on show was Nasmyth's steam hammer."},{"index":7,"start":71.5,"end":83.94,"text":"Though in those days travelling was not as easy as it is today, steam boats carried thousands of visitors across the Channel from Europe."},{"index":8,"start":83.94,"end":90.34,"text":"On arriving in England, they were, taken to the Crystal Palace by train."},{"index":9,"start":90.34,"end":99.94,"text":"There were six million visitors in all, and the profits from the exhibition were used to build museums and colleges."},{"index":10,"start":99.94,"end":104.67,"text":"Later, the Crystal Palace was moved to South London."},{"index":11,"start":104.67,"end":112.17,"text":"It remained one of the most famous buildings in the world until it was burnt down in 1936."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

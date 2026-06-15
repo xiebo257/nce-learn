@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 HTML 分析</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: #f8fafc; background: #050505; }
+    .shell { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 54px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    h1 { margin: 0; font-size: clamp(28px, 5vw, 46px); letter-spacing: 0; }
+    p { color: #a1a1aa; }
+    a { color: inherit; text-decoration: none; }
+    .home-link { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 9px 14px; color: #e5e7eb; }
+    .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .lesson-card { display: grid; gap: 8px; min-height: 112px; padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: #171717; }
+    .lesson-card:hover { border-color: rgba(124,147,255,.72); background: #1f1f24; }
+    .lesson-card.pending { opacity: .55; pointer-events: none; }
+    .lesson-no { color: #7c93ff; font-size: 13px; font-weight: 700; }
+    strong { font-size: 17px; line-height: 1.28; }
+    .lesson-card span:last-child { color: #86efac; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div>
+        <h1>NCE2 HTML 分析</h1>
+        <p>第二册已生成 96 课，美音发音、连读分析、句首播放和底部字幕播放器。生成过程逐课更新。</p>
+      </div>
+      <a class="home-link" href="../../index.html">首页</a>
+    </div>
+    <div class="lesson-grid">
+      <a class="lesson-card" href="01－A Private Conversation.analysis.html">
+        <span class="lesson-no">Lesson 01</span>
+        <strong>A Private Conversation</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="02－Breakfast or Lunch.analysis.html">
+        <span class="lesson-no">Lesson 02</span>
+        <strong>Breakfast or Lunch</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="03－Please Send Me a Card.analysis.html">
+        <span class="lesson-no">Lesson 03</span>
+        <strong>Please Send Me a Card</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="04－An Exciting Trip.analysis.html">
+        <span class="lesson-no">Lesson 04</span>
+        <strong>An Exciting Trip</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="05－No Wrong Numbers.analysis.html">
+        <span class="lesson-no">Lesson 05</span>
+        <strong>No Wrong Numbers</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="06－Percy Buttons.analysis.html">
+        <span class="lesson-no">Lesson 06</span>
+        <strong>Percy Buttons</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="07－Too Late.analysis.html">
+        <span class="lesson-no">Lesson 07</span>
+        <strong>Too Late</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="08－The Best and the Worst.analysis.html">
+        <span class="lesson-no">Lesson 08</span>
+        <strong>The Best and the Worst</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="09－A Cold Welcome.analysis.html">
+        <span class="lesson-no">Lesson 09</span>
+        <strong>A Cold Welcome</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="10－Not for Jazz.analysis.html">
+        <span class="lesson-no">Lesson 10</span>
+        <strong>Not for Jazz</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="11－One Good Turn Deserves Another.analysis.html">
+        <span class="lesson-no">Lesson 11</span>
+        <strong>One Good Turn Deserves Another</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="12－Goodbye and Good Luck.analysis.html">
+        <span class="lesson-no">Lesson 12</span>
+        <strong>Goodbye and Good Luck</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="13－The Greenwood Boys.analysis.html">
+        <span class="lesson-no">Lesson 13</span>
+        <strong>The Greenwood Boys</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="14－Do You Speak English.analysis.html">
+        <span class="lesson-no">Lesson 14</span>
+        <strong>Do You Speak English</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="15－Good News.analysis.html">
+        <span class="lesson-no">Lesson 15</span>
+        <strong>Good News</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="16－A Polite Request.analysis.html">
+        <span class="lesson-no">Lesson 16</span>
+        <strong>A Polite Request</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="17－Always Young.analysis.html">
+        <span class="lesson-no">Lesson 17</span>
+        <strong>Always Young</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="18－He Often does This.analysis.html">
+        <span class="lesson-no">Lesson 18</span>
+        <strong>He Often does This</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="19－Sold Out.analysis.html">
+        <span class="lesson-no">Lesson 19</span>
+        <strong>Sold Out</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="20－One Man in a Boat.analysis.html">
+        <span class="lesson-no">Lesson 20</span>
+        <strong>One Man in a Boat</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="21－Mad or Not.analysis.html">
+        <span class="lesson-no">Lesson 21</span>
+        <strong>Mad or Not</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="22－A Glass Envelope.analysis.html">
+        <span class="lesson-no">Lesson 22</span>
+        <strong>A Glass Envelope</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="23－A New House.analysis.html">
+        <span class="lesson-no">Lesson 23</span>
+        <strong>A New House</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="24－It Could be Worse.analysis.html">
+        <span class="lesson-no">Lesson 24</span>
+        <strong>It Could be Worse</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="25－Do the English Speak English.analysis.html">
+        <span class="lesson-no">Lesson 25</span>
+        <strong>Do the English Speak English</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="26－The Best Art Critics.analysis.html">
+        <span class="lesson-no">Lesson 26</span>
+        <strong>The Best Art Critics</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="27－A Wet Night.analysis.html">
+        <span class="lesson-no">Lesson 27</span>
+        <strong>A Wet Night</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="28－No Parking.analysis.html">
+        <span class="lesson-no">Lesson 28</span>
+        <strong>No Parking</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="29－Taxi.analysis.html">
+        <span class="lesson-no">Lesson 29</span>
+        <strong>Taxi</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="30－Football or Polo.analysis.html">
+        <span class="lesson-no">Lesson 30</span>
+        <strong>Football or Polo</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="31－Success Story.analysis.html">
+        <span class="lesson-no">Lesson 31</span>
+        <strong>Success Story</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="32－Shopping Made Easy.analysis.html">
+        <span class="lesson-no">Lesson 32</span>
+        <strong>Shopping Made Easy</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="33－Out of the Darkness.analysis.html">
+        <span class="lesson-no">Lesson 33</span>
+        <strong>Out of the Darkness</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="34－Quick Work.analysis.html">
+        <span class="lesson-no">Lesson 34</span>
+        <strong>Quick Work</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="35－Stop Thief.analysis.html">
+        <span class="lesson-no">Lesson 35</span>
+        <strong>Stop Thief!</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="36－Across the Channel.analysis.html">
+        <span class="lesson-no">Lesson 36</span>
+        <strong>Across the Channel</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="37－The Olympic Games.analysis.html">
+        <span class="lesson-no">Lesson 37</span>
+        <strong>The Olympic Games</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="38－Everything Except the Weather.analysis.html">
+        <span class="lesson-no">Lesson 38</span>
+        <strong>Everything Except the Weather</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="39－Am I All Right.analysis.html">
+        <span class="lesson-no">Lesson 39</span>
+        <strong>Am I All Right</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="40－Food and Talk.analysis.html">
+        <span class="lesson-no">Lesson 40</span>
+        <strong>Food and Talk</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="41－Do You Call That a Hat.analysis.html">
+        <span class="lesson-no">Lesson 41</span>
+        <strong>Do You Call That a Hat</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="42－Not Very Musical.analysis.html">
+        <span class="lesson-no">Lesson 42</span>
+        <strong>Not Very Musical</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="43－Over the South Pole.analysis.html">
+        <span class="lesson-no">Lesson 43</span>
+        <strong>Over the South Pole</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="44－Through the Forest.analysis.html">
+        <span class="lesson-no">Lesson 44</span>
+        <strong>Through the Forest</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="45－A Clear Conscience.analysis.html">
+        <span class="lesson-no">Lesson 45</span>
+        <strong>A Clear Conscience</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="46－Expensive and Uncomfortable.analysis.html">
+        <span class="lesson-no">Lesson 46</span>
+        <strong>Expensive and Uncomfortable</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="47－A Thirsty Ghost.analysis.html">
+        <span class="lesson-no">Lesson 47</span>
+        <strong>A Thirsty Ghost</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="48－Did You Want to Tell Me Something.analysis.html">
+        <span class="lesson-no">Lesson 48</span>
+        <strong>Did You Want to Tell Me Something</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="49－The End of a Dream.analysis.html">
+        <span class="lesson-no">Lesson 49</span>
+        <strong>The End of a Dream</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="50－Taken for a Ride.analysis.html">
+        <span class="lesson-no">Lesson 50</span>
+        <strong>Taken for a Ride</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="51－Reward for Virtue.analysis.html">
+        <span class="lesson-no">Lesson 51</span>
+        <strong>Reward for Virtue</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="52－A Pretty Carpet.analysis.html">
+        <span class="lesson-no">Lesson 52</span>
+        <strong>A Pretty Carpet</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="53－Hot Snake.analysis.html">
+        <span class="lesson-no">Lesson 53</span>
+        <strong>Hot Snake</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="54－Sticky Fingers.analysis.html">
+        <span class="lesson-no">Lesson 54</span>
+        <strong>Sticky Fingers</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="55－Not a Gold Mine.analysis.html">
+        <span class="lesson-no">Lesson 55</span>
+        <strong>Not a Gold Mine</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="56－Faster Than Sound.analysis.html">
+        <span class="lesson-no">Lesson 56</span>
+        <strong>Faster Than Sound!</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="57－Can I Help You, Madam.analysis.html">
+        <span class="lesson-no">Lesson 57</span>
+        <strong>Can I Help You, Madam</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="58－A Blessing in Disguise.analysis.html">
+        <span class="lesson-no">Lesson 58</span>
+        <strong>A Blessing in Disguise</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="59－In or Out.analysis.html">
+        <span class="lesson-no">Lesson 59</span>
+        <strong>In or Out</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="60－The Future.analysis.html">
+        <span class="lesson-no">Lesson 60</span>
+        <strong>The Future</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="61－Trouble with the Hubble.analysis.html">
+        <span class="lesson-no">Lesson 61</span>
+        <strong>Trouble with the Hubble</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="62－After the Fire.analysis.html">
+        <span class="lesson-no">Lesson 62</span>
+        <strong>After the Fire</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="63－She Was Not Amused.analysis.html">
+        <span class="lesson-no">Lesson 63</span>
+        <strong>She Was Not Amused</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="64－The Channel Tunnel.analysis.html">
+        <span class="lesson-no">Lesson 64</span>
+        <strong>The Channel Tunnel</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="65－Jumbo Versus the Police.analysis.html">
+        <span class="lesson-no">Lesson 65</span>
+        <strong>Jumbo Versus the Police</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="66－Sweet as Honey.analysis.html">
+        <span class="lesson-no">Lesson 66</span>
+        <strong>Sweet as Honey</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="67－Volcanoes.analysis.html">
+        <span class="lesson-no">Lesson 67</span>
+        <strong>Volcanoes</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="68－Persistent.analysis.html">
+        <span class="lesson-no">Lesson 68</span>
+        <strong>Persistent</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="69－But not Murder.analysis.html">
+        <span class="lesson-no">Lesson 69</span>
+        <strong>But not Murder!</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="70－Red for Danger.analysis.html">
+        <span class="lesson-no">Lesson 70</span>
+        <strong>Red for Danger</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="71－A Famous Clock.analysis.html">
+        <span class="lesson-no">Lesson 71</span>
+        <strong>A Famous Clock</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="72－A Car Called Bluebird.analysis.html">
+        <span class="lesson-no">Lesson 72</span>
+        <strong>A Car Called Bluebird</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="73－The Record-Holder.analysis.html">
+        <span class="lesson-no">Lesson 73</span>
+        <strong>The Record-Holder</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="74－Out of the Limelight.analysis.html">
+        <span class="lesson-no">Lesson 74</span>
+        <strong>Out of the Limelight</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="75－SOS.analysis.html">
+        <span class="lesson-no">Lesson 75</span>
+        <strong>SOS</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="76－April Fools' Day.analysis.html">
+        <span class="lesson-no">Lesson 76</span>
+        <strong>April Fools' Day</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="77－A Successful Operation.analysis.html">
+        <span class="lesson-no">Lesson 77</span>
+        <strong>A Successful Operation</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="78－The Last One.analysis.html">
+        <span class="lesson-no">Lesson 78</span>
+        <strong>The Last One</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="79－By Air.analysis.html">
+        <span class="lesson-no">Lesson 79</span>
+        <strong>By Air</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="80－The Crystal Palace.analysis.html">
+        <span class="lesson-no">Lesson 80</span>
+        <strong>The Crystal Palace</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="81－Escape.analysis.html">
+        <span class="lesson-no">Lesson 81</span>
+        <strong>Escape</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="82－Monster or Fish.analysis.html">
+        <span class="lesson-no">Lesson 82</span>
+        <strong>Monster or Fish</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="83－After the Elections.analysis.html">
+        <span class="lesson-no">Lesson 83</span>
+        <strong>After the Elections</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="84－On Strike.analysis.html">
+        <span class="lesson-no">Lesson 84</span>
+        <strong>On Strike</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="85－Never Too Old To Learn.analysis.html">
+        <span class="lesson-no">Lesson 85</span>
+        <strong>Never Too Old To Learn</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="86－Out of Control.analysis.html">
+        <span class="lesson-no">Lesson 86</span>
+        <strong>Out of Control</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="87－A Perfect Alibi.analysis.html">
+        <span class="lesson-no">Lesson 87</span>
+        <strong>A Perfect Alibi</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="88－Trapped in a Mine.analysis.html">
+        <span class="lesson-no">Lesson 88</span>
+        <strong>Trapped in a Mine</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="89－A Slip of the Tongue.analysis.html">
+        <span class="lesson-no">Lesson 89</span>
+        <strong>A Slip of the Tongue</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="90－What's for Supper.analysis.html">
+        <span class="lesson-no">Lesson 90</span>
+        <strong>What's for Supper</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="91－Three Men in a Basket.analysis.html">
+        <span class="lesson-no">Lesson 91</span>
+        <strong>Three Men in a Basket</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="92－Asking for Trouble.analysis.html">
+        <span class="lesson-no">Lesson 92</span>
+        <strong>Asking for Trouble</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="93－A Noble Gift.analysis.html">
+        <span class="lesson-no">Lesson 93</span>
+        <strong>A Noble Gift</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="94－Future Champions.analysis.html">
+        <span class="lesson-no">Lesson 94</span>
+        <strong>Future Champions</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="95－A Fantasy.analysis.html">
+        <span class="lesson-no">Lesson 95</span>
+        <strong>A Fantasy</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="96－The Dead Return.analysis.html">
+        <span class="lesson-no">Lesson 96</span>
+        <strong>The Dead Return</strong>
+        <span>已生成</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

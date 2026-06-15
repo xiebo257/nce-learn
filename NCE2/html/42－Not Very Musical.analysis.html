@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 42 - Not Very Musical</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 42 - Not Very Musical</h1>
+      <p class="meta">问题: What happened when the snake charmer began to play jazz?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.24" data-end="26.05">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">As</span> <span class="weak">we</span> <span class="weak">had</span> <span class="weak linking">had</span> <span class="weak linking">a</span> long walk through <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">markets</span> <span class="weak linking">of</span> <span class="linking">old</span> Delhi, <span class="weak">we</span> <span class="linking">stopped</span> <span class="weak linking">at</span> <span class="weak linking">a</span> square <span class="weak">to</span> <span class="weak linking">have</span> <span class="weak linking">a</span> rest.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əz</span> wi <span class="weak">həd</span> <span class="weak">həd</span><span class="linking">‿</span><span class="weak">ə</span> long wɔk θru one <span class="weak">əv</span> <span class="weak">ðə</span> ˈmɑrkət<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>oʊld ˈdɛli wi stɑp<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> skwɛr <span class="weak">tə</span> <span class="weak">həv</span><span class="linking">‿</span><span class="weak">ə</span> rɛst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həd‿ə、ˈmɑrkət‿əv‿oʊld、stɑp‿ət‿ə、həv‿ə 连读；ðə、ə、əz、ət、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>由于我们在旧德里的一个市场走了很长一段路，所以我们在一个广场停下来休息。</p></div>
+      <div class="field words"><span>词</span><p>long 长的； walk 走； through 通过； markets 市场；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.05" data-end="37.59">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">After</span> <span class="weak linking">a</span> time, <span class="weak">we</span> <span class="linking">noticed</span> <span class="weak linking">a</span> snake charmer with two large <span class="linking">baskets</span> <span class="weak linking">at</span> <span class="weak">the</span> other <span class="linking">side</span> <span class="weak linking">of</span> <span class="weak">the</span> square, so <span class="weak">we</span> went <span class="weak">to</span> <span class="weak linking">have</span> <span class="weak linking">a</span> <span class="linking">look</span> <span class="weak linking">at</span> <span class="weak">him.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈæftər<span class="linking">‿</span><span class="weak">ə</span> time wi ˈnoʊdəs<span class="linking">‿</span><span class="weak">ə</span> sneɪk ˈtʃɑrmər wɪð tu lɑrdʒ ˈbæskət<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ði</span><span class="linking">‿</span>ˈəðər side <span class="weak">əv</span> <span class="weak">ðə</span> skwɛr soʊ wi wɛnt <span class="weak">tə</span> <span class="weak">həv</span><span class="linking">‿</span><span class="weak">ə</span> lʊk<span class="linking">‿</span><span class="weak">ət</span> hɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈæftər‿ə、ˈnoʊdəs‿ə、ˈbæskət‿ət、ði‿ˈəðər、həv‿ə 连读；ðə、ði、ə、ət、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>过了一会儿，我们注意到广场另一边有一个耍蛇人，提着两个大篮子，于是我们就去看他。</p></div>
+      <div class="field words"><span>词</span><p>after 后； time 时间； noticed 注意到； snake 蛇；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="37.59" data-end="47.11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">As</span> <span class="linking">soon</span> <span class="weak linking">as</span> <span class="weak">he</span> saw us, <span class="weak">he</span> <span class="linking">picked</span> <span class="linking">up</span> <span class="weak linking">a</span> long pipe which <span class="weak">was</span> covered with <span class="linking">coins</span> <span class="weak linking">and</span> <span class="linking">opened</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> baskets.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əz</span> sun<span class="linking">‿</span><span class="weak">əz</span> hi sɔ əs hi pɪk<span class="linking">‿</span>əp<span class="linking">‿</span><span class="weak">ə</span> long paɪp wɪtʃ <span class="weak">wəz</span> ˈkəvərd wɪð kɔɪn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈoʊpn<span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> ˈbæskət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>sun‿əz、pɪk‿əp‿ə、kɔɪn‿ən‿ˈoʊpn‿one 连读；ðə、ə、ən、əz、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他一看到我们，就拿起一根装满硬币的长管子，打开了其中一个篮子。</p></div>
+      <div class="field words"><span>词</span><p>soon 很快； picked 挑选的； long 长的； pipe 管道；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="47.11" data-end="53.85">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">When <span class="weak">he</span> began <span class="weak">to</span> <span class="linking">play</span> <span class="weak linking">a</span> tune, <span class="weak">we</span> <span class="weak">had</span> <span class="weak">our</span> first <span class="linking">glimpse</span> <span class="weak linking">of</span> <span class="weak">the</span> snake.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wɛn hi bəˈɡæn <span class="weak">tə</span> pleɪ <span class="weak">ə</span> tun wi <span class="weak">həd</span> aʊɚ fərst ɡlɪms<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> sneɪk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɡlɪms‿əv 连读；ðə、ə、tə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当他开始演奏一首曲子时，我们第一次看到了蛇。</p></div>
+      <div class="field words"><span>词</span><p>when 什么时候； began 开始； play 玩； tune 调；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="53.85" data-end="60.19">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">It</span> rose <span class="linking">out</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">basket</span> <span class="weak linking">and</span> began <span class="weak">to</span> follow <span class="weak">the</span> <span class="linking">movements</span> <span class="weak linking">of</span> <span class="weak">the</span> pipe.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt roʊz aʊt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈbæskət<span class="linking">‿</span><span class="weak">ən</span> bəˈɡæn <span class="weak">tə</span> ˈfɑloʊ <span class="weak">ðə</span> ˈmuvmnt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> paɪp/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>aʊt‿əv、ˈbæskət‿ən、ˈmuvmnt‿əv 连读；ðə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>它从篮子里升起，开始跟随管道的运动。</p></div>
+      <div class="field words"><span>词</span><p>rose 玫瑰； basket 篮子； began 开始； follow 跟随；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="60.19" data-end="69.41">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">We</span> <span class="weak">were</span> very much surprised when <span class="weak">the</span> snake charmer suddenly began <span class="weak">to</span> play <span class="linking">jazz</span> <span class="weak linking">and</span> modern pop songs.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi <span class="weak">wɚ</span> ˈvɛri mətʃ səˈpraɪzd wɛn <span class="weak">ðə</span> sneɪk ˈtʃɑrmər ˈsədnli bəˈɡæn <span class="weak">tə</span> pleɪ dʒæz<span class="linking">‿</span><span class="weak">ən</span> ˈmɑdərn pɑp sɔŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dʒæz‿ən 连读；ðə、ən、tə、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当耍蛇人突然开始演奏爵士乐和现代流行歌曲时，我们感到非常惊讶。</p></div>
+      <div class="field words"><span>词</span><p>very 非常； much 很多； surprised 惊讶； when 什么时候；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="69.41" data-end="74.53">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">The</span> snake, however, continued <span class="weak">to</span> 'dance' slowly.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> sneɪk haʊˈɛvər <span class="weak">kən</span>ˈtɪnju <span class="weak">tə</span> dæns ˈsloʊli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>然而，蛇却继续缓慢地‘跳舞’。</p></div>
+      <div class="field words"><span>词</span><p>snake 蛇； however 然而； continued 持续； dance 舞蹈；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="74.53" data-end="80.61">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak linking">It</span> <span class="linking">obviously</span> <span class="weak">could</span> not tell <span class="weak">the</span> difference <span class="linking">between</span> <span class="linking">Indian</span> <span class="linking">music</span> <span class="weak linking">and</span> jazz!</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ˈɑbviəsli kəd nɑt tɛl <span class="weak">ðə</span> ˈdɪfrəns bəˈtwin<span class="linking">‿</span>ˈɪndiən music<span class="linking">‿</span><span class="weak">ən</span> dʒæz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ˈɑbviəsli、bəˈtwin‿ˈɪndiən、music‿ən 连读；ðə、ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>它显然无法区分印度音乐和爵士乐！</p></div>
+      <div class="field words"><span>词</span><p>obviously 明显地； tell 告诉； difference 不同之处； between 之间；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>long 长的； walk 走； through 通过； markets 市场； after 后； time 时间； noticed 注意到； snake 蛇； soon 很快； picked 挑选的； long 长的； pipe 管道； when 什么时候； began 开始； play 玩； tune 调； rose 玫瑰； basket 篮子；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>原因或结果关系连接分句； 不定式短语补充目的、结果或宾语； 时间状语从句交代动作先后； 含定语从句或名词性从句； when 引导时间状语从句； 并列结构连接动作或信息。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 一般过去时叙述故事主线； 一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>8. It obviously could not tell the difference between Indian music and jazz!。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>həd‿ə、ˈmɑrkət‿əv‿oʊld、stɑp‿ət‿ə、həv‿ə 连读；ðə、ə、əz、ət、tə、əv 弱读/弱化； ˈæftər‿ə、ˈnoʊdəs‿ə、ˈbæskət‿ət、ði‿ˈəðər、həv‿ə 连读；ðə、ði、ə、ət、tə、əv 弱读/弱化； sun‿əz、pɪk‿əp‿ə、kɔɪn‿ən‿ˈoʊpn‿one 连读；ðə、ə、ən、əz、əv、wəz 弱读/弱化； ɡlɪms‿əv 连读；ðə、ə、tə、əv、həd 弱读/弱化； aʊt‿əv、ˈbæskət‿ən、ˈmuvmnt‿əv 连读；ðə、ən、tə、əv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Not Very Musical</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../42－Not Very Musical.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.24,"end":26.05,"text":"As we had had a long walk through one of the markets of old Delhi, we stopped at a square to have a rest."},{"index":2,"start":26.05,"end":37.59,"text":"After a time, we noticed a snake charmer with two large baskets at the other side of the square, so we went to have a look at him."},{"index":3,"start":37.59,"end":47.11,"text":"As soon as he saw us, he picked up a long pipe which was covered with coins and opened one of the baskets."},{"index":4,"start":47.11,"end":53.85,"text":"When he began to play a tune, we had our first glimpse of the snake."},{"index":5,"start":53.85,"end":60.19,"text":"It rose out of the basket and began to follow the movements of the pipe."},{"index":6,"start":60.19,"end":69.41,"text":"We were very much surprised when the snake charmer suddenly began to play jazz and modern pop songs."},{"index":7,"start":69.41,"end":74.53,"text":"The snake, however, continued to 'dance' slowly."},{"index":8,"start":74.53,"end":80.61,"text":"It obviously could not tell the difference between Indian music and jazz!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

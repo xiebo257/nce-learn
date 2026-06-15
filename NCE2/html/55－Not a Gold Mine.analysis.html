@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 55 - Not a Gold Mine</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 55 - Not a Gold Mine</h1>
+      <p class="meta">问题: What did the team find?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.25" data-end="20.36">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Dreams</span> <span class="weak linking">of</span> finding lost <span class="linking">treasure</span> <span class="linking">almost</span> came true recently.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/drim<span class="linking">‿</span><span class="weak">əv</span> finding lɔst ˈtrɛʒər<span class="linking">‿</span>ˈɔlmoʊst keɪm tru ˈrisnli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>drim‿əv、ˈtrɛʒər‿ˈɔlmoʊst 连读；əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>寻找失落宝藏的梦想最近几乎实现了。</p></div>
+      <div class="field words"><span>词</span><p>dreams 梦想； finding 发现； lost 丢失的； treasure 宝藏；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="20.36" data-end="32.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">A</span> new machine called <span class="weak">'The</span> Revealer' <span class="weak">has</span> <span class="weak linking">been</span> <span class="linking">invented</span> <span class="weak linking">and</span> <span class="weak linking">it</span> <span class="weak">has</span> <span class="weak">been</span> used <span class="weak">to</span> detect gold which <span class="weak">has</span> <span class="weak">been</span> <span class="linking">buried</span> <span class="weak linking">in</span> <span class="weak">the</span> ground.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> nu machine kɔl <span class="weak">ðə</span> revealer <span class="weak">həz</span> bɪn<span class="linking">‿</span>ɪnˈvɛnt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt <span class="weak">həz</span> bɪn just <span class="weak">tə</span> dəˈtɛk ɡoʊld wɪtʃ <span class="weak">həz</span> bɪn ˈbɛri ɪn <span class="weak">ðə</span> ɡraʊnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bɪn‿ɪnˈvɛnt‿ən‿ɪt 连读；ðə、ə、ən、tə、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>一种名为“揭示者”的新机器已经发明，它已被用来探测埋在地下的黄金。</p></div>
+      <div class="field words"><span>词</span><p>machine 机器； called 被称为； revealer 揭秘者； invented 发明了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="32.07" data-end="41.97">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> machine <span class="weak">was</span> <span class="linking">used</span> <span class="weak linking">in</span> <span class="weak linking">a</span> cave near <span class="weak">the</span> seashore <span class="linking">where--it</span> <span class="weak linking">is</span> said--pirates used <span class="weak">to</span> hide gold.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> machine <span class="weak">wəz</span> just<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> keɪv nɪr <span class="weak">ðə</span> ˈsiˌʃɔr whereit<span class="linking">‿</span><span class="weak">ɪz</span> saidpirates just <span class="weak">tə</span> hide ɡoʊld/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>just‿ɪn‿ə、whereit‿ɪz 连读；ðə、ə、tə、ɪz、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>这台机器是在海边附近的一个洞穴中使用的，据说海盗过去常常在那里藏匿黄金。</p></div>
+      <div class="field words"><span>词</span><p>machine 机器； used 用过的； cave 洞穴； near 靠近；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="41.97" data-end="49.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> pirates <span class="weak linking">would</span> <span class="linking">often</span> bury <span class="linking">gold</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">cave</span> <span class="weak linking">and</span> then fail <span class="weak">to</span> <span class="linking">collect</span> <span class="weak linking">it.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈpaɪrət wəd<span class="linking">‿</span>ˈɔfn ˈbɛri ɡoʊld<span class="linking">‿</span>ɪn <span class="weak">ðə</span> keɪv<span class="linking">‿</span><span class="weak">ən</span> ðɛn feɪl <span class="weak">tə</span> kəˈlɛk<span class="linking">‿</span>ɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəd‿ˈɔfn、ɡoʊld‿ɪn、keɪv‿ən、kəˈlɛk‿ɪt 连读；ðə、ən、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>海盗们常常将黄金埋在山洞里，却无法取走。</p></div>
+      <div class="field words"><span>词</span><p>pirates 海盗； often 经常； bury 埋葬； gold 金子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.07" data-end="57.25">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Armed with <span class="weak">the</span> new <span class="linking">machine,</span> <span class="weak linking">a</span> search party <span class="linking">went</span> <span class="linking">into</span> <span class="weak">the</span> cave hoping <span class="weak">to</span> find buried treasure.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɑrmd wɪð <span class="weak">ðə</span> nu machine <span class="weak">ə</span> sərtʃ ˈpɑrdi wɛnt<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> keɪv hoʊp <span class="weak">tə</span> find ˈbɛri ˈtrɛʒər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɛnt‿ˈɪntu 连读；ðə、ə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>带着这台新机器，一支搜索队进入洞穴，希望找到埋藏的宝藏。</p></div>
+      <div class="field words"><span>词</span><p>armed 武装的； with 和； machine 机器； search 搜索；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="57.25" data-end="68.51">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> <span class="linking">leader</span> <span class="weak linking">of</span> <span class="weak">the</span> party <span class="weak linking">was</span> <span class="linking">examining</span> <span class="weak">the</span> soil near <span class="weak">the</span> entrance <span class="weak">to</span> <span class="weak">the</span> cave when <span class="weak">the</span> machine showed <span class="weak">that</span> <span class="weak">there</span> <span class="weak">was</span> <span class="linking">gold</span> <span class="linking">under</span> <span class="weak">the</span> ground.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈlidər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈpɑrdi <span class="weak">wəz</span><span class="linking">‿</span>ɪɡˈzæmən <span class="weak">ðə</span> sɔɪl nɪr <span class="weak">ði</span><span class="linking">‿</span>ˈɛntrəns <span class="weak">tə</span> <span class="weak">ðə</span> keɪv wɛn <span class="weak">ðə</span> machine ʃoʊ ðæt ðɛr <span class="weak">wəz</span> ɡoʊld<span class="linking">‿</span>ˈəndər <span class="weak">ðə</span> ɡraʊnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈlidər‿əv、wəz‿ɪɡˈzæmən、ði‿ˈɛntrəns、ɡoʊld‿ˈəndər 连读；ðə、ði、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>队伍的领导者正在检查洞穴入口附近的土壤，这时机器显示地下有金子。</p></div>
+      <div class="field words"><span>词</span><p>leader 领导者； party 派对； examining 检查； soil 土壤；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="68.51" data-end="74.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Very excited, <span class="weak">the</span> party <span class="linking">dug</span> <span class="weak linking">a</span> hole two feet deep.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈvɛri ɪkˈsaɪdəd <span class="weak">ðə</span> ˈpɑrdi dəɡ<span class="linking">‿</span><span class="weak">ə</span> hoʊl tu fit dip/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəɡ‿ə 连读；ðə、ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>一行人很兴奋，挖了一个两尺深的洞。</p></div>
+      <div class="field words"><span>词</span><p>very 非常； excited 兴奋的； party 派对； hole 洞；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="74.14" data-end="80.66">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">They</span> finally <span class="linking">found</span> <span class="weak linking">a</span> small gold coin which <span class="weak linking">was</span> <span class="linking">almost</span> worthless.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ ˈfaɪnəli found<span class="linking">‿</span><span class="weak">ə</span> smɔl ɡoʊld kɔɪn wɪtʃ <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlmoʊst ˈwərθləs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>found‿ə、wəz‿ˈɔlmoʊst 连读；ə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他们终于找到了一枚几乎不值钱的小金币。</p></div>
+      <div class="field words"><span>词</span><p>finally 最后； found 成立； small 小的； gold 金子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="80.66" data-end="91.21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> party then searched <span class="weak">the</span> whole cave thoroughly <span class="weak">but</span> did not <span class="linking">find</span> <span class="linking">anything</span> <span class="linking">except</span> <span class="weak linking">an</span> <span class="linking">empty</span> tin trunk.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈpɑrdi ðɛn sərtʃ <span class="weak">ðə</span> hoʊl keɪv ˈθərəli bət dɪd nɑt find<span class="linking">‿</span>ˈɛniˌθɪŋ<span class="linking">‿</span>ɪkˈsɛpt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛmti tɪn trəŋk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>find‿ˈɛniˌθɪŋ‿ɪkˈsɛpt‿ən‿ˈɛmti 连读；ðə、ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>随后一行人彻底搜查了整个山洞，但除了一个空锡箱外什么也没找到。</p></div>
+      <div class="field words"><span>词</span><p>party 派对； then 然后； searched 搜索过； whole 整个的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="91.21" data-end="100.04">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> <span class="linking">spite</span> <span class="weak linking">of</span> this, many <span class="linking">people</span> <span class="weak linking">are</span> confident <span class="weak">that</span> <span class="weak">'The</span> Revealer' may reveal <span class="linking">something</span> <span class="weak linking">of</span> value fairly soon.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn spaɪt<span class="linking">‿</span><span class="weak">əv</span> ðɪs ˈmɛni ˈpipl<span class="linking">‿</span><span class="weak">ɑr</span> ˈkɑnfədnt ðæt <span class="weak">ðə</span> revealer meɪ rəˈvil ˈsəmˌθɪŋ<span class="linking">‿</span><span class="weak">əv</span> ˈvælju ˈfɛrli sun/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>spaɪt‿əv、ˈpipl‿ɑr、ˈsəmˌθɪŋ‿əv 连读；ðə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>尽管如此，许多人仍然相信《揭露者》可能很快就会揭露一些有价值的东西。</p></div>
+      <div class="field words"><span>词</span><p>spite 恶意； this 这； many 许多； people 人们；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>dreams 梦想； finding 发现； lost 丢失的； treasure 宝藏； machine 机器； called 被称为； revealer 揭秘者； invented 发明了； machine 机器； used 用过的； cave 洞穴； near 靠近； pirates 海盗； often 经常； bury 埋葬； gold 金子； armed 武装的； with 和；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 含定语从句或名词性从句； 含被动结构； 不定式短语补充目的、结果或宾语； 直接引语与叙述语结合； 并列结构连接动作或信息。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般过去时叙述故事主线； 现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 过去进行时描写当时正在发生的动作； 一般现在时或基础事实陈述。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>4. The pirates would often bury gold in the cave and then fail to collect it.； 10. In spite of this, many people are confident that 'The Revealer' may reveal something of value fairly soon.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>drim‿əv、ˈtrɛʒər‿ˈɔlmoʊst 连读；əv 弱读/弱化； bɪn‿ɪnˈvɛnt‿ən‿ɪt 连读；ðə、ə、ən、tə、həz 弱读/弱化； just‿ɪn‿ə、whereit‿ɪz 连读；ðə、ə、tə、ɪz、wəz 弱读/弱化； wəd‿ˈɔfn、ɡoʊld‿ɪn、keɪv‿ən、kəˈlɛk‿ɪt 连读；ðə、ən、tə 弱读/弱化； wɛnt‿ˈɪntu 连读；ðə、ə、tə 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Not a Gold Mine</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../55－Not a Gold Mine.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.25,"end":20.36,"text":"Dreams of finding lost treasure almost came true recently."},{"index":2,"start":20.36,"end":32.07,"text":"A new machine called 'The Revealer' has been invented and it has been used to detect gold which has been buried in the ground."},{"index":3,"start":32.07,"end":41.97,"text":"The machine was used in a cave near the seashore where--it is said--pirates used to hide gold."},{"index":4,"start":41.97,"end":49.07,"text":"The pirates would often bury gold in the cave and then fail to collect it."},{"index":5,"start":49.07,"end":57.25,"text":"Armed with the new machine, a search party went into the cave hoping to find buried treasure."},{"index":6,"start":57.25,"end":68.51,"text":"The leader of the party was examining the soil near the entrance to the cave when the machine showed that there was gold under the ground."},{"index":7,"start":68.51,"end":74.14,"text":"Very excited, the party dug a hole two feet deep."},{"index":8,"start":74.14,"end":80.66,"text":"They finally found a small gold coin which was almost worthless."},{"index":9,"start":80.66,"end":91.21,"text":"The party then searched the whole cave thoroughly but did not find anything except an empty tin trunk."},{"index":10,"start":91.21,"end":100.04,"text":"In spite of this, many people are confident that 'The Revealer' may reveal something of value fairly soon."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

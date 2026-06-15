@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 86 - Out of Control</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 86 - Out of Control</h1>
+      <p class="meta">问题: What was the danger?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.45" data-end="22.55">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">As</span> <span class="weak">the</span> man tried <span class="weak">to</span> swing <span class="weak">the</span> speedboat round, <span class="weak">the</span> steering wheel <span class="linking">came</span> <span class="linking">away</span> <span class="weak linking">in</span> <span class="weak">his</span> hands.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əz</span> <span class="weak">ðə</span> mæn traɪd <span class="weak">tə</span> swɪŋ <span class="weak">ðə</span> ˈspidˌboʊt raʊnd <span class="weak">ðə</span> ˈstɪrɪŋ wil keɪm<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ ɪn hɪz hænd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>keɪm‿əˈweɪ 连读；ðə、əz、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当该男子试图转动快艇时，他手中的方向盘脱落了。</p></div>
+      <div class="field words"><span>词</span><p>tried 尝试过； swing 摇摆； speedboat 快艇； round 圆形的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="22.55" data-end="30.82">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">He</span> waved desperately <span class="weak">to</span> <span class="weak">his</span> companion, who <span class="weak">had</span> <span class="weak">been</span> water skiing <span class="weak">for</span> <span class="weak">the</span> last fifteen minutes.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi weɪv ˈdɛsprətli <span class="weak">tə</span> hɪz kəmˈpænjən who <span class="weak">həd</span> bɪn ˈwɔdər ˈskiɪŋ <span class="weak">fɚ</span> <span class="weak">ðə</span> læst ˌfɪfˈtin ˈmɪnət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他绝望地向他的同伴挥手，他的同伴在过去的十五分钟里一直在滑水。</p></div>
+      <div class="field words"><span>词</span><p>waved 挥手； desperately 拼命地； companion 伴侣； water 水；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.82" data-end="40.9">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Both men <span class="weak">had</span> hardly <span class="weak">had</span> time <span class="weak">to</span> realize what <span class="weak">was</span> happening when <span class="weak">they</span> <span class="weak">were</span> thrown violently into <span class="weak">the</span> sea.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/boʊθ men <span class="weak">həd</span> ˈhɑrdli <span class="weak">həd</span> time <span class="weak">tə</span> ˈriˌlaɪz wət <span class="weak">wəz</span> ˈhæpnɪŋ wɛn ðeɪ <span class="weak">wɚ</span> θroʊn ˈvaɪləntli ˈɪntu <span class="weak">ðə</span> si/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə、wəz、wɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>两人还没来得及意识到发生了什么，就被猛烈地扔进了海里。</p></div>
+      <div class="field words"><span>词</span><p>both 两个都； hardly 几乎不； time 时间； realize 意识到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.9" data-end="49.2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> speedboat <span class="weak">had</span> <span class="linking">struck</span> <span class="weak linking">a</span> buoy, <span class="weak linking">but</span> <span class="weak linking">it</span> continued <span class="weak">to</span> move very quickly across <span class="weak">the</span> water.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈspidˌboʊt <span class="weak">həd</span> strək<span class="linking">‿</span><span class="weak">ə</span> ˈbui bət<span class="linking">‿</span>ɪt <span class="weak">kən</span>ˈtɪnju <span class="weak">tə</span> move ˈvɛri ˈkwɪkli <span class="weak">ə</span>ˈkrɔs <span class="weak">ðə</span> ˈwɔdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>strək‿ə、bət‿ɪt 连读；ðə、ə、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>快艇撞上了浮标，但它继续在水面上快速移动。</p></div>
+      <div class="field words"><span>词</span><p>speedboat 快艇； struck 击中； buoy 浮标； continued 持续；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.2" data-end="60.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Both men <span class="weak">had</span> just begun <span class="weak">to</span> swim towards <span class="weak">the</span> shore, when <span class="weak">they</span> noticed with dismay <span class="weak">that</span> <span class="weak">the</span> speedboat <span class="weak">was</span> <span class="linking">moving</span> <span class="weak linking">in</span> <span class="weak linking">a</span> circle.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/boʊθ men <span class="weak">həd</span> dʒəst bəˈɡən <span class="weak">tə</span> swɪm tɔrdz <span class="weak">ðə</span> ʃɔr wɛn ðeɪ ˈnoʊdəs wɪð dɪˈsmeɪ ðæt <span class="weak">ðə</span> ˈspidˌboʊt <span class="weak">wəz</span> moving<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> ˈsərkl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moving‿ɪn‿ə 连读；ðə、ə、tə、wəz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>两人刚开始向岸边游去，就惊愕地发现快艇正在转圈。</p></div>
+      <div class="field words"><span>词</span><p>both 两个都； just 只是； begun 开始； swim 游泳；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="60.07" data-end="65.95">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">It</span> now came straight towards <span class="weak linking">them</span> <span class="weak linking">at</span> tremendous speed.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt naʊ keɪm streɪt tɔrdz ðəm<span class="linking">‿</span><span class="weak">ət</span> trəˈmɛndəs spid/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðəm‿ət 连读；ət 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>现在它以极快的速度直冲着他们而来。</p></div>
+      <div class="field words"><span>词</span><p>came 来了； straight 直的； towards 向； tremendous 巨大的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="65.95" data-end="73.18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">In</span> less <span class="linking">than</span> <span class="weak linking">a</span> <span class="linking">minute,</span> <span class="weak linking">it</span> roared past <span class="weak linking">them</span> <span class="linking">only</span> <span class="weak linking">a</span> few <span class="linking">feet</span> <span class="linking">away.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn lɛs ðæn<span class="linking">‿</span><span class="weak">ə</span> ˈmɪnət<span class="linking">‿</span>ɪt rɔr pæst ðəm<span class="linking">‿</span>ˈoʊnli <span class="weak">ə</span> fju fit<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðæn‿ə、ˈmɪnət‿ɪt、ðəm‿ˈoʊnli、fit‿əˈweɪ 连读；ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>不到一分钟，它就在距离他们只有几英尺的地方呼啸而过。</p></div>
+      <div class="field words"><span>词</span><p>less 较少的； than 比； minute 分钟； roared 咆哮着；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="73.18" data-end="83.52">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">After</span> <span class="weak linking">it</span> <span class="weak">had</span> passed, <span class="weak">they</span> <span class="linking">swam</span> <span class="linking">on</span> <span class="weak linking">as</span> <span class="linking">quickly</span> <span class="weak linking">as</span> <span class="weak">they</span> <span class="weak">could</span> because <span class="weak">they</span> knew <span class="weak">that</span> <span class="weak">the</span> boat <span class="weak">would</span> soon return.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈæftər<span class="linking">‿</span>ɪt <span class="weak">həd</span> pæs ðeɪ swæm<span class="linking">‿</span>ɔn<span class="linking">‿</span><span class="weak">əz</span> ˈkwɪkli <span class="weak">əz</span> ðeɪ kəd bəˈkəz ðeɪ nu ðæt <span class="weak">ðə</span> boʊt wəd sun rəˈtərn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈæftər‿ɪt、swæm‿ɔn‿əz 连读；ðə、əz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>船过去后，他们以最快的速度继续游，因为他们知道船很快就会回来。</p></div>
+      <div class="field words"><span>词</span><p>after 后； passed 通过了； swam 游泳； quickly 迅速地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="83.52" data-end="92.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">They</span> <span class="weak">had</span> just <span class="weak linking">had</span> <span class="linking">enough</span> time <span class="weak">to</span> swim <span class="linking">out</span> <span class="weak linking">of</span> danger when <span class="weak">the</span> <span class="linking">boat</span> <span class="linking">again</span> <span class="linking">completed</span> <span class="weak linking">a</span> circle.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ <span class="weak">həd</span> dʒəst <span class="weak">həd</span><span class="linking">‿</span>ɪˈnəf time <span class="weak">tə</span> swɪm aʊt<span class="linking">‿</span><span class="weak">əv</span> danger wɛn <span class="weak">ðə</span> boʊt<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛn kəmˈplit<span class="linking">‿</span><span class="weak">ə</span> ˈsərkl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həd‿ɪˈnəf、aʊt‿əv、boʊt‿əˈɡɛn、kəmˈplit‿ə 连读；ðə、ə、tə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他们刚有足够的时间游出危险，船又绕了一圈。</p></div>
+      <div class="field words"><span>词</span><p>just 只是； enough 足够的； time 时间； swim 游泳；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="92.13" data-end="98.41">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">On <span class="linking">this</span> <span class="linking">occasion,</span> <span class="linking">however,</span> <span class="weak linking">it</span> <span class="weak">had</span> slowed down considerably.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɔn ðɪs<span class="linking">‿</span><span class="weak">ə</span>ˈkeɪʒn haʊˈɛvər<span class="linking">‿</span>ɪt <span class="weak">həd</span> sloʊ daʊn <span class="weak">kən</span>ˈsɪdrəbli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɪs‿əˈkeɪʒn、haʊˈɛvər‿ɪt 连读；həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>然而，这一次，它的速度明显减慢了。</p></div>
+      <div class="field words"><span>词</span><p>this 这； occasion 场合； however 然而； slowed 放慢了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="98.41" data-end="102.6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> petrol <span class="weak">had</span> nearly all <span class="weak">been</span> <span class="linking">used</span> <span class="linking">up.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈpɛtrəl <span class="weak">həd</span> ˈnɪrli ɔl bɪn just<span class="linking">‿</span>əp/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>just‿əp 连读；ðə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>汽油几乎都用完了。</p></div>
+      <div class="field words"><span>词</span><p>petrol 汽油； nearly 几乎； used 用过的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="102.6" data-end="110.43">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Before long, <span class="weak">the</span> noise dropped <span class="linking">completely</span> <span class="weak linking">and</span> <span class="weak">the</span> boat began <span class="weak">to</span> drift gently across <span class="weak">the</span> water.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bəˈfɔr long <span class="weak">ðə</span> nɔɪz dropped kəmˈplitli <span class="weak">ən</span> <span class="weak">ðə</span> boʊt bəˈɡæn <span class="weak">tə</span> drɪft ˈdʒɛnli <span class="weak">ə</span>ˈkrɔs <span class="weak">ðə</span> ˈwɔdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、ən、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>不久，噪音完全消失，小船开始轻轻地在水面上漂流。</p></div>
+      <div class="field words"><span>词</span><p>before 前； long 长的； noise 噪音； dropped 掉落；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>tried 尝试过； swing 摇摆； speedboat 快艇； round 圆形的； waved 挥手； desperately 拼命地； companion 伴侣； water 水； both 两个都； hardly 几乎不； time 时间； realize 意识到； speedboat 快艇； struck 击中； buoy 浮标； continued 持续； both 两个都； just 只是；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>原因或结果关系连接分句； 不定式短语补充目的、结果或宾语； 含定语从句或名词性从句； when 引导时间状语从句； 主语 + 谓语 + 宾语/补足语的基础叙述句； 时间状语从句交代动作先后。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般过去时叙述故事主线； 过去完成时说明更早发生的动作； 过去进行时描写当时正在发生的动作； 一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>8. After it had passed, they swam on as quickly as they could because they knew that the boat would soon return.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>keɪm‿əˈweɪ 连读；ðə、əz、tə 弱读/弱化； strək‿ə、bət‿ɪt 连读；ðə、ə、tə、həd 弱读/弱化； moving‿ɪn‿ə 连读；ðə、ə、tə、wəz、həd 弱读/弱化； ðəm‿ət 连读；ət 弱读/弱化； ðæn‿ə、ˈmɪnət‿ɪt、ðəm‿ˈoʊnli、fit‿əˈweɪ 连读；ə 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Out of Control</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../86－Out of Control.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.45,"end":22.55,"text":"As the man tried to swing the speedboat round, the steering wheel came away in his hands."},{"index":2,"start":22.55,"end":30.82,"text":"He waved desperately to his companion, who had been water skiing for the last fifteen minutes."},{"index":3,"start":30.82,"end":40.9,"text":"Both men had hardly had time to realize what was happening when they were thrown violently into the sea."},{"index":4,"start":40.9,"end":49.2,"text":"The speedboat had struck a buoy, but it continued to move very quickly across the water."},{"index":5,"start":49.2,"end":60.07,"text":"Both men had just begun to swim towards the shore, when they noticed with dismay that the speedboat was moving in a circle."},{"index":6,"start":60.07,"end":65.95,"text":"It now came straight towards them at tremendous speed."},{"index":7,"start":65.95,"end":73.18,"text":"In less than a minute, it roared past them only a few feet away."},{"index":8,"start":73.18,"end":83.52,"text":"After it had passed, they swam on as quickly as they could because they knew that the boat would soon return."},{"index":9,"start":83.52,"end":92.13,"text":"They had just had enough time to swim out of danger when the boat again completed a circle."},{"index":10,"start":92.13,"end":98.41,"text":"On this occasion, however, it had slowed down considerably."},{"index":11,"start":98.41,"end":102.6,"text":"The petrol had nearly all been used up."},{"index":12,"start":102.6,"end":110.43,"text":"Before long, the noise dropped completely and the boat began to drift gently across the water."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

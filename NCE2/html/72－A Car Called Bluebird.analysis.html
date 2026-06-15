@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 72 - A Car Called Bluebird</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 72 - A Car Called Bluebird</h1>
+      <p class="meta">问题: What mistake was made?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.43" data-end="26.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> great racing driver, Sir Malcolm Campbell, <span class="weak">was</span> <span class="weak">the</span> first man <span class="weak">to</span> <span class="linking">drive</span> <span class="weak linking">at</span> <span class="linking">over</span> 300 miles per hour.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ɡreɪt ˈreɪsɪŋ ˈdraɪvər sər malcolm campbell <span class="weak">wəz</span> <span class="weak">ðə</span> fərst mæn <span class="weak">tə</span> drive <span class="weak">ət</span><span class="linking">‿</span>ˈoʊvər maɪl pər ˈaʊr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ət‿ˈoʊvər 连读；ðə、ət、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>伟大的赛车手马尔科姆·坎贝尔爵士是第一个驾驶速度超过每小时 300 英里的人。</p></div>
+      <div class="field words"><span>词</span><p>great 伟大的； racing 赛车； driver 司机； malcolm 马尔科姆；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.14" data-end="36.32">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">He</span> <span class="linking">set</span> <span class="linking">up</span> <span class="weak linking">a</span> new world <span class="linking">record</span> <span class="weak linking">in</span> <span class="linking">September</span> <span class="linking">1935</span> <span class="weak linking">at</span> Bonneville Salt Flats, Utah.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi sɛt<span class="linking">‿</span>əp<span class="linking">‿</span><span class="weak">ə</span> nu wərld ˈrɛkərd<span class="linking">‿</span>ɪn sɛpˈtɛmbər<span class="linking">‿</span><span class="weak">ət</span> bonneville sɔlt flæt ˈjuˌtɔ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>sɛt‿əp‿ə、ˈrɛkərd‿ɪn、sɛpˈtɛmbər‿ət 连读；ə、ət 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>1935 年 9 月，他在犹他州博纳维尔盐滩创造了新的世界纪录。</p></div>
+      <div class="field words"><span>词</span><p>world 世界； record 记录； september 九月； bonneville 博讷维尔；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="36.32" data-end="42.92">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Bluebird, <span class="weak">the</span> car <span class="weak">he</span> <span class="weak">was</span> driving, <span class="weak">had</span> <span class="weak">been</span> specially built <span class="weak">for</span> <span class="weak">him.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈbluˌbərd <span class="weak">ðə</span> kɑr hi <span class="weak">wəz</span> driving <span class="weak">həd</span> bɪn ˈspɛʃli bɪlt <span class="weak">fɚ</span> hɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、wəz、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他驾驶的蓝鸟汽车是专门为他打造的。</p></div>
+      <div class="field words"><span>词</span><p>bluebird 蓝鸟； driving 驾驶； specially 特别； built 建成；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="42.92" data-end="50.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> <span class="linking">over</span> <span class="linking">30</span> <span class="linking">feet</span> <span class="weak linking">in</span> <span class="linking">length</span> <span class="weak linking">and</span> <span class="weak linking">had</span> <span class="weak linking">a</span> 2, 500-horsepower engine.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈoʊvər fit<span class="linking">‿</span>ɪn lɛŋθ<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">həd</span><span class="linking">‿</span><span class="weak">ə</span> ˈhɔrsˌpaʊər engine/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿ˈoʊvər、fit‿ɪn、lɛŋθ‿ən、həd‿ə 连读；ə、ən、wəz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>它长超过 30 英尺，配有 2, 500 马力的发动机。</p></div>
+      <div class="field words"><span>词</span><p>over 超过； feet 脚； length 长度； horsepower 马力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="50.42" data-end="64.39">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Although Campbell <span class="linking">reached</span> <span class="weak linking">a</span> <span class="linking">speed</span> <span class="weak linking">of</span> <span class="linking">over</span> 304 miles per hour, <span class="weak">he</span> <span class="weak">had</span> great <span class="linking">difficulty</span> <span class="weak linking">in</span> controlling <span class="weak">the</span> car <span class="linking">because</span> <span class="weak linking">a</span> tyre burst during <span class="weak">the</span> first run.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɔlˈðoʊ campbell ritʃ<span class="linking">‿</span><span class="weak">ə</span> spid<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈoʊvər maɪl pər ˈaʊr hi <span class="weak">həd</span> ɡreɪt ˈdɪfəkəlti ɪn controlling <span class="weak">ðə</span> kɑr bəˈkəz<span class="linking">‿</span><span class="weak">ə</span> ˈtaɪr bərst ˈdʊrɪŋ <span class="weak">ðə</span> fərst run/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ritʃ‿ə、spid‿əv‿ˈoʊvər、bəˈkəz‿ə 连读；ðə、ə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>尽管坎贝尔的速度达到了每小时 304 英里以上，但他在控制赛车方面遇到了很大困难，因为在第一次行驶时轮胎就爆了。</p></div>
+      <div class="field words"><span>词</span><p>although 虽然； campbell 坎贝尔； reached 达到； speed 速度；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="64.39" data-end="75.53">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">After <span class="weak linking">his</span> <span class="linking">attempt,</span> Campbell <span class="weak">was</span> disappointed <span class="weak">to</span> learn <span class="weak">that</span> <span class="weak linking">his</span> <span class="linking">average</span> speed <span class="weak">had</span> <span class="weak">been</span> 299 miles per hour.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈæftər hɪz<span class="linking">‿</span><span class="weak">ə</span>ˈtɛmt campbell <span class="weak">wəz</span> ˌdɪsəˈpɔɪnəd <span class="weak">tə</span> lərn ðæt hɪz<span class="linking">‿</span>ˈævrɪdʒ spid <span class="weak">həd</span> bɪn maɪl pər ˈaʊr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɪz‿əˈtɛmt、hɪz‿ˈævrɪdʒ 连读；tə、wəz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>尝试后，坎贝尔失望地发现他的平均速度为每小时 299 英里。</p></div>
+      <div class="field words"><span>词</span><p>after 后； attempt 试图； campbell 坎贝尔； disappointed 失望的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="75.53" data-end="82.11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">However,</span> <span class="weak linking">a</span> few days later, <span class="weak">he</span> <span class="weak">was</span> told <span class="weak linking">that</span> <span class="weak linking">a</span> mistake <span class="weak">had</span> <span class="weak">been</span> made.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/haʊˈɛvər<span class="linking">‿</span><span class="weak">ə</span> fju deɪ ˈleɪdər hi <span class="weak">wəz</span> toʊld ðæt<span class="linking">‿</span><span class="weak">ə</span> məˈsteɪk <span class="weak">həd</span> bɪn meɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>haʊˈɛvər‿ə、ðæt‿ə 连读；ə、wəz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>然而，几天后，他被告知犯了一个错误。</p></div>
+      <div class="field words"><span>词</span><p>however 然而； days 天； later 之后； told 告诉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="82.11" data-end="87.54">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak linking">His</span> <span class="linking">average</span> speed <span class="weak">had</span> <span class="weak">been</span> 301 miles per hour.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hɪz<span class="linking">‿</span>ˈævrɪdʒ spid <span class="weak">həd</span> bɪn maɪl pər ˈaʊr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɪz‿ˈævrɪdʒ 连读；həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他的平均速度为每小时 301 英里。</p></div>
+      <div class="field words"><span>词</span><p>average 平均的； speed 速度； miles 英里； hour 小时；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="87.54" data-end="95.58">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Since <span class="weak">that</span> time, racing drivers <span class="weak">have</span> reached <span class="linking">speeds</span> <span class="linking">over</span> <span class="linking">600</span> <span class="linking">miles</span> <span class="weak linking">an</span> hour.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sɪns ðæt time ˈreɪsɪŋ ˈdraɪvər <span class="weak">həv</span> ritʃ spid<span class="linking">‿</span>ˈoʊvər maɪl<span class="linking">‿</span><span class="weak">ən</span> ˈaʊr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>spid‿ˈoʊvər、maɪl‿ən 连读；ən、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>从那时起，赛车手的时速已超过 600 英里。</p></div>
+      <div class="field words"><span>词</span><p>since 自从； time 时间； racing 赛车； drivers 司机；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="95.58" data-end="105.91">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">Following</span> <span class="weak linking">in</span> <span class="weak">his</span> father's footsteps many years later, Sir Malcolm's son, <span class="linking">Donald,</span> <span class="linking">also</span> <span class="linking">set</span> <span class="linking">up</span> <span class="weak linking">a</span> world record.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈfɑloʊɪŋ<span class="linking">‿</span>ɪn hɪz father's ˈfʊtˌstɛp ˈmɛni jɪr ˈleɪdər sər malcolm's sən donald<span class="linking">‿</span>ˈɔlsoʊ sɛt<span class="linking">‿</span>əp<span class="linking">‿</span><span class="weak">ə</span> wərld ˈrɛkərd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈfɑloʊɪŋ‿ɪn、donald‿ˈɔlsoʊ、sɛt‿əp‿ə 连读；ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>多年后，马尔科姆爵士的儿子唐纳德追随父亲的脚步，也创造了一项世界纪录。</p></div>
+      <div class="field words"><span>词</span><p>following 下列的； father's 父亲的； footsteps 脚步声； many 许多；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="105.91" data-end="110.41">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Like <span class="weak">his</span> father, <span class="weak">he</span> <span class="weak">was</span> <span class="linking">driving</span> <span class="weak linking">a</span> car called Bluebird.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/like hɪz ˈfɑðər hi <span class="weak">wəz</span> driving<span class="linking">‿</span><span class="weak">ə</span> kɑr kɔl ˈbluˌbərd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>driving‿ə 连读；ə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>和他的父亲一样，他驾驶着一辆名为“蓝鸟”的汽车。</p></div>
+      <div class="field words"><span>词</span><p>like 喜欢； father 父亲； driving 驾驶； called 被称为；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>great 伟大的； racing 赛车； driver 司机； malcolm 马尔科姆； world 世界； record 记录； september 九月； bonneville 博讷维尔； bluebird 蓝鸟； driving 驾驶； specially 特别； built 建成； over 超过； feet 脚； length 长度； horsepower 马力； although 虽然； campbell 坎贝尔；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 原因或结果关系连接分句； 并列结构连接动作或信息； 时间状语从句交代动作先后； 含定语从句或名词性从句； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般过去时叙述故事主线； 一般现在时或基础事实陈述； 过去完成时说明更早发生的动作； 过去进行时描写当时正在发生的动作； 现在完成时强调结果或经历。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ət‿ˈoʊvər 连读；ðə、ət、tə、wəz 弱读/弱化； sɛt‿əp‿ə、ˈrɛkərd‿ɪn、sɛpˈtɛmbər‿ət 连读；ə、ət 弱读/弱化； wəz‿ˈoʊvər、fit‿ɪn、lɛŋθ‿ən、həd‿ə 连读；ə、ən、wəz、həd 弱读/弱化； ritʃ‿ə、spid‿əv‿ˈoʊvər、bəˈkəz‿ə 连读；ðə、ə、əv、həd 弱读/弱化； hɪz‿əˈtɛmt、hɪz‿ˈævrɪdʒ 连读；tə、wəz、həd 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">A Car Called Bluebird</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../72－A Car Called Bluebird.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.43,"end":26.14,"text":"The great racing driver, Sir Malcolm Campbell, was the first man to drive at over 300 miles per hour."},{"index":2,"start":26.14,"end":36.32,"text":"He set up a new world record in September 1935 at Bonneville Salt Flats, Utah."},{"index":3,"start":36.32,"end":42.92,"text":"Bluebird, the car he was driving, had been specially built for him."},{"index":4,"start":42.92,"end":50.42,"text":"It was over 30 feet in length and had a 2, 500-horsepower engine."},{"index":5,"start":50.42,"end":64.39,"text":"Although Campbell reached a speed of over 304 miles per hour, he had great difficulty in controlling the car because a tyre burst during the first run."},{"index":6,"start":64.39,"end":75.53,"text":"After his attempt, Campbell was disappointed to learn that his average speed had been 299 miles per hour."},{"index":7,"start":75.53,"end":82.11,"text":"However, a few days later, he was told that a mistake had been made."},{"index":8,"start":82.11,"end":87.54,"text":"His average speed had been 301 miles per hour."},{"index":9,"start":87.54,"end":95.58,"text":"Since that time, racing drivers have reached speeds over 600 miles an hour."},{"index":10,"start":95.58,"end":105.91,"text":"Following in his father's footsteps many years later, Sir Malcolm's son, Donald, also set up a world record."},{"index":11,"start":105.91,"end":110.41,"text":"Like his father, he was driving a car called Bluebird."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

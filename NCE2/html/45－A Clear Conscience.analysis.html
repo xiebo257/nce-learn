@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 45 - A Clear Conscience</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 45 - A Clear Conscience</h1>
+      <p class="meta">问题: How did Sam get his money back?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.7" data-end="21.01">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> whole village soon learnt <span class="weak linking">that</span> <span class="weak linking">a</span> large <span class="linking">sum</span> <span class="weak linking">of</span> money <span class="weak">had</span> <span class="weak">been</span> lost.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> hoʊl ˈvɪlɪdʒ sun lərnt ðæt<span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ səm<span class="linking">‿</span><span class="weak">əv</span> ˈməni <span class="weak">həd</span> bɪn lɔst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðæt‿ə、səm‿əv 连读；ðə、ə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>很快全村人都知道损失了一大笔钱。</p></div>
+      <div class="field words"><span>词</span><p>whole 整个的； village 村庄； soon 很快； learnt 学到了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="21.01" data-end="30.29">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Sam Benton, <span class="weak">the</span> local butcher, <span class="weak">had</span> lost <span class="weak">his</span> wallet while taking <span class="weak">his</span> savings <span class="weak">to</span> <span class="weak">the</span> <span class="linking">post</span> <span class="linking">office.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sæm benton <span class="weak">ðə</span> ˈloʊkəl ˈbʊtʃər <span class="weak">həd</span> lɔst hɪz wallet waɪl ˈteɪkɪŋ hɪz ˈseɪvɪŋz <span class="weak">tə</span> <span class="weak">ðə</span> poʊst<span class="linking">‿</span>ˈɔfəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>poʊst‿ˈɔfəs 连读；ðə、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当地屠夫萨姆·本顿 (Sam Benton) 在将积蓄带到邮局时丢失了钱包。</p></div>
+      <div class="field words"><span>词</span><p>benton 本顿； local 当地的； butcher 屠夫； lost 丢失的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.29" data-end="40.43">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Sam <span class="weak">was</span> sure <span class="weak">that</span> <span class="weak">the</span> wallet must <span class="weak">have</span> <span class="weak">been</span> found by <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> villagers, <span class="weak linking">but</span> <span class="weak linking">it</span> <span class="weak">was</span> not returned <span class="weak">to</span> <span class="weak">him.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sæm <span class="weak">wəz</span> ʃʊr ðæt <span class="weak">ðə</span> wallet məst <span class="weak">həv</span> bɪn found baɪ one <span class="weak">əv</span> <span class="weak">ðə</span> ˈvɪlɪdʒər bət<span class="linking">‿</span>ɪt <span class="weak">wəz</span> nɑt rəˈtərn <span class="weak">tə</span> hɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ɪt 连读；ðə、tə、əv、wəz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>萨姆确信钱包一定是其中一位村民发现的，但钱包没有归还给他。</p></div>
+      <div class="field words"><span>词</span><p>sure 当然； wallet 钱包； must 必须； found 成立；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.43" data-end="49.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Three months <span class="linking">passed,</span> <span class="weak linking">and</span> <span class="linking">then</span> <span class="linking">one</span> morning, Sam found <span class="weak">his</span> wallet outside <span class="weak">his</span> front door.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/θri mənθ pæs<span class="linking">‿</span><span class="weak">ən</span> ðɛn<span class="linking">‿</span>one ˈmɔrnɪŋ sæm found hɪz wallet ˌaʊtˈsaɪd hɪz frənt dɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>pæs‿ən、ðɛn‿one 连读；ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>三个月过去了，有一天早上，萨姆在前门外发现了他的钱包。</p></div>
+      <div class="field words"><span>词</span><p>three 三； months 月； passed 通过了； then 然后；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.07" data-end="65.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">It</span> <span class="weak">had</span> <span class="weak">been</span> <span class="linking">wrapped</span> <span class="linking">up</span> <span class="weak linking">in</span> <span class="linking">newspaper</span> <span class="weak linking">and</span> <span class="weak linking">it</span> contained half <span class="weak">the</span> money <span class="weak">he</span> <span class="weak">had</span> lost, together <span class="linking">with</span> <span class="weak linking">a</span> note which <span class="linking">said:</span> <span class="weak linking">'A</span> thief, yes, <span class="weak linking">but</span> <span class="linking">only</span> 50 per <span class="linking">cent</span> <span class="weak linking">a</span> thief!'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">həd</span> bɪn ræp<span class="linking">‿</span>əp<span class="linking">‿</span>ɪn ˈnuzˌpeɪpər<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt <span class="weak">kən</span>ˈteɪn hæf <span class="weak">ðə</span> ˈməni hi <span class="weak">həd</span> lɔst <span class="weak">tə</span>ˈɡɛðər wɪð<span class="linking">‿</span><span class="weak">ə</span> note wɪtʃ sɛd<span class="linking">‿</span><span class="weak">ə</span> θif jɛs bət<span class="linking">‿</span>ˈoʊnli pər sɛnt<span class="linking">‿</span><span class="weak">ə</span> θif/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ræp‿əp‿ɪn、ˈnuzˌpeɪpər‿ən‿ɪt、wɪð‿ə、sɛd‿ə、bət‿ˈoʊnli 连读；ðə、ə、ən、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>它是用报纸包裹起来的，里面有他损失的一半钱，还有一张纸条，上面写着：“是的，是小偷，但只有百分之五十是小偷！”</p></div>
+      <div class="field words"><span>词</span><p>wrapped 包裹着； newspaper 报纸； contained 包含； half 一半；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="65.13" data-end="76.32">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Two months later, some more money <span class="weak">was</span> sent <span class="weak">to</span> Sam <span class="linking">with</span> <span class="linking">another</span> note: 'Only 25 per <span class="linking">cent</span> <span class="weak linking">a</span> thief now!'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/tu mənθ ˈleɪdər səm mɔr ˈməni <span class="weak">wəz</span> sɛnt <span class="weak">tə</span> sæm wɪð<span class="linking">‿</span><span class="weak">ə</span>ˈnəðər note ˈoʊnli pər sɛnt<span class="linking">‿</span><span class="weak">ə</span> θif naʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɪð‿əˈnəðər、sɛnt‿ə 连读；ə、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>两个月后，山姆又收到了一些钱，并附上了一张纸条：“现在只有 25% 是小偷！”</p></div>
+      <div class="field words"><span>词</span><p>months 月； later 之后； some 一些； more 更多的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="76.32" data-end="82.34">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">In</span> time, all Sam's money <span class="weak">was</span> paid <span class="linking">back</span> <span class="weak linking">in</span> this way.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn time ɔl sam's ˈməni <span class="weak">wəz</span> paid bæk<span class="linking">‿</span>ɪn ðɪs weɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bæk‿ɪn 连读；wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>假以时日，萨姆的钱就这样全部还清了。</p></div>
+      <div class="field words"><span>词</span><p>time 时间； sam's 萨姆的； money 钱； paid 有薪酬的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="82.34" data-end="86.59">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> last note said: <span class="weak">'I</span> <span class="weak">am</span> 100 per <span class="linking">cent</span> <span class="linking">honest</span> now!'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> læst note sɛd aɪ am pər sɛnt<span class="linking">‿</span>ˈɑnəst naʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>sɛnt‿ˈɑnəst 连读；ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>最后一张纸条上写着：“我现在百分百诚实了！”</p></div>
+      <div class="field words"><span>词</span><p>last 最后的； note 笔记； said 说； cent 分；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>whole 整个的； village 村庄； soon 很快； learnt 学到了； benton 本顿； local 当地的； butcher 屠夫； lost 丢失的； sure 当然； wallet 钱包； must 必须； found 成立； three 三； months 月； passed 通过了； then 然后； wrapped 包裹着； newspaper 报纸；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>含定语从句或名词性从句； 时间状语从句交代动作先后； 并列结构连接动作或信息； 直接引语与叙述语结合； 含被动结构； 主语 + 谓语 + 宾语/补足语的基础叙述句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>过去完成时说明更早发生的动作； 一般过去时叙述故事主线； 现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>3. Sam was sure that the wallet must have been found by one of the villagers, but it was not returned to him.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ðæt‿ə、səm‿əv 连读；ðə、ə、əv、həd 弱读/弱化； poʊst‿ˈɔfəs 连读；ðə、tə、həd 弱读/弱化； bət‿ɪt 连读；ðə、tə、əv、wəz、həv 弱读/弱化； pæs‿ən、ðɛn‿one 连读；ən 弱读/弱化； ræp‿əp‿ɪn、ˈnuzˌpeɪpər‿ən‿ɪt、wɪð‿ə、sɛd‿ə、bət‿ˈoʊnli 连读；ðə、ə、ən、həd 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">A Clear Conscience</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../45－A Clear Conscience.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.7,"end":21.01,"text":"The whole village soon learnt that a large sum of money had been lost."},{"index":2,"start":21.01,"end":30.29,"text":"Sam Benton, the local butcher, had lost his wallet while taking his savings to the post office."},{"index":3,"start":30.29,"end":40.43,"text":"Sam was sure that the wallet must have been found by one of the villagers, but it was not returned to him."},{"index":4,"start":40.43,"end":49.07,"text":"Three months passed, and then one morning, Sam found his wallet outside his front door."},{"index":5,"start":49.07,"end":65.13,"text":"It had been wrapped up in newspaper and it contained half the money he had lost, together with a note which said: 'A thief, yes, but only 50 per cent a thief!'"},{"index":6,"start":65.13,"end":76.32,"text":"Two months later, some more money was sent to Sam with another note: 'Only 25 per cent a thief now!'"},{"index":7,"start":76.32,"end":82.34,"text":"In time, all Sam's money was paid back in this way."},{"index":8,"start":82.34,"end":86.59,"text":"The last note said: 'I am 100 per cent honest now!'"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

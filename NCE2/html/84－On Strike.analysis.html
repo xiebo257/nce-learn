@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 84 - On Strike</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 84 - On Strike</h1>
+      <p class="meta">问题: Who will be driving the buses next week?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="15.18" data-end="19.77">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Busmen <span class="weak">have</span> decided <span class="weak">to</span> go on strike next week.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈbəsmən <span class="weak">həv</span> dəˈsaɪdəd <span class="weak">tə</span> ɡoʊ ɔn straɪk nɛkst wik/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>tə、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>巴士司机决定下周举行罢工。</p></div>
+      <div class="field words"><span>词</span><p>busmen 巴士人； decided 决定； strike 罢工； next 下一个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="19.77" data-end="23.83">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> <span class="linking">strike</span> <span class="weak linking">is</span> due <span class="weak">to</span> <span class="linking">begin</span> <span class="linking">on</span> Tuesday.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> straɪk<span class="linking">‿</span><span class="weak">ɪz</span> du <span class="weak">tə</span> bəˈɡɪn<span class="linking">‿</span>ɔn ˈtuzˌdeɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>straɪk‿ɪz、bəˈɡɪn‿ɔn 连读；ðə、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>罢工定于周二开始。</p></div>
+      <div class="field words"><span>词</span><p>strike 罢工； begin 开始； tuesday 周二；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="23.83" data-end="27.51">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">No one knows how <span class="linking">long</span> <span class="weak linking">it</span> <span class="weak">will</span> last.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/noʊ one noʊ haʊ long<span class="linking">‿</span>ɪt wɪl læst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>long‿ɪt 连读。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>没有人知道它会持续多久。</p></div>
+      <div class="field words"><span>词</span><p>knows 知道； long 长的； last 最后的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="27.51" data-end="38.37">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">The</span> busmen <span class="weak">have</span> stated <span class="weak">that</span> <span class="weak">the</span> strike <span class="weak">will</span> continue until <span class="linking">general</span> <span class="linking">agreement</span> <span class="weak linking">is</span> <span class="linking">reached</span> <span class="linking">about</span> <span class="linking">pay</span> <span class="weak linking">and</span> working conditions.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈbəsmən <span class="weak">həv</span> steɪt ðæt <span class="weak">ðə</span> straɪk wɪl <span class="weak">kən</span>ˈtɪnju ˌ<span class="weak">ən</span>ˈtɪl ˈdʒɛnrəl<span class="linking">‿</span><span class="weak">ə</span>ˈɡrimnt<span class="linking">‿</span><span class="weak">ɪz</span> ritʃ<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt peɪ <span class="weak">ən</span> ˈwərkɪŋ <span class="weak">kən</span>ˈdɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈdʒɛnrəl‿əˈɡrimnt‿ɪz、ritʃ‿əˈbaʊt 连读；ðə、ən、ɪz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>公交车司机表示，罢工将继续下去，直到就工资和工作条件达成普遍协议为止。</p></div>
+      <div class="field words"><span>词</span><p>busmen 巴士人； stated 指出； strike 罢工； continue 继续；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="38.37" data-end="44.15">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Most people believe <span class="weak">that</span> <span class="weak">the</span> strike <span class="weak">will</span> last <span class="weak linking">for</span> <span class="weak linking">at</span> <span class="linking">least</span> <span class="weak linking">a</span> week.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/moʊst ˈpipl bəˈliv ðæt <span class="weak">ðə</span> straɪk wɪl læst <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ət</span> list<span class="linking">‿</span><span class="weak">ə</span> wik/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>fɚ‿ət、list‿ə 连读；ðə、ə、ət、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>大多数人认为罢工将持续至少一周。</p></div>
+      <div class="field words"><span>词</span><p>most 最多； people 人们； believe 相信； strike 罢工；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="44.15" data-end="52.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Many <span class="linking">owners</span> <span class="weak linking">of</span> private <span class="linking">cars</span> <span class="weak linking">are</span> going <span class="weak">to</span> offer 'free rides' <span class="weak">to</span> <span class="linking">people</span> <span class="linking">on</span> <span class="weak">their</span> way <span class="weak">to</span> work.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈmɛni ˈoʊnər<span class="linking">‿</span><span class="weak">əv</span> ˈpraɪvət kɑr<span class="linking">‿</span><span class="weak">ɑr</span> ˈɡoʊɪŋ <span class="weak">tə</span> ˈɔfər free raɪd <span class="weak">tə</span> ˈpipl<span class="linking">‿</span>ɔn ðɛr weɪ <span class="weak">tə</span> wərk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈoʊnər‿əv、kɑr‿ɑr、ˈpipl‿ɔn 连读；tə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>许多私家车车主将在上班途中为人们提供“免费乘车”服务。</p></div>
+      <div class="field words"><span>词</span><p>many 许多； owners 业主； private 私人的； cars 汽车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="52.07" data-end="56.81">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">This <span class="weak">will</span> relieve <span class="linking">pressure</span> <span class="linking">on</span> <span class="weak">the</span> trains <span class="weak">to</span> <span class="linking">some</span> <span class="linking">extent.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs wɪl rəˈliv ˈprɛʃər<span class="linking">‿</span>ɔn <span class="weak">ðə</span> treɪn <span class="weak">tə</span> səm<span class="linking">‿</span>ɪkˈstɛnt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈprɛʃər‿ɔn、səm‿ɪkˈstɛnt 连读；ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>这将在一定程度上缓解列车的压力。</p></div>
+      <div class="field words"><span>词</span><p>this 这； relieve 缓解； pressure 压力； trains 火车；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="56.81" data-end="65.56">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">Meanwhile,</span> <span class="weak linking">a</span> <span class="linking">number</span> <span class="weak linking">of</span> university students <span class="weak">have</span> volunteered <span class="weak">to</span> drive buses while <span class="weak">the</span> strike lasts.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈminˌwaɪl<span class="linking">‿</span><span class="weak">ə</span> ˈnəmbər<span class="linking">‿</span><span class="weak">əv</span> ˌjunəˈvərsədi ˈstudnt <span class="weak">həv</span> ˌvɑlənˈtɪr <span class="weak">tə</span> drive bəs waɪl <span class="weak">ðə</span> straɪk læst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈminˌwaɪl‿ə、ˈnəmbər‿əv 连读；ðə、ə、tə、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>与此同时，一些大学生自愿在罢工持续期间驾驶公共汽车。</p></div>
+      <div class="field words"><span>词</span><p>meanwhile 与此同时； number 数字； university 大学； students 学生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="65.56" data-end="76.72">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">All <span class="weak">the</span> <span class="linking">students</span> <span class="weak linking">are</span> <span class="linking">expert</span> drivers, <span class="weak">but</span> before <span class="weak">they</span> drive <span class="linking">any</span> <span class="weak linking">of</span> <span class="weak">the</span> buses, <span class="weak">they</span> <span class="weak">will</span> <span class="weak">have</span> <span class="weak">to</span> <span class="linking">pass</span> <span class="weak linking">a</span> special test.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɔl <span class="weak">ðə</span> ˈstudnt<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ˈɛkˌspərt ˈdraɪvər bət bəˈfɔr ðeɪ drive ˈɛni <span class="weak">əv</span> <span class="weak">ðə</span> bəs ðeɪ wɪl <span class="weak">həv</span> <span class="weak">tə</span> pæs<span class="linking">‿</span><span class="weak">ə</span> ˈspɛʃl tɛst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈstudnt‿ɑr‿ˈɛkˌspərt、pæs‿ə 连读；ðə、ə、tə、əv、ɑr、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；将来结构表示预期或安排；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>所有学生都是专业司机，但在驾驶任何公共汽车之前，他们必须通过特殊测试。</p></div>
+      <div class="field words"><span>词</span><p>students 学生； expert 专家； drivers 司机； before 前；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="76.72" data-end="81.72">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> <span class="linking">students</span> <span class="weak linking">are</span> going <span class="weak">to</span> take <span class="weak">the</span> <span class="linking">test</span> <span class="weak linking">in</span> two days' time.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈstudnt<span class="linking">‿</span><span class="weak">ɑr</span> ˈɡoʊɪŋ <span class="weak">tə</span> teɪk <span class="weak">ðə</span> tɛst<span class="linking">‿</span>ɪn tu deɪ time/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈstudnt‿ɑr、tɛst‿ɪn 连读；ðə、tə、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>两天后学生们就要参加考试了。</p></div>
+      <div class="field words"><span>词</span><p>students 学生； going 去； take 拿； test 测试；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="81.72" data-end="87.43">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Even so, <span class="linking">people</span> <span class="weak linking">are</span> going <span class="weak">to</span> <span class="linking">find</span> <span class="weak linking">it</span> difficult <span class="weak">to</span> get <span class="weak">to</span> work.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈivən soʊ ˈpipl<span class="linking">‿</span><span class="weak">ɑr</span> ˈɡoʊɪŋ <span class="weak">tə</span> find<span class="linking">‿</span>ɪt ˈdɪfəkəlt <span class="weak">tə</span> ɡɛt <span class="weak">tə</span> wərk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈpipl‿ɑr、find‿ɪt 连读；tə、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>即便如此，人们还是会发现上班很困难。</p></div>
+      <div class="field words"><span>词</span><p>even 甚至； people 人们； going 去； find 寻找；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="87.43" data-end="95.31">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">But</span> so far, <span class="weak">the</span> public <span class="weak">has</span> <span class="linking">expressed</span> <span class="linking">its</span> gratitude <span class="weak">to</span> <span class="weak">the</span> <span class="linking">students</span> <span class="weak linking">in</span> lettters <span class="weak">to</span> <span class="weak">the</span> Press.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət soʊ fɑr <span class="weak">ðə</span> ˈpəblɪk <span class="weak">həz</span> expressed<span class="linking">‿</span>its ˈɡrædəˌtud <span class="weak">tə</span> <span class="weak">ðə</span> ˈstudnt<span class="linking">‿</span>ɪn lettters <span class="weak">tə</span> <span class="weak">ðə</span> prɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>expressed‿its、ˈstudnt‿ɪn 连读；ðə、tə、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>但到目前为止，公众已经在给媒体的信中表达了对学生的感谢。</p></div>
+      <div class="field words"><span>词</span><p>public 民众； expressed 表达的； gratitude 感激； students 学生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="95.31" data-end="101.56">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">Only one or two people <span class="weak linking">have</span> <span class="linking">objected</span> <span class="weak">that</span> <span class="weak">the</span> students <span class="weak">will</span> drive too fast!</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈoʊnli one ɔr tu ˈpipl <span class="weak">həv</span><span class="linking">‿</span>objected ðæt <span class="weak">ðə</span> ˈstudnt wɪl drive tu fast/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həv‿objected 连读；ðə、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>只有一两个人反对，认为学生开得太快了！</p></div>
+      <div class="field words"><span>词</span><p>only 仅有的； people 人们； objected 反对； students 学生；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>busmen 巴士人； decided 决定； strike 罢工； next 下一个； strike 罢工； begin 开始； tuesday 周二； knows 知道； long 长的； last 最后的； busmen 巴士人； stated 指出； strike 罢工； continue 继续； most 最多； people 人们； believe 相信； strike 罢工；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>不定式短语补充目的、结果或宾语； 主语 + 谓语 + 宾语/补足语的基础叙述句； 时间状语从句交代动作先后； 含定语从句或名词性从句； 含被动结构； 原因或结果关系连接分句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 一般现在时或基础事实陈述； 将来结构表示预期或安排； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>3. No one knows how long it will last.； 4. The busmen have stated that the strike will continue until general agreement is reached about pay and working conditions.； 5. Most people believe that the strike will last for at least a week.； 7. This will relieve pressure on the trains to some extent.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>straɪk‿ɪz、bəˈɡɪn‿ɔn 连读；ðə、tə、ɪz 弱读/弱化； long‿ɪt 连读； ˈdʒɛnrəl‿əˈɡrimnt‿ɪz、ritʃ‿əˈbaʊt 连读；ðə、ən、ɪz、həv 弱读/弱化； fɚ‿ət、list‿ə 连读；ðə、ə、ət、fɚ 弱读/弱化； ˈoʊnər‿əv、kɑr‿ɑr、ˈpipl‿ɔn 连读；tə、əv、ɑr 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">On Strike</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../84－On Strike.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":15.18,"end":19.77,"text":"Busmen have decided to go on strike next week."},{"index":2,"start":19.77,"end":23.83,"text":"The strike is due to begin on Tuesday."},{"index":3,"start":23.83,"end":27.51,"text":"No one knows how long it will last."},{"index":4,"start":27.51,"end":38.37,"text":"The busmen have stated that the strike will continue until general agreement is reached about pay and working conditions."},{"index":5,"start":38.37,"end":44.15,"text":"Most people believe that the strike will last for at least a week."},{"index":6,"start":44.15,"end":52.07,"text":"Many owners of private cars are going to offer 'free rides' to people on their way to work."},{"index":7,"start":52.07,"end":56.81,"text":"This will relieve pressure on the trains to some extent."},{"index":8,"start":56.81,"end":65.56,"text":"Meanwhile, a number of university students have volunteered to drive buses while the strike lasts."},{"index":9,"start":65.56,"end":76.72,"text":"All the students are expert drivers, but before they drive any of the buses, they will have to pass a special test."},{"index":10,"start":76.72,"end":81.72,"text":"The students are going to take the test in two days' time."},{"index":11,"start":81.72,"end":87.43,"text":"Even so, people are going to find it difficult to get to work."},{"index":12,"start":87.43,"end":95.31,"text":"But so far, the public has expressed its gratitude to the students in lettters to the Press."},{"index":13,"start":95.31,"end":101.56,"text":"Only one or two people have objected that the students will drive too fast!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 38 - Everything Except the Weather</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 38 - Everything Except the Weather</h1>
+      <p class="meta">问题: Why did Harrison sell his house so quickly?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.51" data-end="25.97">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">My</span> old friend, Harrison, <span class="weak">had</span> <span class="linking">lived</span> <span class="weak linking">in</span> <span class="weak">the</span> Mediterranean <span class="weak">for</span> many years before <span class="weak">he</span> returned <span class="weak">to</span> England.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/maɪ oʊld frɛnd harrison <span class="weak">həd</span> lived<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˌmɛdətəˈreɪniən <span class="weak">fɚ</span> ˈmɛni jɪr bəˈfɔr hi rəˈtərn <span class="weak">tə</span> ˈɪŋlənd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>lived‿ɪn 连读；ðə、tə、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>（需校对）My old friend, Harrison, had lived in the Mediterranean for many years before he returned to England.</p></div>
+      <div class="field words"><span>词</span><p>friend 朋友； harrison 哈里森； lived 住过； mediterranean 地中海的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="25.97" data-end="33.61">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">He</span> <span class="weak linking">had</span> <span class="linking">often</span> <span class="linking">dreamed</span> <span class="weak linking">of</span> <span class="linking">retiring</span> <span class="weak linking">in</span> <span class="linking">England</span> <span class="weak linking">and</span> <span class="weak">had</span> planned <span class="weak">to</span> settle <span class="linking">down</span> <span class="weak linking">in</span> <span class="weak">the</span> country.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">həd</span><span class="linking">‿</span>ˈɔfn drim<span class="linking">‿</span><span class="weak">əv</span> rəˈtaɪrɪŋ<span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɪŋlənd<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">həd</span> plænd <span class="weak">tə</span> ˈsɛdl daʊn<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈkəntri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həd‿ˈɔfn、drim‿əv、rəˈtaɪrɪŋ‿ɪn‿ˈɪŋlənd‿ən、daʊn‿ɪn 连读；ðə、ən、tə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他经常梦想在英国退休，并计划在该国定居。</p></div>
+      <div class="field words"><span>词</span><p>often 经常； dreamed 梦见； retiring 退休； england 英格兰；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="33.61" data-end="40.05">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">He</span> <span class="weak">had</span> no sooner returned than <span class="weak">he</span> <span class="linking">bought</span> <span class="weak linking">a</span> <span class="linking">house</span> <span class="weak linking">and</span> went <span class="weak">to</span> live <span class="weak">there.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">həd</span> noʊ sun rəˈtərn ðæn hi bɔt<span class="linking">‿</span><span class="weak">ə</span> haʊs<span class="linking">‿</span><span class="weak">ən</span> wɛnt <span class="weak">tə</span> live ðɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bɔt‿ə、haʊs‿ən 连读；ə、ən、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他一回来就买了房子住在那里。</p></div>
+      <div class="field words"><span>词</span><p>sooner 早点； returned 返回； than 比； bought 买；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="40.05" data-end="54.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="linking">Almost</span> <span class="linking">immediately</span> <span class="weak">he</span> began <span class="weak">to</span> <span class="linking">complain</span> <span class="linking">about</span> <span class="weak">the</span> weather, <span class="weak linking">for</span> <span class="linking">even</span> <span class="linking">though</span> <span class="weak linking">it</span> <span class="weak">was</span> still <span class="linking">summer,</span> <span class="weak linking">it</span> rained <span class="linking">continually</span> <span class="weak linking">and</span> <span class="weak linking">it</span> <span class="weak linking">was</span> <span class="linking">often</span> bitterly cold.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɔlmoʊst<span class="linking">‿</span>ɪˈmidiətli hi bəˈɡæn <span class="weak">tə</span> kəmˈpleɪn<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt <span class="weak">ðə</span> weather <span class="weak">fɚ</span><span class="linking">‿</span>ˈivən ðoʊ ɪt <span class="weak">wəz</span> stɪl ˈsəmər<span class="linking">‿</span>ɪt reɪn <span class="weak">kən</span>ˈtɪnjəli <span class="weak">ən</span><span class="linking">‿</span>ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈɔfn ˈbɪdərli koʊld/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈɔlmoʊst‿ɪˈmidiətli、kəmˈpleɪn‿əˈbaʊt、fɚ‿ˈivən、ˈsəmər‿ɪt、ən‿ɪt 连读；ðə、ən、tə、wəz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>几乎立刻他就开始抱怨天气，因为尽管还是夏天，雨却一直下个不停，而且常常寒冷刺骨。</p></div>
+      <div class="field words"><span>词</span><p>almost 几乎； immediately 立刻； began 开始； complain 抱怨；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="54.84" data-end="60.47">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">After so many <span class="linking">years</span> <span class="weak linking">of</span> sunshine, Harrison <span class="linking">got</span> <span class="weak linking">a</span> shock.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈæftər soʊ ˈmɛni jɪr<span class="linking">‿</span><span class="weak">əv</span> ˈsənˌʃaɪn harrison ɡɑt<span class="linking">‿</span><span class="weak">ə</span> ʃɑk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>jɪr‿əv、ɡɑt‿ə 连读；ə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>经历了这么多年的阳光照射，哈里森感到震惊。</p></div>
+      <div class="field words"><span>词</span><p>after 后； many 许多； years 年； sunshine 阳光；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="60.47" data-end="65.6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">He</span> <span class="linking">acted</span> <span class="weak linking">as</span> <span class="linking">if</span> <span class="weak">he</span> <span class="weak">had</span> never <span class="linking">lived</span> <span class="weak linking">in</span> <span class="linking">England</span> before.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi æk<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ɪf hi <span class="weak">həd</span> ˈnɛvər lived<span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɪŋlənd bəˈfɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>æk‿əz‿ɪf、lived‿ɪn‿ˈɪŋlənd 连读；əz、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他表现得好像他以前从未在英国生活过一样。</p></div>
+      <div class="field words"><span>词</span><p>acted 采取行动； never 绝不； lived 住过； england 英格兰；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="65.6" data-end="69.79">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> <span class="linking">end,</span> <span class="weak linking">it</span> <span class="weak">was</span> more than <span class="weak">he</span> <span class="weak">could</span> bear.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn <span class="weak">ði</span><span class="linking">‿</span>ɛnd<span class="linking">‿</span>ɪt <span class="weak">wəz</span> mɔr ðæn hi kəd bɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ɛnd‿ɪt 连读；ði、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>最终，这超出了他的承受能力。</p></div>
+      <div class="field words"><span>词</span><p>in the end 最后； more 更多的； than 比； bear 忍受；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="69.79" data-end="77.21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">He</span> <span class="weak">had</span> hardly <span class="weak">had</span> time <span class="weak">to</span> settle down when <span class="weak">he</span> sold <span class="weak">the</span> <span class="linking">house</span> <span class="weak linking">and</span> left <span class="weak">the</span> country.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">həd</span> ˈhɑrdli <span class="weak">həd</span> time <span class="weak">tə</span> ˈsɛdl daʊn wɛn hi soʊld <span class="weak">ðə</span> haʊs<span class="linking">‿</span><span class="weak">ən</span> lɛft <span class="weak">ðə</span> ˈkəntri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>haʊs‿ən 连读；ðə、ən、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他还没来得及安顿下来，就卖掉了房子，离开了这个国家。</p></div>
+      <div class="field words"><span>词</span><p>hardly 几乎不； time 时间； settle 定居； down 向下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="77.21" data-end="82.79">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> dream <span class="weak">he</span> <span class="weak">had</span> <span class="weak">had</span> <span class="weak">for</span> so many <span class="linking">years</span> <span class="linking">ended</span> <span class="weak">there.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> drim hi <span class="weak">həd</span> <span class="weak">həd</span> <span class="weak">fɚ</span> soʊ ˈmɛni jɪr<span class="linking">‿</span>ɛnd ðɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>jɪr‿ɛnd 连读；ðə、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他这么多年的梦想到此结束。</p></div>
+      <div class="field words"><span>词</span><p>dream 梦； many 许多； years 年； ended 结束了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="82.79" data-end="87.29">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Harrison <span class="weak">had</span> <span class="linking">thought</span> <span class="weak linking">of</span> <span class="linking">everything</span> <span class="linking">except</span> <span class="weak">the</span> weather.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/harrison <span class="weak">həd</span> θɔt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɛvriˌθɪŋ<span class="linking">‿</span>ɪkˈsɛpt <span class="weak">ðə</span> weather/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>θɔt‿əv‿ˈɛvriˌθɪŋ‿ɪkˈsɛpt 连读；ðə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>哈里森考虑到了一切，除了天气。</p></div>
+      <div class="field words"><span>词</span><p>harrison 哈里森； thought 想法； everything 一切； except 除了；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>friend 朋友； harrison 哈里森； lived 住过； mediterranean 地中海的； often 经常； dreamed 梦见； retiring 退休； england 英格兰； sooner 早点； returned 返回； than 比； bought 买； almost 几乎； immediately 立刻； began 开始； complain 抱怨； after 后； many 许多；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>时间状语从句交代动作先后； 原因或结果关系连接分句； 并列结构连接动作或信息； 不定式短语补充目的、结果或宾语； 主语 + 谓语 + 宾语/补足语的基础叙述句； when 引导时间状语从句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>过去完成时说明更早发生的动作； 一般过去时叙述故事主线； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>7. In the end, it was more than he could bear.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>lived‿ɪn 连读；ðə、tə、fɚ、həd 弱读/弱化； həd‿ˈɔfn、drim‿əv、rəˈtaɪrɪŋ‿ɪn‿ˈɪŋlənd‿ən、daʊn‿ɪn 连读；ðə、ən、tə、əv、həd 弱读/弱化； bɔt‿ə、haʊs‿ən 连读；ə、ən、tə、həd 弱读/弱化； ˈɔlmoʊst‿ɪˈmidiətli、kəmˈpleɪn‿əˈbaʊt、fɚ‿ˈivən、ˈsəmər‿ɪt、ən‿ɪt 连读；ðə、ən、tə、wəz、fɚ 弱读/弱化； jɪr‿əv、ɡɑt‿ə 连读；ə、əv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Everything Except the Weather</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../38－Everything Except the Weather.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.51,"end":25.97,"text":"My old friend, Harrison, had lived in the Mediterranean for many years before he returned to England."},{"index":2,"start":25.97,"end":33.61,"text":"He had often dreamed of retiring in England and had planned to settle down in the country."},{"index":3,"start":33.61,"end":40.05,"text":"He had no sooner returned than he bought a house and went to live there."},{"index":4,"start":40.05,"end":54.84,"text":"Almost immediately he began to complain about the weather, for even though it was still summer, it rained continually and it was often bitterly cold."},{"index":5,"start":54.84,"end":60.47,"text":"After so many years of sunshine, Harrison got a shock."},{"index":6,"start":60.47,"end":65.6,"text":"He acted as if he had never lived in England before."},{"index":7,"start":65.6,"end":69.79,"text":"In the end, it was more than he could bear."},{"index":8,"start":69.79,"end":77.21,"text":"He had hardly had time to settle down when he sold the house and left the country."},{"index":9,"start":77.21,"end":82.79,"text":"The dream he had had for so many years ended there."},{"index":10,"start":82.79,"end":87.29,"text":"Harrison had thought of everything except the weather."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

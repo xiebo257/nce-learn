@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE2 Lesson 52 - A Pretty Carpet</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 2</p>
+      <h1>NCE2 Lesson 52 - A Pretty Carpet</h1>
+      <p class="meta">问题: What is the writer's carpet made of?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="14.42" data-end="22.27">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">We</span> <span class="weak">have</span> just <span class="linking">moved</span> <span class="linking">into</span> <span class="weak linking">a</span> new <span class="linking">house</span> <span class="weak linking">and</span> <span class="weak">I</span> <span class="weak">have</span> <span class="weak">been</span> working <span class="linking">hard</span> <span class="linking">all</span> morning.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi <span class="weak">həv</span> dʒəst moved<span class="linking">‿</span>ˈɪntu <span class="weak">ə</span> nu haʊs<span class="linking">‿</span><span class="weak">ən</span> aɪ <span class="weak">həv</span> bɪn ˈwərkɪŋ hɑrd<span class="linking">‿</span>ɔl ˈmɔrnɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moved‿ˈɪntu、haʊs‿ən、hɑrd‿ɔl 连读；ə、ən、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>我们刚刚搬进新房子，我整个早上都在努力工作。</p></div>
+      <div class="field words"><span>词</span><p>just 只是； moved 搬家了； into 进入； house 房子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="22.27" data-end="27.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">I</span> <span class="weak">have</span> <span class="weak">been</span> trying <span class="weak">to</span> get <span class="weak">my</span> new <span class="linking">room</span> <span class="weak linking">in</span> <span class="linking">order.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ <span class="weak">həv</span> bɪn ˈtraɪɪŋ <span class="weak">tə</span> ɡɛt maɪ nu rum<span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɔrdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rum‿ɪn‿ˈɔrdər 连读；tə、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>我一直在努力把我的新房间收拾整齐。</p></div>
+      <div class="field words"><span>词</span><p>trying 尝试； room 房间； order 命令；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="27.17" data-end="34.01">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">This <span class="weak">has</span> not <span class="weak linking">been</span> <span class="linking">easy</span> because <span class="weak">I</span> <span class="linking">own</span> <span class="linking">over</span> <span class="weak linking">a</span> thousand books.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs <span class="weak">həz</span> nɑt bɪn<span class="linking">‿</span>ˈizi bəˈkəz aɪ<span class="linking">‿</span>oʊn<span class="linking">‿</span>ˈoʊvər<span class="linking">‿</span><span class="weak">ə</span> ˈθaʊzn bʊks/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bɪn‿ˈizi、aɪ‿oʊn‿ˈoʊvər‿ə 连读；ə、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>这并不容易，因为我拥有一千多本书。</p></div>
+      <div class="field words"><span>词</span><p>this 这； easy 简单的； because 因为； over 超过；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="34.01" data-end="44.3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">To</span> make matters worse, <span class="weak">the</span> <span class="linking">room</span> <span class="weak linking">is</span> rather small, so <span class="weak">I</span> <span class="weak">have</span> temporarily put <span class="weak">my</span> <span class="linking">books</span> <span class="linking">on</span> <span class="weak">the</span> floor.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span> make ˈmædər wərs <span class="weak">ðə</span> rum<span class="linking">‿</span><span class="weak">ɪz</span> ˈræðər smɔl soʊ aɪ <span class="weak">həv</span> ˈtɛmpəˌrɛrəli pʊt maɪ bʊks<span class="linking">‿</span>ɔn <span class="weak">ðə</span> flɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rum‿ɪz、bʊks‿ɔn 连读；ðə、tə、ɪz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>更糟糕的是，房间很小，所以我把书暂时放在地板上。</p></div>
+      <div class="field words"><span>词</span><p>make 制作； matters 事情； worse 更糟； room 房间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="44.3" data-end="55.8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">At</span> <span class="weak">the</span> moment, <span class="weak">they</span> <span class="linking">cover</span> <span class="linking">every</span> <span class="linking">inch</span> <span class="weak linking">of</span> floor <span class="linking">space</span> <span class="weak linking">and</span> <span class="weak">I</span> actually <span class="weak">have</span> <span class="weak">to</span> <span class="linking">walk</span> <span class="linking">on</span> <span class="weak">them</span> <span class="weak">to</span> <span class="linking">get</span> <span class="weak linking">in</span> <span class="linking">or</span> <span class="linking">out</span> <span class="weak linking">of</span> <span class="weak">the</span> room.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ət</span> <span class="weak">ðə</span> ˈmoʊmnt ðeɪ ˈkəvər<span class="linking">‿</span>ˈɛvri ɪnʃ<span class="linking">‿</span><span class="weak">əv</span> flɔr speɪs<span class="linking">‿</span><span class="weak">ən</span> aɪ<span class="linking">‿</span>ˈækʃəli <span class="weak">həv</span> <span class="weak">tə</span> wɔk<span class="linking">‿</span>ɔn ðəm <span class="weak">tə</span> ɡɛt<span class="linking">‿</span>ɪn<span class="linking">‿</span>ɔr aʊt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> rum/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈkəvər‿ˈɛvri、ɪnʃ‿əv、speɪs‿ən、aɪ‿ˈækʃəli、wɔk‿ɔn 连读；ðə、ən、ət、tə、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>目前，它们覆盖了每一寸地板空间，实际上我必须在它们上行走才能进出房间。</p></div>
+      <div class="field words"><span>词</span><p>moment 片刻； cover 覆盖； every 每一个； inch 英寸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="55.8" data-end="64.52">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">A</span> short <span class="linking">while</span> <span class="linking">ago,</span> <span class="weak">my</span> sister helped <span class="weak">me</span> <span class="weak">to</span> carry <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">my</span> old <span class="linking">bookcases</span> <span class="linking">up</span> <span class="weak">the</span> stairs.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ʃɔrt waɪl<span class="linking">‿</span><span class="weak">ə</span>ˈɡoʊ maɪ ˈsɪstər hɛlp mi <span class="weak">tə</span> ˈkɛri one <span class="weak">əv</span> maɪ oʊld ˈbʊkˌkeɪs<span class="linking">‿</span>əp <span class="weak">ðə</span> stɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>waɪl‿əˈɡoʊ、ˈbʊkˌkeɪs‿əp 连读；ðə、ə、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>不久前，姐姐帮我把一个旧书柜搬上楼梯。</p></div>
+      <div class="field words"><span>词</span><p>short 短的； while 尽管； sister 姐姐； helped 帮助了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="64.52" data-end="73.35">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">She</span> <span class="linking">went</span> <span class="linking">into</span> <span class="weak">my</span> <span class="linking">room</span> <span class="weak linking">and</span> <span class="linking">got</span> <span class="weak linking">a</span> big surprise when <span class="weak">she</span> saw all those <span class="linking">books</span> <span class="linking">on</span> <span class="weak">the</span> floor.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃi wɛnt<span class="linking">‿</span>ˈɪntu maɪ rum<span class="linking">‿</span><span class="weak">ən</span> ɡɑt<span class="linking">‿</span><span class="weak">ə</span> big səˈpraɪz wɛn ʃi sɔ ɔl ðoʊz bʊks<span class="linking">‿</span>ɔn <span class="weak">ðə</span> flɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɛnt‿ˈɪntu、rum‿ən、ɡɑt‿ə、bʊks‿ɔn 连读；ðə、ə、ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>她走进我的房间，看到地板上那么多书，大吃一惊。</p></div>
+      <div class="field words"><span>词</span><p>went 去了； into 进入； room 房间； surprise 惊喜；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="73.35" data-end="79.77">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">'This</span> <span class="weak linking">is</span> <span class="weak">the</span> prettiest carpet <span class="weak">I</span> <span class="weak linking">have</span> <span class="linking">ever</span> seen,' <span class="weak">she</span> said.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> ˈprɪdi ˈkɑrpət aɪ <span class="weak">həv</span><span class="linking">‿</span>ˈɛvər sin ʃi sɛd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz、həv‿ˈɛvər 连读；ðə、ɪz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>“这是我见过的最漂亮的地毯，”她说。</p></div>
+      <div class="field words"><span>词</span><p>this 这； prettiest 最漂亮的； carpet 地毯； ever 曾经；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="79.77" data-end="87.25">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">She</span> <span class="linking">gazed</span> <span class="weak linking">at</span> <span class="weak linking">it</span> <span class="weak">for</span> some time <span class="linking">then</span> <span class="linking">added,</span> <span class="weak">'You</span> don't need <span class="linking">bookcases</span> <span class="weak linking">at</span> <span class="linking">all.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ʃi ɡeɪz<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>ɪt <span class="weak">fɚ</span> səm time ðɛn<span class="linking">‿</span>ˈædəd ju doʊnt nid ˈbʊkˌkeɪs<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>ɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɡeɪz‿ət‿ɪt、ðɛn‿ˈædəd、ˈbʊkˌkeɪs‿ət‿ɔl 连读；ət、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>她盯着它看了一会儿，然后补充道：“你根本不需要书架。”</p></div>
+      <div class="field words"><span>词</span><p>gazed 凝视着； some 一些； time 时间； then 然后；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="87.25" data-end="92">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">You</span> <span class="weak">can</span> sit <span class="linking">here</span> <span class="weak linking">in</span> <span class="weak">your</span> spare <span class="linking">time</span> <span class="weak linking">and</span> read <span class="weak">the</span> carpet!'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ju <span class="weak">kən</span> sɪt hɪr<span class="linking">‿</span>ɪn <span class="weak">jɚ</span> spɛr time <span class="weak">ən</span> read <span class="weak">ðə</span> ˈkɑrpət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɪr‿ɪn 连读；ðə、ən、kən、jɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>闲暇时你可以坐在这里看地毯！”</p></div>
+      <div class="field words"><span>词</span><p>here 这里； spare 空闲的； time 时间； read 读；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>just 只是； moved 搬家了； into 进入； house 房子； trying 尝试； room 房间； order 命令； this 这； easy 简单的； because 因为； over 超过； make 制作； matters 事情； worse 更糟； room 房间； moment 片刻； cover 覆盖； every 每一个；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>并列结构连接动作或信息； 主语 + 谓语 + 宾语/补足语的基础叙述句； 原因或结果关系连接分句； 不定式短语补充目的、结果或宾语； 时间状语从句交代动作先后； when 引导时间状语从句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 一般现在时或基础事实陈述； 一般过去时叙述故事主线。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>5. At the moment, they cover every inch of floor space and I actually have to walk on them to get in or out of the room.； 10. You can sit here in your spare time and read the carpet!'。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>moved‿ˈɪntu、haʊs‿ən、hɑrd‿ɔl 连读；ə、ən、həv 弱读/弱化； rum‿ɪn‿ˈɔrdər 连读；tə、həv 弱读/弱化； bɪn‿ˈizi、aɪ‿oʊn‿ˈoʊvər‿ə 连读；ə、həz 弱读/弱化； rum‿ɪz、bʊks‿ɔn 连读；ðə、tə、ɪz、həv 弱读/弱化； ˈkəvər‿ˈɛvri、ɪnʃ‿əv、speɪs‿ən、aɪ‿ˈækʃəli、wɔk‿ɔn 连读；ðə、ən、ət、tə、əv、həv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">A Pretty Carpet</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../52－A Pretty Carpet.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":14.42,"end":22.27,"text":"We have just moved into a new house and I have been working hard all morning."},{"index":2,"start":22.27,"end":27.17,"text":"I have been trying to get my new room in order."},{"index":3,"start":27.17,"end":34.01,"text":"This has not been easy because I own over a thousand books."},{"index":4,"start":34.01,"end":44.3,"text":"To make matters worse, the room is rather small, so I have temporarily put my books on the floor."},{"index":5,"start":44.3,"end":55.8,"text":"At the moment, they cover every inch of floor space and I actually have to walk on them to get in or out of the room."},{"index":6,"start":55.8,"end":64.52,"text":"A short while ago, my sister helped me to carry one of my old bookcases up the stairs."},{"index":7,"start":64.52,"end":73.35,"text":"She went into my room and got a big surprise when she saw all those books on the floor."},{"index":8,"start":73.35,"end":79.77,"text":"'This is the prettiest carpet I have ever seen,' she said."},{"index":9,"start":79.77,"end":87.25,"text":"She gazed at it for some time then added, 'You don't need bookcases at all."},{"index":10,"start":87.25,"end":92,"text":"You can sit here in your spare time and read the carpet!'"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

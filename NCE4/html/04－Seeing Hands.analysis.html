@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 04 - Seeing Hands</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 04 - Seeing Hands</h1>
+      <p class="meta">问题: How did Vera disover she had this gift of second sight?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.12" data-end="27.32">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Several cases <span class="weak">have</span> <span class="weak">been</span> <span class="linking">reported</span> <span class="weak linking">in</span> Russia <span class="linking">recently</span> <span class="weak linking">of</span> people who <span class="weak">can</span> <span class="linking">read</span> <span class="weak linking">and</span> detect colours with <span class="weak">their</span> <span class="linking">fingers,</span> <span class="weak linking">and</span> <span class="linking">even</span> see through solid <span class="linking">doors</span> <span class="weak linking">and</span> walls.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsɛvrəl keɪs <span class="weak">həv</span> bɪn rəˈpɔrt<span class="linking">‿</span>ɪn ˈrəʃə ˈrisnli <span class="weak">əv</span> ˈpipl who <span class="weak">kən</span> read<span class="linking">‿</span><span class="weak">ən</span> dəˈtɛk ˈkələr wɪð ðɛr ˈfɪŋɡər<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈivən si θru ˈsɑləd dɔr<span class="linking">‿</span><span class="weak">ən</span> wɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rəˈpɔrt‿ɪn、read‿ən、ˈfɪŋɡər‿ən‿ˈivən、dɔr‿ən 连读；ən、kən、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>最近，俄罗斯报道了几起案例，人们可以用手指阅读和检测颜色，甚至可以透过坚固的门和墙壁看到东西。</p></div>
+      <div class="field words"><span>词</span><p>several 一些； cases 案例； reported 报道； russia 俄罗斯；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="27.32" data-end="40.7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">One case <span class="linking">concerns</span> <span class="weak linking">an</span> 11-year-old schoolgirl Vera Petrova, who <span class="weak">has</span> normal vision <span class="weak">but</span> who <span class="weak linking">can</span> <span class="linking">also</span> perceive things with different <span class="linking">parts</span> <span class="weak linking">of</span> <span class="weak">her</span> <span class="linking">skin,</span> <span class="weak linking">and</span> through solid walls.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one keɪs <span class="weak">kən</span>ˈsərn<span class="linking">‿</span><span class="weak">ən</span> yearold ˈskulˌɡərl vera petrova who <span class="weak">həz</span> ˈnɔrml vision bət who <span class="weak">kən</span><span class="linking">‿</span>ˈɔlsoʊ pərˈsiv θɪŋ wɪð ˈdɪfrənt pɑrt<span class="linking">‿</span><span class="weak">əv</span> hɚ skɪn<span class="linking">‿</span><span class="weak">ən</span> θru ˈsɑləd wɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kənˈsərn‿ən、kən‿ˈɔlsoʊ、pɑrt‿əv、skɪn‿ən 连读；ən、kən、əv、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>其中一个案例涉及一名 11 岁女学生维拉·佩特洛娃 (Vera Petrova)，她视力正常，但也能用皮肤的不同部位以及透过坚固的墙壁感知事物。</p></div>
+      <div class="field words"><span>词</span><p>case 案件； concerns 担忧； yearold 岁； schoolgirl 女学生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="40.7" data-end="44.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">This</span> <span class="linking">ability</span> <span class="weak">was</span> first noticed by <span class="weak">her</span> father.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span><span class="weak">ə</span>ˈbɪlədi <span class="weak">wəz</span> fərst ˈnoʊdəs baɪ hɚ ˈfɑðər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɪs‿əˈbɪlədi 连读；wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>这种能力首先被她的父亲注意到。</p></div>
+      <div class="field words"><span>词</span><p>this 这； ability 能力； first 第一的； noticed 注意到；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="44.14" data-end="50.44">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">One day <span class="weak">she</span> <span class="linking">came</span> <span class="linking">into</span> <span class="weak linking">his</span> <span class="linking">office</span> <span class="weak linking">and</span> happened <span class="weak">to</span> put <span class="weak">her</span> <span class="linking">hands</span> <span class="linking">on</span> <span class="weak">the</span> <span class="linking">door</span> <span class="weak linking">of</span> <span class="weak linking">a</span> locked safe.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one deɪ ʃi keɪm<span class="linking">‿</span>ˈɪntu hɪz<span class="linking">‿</span>ˈɔfəs<span class="linking">‿</span><span class="weak">ən</span> ˈhæpən <span class="weak">tə</span> pʊt hɚ hænd<span class="linking">‿</span>ɔn <span class="weak">ðə</span> dɔr<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> locked safe/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>keɪm‿ˈɪntu、hɪz‿ˈɔfəs‿ən、hænd‿ɔn、dɔr‿əv‿ə 连读；ðə、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>有一天，她走进他的办公室，碰巧把手放在了锁着的保险箱的门上。</p></div>
+      <div class="field words"><span>词</span><p>came 来了； into 进入； office 办公室； happened 发生了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="50.44" data-end="60.32">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Suddenly <span class="weak">she</span> asked <span class="weak">her</span> father why <span class="weak">he</span> kept so many old newspapers <span class="linking">locked</span> <span class="linking">away</span> <span class="weak linking">there,</span> <span class="weak linking">and</span> <span class="linking">even</span> described <span class="weak">the</span> way <span class="weak">they</span> <span class="weak">were</span> <span class="linking">done</span> <span class="linking">up</span> <span class="weak linking">in</span> bundles.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsədnli ʃi æsk hɚ ˈfɑðər waɪ hi kɛpt soʊ ˈmɛni oʊld ˈnuzˌpeɪpər locked<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ ðɛr<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈivən dəˈskraɪb <span class="weak">ðə</span> weɪ ðeɪ <span class="weak">wɚ</span> dən<span class="linking">‿</span>əp<span class="linking">‿</span>ɪn ˈbəndl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>locked‿əˈweɪ、ðɛr‿ən‿ˈivən、dən‿əp‿ɪn 连读；ðə、ən、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>突然，她问父亲为什么要把这么多旧报纸锁在那里，甚至还描述了它们是如何捆扎起来的。</p></div>
+      <div class="field words"><span>词</span><p>suddenly 突然； asked 问； father 父亲； kept 保留；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="60.32" data-end="79.54">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Vera's curious talent <span class="weak">was</span> brought <span class="weak">to</span> <span class="weak">the</span> <span class="linking">notice</span> <span class="weak linking">of</span> <span class="weak linking">a</span> scientific <span class="linking">research</span> <span class="linking">institute</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">town</span> <span class="weak linking">of</span> <span class="linking">Ulyanovsk,</span> near where <span class="weak">she</span> <span class="linking">lives,</span> <span class="weak linking">and</span> <span class="weak linking">in</span> April <span class="weak">she</span> <span class="weak">was</span> <span class="linking">given</span> <span class="weak linking">a</span> <span class="linking">series</span> <span class="weak linking">of</span> tests <span class="linking">by</span> <span class="weak linking">a</span> special <span class="linking">commission</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">Ministry</span> <span class="weak linking">of</span> <span class="linking">Health</span> <span class="weak linking">of</span> <span class="weak">the</span> Russian Federal Republic.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/vera's ˈkjʊriəs ˈtælənt <span class="weak">wəz</span> brɔt <span class="weak">tə</span> <span class="weak">ðə</span> ˈnoʊdəs<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˌsaɪənˈtɪfɪk ˈriˌsərtʃ<span class="linking">‿</span>ˈɪnstəˌtut<span class="linking">‿</span>ɪn <span class="weak">ðə</span> taʊn<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ulyanovsk nɪr wɛr ʃi lives<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn ˈeɪprəl ʃi <span class="weak">wəz</span> ˈɡɪvn<span class="linking">‿</span><span class="weak">ə</span> ˈsɪriz<span class="linking">‿</span><span class="weak">əv</span> tɛst baɪ <span class="weak">ə</span> ˈspɛʃl kəˈmɪʃən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈmɪnəstri <span class="weak">əv</span> hɛlθ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈrəʃən ˈfɛdrəl rəˈpəblɪk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈnoʊdəs‿əv‿ə、ˈriˌsərtʃ‿ˈɪnstəˌtut‿ɪn、taʊn‿əv‿ulyanovsk、lives‿ən‿ɪn、ˈɡɪvn‿ə 连读；ðə、ə、ən、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>薇拉的好奇天赋引起了她居住地附近乌里扬诺夫斯克镇一家科学研究机构的注意，四月份，俄罗斯联邦共和国卫生部的一个特别委员会对她进行了一系列测试。</p></div>
+      <div class="field words"><span>词</span><p>vera's 维拉的； curious 好奇的； talent 天赋； brought 带来；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="79.54" data-end="102.69">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">During these tests <span class="weak">she</span> <span class="weak">was</span> able <span class="weak">to</span> <span class="linking">read</span> <span class="weak linking">a</span> newspaper <span class="linking">through</span> <span class="weak linking">an</span> <span class="linking">opaque</span> <span class="linking">screen</span> <span class="weak linking">and,</span> stranger still, by moving <span class="weak linking">her</span> <span class="linking">elbow</span> <span class="linking">over</span> <span class="weak linking">a</span> child's <span class="linking">game</span> <span class="weak linking">of</span> Lotto <span class="weak">she</span> <span class="weak">was</span> able <span class="weak">to</span> describe <span class="weak">the</span> <span class="linking">figures</span> <span class="weak linking">and</span> colours <span class="linking">printed</span> <span class="linking">on</span> <span class="weak linking">it;</span> <span class="weak linking">and,</span> <span class="weak linking">in</span> <span class="linking">another</span> <span class="linking">instance,</span> wearing <span class="linking">stockings</span> <span class="weak linking">and</span> slippers, <span class="weak">to</span> make out with <span class="weak">her</span> foot <span class="weak">the</span> <span class="linking">outlines</span> <span class="weak linking">and</span> <span class="linking">colours</span> <span class="weak linking">of</span> <span class="weak linking">a</span> picture <span class="linking">hidden</span> <span class="linking">under</span> <span class="weak linking">a</span> carpet.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈdʊrɪŋ ðiz tɛst ʃi <span class="weak">wəz</span> ˈeɪbl <span class="weak">tə</span> read<span class="linking">‿</span><span class="weak">ə</span> ˈnuzˌpeɪpər θru <span class="weak">ən</span><span class="linking">‿</span>oʊˈpeɪk screen<span class="linking">‿</span><span class="weak">ən</span> ˈstreɪndʒər stɪl baɪ moving hɚ<span class="linking">‿</span>ˈɛlˌboʊ ˈoʊvər<span class="linking">‿</span><span class="weak">ə</span> child's game <span class="weak">əv</span> ˈlɑdoʊ ʃi <span class="weak">wəz</span> ˈeɪbl <span class="weak">tə</span> dəˈskraɪb <span class="weak">ðə</span> ˈfɪɡjər<span class="linking">‿</span><span class="weak">ən</span> ˈkələr prɪntt<span class="linking">‿</span>ɔn<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span>ˈnəðər<span class="linking">‿</span>ˈɪnstns ˈwɛrɪŋ ˈstɑkɪŋ<span class="linking">‿</span><span class="weak">ən</span> ˈslɪpər <span class="weak">tə</span> make aʊt wɪð hɚ fʊt <span class="weak">ðə</span> ˈaʊtˌlaɪn<span class="linking">‿</span><span class="weak">ən</span> ˈkələr<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> picture hidden<span class="linking">‿</span>ˈəndər<span class="linking">‿</span><span class="weak">ə</span> ˈkɑrpət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>read‿ə、ən‿oʊˈpeɪk、screen‿ən、hɚ‿ˈɛlˌboʊ、ˈoʊvər‿ə 连读；ðə、ə、ən、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>在这些测试中，她能够通过不透明的屏幕阅读报纸，更奇怪的是，通过将肘部移到儿童的乐透游戏上，她能够描述印刷在报纸上的数字和颜色；还有一次，她穿着丝袜和拖鞋，用脚辨认出地毯下藏着的图画的轮廓和颜色。</p></div>
+      <div class="field words"><span>词</span><p>during 期间； these 这些； tests 测试； able 有能力的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="102.69" data-end="108.26">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="linking">Other</span> <span class="linking">experiments</span> showed <span class="weak">that</span> <span class="weak">her</span> <span class="linking">knees</span> <span class="weak linking">and</span> shoulders <span class="weak linking">had</span> <span class="weak linking">a</span> similar sensitivity.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈəðər<span class="linking">‿</span>ɪkˈspɛrəmənt ʃoʊ ðæt hɚ ni <span class="weak">ən</span> ˈʃoʊldər <span class="weak">həd</span><span class="linking">‿</span><span class="weak">ə</span> ˈsɪmlər ˌsɛnsəˈtɪvədi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈəðər‿ɪkˈspɛrəmənt、həd‿ə 连读；ə、ən、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>其他实验表明她的膝盖和肩膀也有类似的敏感性。</p></div>
+      <div class="field words"><span>词</span><p>other 其他； experiments 实验； showed 显示； knees 膝盖；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="108.26" data-end="116.86">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">During</span> <span class="linking">all</span> these tests Vera <span class="weak">was</span> <span class="linking">blindfold;</span> <span class="weak linking">and</span> <span class="linking">indeed,</span> <span class="linking">except</span> when blindfold <span class="weak">she</span> lacked <span class="weak">the</span> ability <span class="weak">to</span> perceive things with <span class="weak">her</span> skin.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈdʊrɪŋ<span class="linking">‿</span>ɔl ðiz tɛst vera <span class="weak">wəz</span> ˈblaɪnˌfoʊld<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪnˈdid<span class="linking">‿</span>ɪkˈsɛpt wɛn ˈblaɪnˌfoʊld ʃi læk <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈbɪlədi <span class="weak">tə</span> pərˈsiv θɪŋ wɪð hɚ skɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈdʊrɪŋ‿ɔl、ˈblaɪnˌfoʊld‿ən‿ɪnˈdid‿ɪkˈsɛpt、ði‿əˈbɪlədi 连读；ði、ən、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>在所有这些测试中，维拉都被蒙住眼睛。事实上，除了蒙上眼睛之外，她缺乏用皮肤感知事物的能力。</p></div>
+      <div class="field words"><span>词</span><p>during 期间； these 这些； tests 测试； vera 维拉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="116.86" data-end="127.28">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> <span class="linking">also</span> found <span class="weak linking">that</span> <span class="linking">although</span> <span class="weak">she</span> <span class="weak">could</span> perceive things with <span class="weak">her</span> fingers <span class="linking">this</span> <span class="linking">ability</span> ceased <span class="weak">the</span> moment <span class="weak">her</span> hands <span class="weak">were</span> wet.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlsoʊ found ðæt<span class="linking">‿</span>ɔlˈðoʊ ʃi kəd pərˈsiv θɪŋ wɪð hɚ ˈfɪŋɡər ðɪs<span class="linking">‿</span><span class="weak">ə</span>ˈbɪlədi sis <span class="weak">ðə</span> ˈmoʊmnt hɚ hænd <span class="weak">wɚ</span> wɛt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿ˈɔlsoʊ、ðæt‿ɔlˈðoʊ、ðɪs‿əˈbɪlədi 连读；ðə、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>研究还发现，尽管她可以用手指感知事物，但一旦手湿了，这种能力就消失了。</p></div>
+      <div class="field words"><span>词</span><p>also 还； found 成立； although 虽然； perceive 感知；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>several 一些； cases 案例； reported 报道； russia 俄罗斯； case 案件； concerns 担忧； yearold 岁； schoolgirl 女学生； this 这； ability 能力； first 第一的； noticed 注意到； came 来了； into 进入； office 办公室； happened 发生了； suddenly 突然； asked 问；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>含定语从句或名词性从句； 含被动结构； 并列结构连接动作或信息； 主语 + 谓语 + 宾语/补足语的基础叙述句； 不定式短语补充目的、结果或宾语； 直接引语与叙述语结合。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 一般过去时叙述故事主线。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>1. Several cases have been reported in Russia recently of people who can read and detect colours with their fingers, and even see through solid doors and walls.； 2. One case concerns an 11-year-old schoolgirl Vera Petrova, who has normal vision but who can also perceive things with different parts of her skin, and through solid walls.； 10. It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>rəˈpɔrt‿ɪn、read‿ən、ˈfɪŋɡər‿ən‿ˈivən、dɔr‿ən 连读；ən、kən、əv、həv 弱读/弱化； kənˈsərn‿ən、kən‿ˈɔlsoʊ、pɑrt‿əv、skɪn‿ən 连读；ən、kən、əv、həz 弱读/弱化； ðɪs‿əˈbɪlədi 连读；wəz 弱读/弱化； keɪm‿ˈɪntu、hɪz‿ˈɔfəs‿ən、hænd‿ɔn、dɔr‿əv‿ə 连读；ðə、ə、ən、tə、əv 弱读/弱化； locked‿əˈweɪ、ðɛr‿ən‿ˈivən、dən‿əp‿ɪn 连读；ðə、ən、wɚ 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Seeing Hands</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../04－Seeing Hands.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.12,"end":27.32,"text":"Several cases have been reported in Russia recently of people who can read and detect colours with their fingers, and even see through solid doors and walls."},{"index":2,"start":27.32,"end":40.7,"text":"One case concerns an 11-year-old schoolgirl Vera Petrova, who has normal vision but who can also perceive things with different parts of her skin, and through solid walls."},{"index":3,"start":40.7,"end":44.14,"text":"This ability was first noticed by her father."},{"index":4,"start":44.14,"end":50.44,"text":"One day she came into his office and happened to put her hands on the door of a locked safe."},{"index":5,"start":50.44,"end":60.32,"text":"Suddenly she asked her father why he kept so many old newspapers locked away there, and even described the way they were done up in bundles."},{"index":6,"start":60.32,"end":79.54,"text":"Vera's curious talent was brought to the notice of a scientific research institute in the town of Ulyanovsk, near where she lives, and in April she was given a series of tests by a special commission of the Ministry of Health of the Russian Federal Republic."},{"index":7,"start":79.54,"end":102.69,"text":"During these tests she was able to read a newspaper through an opaque screen and, stranger still, by moving her elbow over a child's game of Lotto she was able to describe the figures and colours printed on it; and, in another instance, wearing stockings and slippers, to make out with her foot the outlines and colours of a picture hidden under a carpet."},{"index":8,"start":102.69,"end":108.26,"text":"Other experiments showed that her knees and shoulders had a similar sensitivity."},{"index":9,"start":108.26,"end":116.86,"text":"During all these tests Vera was blindfold; and indeed, except when blindfold she lacked the ability to perceive things with her skin."},{"index":10,"start":116.86,"end":127.28,"text":"It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

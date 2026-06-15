@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 42 - Recording an Earthquake</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 42 - Recording an Earthquake</h1>
+      <p class="meta">问题: What does a pen have to do to record on paper the vibrations generated by an earthquake?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+      <a href="#sentence-30">30</a>
+      <a href="#sentence-31">31</a>
+      <a href="#sentence-32">32</a>
+      <a href="#sentence-33">33</a>
+      <a href="#sentence-34">34</a>
+      <a href="#sentence-35">35</a>
+      <a href="#sentence-36">36</a>
+      <a href="#sentence-37">37</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.95" data-end="23.69">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak linking">An</span> <span class="linking">earthquake</span> comes <span class="linking">like</span> <span class="weak linking">a</span> <span class="linking">thief</span> <span class="weak linking">in</span> <span class="weak">the</span> night, without warning.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>ˈərθˌkweɪk kəm like <span class="weak">ə</span> θif<span class="linking">‿</span>ɪn <span class="weak">ðə</span> night wəˈðaʊt ˈwɔrnɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ən‿ˈərθˌkweɪk、θif‿ɪn 连读；ðə、ə、ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>地震就像夜间的小偷一样毫无预兆地来袭。</p></div>
+      <div class="field words"><span>词</span><p>earthquake 地震； comes 来了； like 喜欢； thief 贼；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.69" data-end="29.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> necessary, therefore, <span class="weak">to</span> <span class="linking">invent</span> <span class="linking">instruments</span> <span class="weak">that</span> neither slumbered nor slept.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> ˈnɛsəˌsɛri ˈðɛrˌfɔr <span class="weak">tə</span> ɪnˈvɛnt<span class="linking">‿</span>ˈɪnstrəmənt ðæt ˈniðər ˈsləmbər nɔr slept/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪnˈvɛnt‿ˈɪnstrəmənt 连读；tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>因此，有必要发明一种既不打盹也不睡觉的仪器。</p></div>
+      <div class="field words"><span>词</span><p>necessary 必要的； therefore 所以； invent 发明； instruments 仪器；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="29.84" data-end="32.36">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Some devices <span class="weak">were</span> quite simple.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/səm devices <span class="weak">wɚ</span> kwaɪt simple/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>有些设备非常简单。</p></div>
+      <div class="field words"><span>词</span><p>some 一些； devices 设备； quite 相当； simple 简单的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="32.36" data-end="41.06">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">One, <span class="weak linking">for</span> <span class="linking">instance,</span> <span class="linking">consisted</span> <span class="weak linking">of</span> <span class="linking">rods</span> <span class="weak linking">of</span> various <span class="linking">lengths</span> <span class="weak linking">and</span> thicknesses which <span class="weak">would</span> <span class="linking">stand</span> <span class="linking">up</span> <span class="linking">on</span> <span class="linking">end</span> like ninepins.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one <span class="weak">fɚ</span><span class="linking">‿</span>ˈɪnstns <span class="weak">kən</span>ˈsɪst<span class="linking">‿</span><span class="weak">əv</span> rɑd<span class="linking">‿</span><span class="weak">əv</span> ˈvɛriəs lɛŋθ<span class="linking">‿</span><span class="weak">ən</span> ˈθɪknəs wɪtʃ wəd stænd<span class="linking">‿</span>əp<span class="linking">‿</span>ɔn<span class="linking">‿</span>ɛnd like ˈnaɪnˌpɪnz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>fɚ‿ˈɪnstns、kənˈsɪst‿əv、rɑd‿əv、lɛŋθ‿ən、stænd‿əp‿ɔn‿ɛnd 连读；ən、əv、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>例如，其中一种由不同长度和粗细的杆组成，这些杆可以像九瓶柱一样直立起来。</p></div>
+      <div class="field words"><span>词</span><p>instance 实例； consisted 包括； rods 棒； various 各种各样的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="41.06" data-end="46.36">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">When</span> <span class="weak linking">a</span> shock <span class="linking">came,</span> <span class="weak linking">it</span> shook <span class="weak">the</span> rigid <span class="linking">table</span> <span class="linking">upon</span> which these stood.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wɛn<span class="linking">‿</span><span class="weak">ə</span> ʃɑk keɪm<span class="linking">‿</span>ɪt shook <span class="weak">ðə</span> ˈrɪdʒəd ˈteɪbl<span class="linking">‿</span><span class="weak">ə</span>ˈpɑn wɪtʃ ðiz stʊd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɛn‿ə、keɪm‿ɪt、ˈteɪbl‿əˈpɑn 连读；ðə、ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当震动袭来时，这些东西所在的坚硬桌子都震动了。</p></div>
+      <div class="field words"><span>词</span><p>when 什么时候； shock 震惊； came 来了； shook 震动；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="46.36" data-end="51.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="linking">If</span> <span class="weak linking">it</span> <span class="weak">were</span> <span class="linking">gentle,</span> <span class="linking">only</span> <span class="weak">the</span> <span class="linking">more</span> <span class="linking">unstable</span> rods fell.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪf<span class="linking">‿</span>ɪt <span class="weak">wɚ</span> ˈdʒɛnəl<span class="linking">‿</span>ˈoʊnli <span class="weak">ðə</span> mɔr<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈsteɪbl rɑd fɛl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪf‿ɪt、ˈdʒɛnəl‿ˈoʊnli、mɔr‿ˌənˈsteɪbl 连读；ðə、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>如果动作轻柔，只有更不稳定的棒会掉落。</p></div>
+      <div class="field words"><span>词</span><p>gentle 温和的； only 仅有的； more 更多的； unstable 不稳定；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="51.17" data-end="53.99">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">If</span> <span class="weak linking">it</span> <span class="weak">were</span> severe, <span class="weak">they</span> all fell.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪf<span class="linking">‿</span>ɪt <span class="weak">wɚ</span> səˈvɪr ðeɪ ɔl fɛl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪf‿ɪt 连读；wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>如果严重的话，他们都会倒下。</p></div>
+      <div class="field words"><span>词</span><p>severe 严重； fell 跌倒了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="53.99" data-end="68.99">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Thus <span class="weak">the</span> rods, by <span class="linking">falling,</span> <span class="weak linking">and</span> by <span class="weak">the</span> <span class="linking">direction</span> <span class="weak linking">in</span> which <span class="weak">they</span> fell, recorded <span class="weak">for</span> <span class="weak">the</span> slumbering scientist <span class="weak">the</span> <span class="linking">strength</span> <span class="weak linking">of</span> <span class="weak linking">a</span> shock <span class="weak">that</span> <span class="weak">was</span> too weak <span class="weak">to</span> waken <span class="weak linking">him,</span> <span class="weak linking">and</span> <span class="weak">the</span> direction <span class="weak">from</span> <span class="linking">which</span> <span class="weak linking">it</span> came.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðəs <span class="weak">ðə</span> rɑd baɪ fɔl<span class="linking">‿</span><span class="weak">ən</span> baɪ <span class="weak">ðə</span> dəˈrɛkʃən<span class="linking">‿</span>ɪn wɪtʃ ðeɪ fɛl rəˈkɔrdəd <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsləmbər ˈsaɪəntəst <span class="weak">ðə</span> strɛŋθ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ʃɑk ðæt <span class="weak">wəz</span> tu wik <span class="weak">tə</span> ˈweɪkən hɪm<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> dəˈrɛkʃən <span class="weak">frəm</span> wɪtʃ<span class="linking">‿</span>ɪt keɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>fɔl‿ən、dəˈrɛkʃən‿ɪn、strɛŋθ‿əv‿ə、hɪm‿ən、wɪtʃ‿ɪt 连读；ðə、ə、ən、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>因此，棒通过下落以及下落的方向，为沉睡的科学家记录了太弱而无法唤醒他的震动的强度，以及震动来自的方向。</p></div>
+      <div class="field words"><span>词</span><p>thus 因此； rods 棒； falling 坠落； direction 方向；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="68.99" data-end="75.87">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">But</span> <span class="linking">instruments</span> far more delicate than <span class="weak">that</span> <span class="weak">were</span> <span class="linking">needed</span> <span class="linking">if</span> <span class="linking">any</span> really <span class="linking">serious</span> <span class="linking">advance</span> <span class="weak">was</span> <span class="weak">to</span> <span class="weak">be</span> made.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span>ˈɪnstrəmənt fɑr mɔr ˈdɛləkət ðæn ðæt <span class="weak">wɚ</span> nid<span class="linking">‿</span>ɪf<span class="linking">‿</span>ˈɛni ˈrili ˈsɪriəs<span class="linking">‿</span>ədˈvæns <span class="weak">wəz</span> <span class="weak">tə</span> bi meɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ˈɪnstrəmənt、nid‿ɪf‿ˈɛni、ˈsɪriəs‿ədˈvæns 连读；tə、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>但如果要取得任何真正重大的进展，就需要比这更精密的仪器。</p></div>
+      <div class="field words"><span>词</span><p>instruments 仪器； more 更多的； delicate 精美的； than 比；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="75.87" data-end="88.24">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">The</span> ideal <span class="weak">to</span> <span class="weak">be</span> <span class="linking">aimed</span> <span class="weak linking">at</span> <span class="weak">was</span> <span class="weak">to</span> <span class="linking">devise</span> <span class="weak linking">an</span> <span class="linking">instrument</span> <span class="weak">that</span> <span class="weak">could</span> record <span class="linking">with</span> <span class="weak linking">a</span> <span class="linking">pen</span> <span class="linking">on</span> paper, <span class="weak">the</span> <span class="linking">movements</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">ground</span> <span class="linking">or</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">table</span> <span class="weak linking">as</span> <span class="weak">the</span> quake passed by.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> aɪˈdil <span class="weak">tə</span> bi eɪm<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">wəz</span> <span class="weak">tə</span> dəˈvaɪz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪnstrəmənt ðæt kəd ˈrɛkərd wɪð<span class="linking">‿</span><span class="weak">ə</span> pen<span class="linking">‿</span>ɔn ˈpeɪpər <span class="weak">ðə</span> ˈmuvmnt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ɡraʊnd<span class="linking">‿</span>ɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈteɪbl<span class="linking">‿</span><span class="weak">əz</span> <span class="weak">ðə</span> kweɪk pæs baɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>eɪm‿ət、dəˈvaɪz‿ən‿ˈɪnstrəmənt、wɪð‿ə、pen‿ɔn、ˈmuvmnt‿əv 连读；ðə、ə、ən、əz、ət、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>我们的理想目标是设计一种仪器，可以用笔在纸上记录地震经过时地面或桌子的运动。</p></div>
+      <div class="field words"><span>词</span><p>ideal 理想的； aimed 瞄准的； devise 设计； instrument 乐器；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="88.24" data-end="92.57">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">While <span class="weak">I</span> write <span class="weak">my</span> pen moves, <span class="weak">but</span> <span class="weak">the</span> paper keeps still.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/waɪl aɪ write maɪ pen moves bət <span class="weak">ðə</span> ˈpeɪpər kip stɪl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>当我写字时，笔在动，但纸却保持静止。</p></div>
+      <div class="field words"><span>词</span><p>while 尽管； write 写； moves 动作； paper 纸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="92.57" data-end="99.75">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">With practice, no doubt, <span class="weak">I</span> <span class="weak linking">could</span> <span class="weak linking">in</span> time learn <span class="weak">to</span> write by holding <span class="weak">the</span> pen still while <span class="weak">the</span> paper moved.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wɪð ˈpræktəs noʊ daʊt aɪ kəd<span class="linking">‿</span>ɪn time lərn <span class="weak">tə</span> write baɪ ˈhoʊldɪŋ <span class="weak">ðə</span> pen stɪl waɪl <span class="weak">ðə</span> ˈpeɪpər moved/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kəd‿ɪn 连读；ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>毫无疑问，通过练习，我很快就能学会在纸移动时握笔不动来写字。</p></div>
+      <div class="field words"><span>词</span><p>with 和； practice 实践； doubt 怀疑； time 时间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="99.75" data-end="111.7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">That</span> <span class="linking">sounds</span> <span class="weak linking">a</span> silly suggestion, <span class="weak">but</span> <span class="weak">that</span> <span class="weak">was</span> precisely <span class="weak">the</span> idea <span class="linking">adopted</span> <span class="weak linking">in</span> <span class="linking">some</span> <span class="weak linking">of</span> <span class="weak">the</span> early instruments (seismometers) <span class="weak">for</span> <span class="linking">recording</span> <span class="linking">earthquake</span> waves.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðæt saʊnd<span class="linking">‿</span><span class="weak">ə</span> ˈsɪli səˈdʒɛstʃən bət ðæt <span class="weak">wəz</span> priˈsaɪsli <span class="weak">ðə</span> aɪˈdiə <span class="weak">ə</span>ˈdɑptəd<span class="linking">‿</span>ɪn səm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈərli ˈɪnstrəmənt saɪzˈmɑmədər <span class="weak">fɚ</span> rəˈkɔrdɪŋ<span class="linking">‿</span>ˈərθˌkweɪk weɪv/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>saʊnd‿ə、əˈdɑptəd‿ɪn、səm‿əv、ði‿ˈərli、rəˈkɔrdɪŋ‿ˈərθˌkweɪk 连读；ðə、ði、ə、əv、wəz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>这听起来是一个愚蠢的建议，但这正是一些早期记录地震波的仪器（地震仪）所采用的想法。</p></div>
+      <div class="field words"><span>词</span><p>sounds 声音； silly 愚蠢的； suggestion 建议； precisely 恰恰；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="111.7" data-end="119.02">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">But</span> when table, <span class="linking">penholder</span> <span class="weak linking">and</span> <span class="linking">paper</span> <span class="weak linking">are</span> <span class="linking">all</span> moving, <span class="linking">how</span> <span class="weak linking">is</span> <span class="weak linking">it</span> possible <span class="weak">to</span> write legibly?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət wɛn ˈteɪbl penholder<span class="linking">‿</span><span class="weak">ən</span> ˈpeɪpər<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ɔl moving haʊ <span class="weak">ɪz</span><span class="linking">‿</span>ɪt ˈpɑsəbl <span class="weak">tə</span> write ˈlɛdʒəbli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>penholder‿ən、ˈpeɪpər‿ɑr‿ɔl、ɪz‿ɪt 连读；ən、tə、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>但桌子、笔杆、纸都在动，怎么可能写得清楚呢？</p></div>
+      <div class="field words"><span>词</span><p>when 什么时候； table 桌子； penholder 笔架； paper 纸；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="119.02" data-end="124.18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> key <span class="weak linking">to</span> <span class="weak linking">a</span> <span class="linking">solution</span> <span class="weak linking">of</span> <span class="weak">that</span> problem <span class="linking">lay</span> <span class="weak linking">in</span> <span class="weak linking">an</span> <span class="linking">everyday</span> observation.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ki <span class="weak">tə</span> <span class="weak">ə</span> səˈluʃən<span class="linking">‿</span><span class="weak">əv</span> ðæt ˈprɑbləm leɪ ɪn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛvriˌdeɪ ˌɑbzərˈveɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>səˈluʃən‿əv、ɪn‿ən‿ˈɛvriˌdeɪ 连读；ðə、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>解决这个问题的关键在于日常观察。</p></div>
+      <div class="field words"><span>词</span><p>solution 解决方案； problem 问题； everyday 每天； observation 观察；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="124.18" data-end="130.59">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Why <span class="weak linking">does</span> <span class="weak linking">a</span> person <span class="linking">standing</span> <span class="weak linking">in</span> <span class="weak linking">a</span> <span class="linking">bus</span> <span class="linking">or</span> train tend <span class="weak">to</span> fall <span class="linking">when</span> <span class="weak linking">a</span> sudden <span class="linking">start</span> <span class="weak linking">is</span> made?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/waɪ dəz<span class="linking">‿</span><span class="weak">ə</span> ˈpərsn ˈstændɪŋ<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> bəs<span class="linking">‿</span>ɔr treɪn tɛnd <span class="weak">tə</span> fɔl wɛn<span class="linking">‿</span><span class="weak">ə</span> ˈsədn stɑrt<span class="linking">‿</span><span class="weak">ɪz</span> meɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəz‿ə、ˈstændɪŋ‿ɪn‿ə、bəs‿ɔr、wɛn‿ə、stɑrt‿ɪz 连读；ə、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>为什么站在公交车或火车上的人突然启动时容易摔倒？</p></div>
+      <div class="field words"><span>词</span><p>person 人； standing 常设； train 火车； tend 趋向；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="130.59" data-end="135.18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> because <span class="weak">his</span> feet move on, <span class="weak">but</span> <span class="weak">his</span> head stays still.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> bəˈkəz hɪz fit move ɔn bət hɪz hɛd steɪ stɪl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz 连读；ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这是因为他的脚在前进，但他的头却保持静止。</p></div>
+      <div class="field words"><span>词</span><p>because 因为； feet 脚； move 移动； head 头；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="135.18" data-end="138.39">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">A</span> simple experiment <span class="weak">will</span> <span class="linking">help</span> <span class="linking">us</span> <span class="weak linking">a</span> little further.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> simple ɪkˈspɛrəmənt wɪl hɛlp<span class="linking">‿</span>əs<span class="linking">‿</span><span class="weak">ə</span> ˈlɪdl ˈfərðər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɛlp‿əs‿ə 连读；ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>一个简单的实验将帮助我们更进一步。</p></div>
+      <div class="field words"><span>词</span><p>simple 简单的； experiment 实验； help 帮助； little 小的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="138.39" data-end="142.24">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">Tie</span> <span class="weak linking">a</span> heavy <span class="linking">weight</span> <span class="weak linking">at</span> <span class="weak">the</span> <span class="linking">end</span> <span class="weak linking">of</span> <span class="weak linking">a</span> long <span class="linking">piece</span> <span class="weak linking">of</span> string.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/tie <span class="weak">ə</span> ˈhɛvi weɪt<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ði</span><span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> long pis<span class="linking">‿</span><span class="weak">əv</span> strɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>weɪt‿ət、ði‿ɛnd‿əv‿ə、pis‿əv 连读；ði、ə、ət、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在一根长绳子的末端系上一个重物。</p></div>
+      <div class="field words"><span>词</span><p>heavy 重的； weight 重量； long 长的； piece 片；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="142.24" data-end="148.78">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">With <span class="weak">the</span> hand held <span class="linking">high</span> <span class="weak linking">in</span> <span class="weak">the</span> air, hold <span class="weak">the</span> string so <span class="weak">that</span> <span class="weak">the</span> weight nearly touches <span class="weak">the</span> ground.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wɪð <span class="weak">ðə</span> hænd hɛld high<span class="linking">‿</span>ɪn <span class="weak">ðə</span> air hoʊld <span class="weak">ðə</span> strɪŋ soʊ ðæt <span class="weak">ðə</span> weɪt ˈnɪrli touches <span class="weak">ðə</span> ɡraʊnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>high‿ɪn 连读；ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>手高举在空中，握住绳子，使重物几乎接触地面。</p></div>
+      <div class="field words"><span>词</span><p>with 和； hand 手； held 握住； high 高的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="148.78" data-end="153.76">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text">Now move <span class="weak">the</span> hand <span class="weak linking">to</span> <span class="weak linking">and</span> <span class="linking">fro</span> <span class="weak linking">and</span> around <span class="weak">but</span> <span class="linking">not</span> <span class="linking">up</span> <span class="weak linking">and</span> down.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/naʊ move <span class="weak">ðə</span> hænd <span class="weak">tə</span> <span class="weak">ən</span> froʊ <span class="weak">ən</span> around bət nɑɾ<span class="linking">‿</span>əp<span class="linking">‿</span><span class="weak">ən</span> daʊn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>nɑɾ‿əp‿ən 连读；ðə、ən、tə 弱读/弱化；nɑɾ‿əp‿ən 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>现在来回移动手，但不要上下移动。</p></div>
+      <div class="field words"><span>词</span><p>move 移动； hand 手； around 大约； down 向下；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="153.76" data-end="158.34">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">It</span> <span class="weak">will</span> <span class="weak">be</span> found <span class="weak">that</span> <span class="weak">the</span> weight moves <span class="weak">but</span> slightly or <span class="linking">not</span> <span class="weak linking">at</span> <span class="linking">all.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt wɪl bi found ðæt <span class="weak">ðə</span> weɪt moves bət ˈslaɪtli ɔr nɑɾ<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>ɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>nɑɾ‿ət‿ɔl 连读；ðə、ət 弱读/弱化；nɑɾ‿ət‿ɔl 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>会发现重量有轻微移动或根本没有移动。</p></div>
+      <div class="field words"><span>词</span><p>found 成立； weight 重量； moves 动作； slightly 轻微地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="158.34" data-end="164.93">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="linking">Imagine</span> <span class="weak linking">a</span> <span class="linking">pen</span> <span class="linking">attached</span> <span class="weak">to</span> <span class="weak">the</span> <span class="linking">weight</span> <span class="weak linking">in</span> <span class="linking">such</span> <span class="weak linking">a</span> way <span class="weak linking">that</span> <span class="linking">its</span> point <span class="linking">rests</span> <span class="linking">upon</span> <span class="weak linking">a</span> <span class="linking">piece</span> <span class="weak linking">of</span> <span class="linking">paper</span> <span class="linking">on</span> <span class="weak">the</span> floor.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪˈmædʒən<span class="linking">‿</span><span class="weak">ə</span> pen<span class="linking">‿</span><span class="weak">ə</span>ˈtætʃt <span class="weak">tə</span> <span class="weak">ðə</span> weɪt<span class="linking">‿</span>ɪn sətʃ<span class="linking">‿</span><span class="weak">ə</span> weɪ ðæt<span class="linking">‿</span>its pɔɪnt rɛst<span class="linking">‿</span><span class="weak">ə</span>ˈpɑn<span class="linking">‿</span><span class="weak">ə</span> pis<span class="linking">‿</span><span class="weak">əv</span> ˈpeɪpər<span class="linking">‿</span>ɔn <span class="weak">ðə</span> flɔr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪˈmædʒən‿ə、pen‿əˈtætʃt、weɪt‿ɪn、sətʃ‿ə、ðæt‿its 连读；ðə、ə、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>想象一下，一支钢笔以这样一种方式连接到重物上，使其笔尖停留在地板上的一张纸上。</p></div>
+      <div class="field words"><span>词</span><p>imagine 想象； attached 随附的； weight 重量； such 这样的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="164.93" data-end="171.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text"><span class="linking">Imagine</span> <span class="weak linking">an</span> <span class="linking">earthquake</span> shock shaking <span class="weak">the</span> floor, <span class="weak">the</span> paper, <span class="weak linking">you</span> <span class="weak linking">and</span> <span class="weak">your</span> hand.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪˈmædʒən<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈərθˌkweɪk ʃɑk shaking <span class="weak">ðə</span> flɔr <span class="weak">ðə</span> ˈpeɪpər ju <span class="weak">ən</span> <span class="weak">jɚ</span> hænd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪˈmædʒən‿ən‿ˈərθˌkweɪk 连读；ðə、ən、jɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>想象一下地震震动了地板、纸张、你和你的手。</p></div>
+      <div class="field words"><span>词</span><p>imagine 想象； earthquake 地震； shock 震惊； shaking 摇晃；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="171.42" data-end="175.97">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> <span class="linking">midst</span> <span class="weak linking">of</span> <span class="linking">all</span> this movement, <span class="weak">the</span> <span class="linking">weight</span> <span class="weak linking">and</span> <span class="weak">the</span> pen <span class="weak">would</span> <span class="weak">be</span> still.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn <span class="weak">ðə</span> mɪdst<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl ðɪs ˈmuvmnt <span class="weak">ðə</span> weɪt<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> pen wəd bi stɪl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mɪdst‿əv‿ɔl、weɪt‿ən 连读；ðə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>在所有这些运动过程中，重量和笔都是静止的。</p></div>
+      <div class="field words"><span>词</span><p>midst 中间； this 这； movement 移动； weight 重量；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="175.97" data-end="184.18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text"><span class="weak linking">But</span> <span class="weak linking">as</span> <span class="weak">the</span> paper moved <span class="weak">from</span> side <span class="weak">to</span> side under <span class="weak">the</span> pen <span class="linking">point,</span> <span class="linking">its</span> movement <span class="weak">would</span> <span class="weak">be</span> <span class="linking">recorded</span> <span class="weak linking">in</span> <span class="linking">ink</span> <span class="linking">upon</span> <span class="linking">its</span> surface.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span><span class="weak">əz</span> <span class="weak">ðə</span> ˈpeɪpər moved <span class="weak">frəm</span> side <span class="weak">tə</span> side ˈəndər <span class="weak">ðə</span> pen pɔɪnt<span class="linking">‿</span>its ˈmuvmnt wəd bi rəˈkɔrdəd<span class="linking">‿</span>ɪn<span class="linking">‿</span>ink<span class="linking">‿</span><span class="weak">ə</span>ˈpɑn<span class="linking">‿</span>its ˈsərfəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿əz、pɔɪnt‿its、rəˈkɔrdəd‿ɪn‿ink‿əˈpɑn‿its 连读；ðə、əz、tə、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>但是，当纸张在笔尖下从一侧移动到另一侧时，其移动会被墨水记录在其表面上。</p></div>
+      <div class="field words"><span>词</span><p>paper 纸； moved 搬家了； side 边；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="184.18" data-end="193.2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text"><span class="weak">It</span> <span class="weak linking">was</span> <span class="linking">upon</span> this principle <span class="weak">that</span> <span class="weak">the</span> <span class="linking">first</span> <span class="linking">instruments</span> <span class="weak">were</span> made, <span class="weak">but</span> <span class="weak">the</span> paper <span class="weak">was</span> wrapped <span class="linking">round</span> <span class="weak linking">a</span> drum which rotated slowly.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span>ˈpɑn ðɪs ˈprɪnsəpl ðæt <span class="weak">ðə</span> fərst<span class="linking">‿</span>ˈɪnstrəmənt <span class="weak">wɚ</span> meɪd bət <span class="weak">ðə</span> ˈpeɪpər <span class="weak">wəz</span> ræp raʊnd<span class="linking">‿</span><span class="weak">ə</span> drəm wɪtʃ ˈroʊˌteɪt ˈsloʊli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿əˈpɑn、fərst‿ˈɪnstrəmənt、raʊnd‿ə 连读；ðə、ə、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>正是根据这个原理，第一批乐器被制造出来，但纸被包裹在一个缓慢旋转的鼓上。</p></div>
+      <div class="field words"><span>词</span><p>upon 之上； this 这； principle 原则； first 第一的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="193.2" data-end="205.18">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text"><span class="weak">As</span> <span class="linking">long</span> <span class="weak linking">as</span> <span class="linking">all</span> <span class="weak">was</span> still, <span class="weak">the</span> pen <span class="linking">drew</span> <span class="weak linking">a</span> straight line, <span class="weak">but</span> while <span class="weak">the</span> drum <span class="weak">was</span> being shaken, <span class="weak">the</span> line <span class="weak">that</span> <span class="weak">the</span> pen <span class="weak">was</span> drawing wriggled <span class="weak">from</span> side <span class="weak">to</span> side.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əz</span> long<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ɔl <span class="weak">wəz</span> stɪl <span class="weak">ðə</span> pen dru <span class="weak">ə</span> streɪt laɪn bət waɪl <span class="weak">ðə</span> drəm <span class="weak">wəz</span> ˈbiɪŋ shaken <span class="weak">ðə</span> laɪn ðæt <span class="weak">ðə</span> pen <span class="weak">wəz</span> ˈdrɔɪŋ ˈrɪɡl <span class="weak">frəm</span> side <span class="weak">tə</span> side/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>long‿əz‿ɔl 连读；ðə、ə、əz、tə、wəz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>只要一切静止，笔就画出一条直线，但当鼓摇动时，笔所画的线就会左右蠕动。</p></div>
+      <div class="field words"><span>词</span><p>long 长的； still 仍然； drew 画了； straight 直的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="205.18" data-end="215.21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text"><span class="weak">The</span> apparatus thus described, however, <span class="linking">records</span> <span class="linking">only</span> <span class="weak">the</span> horizontal <span class="linking">component</span> <span class="weak linking">of</span> <span class="weak">the</span> wave movement, <span class="linking">which</span> <span class="weak linking">is,</span> <span class="weak linking">in</span> fact, much more complicated.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˌæpəˈrædəs ðəs dəˈskraɪb haʊˈɛvər ˈrɛkərd<span class="linking">‿</span>ˈoʊnli <span class="weak">ðə</span> ˌhɔrəˈzɑnl kəmˈpoʊnənt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> weɪv ˈmuvmnt wɪtʃ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɪn fæk mətʃ mɔr ˈkɑmpləˌkeɪdəd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˌæpəˈrædəs、ˈrɛkərd‿ˈoʊnli、kəmˈpoʊnənt‿əv、wɪtʃ‿ɪz‿ɪn 连读；ðə、ði、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>然而，如此描述的装置仅记录波浪运动的水平分量，这实际上要复杂得多。</p></div>
+      <div class="field words"><span>词</span><p>apparatus 设备； thus 因此； described 描述的； however 然而；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-30" data-start="215.21" data-end="230.54">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="30" aria-label="Play sentence 30">▶</button><span class="sentence-num">30</span><p class="en-text">If <span class="weak">we</span> <span class="weak linking">could</span> <span class="linking">actually</span> see <span class="weak">the</span> path described <span class="linking">by</span> <span class="weak linking">a</span> particle, <span class="linking">such</span> <span class="weak linking">as</span> <span class="weak linking">a</span> sand <span class="linking">grain</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">rock,</span> <span class="weak linking">it</span> <span class="weak">would</span> <span class="weak">be</span> more like <span class="weak linking">that</span> <span class="weak linking">of</span> <span class="weak linking">a</span> bluebottle buzzing round <span class="weak">the</span> <span class="linking">room;</span> <span class="weak linking">it</span> <span class="weak">would</span> <span class="weak">be</span> <span class="linking">up</span> <span class="weak linking">and</span> down, <span class="weak linking">to</span> <span class="weak linking">and</span> <span class="linking">fro</span> <span class="weak linking">and</span> <span class="weak">from</span> side <span class="weak">to</span> side.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪf wi kəd<span class="linking">‿</span>ˈækʃəli si <span class="weak">ðə</span> pæθ dəˈskraɪb baɪ <span class="weak">ə</span> ˈpɑrdəkl sətʃ<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> sænd ɡreɪn<span class="linking">‿</span>ɪn <span class="weak">ðə</span> rɑk<span class="linking">‿</span>ɪt wəd bi mɔr like ðæt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈbluˌbɑdəl ˈbəzɪŋ raʊnd <span class="weak">ðə</span> rum<span class="linking">‿</span>ɪt wəd bi əp<span class="linking">‿</span><span class="weak">ən</span> daʊn <span class="weak">tə</span> <span class="weak">ən</span> froʊ <span class="weak">ən</span> <span class="weak">frəm</span> side <span class="weak">tə</span> side/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kəd‿ˈækʃəli、sətʃ‿əz‿ə、ɡreɪn‿ɪn、rɑk‿ɪt、ðæt‿əv‿ə 连读；ðə、ə、ən、əz、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>如果我们真的能看到粒子（例如岩石中的沙粒）所描述的路径，那么它就更像是在房间里嗡嗡作响的蓝瓶苍蝇；它会上下、前后、左右。</p></div>
+      <div class="field words"><span>词</span><p>actually 实际上； path 小路； described 描述的； particle 粒子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-31" data-start="230.54" data-end="238.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="31" aria-label="Play sentence 31">▶</button><span class="sentence-num">31</span><p class="en-text">Instruments <span class="weak">have</span> <span class="weak">been</span> <span class="linking">devised</span> <span class="weak linking">and</span> <span class="weak">can</span> <span class="weak">be</span> so placed <span class="weak linking">that</span> <span class="linking">all</span> three elements <span class="weak">can</span> <span class="weak">be</span> <span class="linking">recorded</span> <span class="weak linking">in</span> different graphs.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɪnstrəmənt <span class="weak">həv</span> bɪn dəˈvaɪz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">kən</span> bi soʊ pleɪs ðæt<span class="linking">‿</span>ɔl θri ˈɛləmənt <span class="weak">kən</span> bi rəˈkɔrdəd<span class="linking">‿</span>ɪn ˈdɪfrənt ɡræf/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəˈvaɪz‿ən、ðæt‿ɔl、rəˈkɔrdəd‿ɪn 连读；ən、kən、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>仪器的设计和放置可以使所有三个元素都可以记录在不同的图表中。</p></div>
+      <div class="field words"><span>词</span><p>instruments 仪器； devised 设计的； placed 放置； three 三；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-32" data-start="238.84" data-end="250.63">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="32" aria-label="Play sentence 32">▶</button><span class="sentence-num">32</span><p class="en-text">When <span class="weak">the</span> <span class="linking">instrument</span> <span class="weak linking">is</span> <span class="linking">situated</span> <span class="weak linking">at</span> more than 700 miles <span class="weak">from</span> <span class="weak">the</span> earthquake centre, <span class="weak">the</span> graphic record shows three <span class="linking">waves</span> <span class="linking">arriving</span> <span class="linking">one</span> after <span class="weak">the</span> <span class="linking">other</span> <span class="weak linking">at</span> <span class="linking">short</span> <span class="linking">intervals.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wɛn <span class="weak">ði</span><span class="linking">‿</span>ˈɪnstrəmənt<span class="linking">‿</span><span class="weak">ɪz</span> ˈsɪtʃəˌweɪdəd<span class="linking">‿</span><span class="weak">ət</span> mɔr ðæn maɪl <span class="weak">frəm</span> <span class="weak">ði</span><span class="linking">‿</span>ˈərθˌkweɪk ˈsɛnər <span class="weak">ðə</span> ˈɡræfɪk ˈrɛkərd ʃoʊ θri weɪv<span class="linking">‿</span><span class="weak">ə</span>ˈraɪv<span class="linking">‿</span>one ˈæftər <span class="weak">ði</span><span class="linking">‿</span>ˈəðər<span class="linking">‿</span><span class="weak">ət</span> ʃɔrt<span class="linking">‿</span>ˈɪnərvl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˈɪnstrəmənt‿ɪz、ˈsɪtʃəˌweɪdəd‿ət、ði‿ˈərθˌkweɪk、weɪv‿əˈraɪv‿one、ði‿ˈəðər‿ət 连读；ðə、ði、ət、ɪz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；时间状语从句交代动作先后；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>当仪器位于距离地震中心超过 700 英里的地方时，图形记录显示三个波以很短的间隔相继到达。</p></div>
+      <div class="field words"><span>词</span><p>when 什么时候； instrument 乐器； situated 位于； more 更多的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-33" data-start="250.63" data-end="255.56">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="33" aria-label="Play sentence 33">▶</button><span class="sentence-num">33</span><p class="en-text"><span class="weak">The</span> first records <span class="weak">the</span> <span class="linking">arrival</span> <span class="weak linking">of</span> longitudinal vibrations.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> fərst ˈrɛkərd <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈraɪvəl<span class="linking">‿</span><span class="weak">əv</span> ˌlɔndʒəˈtudənl vaɪˈbreɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿əˈraɪvəl‿əv 连读；ðə、ði、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>第一个记录纵向振动的到来。</p></div>
+      <div class="field words"><span>词</span><p>first 第一的； records 记录； arrival 到达； longitudinal 纵向；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-34" data-start="255.56" data-end="265.16">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="34" aria-label="Play sentence 34">▶</button><span class="sentence-num">34</span><p class="en-text"><span class="weak">The</span> second marks <span class="weak">the</span> <span class="linking">arrival</span> <span class="weak linking">of</span> transverse vibrations which travel more <span class="linking">slowly</span> <span class="weak linking">and</span> <span class="linking">arrive</span> several <span class="linking">minutes</span> <span class="linking">after</span> <span class="weak">the</span> first.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈsɛkənd marks <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈraɪvəl<span class="linking">‿</span><span class="weak">əv</span> ˌtrænzˈvərs vaɪˈbreɪʃən wɪtʃ ˈtrævl mɔr ˈsloʊli <span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span>ˈraɪv ˈsɛvrəl ˈmɪnət<span class="linking">‿</span>ˈæftər <span class="weak">ðə</span> fərst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿əˈraɪvəl‿əv、ən‿əˈraɪv、ˈmɪnət‿ˈæftər 连读；ðə、ði、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>第二个标志着横向振动的到来，横向振动的传播速度较慢，并且在第一个振动后几分钟到达。</p></div>
+      <div class="field words"><span>词</span><p>second 第二； marks 标记； arrival 到达； transverse 横；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-35" data-start="265.16" data-end="267.87">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="35" aria-label="Play sentence 35">▶</button><span class="sentence-num">35</span><p class="en-text">These two <span class="weak">have</span> travelled through <span class="weak">the</span> earth.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðiz tu <span class="weak">həv</span> ˈtrævəld θru <span class="weak">ði</span><span class="linking">‿</span>ərθ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ərθ 连读；ði、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>这两个人已经穿越了地球。</p></div>
+      <div class="field words"><span>词</span><p>these 这些； travelled 旅行过； through 通过； earth 地球；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-36" data-start="267.87" data-end="273.66">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="36" aria-label="Play sentence 36">▶</button><span class="sentence-num">36</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> <span class="weak">from</span> <span class="weak">the</span> <span class="linking">study</span> <span class="weak linking">of</span> these <span class="weak">that</span> so much <span class="weak">was</span> <span class="linking">learnt</span> <span class="linking">about</span> <span class="weak">the</span> <span class="linking">interior</span> <span class="weak linking">of</span> <span class="weak">the</span> earth.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> <span class="weak">frəm</span> <span class="weak">ðə</span> ˈstədi <span class="weak">əv</span> ðiz ðæt soʊ mətʃ <span class="weak">wəz</span> lərnt<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt <span class="weak">ði</span><span class="linking">‿</span>ɪnˈtɪriər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ərθ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>lərnt‿əˈbaʊt、ði‿ɪnˈtɪriər‿əv、ði‿ərθ 连读；ðə、ði、əv、wəz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>正是通过对这些的研究，我们对地球内部有了很多了解。</p></div>
+      <div class="field words"><span>词</span><p>study 学习； these 这些； much 很多； learnt 学到了；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-37" data-start="273.66" data-end="281.91">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="37" aria-label="Play sentence 37">▶</button><span class="sentence-num">37</span><p class="en-text"><span class="weak">The</span> <span class="linking">third,</span> <span class="linking">or</span> main <span class="linking">wave</span> <span class="weak linking">is</span> <span class="weak">the</span> <span class="linking">slowest</span> <span class="weak linking">and</span> <span class="weak">has</span> travelled round <span class="weak">the</span> earth through <span class="weak">the</span> surface rocks.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> θərd<span class="linking">‿</span>ɔr meɪn weɪv<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> sloʊ <span class="weak">ən</span> <span class="weak">həz</span> ˈtrævəld raʊnd <span class="weak">ði</span><span class="linking">‿</span>ərθ θru <span class="weak">ðə</span> ˈsərfəs rɑk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>θərd‿ɔr、weɪv‿ɪz、ði‿ərθ 连读；ðə、ði、ən、ɪz、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>第三波或主波是最慢的，并且通过地表岩石绕地球传播。</p></div>
+      <div class="field words"><span>词</span><p>third 第三； main 主要的； wave 海浪； slowest 最慢的；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>earthquake 地震； comes 来了； like 喜欢； thief 贼； necessary 必要的； therefore 所以； invent 发明； instruments 仪器； some 一些； devices 设备； quite 相当； simple 简单的； instance 实例； consisted 包括； rods 棒； various 各种各样的； when 什么时候； shock 震惊；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 含定语从句或名词性从句； 原因或结果关系连接分句； 并列结构连接动作或信息； when 引导时间状语从句； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 一般过去时叙述故事主线； 情态结构表达能力、义务、推测或意愿； 将来结构表示预期或安排； 过去进行时描写当时正在发生的动作； 现在完成时强调结果或经历。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>4. One, for instance, consisted of rods of various lengths and thicknesses which would stand up on end like ninepins.； 10. The ideal to be aimed at was to devise an instrument that could record with a pen on paper, the movements of the ground or of the table as the quake passed by.； 12. With practice, no doubt, I could in time learn to write by holding the pen still while the paper moved.； 18. A simple experiment will help us a little further.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ən‿ˈərθˌkweɪk、θif‿ɪn 连读；ðə、ə、ən 弱读/弱化； ɪnˈvɛnt‿ˈɪnstrəmənt 连读；tə、wəz 弱读/弱化； fɚ‿ˈɪnstns、kənˈsɪst‿əv、rɑd‿əv、lɛŋθ‿ən、stænd‿əp‿ɔn‿ɛnd 连读；ən、əv、fɚ 弱读/弱化； wɛn‿ə、keɪm‿ɪt、ˈteɪbl‿əˈpɑn 连读；ðə、ə 弱读/弱化； ɪf‿ɪt、ˈdʒɛnəl‿ˈoʊnli、mɔr‿ˌənˈsteɪbl 连读；ðə、wɚ 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Recording an Earthquake</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../42－Recording an Earthquake.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.95,"end":23.69,"text":"An earthquake comes like a thief in the night, without warning."},{"index":2,"start":23.69,"end":29.84,"text":"It was necessary, therefore, to invent instruments that neither slumbered nor slept."},{"index":3,"start":29.84,"end":32.36,"text":"Some devices were quite simple."},{"index":4,"start":32.36,"end":41.06,"text":"One, for instance, consisted of rods of various lengths and thicknesses which would stand up on end like ninepins."},{"index":5,"start":41.06,"end":46.36,"text":"When a shock came, it shook the rigid table upon which these stood."},{"index":6,"start":46.36,"end":51.17,"text":"If it were gentle, only the more unstable rods fell."},{"index":7,"start":51.17,"end":53.99,"text":"If it were severe, they all fell."},{"index":8,"start":53.99,"end":68.99,"text":"Thus the rods, by falling, and by the direction in which they fell, recorded for the slumbering scientist the strength of a shock that was too weak to waken him, and the direction from which it came."},{"index":9,"start":68.99,"end":75.87,"text":"But instruments far more delicate than that were needed if any really serious advance was to be made."},{"index":10,"start":75.87,"end":88.24,"text":"The ideal to be aimed at was to devise an instrument that could record with a pen on paper, the movements of the ground or of the table as the quake passed by."},{"index":11,"start":88.24,"end":92.57,"text":"While I write my pen moves, but the paper keeps still."},{"index":12,"start":92.57,"end":99.75,"text":"With practice, no doubt, I could in time learn to write by holding the pen still while the paper moved."},{"index":13,"start":99.75,"end":111.7,"text":"That sounds a silly suggestion, but that was precisely the idea adopted in some of the early instruments (seismometers) for recording earthquake waves."},{"index":14,"start":111.7,"end":119.02,"text":"But when table, penholder and paper are all moving, how is it possible to write legibly?"},{"index":15,"start":119.02,"end":124.18,"text":"The key to a solution of that problem lay in an everyday observation."},{"index":16,"start":124.18,"end":130.59,"text":"Why does a person standing in a bus or train tend to fall when a sudden start is made?"},{"index":17,"start":130.59,"end":135.18,"text":"It is because his feet move on, but his head stays still."},{"index":18,"start":135.18,"end":138.39,"text":"A simple experiment will help us a little further."},{"index":19,"start":138.39,"end":142.24,"text":"Tie a heavy weight at the end of a long piece of string."},{"index":20,"start":142.24,"end":148.78,"text":"With the hand held high in the air, hold the string so that the weight nearly touches the ground."},{"index":21,"start":148.78,"end":153.76,"text":"Now move the hand to and fro and around but not up and down."},{"index":22,"start":153.76,"end":158.34,"text":"It will be found that the weight moves but slightly or not at all."},{"index":23,"start":158.34,"end":164.93,"text":"Imagine a pen attached to the weight in such a way that its point rests upon a piece of paper on the floor."},{"index":24,"start":164.93,"end":171.42,"text":"Imagine an earthquake shock shaking the floor, the paper, you and your hand."},{"index":25,"start":171.42,"end":175.97,"text":"In the midst of all this movement, the weight and the pen would be still."},{"index":26,"start":175.97,"end":184.18,"text":"But as the paper moved from side to side under the pen point, its movement would be recorded in ink upon its surface."},{"index":27,"start":184.18,"end":193.2,"text":"It was upon this principle that the first instruments were made, but the paper was wrapped round a drum which rotated slowly."},{"index":28,"start":193.2,"end":205.18,"text":"As long as all was still, the pen drew a straight line, but while the drum was being shaken, the line that the pen was drawing wriggled from side to side."},{"index":29,"start":205.18,"end":215.21,"text":"The apparatus thus described, however, records only the horizontal component of the wave movement, which is, in fact, much more complicated."},{"index":30,"start":215.21,"end":230.54,"text":"If we could actually see the path described by a particle, such as a sand grain in the rock, it would be more like that of a bluebottle buzzing round the room; it would be up and down, to and fro and from side to side."},{"index":31,"start":230.54,"end":238.84,"text":"Instruments have been devised and can be so placed that all three elements can be recorded in different graphs."},{"index":32,"start":238.84,"end":250.63,"text":"When the instrument is situated at more than 700 miles from the earthquake centre, the graphic record shows three waves arriving one after the other at short intervals."},{"index":33,"start":250.63,"end":255.56,"text":"The first records the arrival of longitudinal vibrations."},{"index":34,"start":255.56,"end":265.16,"text":"The second marks the arrival of transverse vibrations which travel more slowly and arrive several minutes after the first."},{"index":35,"start":265.16,"end":267.87,"text":"These two have travelled through the earth."},{"index":36,"start":267.87,"end":273.66,"text":"It was from the study of these that so much was learnt about the interior of the earth."},{"index":37,"start":273.66,"end":281.91,"text":"The third, or main wave is the slowest and has travelled round the earth through the surface rocks."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

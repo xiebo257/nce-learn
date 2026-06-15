@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 33 - Education</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 33 - Education</h1>
+      <p class="meta">问题: Why is education democratic in bookless tribal societies?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.65" data-end="23.29">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Education</span> <span class="weak linking">is</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> key <span class="linking">words</span> <span class="weak linking">of</span> <span class="weak">our</span> time.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/education<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> ki wərd<span class="linking">‿</span><span class="weak">əv</span> aʊɚ time/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>education‿ɪz‿one、wərd‿əv 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>教育是我们这个时代的关键词之一。</p></div>
+      <div class="field words"><span>词</span><p>education 教育； words 字； time 时间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="23.29" data-end="37.15">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">A</span> man <span class="linking">without</span> <span class="weak linking">an</span> education, <span class="linking">many</span> <span class="weak linking">of</span> <span class="linking">us</span> <span class="linking">believe,</span> <span class="weak linking">is</span> <span class="weak linking">an</span> <span class="linking">unfortunate</span> <span class="linking">victim</span> <span class="weak linking">of</span> <span class="linking">adverse</span> circumstances, <span class="linking">deprived</span> <span class="weak linking">of</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> greatest twentieth-century opportunities.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> mæn wəˈðaʊt<span class="linking">‿</span><span class="weak">ən</span> education ˈmɛni <span class="weak">əv</span><span class="linking">‿</span>əs bəˈliv<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈfɔrtʃnət ˈvɪktəm<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈædˌvərs ˈsərkəmˌstæns dəˈpraɪvd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> ɡreɪt twentiethcentury ˌɑpərˈtunədi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəˈðaʊt‿ən、əv‿əs、bəˈliv‿ɪz‿ən‿ˌənˈfɔrtʃnət、ˈvɪktəm‿əv‿ˈædˌvərs、dəˈpraɪvd‿əv‿one 连读；ðə、ə、ən、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们许多人认为，一个没有受过教育的人是不利环境的不幸受害者，被剥夺了二十世纪最伟大的机会之一。</p></div>
+      <div class="field words"><span>词</span><p>without 没有； education 教育； many 许多； believe 相信；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="37.15" data-end="53.93">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Convinced</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">importance</span> <span class="weak linking">of</span> education, modern <span class="linking">states</span> <span class="linking">'invest'</span> <span class="weak linking">in</span> <span class="linking">institutions</span> <span class="weak linking">of</span> learning <span class="weak">to</span> get <span class="linking">back</span> <span class="linking">'interest'</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">form</span> <span class="weak linking">of</span> <span class="weak linking">a</span> large <span class="linking">group</span> <span class="weak linking">of</span> <span class="linking">enlightened</span> young <span class="linking">men</span> <span class="weak linking">and</span> women <span class="linking">who</span> <span class="weak linking">are</span> potential leaders.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">kən</span>ˈvɪnst<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ɪmˈpɔrtns<span class="linking">‿</span><span class="weak">əv</span> education ˈmɑdərn steɪt<span class="linking">‿</span>ɪnˈvɛst<span class="linking">‿</span>ɪn<span class="linking">‿</span>institutions<span class="linking">‿</span><span class="weak">əv</span> ˈlərnɪŋ <span class="weak">tə</span> ɡɛt bæk<span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span>ɪn <span class="weak">ðə</span> form<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> lɑrdʒ group<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪnˈlaɪtnd jʌŋ men<span class="linking">‿</span><span class="weak">ən</span> women who <span class="weak">ɑr</span> pəˈtɛnʃl ˈlidər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kənˈvɪnst‿əv、ði‿ɪmˈpɔrtns‿əv、steɪt‿ɪnˈvɛst‿ɪn‿institutions‿əv、bæk‿ˈɪntrəst‿ɪn、form‿əv‿ə 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>现代国家深信教育的重要性，对学习机构进行“投资”，以培养大批开明的年轻男女，他们是潜在的领导者，以重新获得“兴趣”。</p></div>
+      <div class="field words"><span>词</span><p>convinced 确信； importance 重要性； education 教育； modern 现代的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="53.93" data-end="70.77">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Education, <span class="linking">with</span> <span class="linking">its</span> <span class="linking">cycles</span> <span class="weak linking">of</span> <span class="linking">instruction</span> so carefully worked out, punctuated by textbooks--those purchasable <span class="linking">wells</span> <span class="weak linking">of</span> wisdom--what <span class="weak">would</span> civilization <span class="weak">be</span> like <span class="linking">without</span> <span class="linking">its</span> benefits?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/education wɪð<span class="linking">‿</span>its ˈsaɪkəl<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪnˈstrəkʃən soʊ ˈkɛrfli wərk aʊt ˈpəŋʃəˌweɪt baɪ textbooksthose purchasable wɛl<span class="linking">‿</span><span class="weak">əv</span> wisdomwhat wəd ˌsɪvələˈzeɪʃən bi like wəˈðaʊt<span class="linking">‿</span>its ˈbɛnəfɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɪð‿its、ˈsaɪkəl‿əv‿ɪnˈstrəkʃən、wɛl‿əv、wəˈðaʊt‿its 连读；əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>教育，其教学周期如此精心设计，并以教科书（那些可以购买的智慧之井）为间断，如果没有它的好处，文明会是什么样子？</p></div>
+      <div class="field words"><span>词</span><p>education 教育； with 和； cycles 周期； instruction 操作说明；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="70.77" data-end="85.07">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">So <span class="linking">much</span> <span class="weak linking">is</span> certain: <span class="weak">that</span> <span class="weak">we</span> <span class="weak">would</span> <span class="weak">have</span> <span class="linking">doctors</span> <span class="weak linking">and</span> preachers, <span class="linking">lawyers</span> <span class="weak linking">and</span> defendants <span class="linking">marriages</span> <span class="weak linking">and</span> births--but <span class="weak">our</span> spiritual outlook <span class="weak">would</span> <span class="weak">be</span> different.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/soʊ mətʃ<span class="linking">‿</span><span class="weak">ɪz</span> ˈsərtn ðæt wi wəd <span class="weak">həv</span> ˈdɑktər<span class="linking">‿</span><span class="weak">ən</span> ˈpritʃər ˈlɔɪər<span class="linking">‿</span><span class="weak">ən</span> dəˈfɛndnt ˈmɛrɪdʒ<span class="linking">‿</span><span class="weak">ən</span> birthsbut aʊɚ ˈspɪrətʃəl ˈaʊtˌlʊk wəd bi ˈdɪfrənt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mətʃ‿ɪz、ˈdɑktər‿ən、ˈlɔɪər‿ən、ˈmɛrɪdʒ‿ən 连读；ən、ɪz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>有很多事情是确定的：我们会有医生和传教士、律师和被告、婚姻和生育——但我们的精神面貌会有所不同。</p></div>
+      <div class="field words"><span>词</span><p>much 很多； certain 肯定； doctors 医生； preachers 传教士；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="85.07" data-end="99.04">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">We</span> <span class="weak">would</span> lay less <span class="linking">stress</span> <span class="linking">on</span> <span class="linking">'facts</span> <span class="weak linking">and</span> <span class="linking">figures'</span> <span class="weak linking">and</span> <span class="linking">more</span> <span class="linking">on</span> <span class="weak linking">a</span> good memory, <span class="linking">on</span> <span class="linking">applied</span> <span class="linking">psychology,</span> <span class="weak linking">and</span> <span class="linking">on</span> <span class="weak">the</span> <span class="linking">capacity</span> <span class="weak linking">of</span> <span class="weak linking">a</span> man <span class="weak">to</span> <span class="linking">get</span> <span class="linking">along</span> with <span class="weak">his</span> fellow-citizens.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi wəd leɪ lɛs strɛs<span class="linking">‿</span>ɔn fæk<span class="linking">‿</span><span class="weak">ən</span> ˈfɪɡjər<span class="linking">‿</span><span class="weak">ən</span> mɔr<span class="linking">‿</span>ɔn<span class="linking">‿</span><span class="weak">ə</span> ɡʊd ˈmɛmri ɔn<span class="linking">‿</span><span class="weak">ə</span>ˈplaɪd saɪˈkɑlədʒi <span class="weak">ən</span><span class="linking">‿</span>ɔn <span class="weak">ðə</span> kəˈpæsədi <span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> mæn <span class="weak">tə</span> ɡɛt<span class="linking">‿</span><span class="weak">ə</span>ˈlɔŋ wɪð hɪz fellowcitizens/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>strɛs‿ɔn、fæk‿ən、ˈfɪɡjər‿ən、mɔr‿ɔn‿ə、ɔn‿əˈplaɪd 连读；ðə、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我们会更少地强调“事实和数字”，而更多地强调良好的记忆力、应用心理学以及一个人与同胞相处的能力。</p></div>
+      <div class="field words"><span>词</span><p>less 较少的； stress 压力； facts 事实； figures 数字；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="99.04" data-end="110.08">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">If <span class="weak linking">our</span> <span class="linking">educational</span> system <span class="weak">were</span> <span class="linking">fashioned</span> <span class="linking">after</span> <span class="linking">its</span> bookless past <span class="weak">we</span> <span class="weak">would</span> <span class="weak">have</span> <span class="weak">the</span> most democratic <span class="linking">form</span> <span class="weak linking">of</span> <span class="linking">'college'</span> <span class="linking">imaginable.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪf aʊɚ<span class="linking">‿</span>ˌɛdʒəˈkeɪʃnəl system <span class="weak">wɚ</span> ˈfæʃən<span class="linking">‿</span>ˈæftər<span class="linking">‿</span>its bookless pæst wi wəd <span class="weak">həv</span> <span class="weak">ðə</span> moʊst ˌdɛməˈkrædɪk form<span class="linking">‿</span><span class="weak">əv</span> ˈkɑlɪdʒ<span class="linking">‿</span>ɪˈmædʒnəbl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>aʊɚ‿ˌɛdʒəˈkeɪʃnəl、ˈfæʃən‿ˈæftər‿its、form‿əv、ˈkɑlɪdʒ‿ɪˈmædʒnəbl 连读；ðə、əv、wɚ、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>如果我们的教育体系是按照过去无书本的方式建立的，我们就会拥有可以想象到的最民主的“大学”形式。</p></div>
+      <div class="field words"><span>词</span><p>educational 教育性的； system 系统； fashioned 成型的； after 后；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="110.08" data-end="126.45">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Among tribal <span class="linking">people</span> <span class="linking">all</span> <span class="linking">knowledge</span> <span class="linking">inherited</span> by <span class="linking">tradition</span> <span class="weak linking">is</span> shared by <span class="linking">all;</span> <span class="weak linking">it</span> <span class="weak linking">is</span> taught <span class="weak">to</span> every <span class="linking">member</span> <span class="weak linking">of</span> <span class="weak">the</span> tribe so <span class="weak linking">that</span> <span class="weak linking">in</span> this <span class="linking">respect</span> <span class="linking">everybody</span> <span class="weak linking">is</span> <span class="linking">equally</span> equipped <span class="weak">for</span> life.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span>ˈməŋ ˈtraɪbl ˈpipl<span class="linking">‿</span>ɔl ˈnɑlədʒ<span class="linking">‿</span>ɪnˈhɛrədəd baɪ trəˈdɪʃən<span class="linking">‿</span><span class="weak">ɪz</span> shared baɪ ɔl<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> tɔt <span class="weak">tə</span> ˈɛvri ˈmɛmbər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> traɪb soʊ ðæt<span class="linking">‿</span>ɪn ðɪs rəˈspɛk<span class="linking">‿</span>ˈɛvribədi <span class="weak">ɪz</span><span class="linking">‿</span>ˈikwəli <span class="weak">ə</span>ˈkwɪp <span class="weak">fɚ</span> laɪf/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈpipl‿ɔl、ˈnɑlədʒ‿ɪnˈhɛrədəd、trəˈdɪʃən‿ɪz、ɔl‿ɪt‿ɪz、ˈmɛmbər‿əv 连读；ðə、tə、əv、ɪz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在部落人民中，所有传统继承的知识都是所有人共享的；它被传授给部落的每个成员，以便在这方面每个人都平等地为生活做好准备。</p></div>
+      <div class="field words"><span>词</span><p>among 之中； tribal 部落的； people 人们； knowledge 知识；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="126.45" data-end="137">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="weak">the</span> ideal <span class="linking">condition</span> <span class="weak linking">of</span> <span class="weak">the</span> 'equal start' <span class="linking">which</span> <span class="linking">only</span> <span class="weak">our</span> most progressive <span class="linking">forms</span> <span class="weak linking">of</span> modern education try <span class="weak">to</span> regain.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> aɪˈdil <span class="weak">kən</span>ˈdɪʃən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈikwl stɑrt wɪtʃ<span class="linking">‿</span>ˈoʊnli aʊɚ moʊst prəˈɡrɛsɪv forms<span class="linking">‿</span><span class="weak">əv</span> ˈmɑdərn education traɪ <span class="weak">tə</span> riˈɡeɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、kənˈdɪʃən‿əv、ði‿ˈikwl、wɪtʃ‿ˈoʊnli、forms‿əv 连读；ðə、ði、tə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这是“平等起点”的理想条件，只有我们最进步的现代教育形式才试图重新获得这种条件。</p></div>
+      <div class="field words"><span>词</span><p>ideal 理想的； condition 状况； equal 平等的； start 开始；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="137" data-end="145.63">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> primitive cultures <span class="weak">the</span> obligation <span class="weak">to</span> <span class="linking">seek</span> <span class="weak linking">and</span> <span class="weak">to</span> receive <span class="weak">the</span> <span class="linking">traditional</span> <span class="linking">instruction</span> <span class="weak linking">is</span> binding <span class="weak">to</span> all.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn ˈprɪmədɪv ˈkəltʃər <span class="weak">ði</span><span class="linking">‿</span>ˌɑbləˈɡeɪʃən <span class="weak">tə</span> sik<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> rəˈsiv <span class="weak">ðə</span> trəˈdɪʃnəl<span class="linking">‿</span>ɪnˈstrəkʃən<span class="linking">‿</span><span class="weak">ɪz</span> ˈbaɪndɪŋ <span class="weak">tə</span> ɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˌɑbləˈɡeɪʃən、sik‿ən、trəˈdɪʃnəl‿ɪnˈstrəkʃən‿ɪz 连读；ðə、ði、ən、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在原始文化中，寻求和接受传统指导的义务对所有人都有约束力。</p></div>
+      <div class="field words"><span>词</span><p>primitive 原始； cultures 文化； obligation 义务； seek 寻找；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="145.63" data-end="171.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak linking">There</span> <span class="weak linking">are</span> <span class="linking">no'illiterates'</span> <span class="linking">--if</span> <span class="weak">the</span> term <span class="weak">can</span> <span class="weak">be</span> applied <span class="weak">to</span> peoples <span class="linking">without</span> <span class="weak linking">a</span> script--while <span class="weak linking">our</span> <span class="linking">own</span> compulsory <span class="linking">school</span> <span class="linking">attendance</span> became <span class="linking">law</span> <span class="weak linking">in</span> <span class="linking">Germany</span> <span class="weak linking">in</span> <span class="linking">1642,</span> <span class="weak linking">in</span> <span class="linking">France</span> <span class="weak linking">in</span> <span class="linking">1806,</span> <span class="weak linking">and</span> <span class="weak linking">in</span> <span class="linking">England</span> <span class="weak linking">in</span> <span class="linking">1876</span> <span class="weak linking">and</span> <span class="weak linking">is</span> still <span class="linking">nonexistent</span> <span class="weak linking">in</span> <span class="weak linking">a</span> <span class="linking">number</span> <span class="weak linking">of</span> 'civilized' nations.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> no'illiterates<span class="linking">‿</span>ɪf <span class="weak">ðə</span> tərm <span class="weak">kən</span> bi <span class="weak">ə</span>ˈplaɪd <span class="weak">tə</span> ˈpipl wəˈðaʊt<span class="linking">‿</span><span class="weak">ə</span> scriptwhile aʊɚ<span class="linking">‿</span>oʊn kəmˈpəlsəri school<span class="linking">‿</span><span class="weak">ə</span>ˈtɛndns bəˈkeɪm lɔ ɪn ˈdʒərməni ɪn<span class="linking">‿</span>ɪn fræns<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɪŋlənd<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ɪz</span> stɪl ˌnɑnəɡˈzɪstnt<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> ˈnəmbər<span class="linking">‿</span><span class="weak">əv</span> ˈsɪvəˌlaɪzd ˈneɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɑr、noilliterates‿ɪf、wəˈðaʊt‿ə、aʊɚ‿oʊn、school‿əˈtɛndns 连读；ðə、ə、ən、tə、kən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>不存在“文盲”——如果这个词可以适用于没有文字的民族的话——而我们自己的义务教育在德国于1642年、在法国于1806年、在英国于1876年成为法律，并且在许多“文明”国家中仍然不存在。</p></div>
+      <div class="field words"><span>词</span><p>no'illiterates 没有文盲； term 学期； applied 应用； peoples 人民；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="171.14" data-end="187.21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">This shows how <span class="linking">long</span> <span class="weak linking">it</span> <span class="weak">was</span> before <span class="weak">we</span> <span class="linking">deemed</span> <span class="weak linking">it</span> necessary <span class="weak">to</span> make sure <span class="weak linking">that</span> <span class="linking">all</span> <span class="weak">our</span> children <span class="weak">could</span> <span class="linking">share</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">knowledge</span> <span class="linking">accumulated</span> by <span class="weak">the</span> 'happy few' during <span class="weak">the</span> past centuries.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs ʃoʊ haʊ long<span class="linking">‿</span>ɪt <span class="weak">wəz</span> bəˈfɔr wi dim<span class="linking">‿</span>ɪt ˈnɛsəˌsɛri <span class="weak">tə</span> make ʃʊr ðæt<span class="linking">‿</span>ɔl aʊɚ ˈtʃɪldrn kəd share ɪn <span class="weak">ðə</span> ˈnɑlədʒ<span class="linking">‿</span><span class="weak">ə</span>ˈkjuməˌleɪt baɪ <span class="weak">ðə</span> ˈhæpi fju ˈdʊrɪŋ <span class="weak">ðə</span> pæst ˈsɛnʃri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>long‿ɪt、dim‿ɪt、ðæt‿ɔl、ˈnɑlədʒ‿əˈkjuməˌleɪt 连读；ðə、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含定语从句或名词性从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>这表明我们花了多长时间才认为有必要确保我们所有的孩子都能分享过去几个世纪中“幸福的少数”积累的知识。</p></div>
+      <div class="field words"><span>词</span><p>this 这； shows 节目； long 长的； before 前；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="187.21" data-end="192.73">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">Education</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">wilderness</span> <span class="weak linking">is</span> <span class="linking">not</span> <span class="weak linking">a</span> <span class="linking">matter</span> <span class="weak linking">of</span> monetary means.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/education<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈwɪldərnəs<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span> ˈmædər<span class="linking">‿</span><span class="weak">əv</span> ˈmɑnəˌtɛri minz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>education‿ɪn、ˈwɪldərnəs‿ɪz、nɑɾ‿ə、ˈmædər‿əv 连读；ðə、ə、əv、ɪz 弱读/弱化；nɑɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>荒野教育不是金钱问题。</p></div>
+      <div class="field words"><span>词</span><p>education 教育； wilderness 荒野； matter 事情； monetary 货币；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="192.73" data-end="196.37">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="linking">All</span> <span class="weak linking">are</span> <span class="linking">entitled</span> <span class="weak linking">to</span> <span class="weak linking">an</span> <span class="linking">equal</span> start.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɔl<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ɪnˈtaɪdl <span class="weak">tə</span> <span class="weak">ən</span><span class="linking">‿</span>ˈikwl stɑrt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɔl‿ɑr‿ɪnˈtaɪdl、ən‿ˈikwl 连读；ən、tə、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>所有人都有权享有平等的起点。</p></div>
+      <div class="field words"><span>词</span><p>entitled 有权； equal 平等的； start 开始；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="196.37" data-end="206.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak linking">There</span> <span class="weak linking">is</span> <span class="linking">none</span> <span class="weak linking">of</span> <span class="weak">the</span> hurry <span class="linking">which,</span> <span class="weak linking">in</span> <span class="weak">our</span> society, often hampers <span class="weak">the</span> full <span class="linking">development</span> <span class="weak linking">of</span> <span class="weak linking">a</span> growing personality.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ɪz</span> nʌn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈhəri wɪtʃ<span class="linking">‿</span>ɪn aʊɚ səˈsaɪədi ˈɔfn ˈhæmpər <span class="weak">ðə</span> full dəˈvɛləpmənt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈɡroʊɪŋ ˌpərsnˈælədi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɪz、nʌn‿əv、wɪtʃ‿ɪn、dəˈvɛləpmənt‿əv‿ə 连读；ðə、ə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在我们的社会中，没有任何匆忙常常会阻碍成长中的个性的充分发展。</p></div>
+      <div class="field words"><span>词</span><p>none 没有任何； hurry 匆忙； which 哪个； society 社会；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="206.13" data-end="219.36">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak linking">There,</span> <span class="weak linking">a</span> child grows <span class="linking">up</span> <span class="linking">under</span> <span class="weak">the</span> <span class="linking">everpresent</span> <span class="linking">attention</span> <span class="weak linking">of</span> <span class="weak">his</span> parents; therefore <span class="weak">the</span> <span class="linking">jungles</span> <span class="weak linking">and</span> <span class="weak">the</span> savannahs <span class="linking">know</span> <span class="weak linking">of</span> no 'juvenile delinquency'.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr<span class="linking">‿</span><span class="weak">ə</span> tʃaɪld ɡroʊ əp<span class="linking">‿</span>ˈəndər <span class="weak">ðə</span> everpresent<span class="linking">‿</span><span class="weak">ə</span>ˈtɛnʃən<span class="linking">‿</span><span class="weak">əv</span> hɪz ˈpɛrnt ˈðɛrˌfɔr <span class="weak">ðə</span> ˈdʒəŋɡl<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> səˈvænə noʊ <span class="weak">əv</span> noʊ ˈdʒuvəˌnaɪl dəˈlɪŋkwənsi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɛr‿ə、əp‿ˈəndər、everpresent‿əˈtɛnʃən‿əv、ˈdʒəŋɡl‿ən 连读；ðə、ə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在那里，孩子在父母无时无刻的关注下成长；因此，丛林和大草原上不存在“青少年犯罪”。</p></div>
+      <div class="field words"><span>词</span><p>child 孩子； grows 成长； under 在下面； everpresent 永远存在的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="219.36" data-end="232.86">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">No <span class="linking">necessity</span> <span class="weak linking">of</span> <span class="linking">making</span> <span class="weak linking">a</span> <span class="linking">living</span> <span class="linking">away</span> <span class="weak">from</span> home <span class="linking">results</span> <span class="weak linking">in</span> <span class="linking">neglect</span> <span class="weak linking">of</span> <span class="linking">children,</span> <span class="weak linking">and</span> no <span class="linking">father</span> <span class="weak linking">is</span> confronted with <span class="weak linking">his</span> <span class="linking">inability</span> <span class="weak">to</span> <span class="linking">'buy'</span> <span class="weak linking">an</span> education <span class="weak">for</span> <span class="weak">his</span> child.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/noʊ nəˈsɛsədi <span class="weak">əv</span> ˈmeɪkɪŋ<span class="linking">‿</span><span class="weak">ə</span> living<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ <span class="weak">frəm</span> home rəˈzəlt<span class="linking">‿</span>ɪn nəˈɡlɛk<span class="linking">‿</span><span class="weak">əv</span> ˈtʃɪldrn<span class="linking">‿</span><span class="weak">ən</span> noʊ ˈfɑðər<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">kən</span>ˈfrənt wɪð hɪz<span class="linking">‿</span>ˌɪnəˈbɪlədi <span class="weak">tə</span> baɪ <span class="weak">ən</span> education <span class="weak">fɚ</span> hɪz tʃaɪld/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈmeɪkɪŋ‿ə、living‿əˈweɪ、rəˈzəlt‿ɪn、nəˈɡlɛk‿əv、ˈtʃɪldrn‿ən 连读；ə、ən、tə、əv、ɪz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>离家谋生的必要性不会导致对孩子的忽视，也没有哪个父亲会面临无法为孩子“购买”教育的情况。</p></div>
+      <div class="field words"><span>词</span><p>necessity 必要性； making 制作； living 活的； away 离开；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>education 教育； words 字； time 时间； without 没有； education 教育； many 许多； believe 相信； convinced 确信； importance 重要性； education 教育； modern 现代的； education 教育； with 和； cycles 周期； instruction 操作说明； much 很多； certain 肯定； doctors 医生；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 含定语从句或名词性从句； 并列结构连接动作或信息； 原因或结果关系连接分句； 时间状语从句交代动作先后； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿； 现在完成时强调结果或经历； 一般过去时叙述故事主线。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>4. Education, with its cycles of instruction so carefully worked out, punctuated by textbooks--those purchasable wells of wisdom--what would civilization be like without its benefits?； 5. So much is certain: that we would have doctors and preachers, lawyers and defendants marriages and births--but our spiritual outlook would be different.； 6. We would lay less stress on 'facts and figures' and more on a good memory, on applied psychology, and on the capacity of a man to get along with his fellow-citizens.； 7. If our educational system were fashioned after its bookless past we would have the most democratic form of 'college' imaginable.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>education‿ɪz‿one、wərd‿əv 连读；ðə、əv、ɪz 弱读/弱化； wəˈðaʊt‿ən、əv‿əs、bəˈliv‿ɪz‿ən‿ˌənˈfɔrtʃnət、ˈvɪktəm‿əv‿ˈædˌvərs、dəˈpraɪvd‿əv‿one 连读；ðə、ə、ən、əv、ɪz 弱读/弱化； kənˈvɪnst‿əv、ði‿ɪmˈpɔrtns‿əv、steɪt‿ɪnˈvɛst‿ɪn‿institutions‿əv、bæk‿ˈɪntrəst‿ɪn、form‿əv‿ə 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化； wɪð‿its、ˈsaɪkəl‿əv‿ɪnˈstrəkʃən、wɛl‿əv、wəˈðaʊt‿its 连读；əv 弱读/弱化； mətʃ‿ɪz、ˈdɑktər‿ən、ˈlɔɪər‿ən、ˈmɛrɪdʒ‿ən 连读；ən、ɪz、həv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Education</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../33－Education.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.65,"end":23.29,"text":"Education is one of the key words of our time."},{"index":2,"start":23.29,"end":37.15,"text":"A man without an education, many of us believe, is an unfortunate victim of adverse circumstances, deprived of one of the greatest twentieth-century opportunities."},{"index":3,"start":37.15,"end":53.93,"text":"Convinced of the importance of education, modern states 'invest' in institutions of learning to get back 'interest' in the form of a large group of enlightened young men and women who are potential leaders."},{"index":4,"start":53.93,"end":70.77,"text":"Education, with its cycles of instruction so carefully worked out, punctuated by textbooks--those purchasable wells of wisdom--what would civilization be like without its benefits?"},{"index":5,"start":70.77,"end":85.07,"text":"So much is certain: that we would have doctors and preachers, lawyers and defendants marriages and births--but our spiritual outlook would be different."},{"index":6,"start":85.07,"end":99.04,"text":"We would lay less stress on 'facts and figures' and more on a good memory, on applied psychology, and on the capacity of a man to get along with his fellow-citizens."},{"index":7,"start":99.04,"end":110.08,"text":"If our educational system were fashioned after its bookless past we would have the most democratic form of 'college' imaginable."},{"index":8,"start":110.08,"end":126.45,"text":"Among tribal people all knowledge inherited by tradition is shared by all; it is taught to every member of the tribe so that in this respect everybody is equally equipped for life."},{"index":9,"start":126.45,"end":137,"text":"It is the ideal condition of the 'equal start' which only our most progressive forms of modern education try to regain."},{"index":10,"start":137,"end":145.63,"text":"In primitive cultures the obligation to seek and to receive the traditional instruction is binding to all."},{"index":11,"start":145.63,"end":171.14,"text":"There are no'illiterates' --if the term can be applied to peoples without a script--while our own compulsory school attendance became law in Germany in 1642, in France in 1806, and in England in 1876 and is still nonexistent in a number of 'civilized' nations."},{"index":12,"start":171.14,"end":187.21,"text":"This shows how long it was before we deemed it necessary to make sure that all our children could share in the knowledge accumulated by the 'happy few' during the past centuries."},{"index":13,"start":187.21,"end":192.73,"text":"Education in the wilderness is not a matter of monetary means."},{"index":14,"start":192.73,"end":196.37,"text":"All are entitled to an equal start."},{"index":15,"start":196.37,"end":206.13,"text":"There is none of the hurry which, in our society, often hampers the full development of a growing personality."},{"index":16,"start":206.13,"end":219.36,"text":"There, a child grows up under the everpresent attention of his parents; therefore the jungles and the savannahs know of no 'juvenile delinquency'."},{"index":17,"start":219.36,"end":232.86,"text":"No necessity of making a living away from home results in neglect of children, and no father is confronted with his inability to 'buy' an education for his child."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 37 - The Process of Ageing</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 37 - The Process of Ageing</h1>
+      <p class="meta">问题: What is one of the most unpleasant discoveries we make about ourselves as we get older?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="20.55" data-end="26.85">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">At</span> <span class="weak">the</span> <span class="linking">age</span> <span class="weak linking">of</span> twelve years, <span class="weak">the</span> human <span class="linking">body</span> <span class="weak linking">is</span> <span class="weak linking">at</span> <span class="linking">its</span> most vigorous.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ət</span> <span class="weak">ðə</span> eɪdʒ<span class="linking">‿</span><span class="weak">əv</span> twɛlv jɪr <span class="weak">ðə</span> ˈjumən ˈbɑdi <span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>its moʊst ˈvɪɡrəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>eɪdʒ‿əv、ɪz‿ət‿its 连读；ðə、ət、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>（需校对）At the age of twelve years, the human body is at its most vigorous.</p></div>
+      <div class="field words"><span>词</span><p>twelve 十二； years 年； human 人类； body 身体；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.85" data-end="39.39">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">It</span> <span class="weak">has</span> yet <span class="weak">to</span> <span class="linking">reach</span> <span class="linking">its</span> full <span class="linking">size</span> <span class="weak linking">and</span> <span class="linking">strength,</span> <span class="weak linking">and</span> <span class="linking">its</span> <span class="linking">owner</span> <span class="weak linking">his</span> <span class="linking">or</span> <span class="weak">her</span> <span class="linking">full</span> <span class="linking">intelligence:</span> <span class="weak linking">but</span> <span class="weak linking">at</span> this age <span class="weak">the</span> <span class="linking">likelihood</span> <span class="weak linking">of</span> <span class="linking">death</span> <span class="weak linking">is</span> least.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">həz</span> jɛt <span class="weak">tə</span> ritʃ<span class="linking">‿</span>its full size <span class="weak">ən</span> strɛŋθ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>its<span class="linking">‿</span>ˈoʊnər hɪz<span class="linking">‿</span>ɔr hɚ full<span class="linking">‿</span>ɪnˈtɛlədʒns bət<span class="linking">‿</span><span class="weak">ət</span> ðɪs eɪdʒ <span class="weak">ðə</span> ˈlaɪkliˌʊd<span class="linking">‿</span><span class="weak">əv</span> dɛθ<span class="linking">‿</span><span class="weak">ɪz</span> list/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ritʃ‿its、strɛŋθ‿ən‿its‿ˈoʊnər、hɪz‿ɔr、full‿ɪnˈtɛlədʒns、bət‿ət 连读；ðə、ən、ət、tə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>它尚未达到其完整的尺寸和强度，其主人也尚未达到其完整的智力：但在这个年龄，死亡的可能性是最小的。</p></div>
+      <div class="field words"><span>词</span><p>reach 抵达； full 满的； size 尺寸； strength 力量；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="39.39" data-end="70.1">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Earlier, <span class="weak">we</span> <span class="weak linking">were</span> <span class="linking">infants</span> <span class="weak linking">and</span> young <span class="linking">children,</span> <span class="weak linking">and</span> consequently more vulnerable; later, <span class="weak">we</span> <span class="linking">shall</span> <span class="linking">undergo</span> <span class="weak linking">a</span> progressive <span class="linking">loss</span> <span class="weak linking">of</span> <span class="weak">our</span> <span class="linking">vigour</span> <span class="weak linking">and</span> resistance which, though <span class="linking">imperceptible</span> <span class="weak linking">at</span> first <span class="weak">will</span> finally become so steep <span class="weak">that</span> <span class="weak">we</span> <span class="weak">can</span> live no longer, however well <span class="weak">we</span> <span class="linking">look</span> <span class="linking">after</span> <span class="linking">ourselves,</span> <span class="weak linking">and</span> however well <span class="linking">society,</span> <span class="weak linking">and</span> <span class="weak">our</span> doctors, <span class="linking">look</span> <span class="linking">after</span> <span class="linking">us.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈərli wi <span class="weak">wɚ</span><span class="linking">‿</span>ˈɪnfənt<span class="linking">‿</span><span class="weak">ən</span> jʌŋ ˈtʃɪldrn<span class="linking">‿</span><span class="weak">ən</span> ˈkɑnsəkwənli mɔr ˈvəlnərbəl ˈleɪdər wi ʃæl<span class="linking">‿</span>ˌəndərˈɡoʊ <span class="weak">ə</span> prəˈɡrɛsɪv lɔs<span class="linking">‿</span><span class="weak">əv</span> aʊɚ ˈvɪɡər<span class="linking">‿</span><span class="weak">ən</span> rəˈzɪstns wɪtʃ ðoʊ ˌɪmpərˈsɛptəbl<span class="linking">‿</span><span class="weak">ət</span> fərst wɪl ˈfaɪnəli bəˈkəm soʊ stip ðæt wi <span class="weak">kən</span> live noʊ lɔŋ haʊˈɛvər wɛl wi lʊk<span class="linking">‿</span>ˈæftər aʊrˈsɛlvz<span class="linking">‿</span><span class="weak">ən</span> haʊˈɛvər wɛl səˈsaɪədi <span class="weak">ən</span> aʊɚ ˈdɑktər lʊk<span class="linking">‿</span>ˈæftər<span class="linking">‿</span>əs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɚ‿ˈɪnfənt‿ən、ˈtʃɪldrn‿ən、ʃæl‿ˌəndərˈɡoʊ、lɔs‿əv、ˈvɪɡər‿ən 连读；ə、ən、ət、kən、əv、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>早些时候，我们还是婴儿和幼儿，因此更加脆弱；后来，我们的活力和抵抗力将逐渐丧失，尽管一开始难以察觉，但最终将变得如此严重，以至于我们无法再活下去，无论我们如何照顾自己，无论社会和医生如何照顾我们。</p></div>
+      <div class="field words"><span>词</span><p>earlier 早些时候； infants 婴儿； young 年轻的； children 孩子们；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="70.1" data-end="75.34">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">This <span class="linking">decline</span> <span class="weak linking">in</span> vigour with <span class="weak">the</span> <span class="linking">passing</span> <span class="weak linking">of</span> <span class="linking">time</span> <span class="weak linking">is</span> called ageing.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs dəˈklaɪn<span class="linking">‿</span>ɪn ˈvɪɡər wɪð <span class="weak">ðə</span> ˈpæsɪŋ<span class="linking">‿</span><span class="weak">əv</span> time <span class="weak">ɪz</span> kɔl ˈeɪdʒɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəˈklaɪn‿ɪn、ˈpæsɪŋ‿əv 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这种活力随着时间的流逝而下降的现象称为衰老。</p></div>
+      <div class="field words"><span>词</span><p>this 这； decline 衰退； vigour 活力； with 和；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="75.34" data-end="104.68">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">most</span> <span class="linking">unpleasant</span> discoveries which <span class="weak">we</span> all make <span class="weak">that</span> <span class="weak">we</span> must <span class="linking">decline</span> <span class="weak linking">in</span> this way, <span class="weak linking">that</span> <span class="linking">if</span> <span class="weak">we</span> escape <span class="linking">wars,</span> <span class="linking">accidents</span> <span class="weak linking">and</span> diseases <span class="weak">we</span> <span class="linking">shall</span> <span class="linking">eventually</span> <span class="linking">'die</span> <span class="weak linking">of</span> <span class="linking">old</span> <span class="linking">age',</span> <span class="weak linking">and</span> <span class="weak">that</span> this <span class="linking">happens</span> <span class="weak linking">at</span> <span class="weak linking">a</span> rate which differs little <span class="weak">from</span> person <span class="weak">to</span> person, so <span class="weak">that</span> <span class="weak linking">there</span> <span class="weak linking">are</span> heavy <span class="linking">odds</span> <span class="weak linking">in</span> <span class="linking">favour</span> <span class="weak linking">of</span> <span class="weak">our</span> dying between <span class="weak">the</span> <span class="linking">ages</span> <span class="weak linking">of</span> <span class="linking">65</span> <span class="weak linking">and</span> 80.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> moʊst<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈplɛznt dəˈskəvri wɪtʃ wi ɔl make ðæt wi məst dəˈklaɪn<span class="linking">‿</span>ɪn ðɪs weɪ ðæt<span class="linking">‿</span>ɪf wi <span class="weak">ə</span>ˈskeɪp wɔr<span class="linking">‿</span>ˈæksədnt<span class="linking">‿</span><span class="weak">ən</span> dəˈziz wi ʃæl<span class="linking">‿</span><span class="weak">ə</span>ˈvɛnʃəli die <span class="weak">əv</span><span class="linking">‿</span>oʊld eɪdʒ<span class="linking">‿</span><span class="weak">ən</span> ðæt ðɪs ˈhæpən<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> reɪt wɪtʃ ˈdɪfər ˈlɪdl <span class="weak">frəm</span> ˈpərsn <span class="weak">tə</span> ˈpərsn soʊ ðæt ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> ˈhɛvi ɑdz<span class="linking">‿</span>ɪn ˈfeɪvər<span class="linking">‿</span><span class="weak">əv</span> aʊɚ ˈdaɪɪŋ bəˈtwin <span class="weak">ðə</span> eɪdʒ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ən</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz‿one、moʊst‿ˌənˈplɛznt、dəˈklaɪn‿ɪn、ðæt‿ɪf、wɔr‿ˈæksədnt‿ən 连读；ðə、ə、ən、ət、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我们所有人都做出的最令人不快的发现之一是，我们必须以这种方式衰落，如果我们逃避战争、事故和疾病，我们最终将“死于老年”，而且这种情况发生的速度因人而异，因此，我们在 65 岁到 80 岁之间死亡的可能性很大。</p></div>
+      <div class="field words"><span>词</span><p>most 最多； unpleasant 不愉快的； discoveries 发现； which 哪个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="104.68" data-end="112.89">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="linking">Some</span> <span class="weak linking">of</span> <span class="linking">us</span> <span class="weak">will</span> die <span class="linking">sooner,</span> <span class="weak linking">a</span> few <span class="weak">will</span> live <span class="linking">longer</span> <span class="linking">--</span> <span class="linking">on</span> <span class="linking">into</span> <span class="weak linking">a</span> <span class="linking">ninth</span> <span class="linking">or</span> tenth decade.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/səm<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>əs wɪl die sun<span class="linking">‿</span><span class="weak">ə</span> fju wɪl live lɔŋ<span class="linking">‿</span>ɔn<span class="linking">‿</span>ˈɪntu <span class="weak">ə</span> naɪnθ<span class="linking">‿</span>ɔr tɛnθ ˈdɛˌkeɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>səm‿əv‿əs、sun‿ə、lɔŋ‿ɔn‿ˈɪntu、naɪnθ‿ɔr 连读；ə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>我们中的一些人会死得更快，一些人会活得更久——活到第九个或第十个十年。</p></div>
+      <div class="field words"><span>词</span><p>some 一些； sooner 早点； live 居住； longer 更长；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="112.89" data-end="123.88">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">But</span> <span class="weak">the</span> <span class="linking">chances</span> <span class="weak linking">are</span> <span class="linking">against</span> <span class="weak linking">it,</span> <span class="weak linking">and</span> <span class="weak linking">there</span> <span class="weak linking">is</span> <span class="weak linking">a</span> virtual <span class="linking">limit</span> <span class="linking">on</span> how long <span class="weak">we</span> <span class="weak">can</span> hope <span class="weak">to</span> <span class="linking">remain</span> <span class="linking">alive,</span> however <span class="linking">lucky</span> <span class="weak linking">and</span> robust <span class="weak linking">we</span> <span class="weak linking">are.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət <span class="weak">ðə</span> tʃæns<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span><span class="weak">ə</span>ˈɡɛnst<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ən</span> ðɛr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈvərtʃəl ˈlɪmət<span class="linking">‿</span>ɔn haʊ long wi <span class="weak">kən</span> hoʊp <span class="weak">tə</span> rəˈmeɪn<span class="linking">‿</span><span class="weak">ə</span>ˈlaɪv haʊˈɛvər ˈləki <span class="weak">ən</span> roʊˈbəst wi <span class="weak">ɑr</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>tʃæns‿ɑr‿əˈɡɛnst‿ɪt‿ən、ðɛr‿ɪz‿ə、ˈlɪmət‿ɔn、rəˈmeɪn‿əˈlaɪv 连读；ðə、ə、ən、tə、kən、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>但机会渺茫，无论我们多么幸运和坚强，我们能活多久实际上是有限的。</p></div>
+      <div class="field words"><span>词</span><p>chances 机会； against 反对； virtual 虚拟的； limit 限制；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="123.88" data-end="130.41">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Normal people tend <span class="weak">to</span> forget this <span class="linking">process</span> <span class="linking">unless</span> <span class="weak linking">and</span> <span class="linking">until</span> <span class="weak linking">they</span> <span class="weak linking">are</span> <span class="linking">reminded</span> <span class="weak linking">of</span> <span class="weak linking">it.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈnɔrml ˈpipl tɛnd <span class="weak">tə</span> fərˈɡɛt ðɪs ˈprɑˌsɛs<span class="linking">‿</span><span class="weak">ən</span>ˈlɛs<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈtɪl ðeɪ <span class="weak">ɑr</span> rəˈmaɪnd<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈprɑˌsɛs‿ənˈlɛs‿ən‿ˌənˈtɪl、rəˈmaɪnd‿əv‿ɪt 连读；ən、tə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>普通人往往会忘记这个过程，除非他们被提醒。</p></div>
+      <div class="field words"><span>词</span><p>normal 普通的； people 人们； tend 趋向； forget 忘记；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="130.41" data-end="150.73">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">We</span> <span class="weak linking">are</span> so familiar with <span class="weak">the</span> fact <span class="weak">that</span> man ages, <span class="weak">that</span> people <span class="weak">have</span> <span class="weak">for</span> <span class="linking">years</span> <span class="linking">assumed</span> <span class="weak">that</span> <span class="weak">the</span> <span class="linking">process</span> <span class="weak linking">of</span> losing vigour with <span class="linking">time,</span> <span class="weak linking">of</span> becoming more likely <span class="weak">to</span> die <span class="weak">the</span> older <span class="weak">we</span> get, <span class="weak">was</span> something self-evident like <span class="weak">the</span> <span class="linking">cooling</span> <span class="weak linking">of</span> <span class="weak linking">a</span> hot <span class="linking">kettle</span> <span class="linking">or</span> <span class="weak">the</span> <span class="linking">wearing-out</span> <span class="weak linking">of</span> <span class="weak linking">a</span> <span class="linking">pair</span> <span class="weak linking">of</span> shoes.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi <span class="weak">ɑr</span> soʊ fəˈmɪljər wɪð <span class="weak">ðə</span> fæk ðæt mæn eɪdʒ ðæt ˈpipl <span class="weak">həv</span> <span class="weak">fɚ</span> jɪr<span class="linking">‿</span><span class="weak">ə</span>ˈsum ðæt <span class="weak">ðə</span> ˈprɑˌsɛs<span class="linking">‿</span><span class="weak">əv</span> ˈluzɪŋ ˈvɪɡər wɪð time <span class="weak">əv</span> bəˈkəmɪŋ mɔr ˈlaɪkli <span class="weak">tə</span> die <span class="weak">ði</span><span class="linking">‿</span>oʊld wi ɡɛt <span class="weak">wəz</span> ˈsəmˌθɪŋ selfevident like <span class="weak">ðə</span> ˈkulɪŋ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> hɑt ˈkɛdl<span class="linking">‿</span>ɔr <span class="weak">ðə</span> wearingout<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> pɛr<span class="linking">‿</span><span class="weak">əv</span> ʃu/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>jɪr‿əˈsum、ˈprɑˌsɛs‿əv、ði‿oʊld、ˈkulɪŋ‿əv‿ə、ˈkɛdl‿ɔr 连读；ðə、ði、ə、tə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>我们对人会衰老的事实非常熟悉，多年来人们一直认为，随着时间的推移，活力逐渐丧失，年龄越大，死亡的可能性就越大，这一过程是不言而喻的，就像热水壶的冷却或一双鞋子的磨损一样。</p></div>
+      <div class="field words"><span>词</span><p>familiar 熟悉的； with 和； fact 事实； ages 年龄；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="150.73" data-end="164.82">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">They</span> <span class="weak linking">have</span> <span class="linking">also</span> assumed <span class="weak linking">that</span> <span class="linking">all</span> <span class="linking">animals,</span> <span class="weak linking">and</span> probably <span class="linking">other</span> <span class="linking">organisms</span> <span class="linking">such</span> <span class="weak linking">as</span> trees, <span class="linking">or</span> <span class="linking">even</span> <span class="weak">the</span> <span class="linking">universe</span> <span class="linking">itself,</span> <span class="linking">must</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">nature</span> <span class="weak linking">of</span> things 'wear out'.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ <span class="weak">həv</span><span class="linking">‿</span>ˈɔlsoʊ <span class="weak">ə</span>ˈsum ðæt<span class="linking">‿</span>ɔl<span class="linking">‿</span>ˈænəml<span class="linking">‿</span><span class="weak">ən</span> ˈprɑbəbli ˈəðər<span class="linking">‿</span>ˈɔrɡəˌnɪzəm sətʃ<span class="linking">‿</span><span class="weak">əz</span> tri ɔr<span class="linking">‿</span>ˈivən <span class="weak">ðə</span> ˈjunəvərs<span class="linking">‿</span>itself məst<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈneɪtʃər<span class="linking">‿</span><span class="weak">əv</span> θɪŋ wɛr aʊt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həv‿ˈɔlsoʊ、ðæt‿ɔl‿ˈænəml‿ən、ˈəðər‿ˈɔrɡəˌnɪzəm、sətʃ‿əz、ɔr‿ˈivən 连读；ðə、ən、əz、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>他们还假设所有动物，可能还有树木等其他有机体，甚至宇宙本身，本质上都必定会“磨损”。</p></div>
+      <div class="field words"><span>词</span><p>also 还； assumed 假定； animals 动物； probably 大概；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="164.82" data-end="189.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">Most</span> <span class="linking">animals</span> <span class="weak">we</span> commonly observe <span class="weak linking">do</span> <span class="weak linking">in</span> fact <span class="linking">age</span> <span class="weak linking">as</span> <span class="weak">we</span> <span class="weak">do,</span> if given <span class="weak">the</span> chance <span class="weak">to</span> live <span class="linking">long</span> <span class="linking">enough;</span> <span class="weak linking">and</span> mechanical systems <span class="linking">like</span> <span class="weak linking">a</span> wound <span class="linking">watch,</span> <span class="linking">or</span> <span class="weak">the</span> sun, <span class="weak linking">do</span> <span class="weak linking">in</span> fact run <span class="linking">out</span> <span class="weak linking">of</span> <span class="linking">energy</span> <span class="weak linking">in</span> <span class="linking">accordance</span> with <span class="weak">the</span> second <span class="linking">law</span> <span class="weak linking">of</span> thermodynamics (whether <span class="weak">the</span> whole universe <span class="weak">does</span> <span class="linking">so</span> <span class="weak linking">is</span> <span class="weak linking">a</span> moot <span class="linking">point</span> <span class="weak linking">at</span> present).</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/moʊst<span class="linking">‿</span>ˈænəml wi ˈkɑmənli əbˈzərv du ɪn fæk eɪdʒ<span class="linking">‿</span><span class="weak">əz</span> wi du ɪf ˈɡɪvn <span class="weak">ðə</span> tʃæns <span class="weak">tə</span> live long<span class="linking">‿</span>ɪˈnəf<span class="linking">‿</span><span class="weak">ən</span> məˈkænəkl systems like <span class="weak">ə</span> wund watch<span class="linking">‿</span>ɔr <span class="weak">ðə</span> sun du ɪn fæk run aʊt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɛnərdʒi ɪn<span class="linking">‿</span><span class="weak">ə</span>ˈkɔrdns wɪð <span class="weak">ðə</span> ˈsɛkənd lɔ <span class="weak">əv</span> ˌθərmoʊˌdaɪˈnæmɪks ˈwɛðər <span class="weak">ðə</span> hoʊl ˈjunəvərs dəz soʊ <span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> mut pɔɪnt<span class="linking">‿</span><span class="weak">ət</span> ˈprɛznt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moʊst‿ˈænəml、eɪdʒ‿əz、long‿ɪˈnəf‿ən、watch‿ɔr、aʊt‿əv‿ˈɛnərdʒi 连读；ðə、ə、ən、əz、ət、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>事实上，如果有机会活得足够长，我们常见的大多数动物都会像我们一样衰老。事实上，根据热力学第二定律，像上链手表或太阳这样的机械系统确实会耗尽能量（目前整个宇宙是否会这样做还是一个有争议的问题）。</p></div>
+      <div class="field words"><span>词</span><p>most 最多； animals 动物； commonly 通常； observe 观察；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="189.17" data-end="194.68">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">But</span> <span class="linking">these</span> <span class="weak linking">are</span> <span class="linking">not</span> <span class="linking">analogous</span> <span class="weak">to</span> what happens when man ages.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət ðiz<span class="linking">‿</span><span class="weak">ɑr</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span>ˈnæləɡəs <span class="weak">tə</span> wət ˈhæpən wɛn mæn eɪdʒ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðiz‿ɑr、nɑɾ‿əˈnæləɡəs 连读；tə、ɑr 弱读/弱化；nɑɾ‿əˈnæləɡəs 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>但这些与人类衰老时发生的情况不同。</p></div>
+      <div class="field words"><span>词</span><p>these 这些； analogous 类似的； what 什么； happens 发生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="194.68" data-end="199.89">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">A</span> run-down <span class="linking">watch</span> <span class="weak linking">is</span> <span class="linking">still</span> <span class="weak linking">a</span> <span class="linking">watch</span> <span class="weak linking">and</span> <span class="weak">can</span> <span class="weak">be</span> rewound.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈrənˌdaʊn watch<span class="linking">‿</span><span class="weak">ɪz</span> stɪl<span class="linking">‿</span><span class="weak">ə</span> watch<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">kən</span> bi riˈwaʊnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>watch‿ɪz、stɪl‿ə、watch‿ən 连读；ə、ən、kən、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>破旧的手表仍然是手表，可以重新上发条。</p></div>
+      <div class="field words"><span>词</span><p>rundown 撞倒； watch 手表； still 仍然；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="199.89" data-end="209.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak linking">An</span> <span class="linking">old</span> watch, by contrast, becomes so <span class="linking">worn</span> <span class="weak linking">and</span> <span class="linking">unreliable</span> <span class="weak linking">that</span> <span class="weak linking">it</span> <span class="linking">eventually</span> <span class="weak linking">is</span> not worth mending.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>oʊld watch baɪ ˈkɑnˌtræst bəˈkəm soʊ wɔrn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌənrəˈlaɪəbl ðæt<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ə</span>ˈvɛnʃəli <span class="weak">ɪz</span> nɑt wərθ mɛndɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ən‿oʊld、wɔrn‿ən‿ˌənrəˈlaɪəbl、ðæt‿ɪt‿əˈvɛnʃəli 连读；ən、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>相比之下，旧手表会变得非常磨损且不可靠，最终不值得修理。</p></div>
+      <div class="field words"><span>词</span><p>watch 手表； contrast 对比； becomes 变成； worn 磨损的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="209.98" data-end="220.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak linking">But</span> <span class="weak linking">a</span> watch <span class="weak">could</span> never <span class="linking">repair</span> <span class="linking">itself--it</span> <span class="weak">does</span> not <span class="linking">consist</span> <span class="weak linking">of</span> living <span class="linking">parts,</span> <span class="linking">only</span> <span class="weak linking">of</span> metal, which <span class="linking">wears</span> <span class="linking">away</span> by friction.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span><span class="weak">ə</span> watch kəd ˈnɛvər rəˈpɛr<span class="linking">‿</span>itselfit dəz nɑt <span class="weak">kən</span>ˈsɪst<span class="linking">‿</span><span class="weak">əv</span> living pɑrt<span class="linking">‿</span>ˈoʊnli <span class="weak">əv</span> metal wɪtʃ wɛr<span class="linking">‿</span><span class="weak">ə</span>ˈweɪ baɪ ˈfrɪkʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ə、rəˈpɛr‿itselfit、kənˈsɪst‿əv、pɑrt‿ˈoʊnli、wɛr‿əˈweɪ 连读；ə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>但手表永远无法自我修复——它不包含活动部件，仅由金属组成，会因摩擦而磨损。</p></div>
+      <div class="field words"><span>词</span><p>watch 手表； never 绝不； repair 修理； itselfit 它本身；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="220.98" data-end="233.69">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">We</span> <span class="weak linking">could,</span> <span class="weak linking">at</span> <span class="linking">one</span> time, <span class="linking">repair</span> <span class="linking">ourselves--well</span> <span class="linking">enough,</span> <span class="weak linking">at</span> least, <span class="weak">to</span> <span class="linking">overcome</span> <span class="linking">all</span> <span class="weak">but</span> <span class="weak">the</span> <span class="linking">most</span> <span class="linking">instantly</span> <span class="linking">fatal</span> <span class="linking">illnesses</span> <span class="weak linking">and</span> <span class="linking">accidents.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi kəd<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>one time rəˈpɛr<span class="linking">‿</span>ourselveswell<span class="linking">‿</span>ɪˈnəf<span class="linking">‿</span><span class="weak">ət</span> list <span class="weak">tə</span> ˌoʊvərˈkəm<span class="linking">‿</span>ɔl bət <span class="weak">ðə</span> moʊst<span class="linking">‿</span>ˈɪnstənli ˈfeɪdl<span class="linking">‿</span>ˈɪlnəs<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈæksədnt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kəd‿ət‿one、rəˈpɛr‿ourselveswell‿ɪˈnəf‿ət、ˌoʊvərˈkəm‿ɔl、moʊst‿ˈɪnstənli、ˈfeɪdl‿ˈɪlnəs‿ən‿ˈæksədnt 连读；ðə、ən、ət、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我们可以暂时修复自己——至少足以克服除最直接致命的疾病和事故之外的所有疾病和事故。</p></div>
+      <div class="field words"><span>词</span><p>time 时间； repair 修理； ourselveswell 我们自己韦尔； enough 足够的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="233.69" data-end="248.79">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Between <span class="linking">twelve</span> <span class="weak linking">and</span> eighty years <span class="weak">we</span> gradually lose this <span class="linking">power;</span> <span class="weak linking">an</span> <span class="linking">illness</span> <span class="linking">which</span> <span class="weak linking">at</span> 12 <span class="weak">would</span> <span class="linking">knock</span> <span class="linking">us</span> <span class="linking">over,</span> <span class="weak linking">at</span> 80 <span class="weak">can</span> <span class="linking">knock</span> <span class="linking">us</span> <span class="linking">out,</span> <span class="weak linking">and</span> <span class="linking">into</span> <span class="weak">our</span> grave.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bəˈtwin twɛlv<span class="linking">‿</span><span class="weak">ən</span> ˈeɪdi jɪr wi ˈɡrædʒwəli luz ðɪs power<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪlnəs wɪtʃ<span class="linking">‿</span><span class="weak">ət</span> wəd nɑk<span class="linking">‿</span>əs<span class="linking">‿</span>ˈoʊvər<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">kən</span> nɑk<span class="linking">‿</span>əs aʊt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪntu aʊɚ ɡreɪv/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>twɛlv‿ən、power‿ən‿ˈɪlnəs、wɪtʃ‿ət、nɑk‿əs‿ˈoʊvər‿ət、nɑk‿əs 连读；ən、ət、kən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>十二到八十年间，我们逐渐失去了这种力量；这种疾病在 12 岁的时候会让我们崩溃，在 80 岁的时候会把我们击倒，然后进入坟墓。</p></div>
+      <div class="field words"><span>词</span><p>between 之间； twelve 十二； eighty 八十； years 年；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="248.79" data-end="262.12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">If <span class="weak">we</span> <span class="weak">could</span> <span class="linking">stay</span> <span class="weak linking">as</span> <span class="linking">vigorous</span> <span class="weak linking">as</span> <span class="weak linking">we</span> <span class="weak linking">are</span> <span class="weak linking">at</span> <span class="linking">twelve,</span> <span class="weak linking">it</span> <span class="weak">would</span> <span class="linking">take</span> <span class="linking">about</span> 700 years <span class="weak">for</span> <span class="linking">half</span> <span class="weak linking">of</span> <span class="linking">us</span> <span class="weak">to</span> <span class="linking">die,</span> <span class="weak linking">and</span> <span class="linking">another</span> 700 <span class="weak">for</span> <span class="weak">the</span> survivors <span class="weak">to</span> <span class="weak">be</span> reduced by <span class="linking">half</span> <span class="linking">again.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪf wi kəd steɪ <span class="weak">əz</span> ˈvɪɡrəs<span class="linking">‿</span><span class="weak">əz</span> wi <span class="weak">ɑr</span><span class="linking">‿</span><span class="weak">ət</span> twɛlv<span class="linking">‿</span>ɪt wəd teɪk<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt jɪr <span class="weak">fɚ</span> hæf<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>əs <span class="weak">tə</span> die <span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span>ˈnəðər <span class="weak">fɚ</span> <span class="weak">ðə</span> sərˈvaɪvər <span class="weak">tə</span> bi rəˈdust baɪ hæf<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈvɪɡrəs‿əz、ɑr‿ət、twɛlv‿ɪt、teɪk‿əˈbaʊt、hæf‿əv‿əs 连读；ðə、ən、əz、ət、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>如果我们能像十二岁时那样精力充沛，大约需要700年，我们就会有一半的人死亡，而另外700年，幸存者就会再次减少一半。</p></div>
+      <div class="field words"><span>词</span><p>stay 停留； vigorous 蓬勃； twelve 十二； take 拿；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>twelve 十二； years 年； human 人类； body 身体； reach 抵达； full 满的； size 尺寸； strength 力量； earlier 早些时候； infants 婴儿； young 年轻的； children 孩子们； this 这； decline 衰退； vigour 活力； with 和； most 最多； unpleasant 不愉快的；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 并列结构连接动作或信息； 时间状语从句交代动作先后； 原因或结果关系连接分句； 含定语从句或名词性从句； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 现在完成时强调结果或经历； 将来结构表示预期或安排； 情态结构表达能力、义务、推测或意愿； 一般过去时叙述故事主线； 过去进行时描写当时正在发生的动作。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>3. Earlier, we were infants and young children, and consequently more vulnerable; later, we shall undergo a progressive loss of our vigour and resistance which, though imperceptible at first will finally become so steep that we can live no longer, however well we look after ourselves, and however well society, and our doctors, look after us.； 5. It is one of the most unpleasant discoveries which we all make that we must decline in this way, that if we escape wars, accidents and diseases we shall eventually 'die of old age', and that this happens at a rate which differs little from person to person, so that there are heavy odds in favour of our dying between the ages of 65 and 80.； 6. Some of us will die sooner, a few will live longer -- on into a ninth or tenth decade.； 7. But the chances are against it, and there is a virtual limit on how long we can hope to remain alive, however lucky and robust we are.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>eɪdʒ‿əv、ɪz‿ət‿its 连读；ðə、ət、əv、ɪz 弱读/弱化； ritʃ‿its、strɛŋθ‿ən‿its‿ˈoʊnər、hɪz‿ɔr、full‿ɪnˈtɛlədʒns、bət‿ət 连读；ðə、ən、ət、tə、əv、ɪz 弱读/弱化； wɚ‿ˈɪnfənt‿ən、ˈtʃɪldrn‿ən、ʃæl‿ˌəndərˈɡoʊ、lɔs‿əv、ˈvɪɡər‿ən 连读；ə、ən、ət、kən、əv、wɚ 弱读/弱化； dəˈklaɪn‿ɪn、ˈpæsɪŋ‿əv 连读；ðə、əv、ɪz 弱读/弱化； ɪt‿ɪz‿one、moʊst‿ˌənˈplɛznt、dəˈklaɪn‿ɪn、ðæt‿ɪf、wɔr‿ˈæksədnt‿ən 连读；ðə、ə、ən、ət、tə、əv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">The Process of Ageing</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../37－The Process of Ageing.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":20.55,"end":26.85,"text":"At the age of twelve years, the human body is at its most vigorous."},{"index":2,"start":26.85,"end":39.39,"text":"It has yet to reach its full size and strength, and its owner his or her full intelligence: but at this age the likelihood of death is least."},{"index":3,"start":39.39,"end":70.1,"text":"Earlier, we were infants and young children, and consequently more vulnerable; later, we shall undergo a progressive loss of our vigour and resistance which, though imperceptible at first will finally become so steep that we can live no longer, however well we look after ourselves, and however well society, and our doctors, look after us."},{"index":4,"start":70.1,"end":75.34,"text":"This decline in vigour with the passing of time is called ageing."},{"index":5,"start":75.34,"end":104.68,"text":"It is one of the most unpleasant discoveries which we all make that we must decline in this way, that if we escape wars, accidents and diseases we shall eventually 'die of old age', and that this happens at a rate which differs little from person to person, so that there are heavy odds in favour of our dying between the ages of 65 and 80."},{"index":6,"start":104.68,"end":112.89,"text":"Some of us will die sooner, a few will live longer -- on into a ninth or tenth decade."},{"index":7,"start":112.89,"end":123.88,"text":"But the chances are against it, and there is a virtual limit on how long we can hope to remain alive, however lucky and robust we are."},{"index":8,"start":123.88,"end":130.41,"text":"Normal people tend to forget this process unless and until they are reminded of it."},{"index":9,"start":130.41,"end":150.73,"text":"We are so familiar with the fact that man ages, that people have for years assumed that the process of losing vigour with time, of becoming more likely to die the older we get, was something self-evident like the cooling of a hot kettle or the wearing-out of a pair of shoes."},{"index":10,"start":150.73,"end":164.82,"text":"They have also assumed that all animals, and probably other organisms such as trees, or even the universe itself, must in the nature of things 'wear out'."},{"index":11,"start":164.82,"end":189.17,"text":"Most animals we commonly observe do in fact age as we do, if given the chance to live long enough; and mechanical systems like a wound watch, or the sun, do in fact run out of energy in accordance with the second law of thermodynamics (whether the whole universe does so is a moot point at present)."},{"index":12,"start":189.17,"end":194.68,"text":"But these are not analogous to what happens when man ages."},{"index":13,"start":194.68,"end":199.89,"text":"A run-down watch is still a watch and can be rewound."},{"index":14,"start":199.89,"end":209.98,"text":"An old watch, by contrast, becomes so worn and unreliable that it eventually is not worth mending."},{"index":15,"start":209.98,"end":220.98,"text":"But a watch could never repair itself--it does not consist of living parts, only of metal, which wears away by friction."},{"index":16,"start":220.98,"end":233.69,"text":"We could, at one time, repair ourselves--well enough, at least, to overcome all but the most instantly fatal illnesses and accidents."},{"index":17,"start":233.69,"end":248.79,"text":"Between twelve and eighty years we gradually lose this power; an illness which at 12 would knock us over, at 80 can knock us out, and into our grave."},{"index":18,"start":248.79,"end":262.12,"text":"If we could stay as vigorous as we are at twelve, it would take about 700 years for half of us to die, and another 700 for the survivors to be reduced by half again."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

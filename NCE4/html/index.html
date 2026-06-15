@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 HTML 分析</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; color: #f8fafc; background: #050505; }
+    .shell { width: min(1120px, calc(100% - 28px)); margin: 0 auto; padding: 28px 0 54px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+    h1 { margin: 0; font-size: clamp(28px, 5vw, 46px); letter-spacing: 0; }
+    p { color: #a1a1aa; }
+    a { color: inherit; text-decoration: none; }
+    .home-link { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 9px 14px; color: #e5e7eb; }
+    .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .lesson-card { display: grid; gap: 8px; min-height: 112px; padding: 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: #171717; }
+    .lesson-card:hover { border-color: rgba(124,147,255,.72); background: #1f1f24; }
+    .lesson-card.pending { opacity: .55; pointer-events: none; }
+    .lesson-no { color: #7c93ff; font-size: 13px; font-weight: 700; }
+    strong { font-size: 17px; line-height: 1.28; }
+    .lesson-card span:last-child { color: #86efac; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div>
+        <h1>NCE4 HTML 分析</h1>
+        <p>第四册已生成 48 课，美音发音、连读分析、句首播放和底部字幕播放器。生成过程逐课更新。</p>
+      </div>
+      <a class="home-link" href="../../index.html">首页</a>
+    </div>
+    <div class="lesson-grid">
+      <a class="lesson-card" href="01－Finding Fossil Man.analysis.html">
+        <span class="lesson-no">Lesson 01</span>
+        <strong>Finding Fossil Man</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="02－Spare That Spider.analysis.html">
+        <span class="lesson-no">Lesson 02</span>
+        <strong>Spare That Spider</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="03－Matterhorn Man.analysis.html">
+        <span class="lesson-no">Lesson 03</span>
+        <strong>Matterhorn Man</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="04－Seeing Hands.analysis.html">
+        <span class="lesson-no">Lesson 04</span>
+        <strong>Seeing Hands</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="05－Youth.analysis.html">
+        <span class="lesson-no">Lesson 05</span>
+        <strong>Youth</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="06－The Sporting Spirit.analysis.html">
+        <span class="lesson-no">Lesson 06</span>
+        <strong>The Sporting Spirit</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="07－Bats.analysis.html">
+        <span class="lesson-no">Lesson 07</span>
+        <strong>Bats</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="08－Trading Standards.analysis.html">
+        <span class="lesson-no">Lesson 08</span>
+        <strong>Trading Standards</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="09－Royal Espionage.analysis.html">
+        <span class="lesson-no">Lesson 09</span>
+        <strong>Royal Espionage</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="10－Silicon Valley.analysis.html">
+        <span class="lesson-no">Lesson 10</span>
+        <strong>Silicon Valley</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="11－How to Grow Old.analysis.html">
+        <span class="lesson-no">Lesson 11</span>
+        <strong>How to Grow Old</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="12－Banks and Their Customers.analysis.html">
+        <span class="lesson-no">Lesson 12</span>
+        <strong>Banks and Their Customers</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="13－The Search for Oil.analysis.html">
+        <span class="lesson-no">Lesson 13</span>
+        <strong>The Search for Oil</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="14－The Butterfly Effect.analysis.html">
+        <span class="lesson-no">Lesson 14</span>
+        <strong>The Butterfly Effect</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="15－Secrecy in Industry.analysis.html">
+        <span class="lesson-no">Lesson 15</span>
+        <strong>Secrecy in Industry</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="16－The Modern City.analysis.html">
+        <span class="lesson-no">Lesson 16</span>
+        <strong>The Modern City</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="17－A Man-made Disease.analysis.html">
+        <span class="lesson-no">Lesson 17</span>
+        <strong>A Man-made Disease</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="18－Porpoises.analysis.html">
+        <span class="lesson-no">Lesson 18</span>
+        <strong>Porpoises</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="19－The Stuff of Dreams.analysis.html">
+        <span class="lesson-no">Lesson 19</span>
+        <strong>The Stuff of Dreams</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="20－Snake Poison.analysis.html">
+        <span class="lesson-no">Lesson 20</span>
+        <strong>Snake Poison</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="21－William S. Hart and the Early Western Film.analysis.html">
+        <span class="lesson-no">Lesson 21</span>
+        <strong>William S. Hart and the Early &quot;Western&quot; Film</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="22－Knowledge and Progress.analysis.html">
+        <span class="lesson-no">Lesson 22</span>
+        <strong>Knowledge and Progress</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="23－Bird Flight.analysis.html">
+        <span class="lesson-no">Lesson 23</span>
+        <strong>Bird Flight</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="24－Beauty.analysis.html">
+        <span class="lesson-no">Lesson 24</span>
+        <strong>Beauty</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="25－Non-Auditory Effects of Noise.analysis.html">
+        <span class="lesson-no">Lesson 25</span>
+        <strong>Non-Auditory Effects of Noise</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="26－The Past Life of the Earth.analysis.html">
+        <span class="lesson-no">Lesson 26</span>
+        <strong>The Past Life of the Earth</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="27－The vasa.analysis.html">
+        <span class="lesson-no">Lesson 27</span>
+        <strong>The &quot;vasa&quot;</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="28－Patients and Doctors.analysis.html">
+        <span class="lesson-no">Lesson 28</span>
+        <strong>Patients and Doctors</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="29－The Hovercraft.analysis.html">
+        <span class="lesson-no">Lesson 29</span>
+        <strong>The Hovercraft</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="30－Exploring the Sea-Floor.analysis.html">
+        <span class="lesson-no">Lesson 30</span>
+        <strong>Exploring the Sea-Floor</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="31－The Sculptor Speaks.analysis.html">
+        <span class="lesson-no">Lesson 31</span>
+        <strong>The Sculptor Speaks</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="32－Galileo Reborn.analysis.html">
+        <span class="lesson-no">Lesson 32</span>
+        <strong>Galileo Reborn</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="33－Education.analysis.html">
+        <span class="lesson-no">Lesson 33</span>
+        <strong>Education</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="34－Adolescence.analysis.html">
+        <span class="lesson-no">Lesson 34</span>
+        <strong>Adolescence</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="35－Space Odyssey.analysis.html">
+        <span class="lesson-no">Lesson 35</span>
+        <strong>Space Odyssey</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="36－The Cost of Government.analysis.html">
+        <span class="lesson-no">Lesson 36</span>
+        <strong>The Cost of Government</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="37－The Process of Ageing.analysis.html">
+        <span class="lesson-no">Lesson 37</span>
+        <strong>The Process of Ageing</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="38－Water and the Traveller.analysis.html">
+        <span class="lesson-no">Lesson 38</span>
+        <strong>Water and the Traveller</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="39－What Every Writer Wants.analysis.html">
+        <span class="lesson-no">Lesson 39</span>
+        <strong>What Every Writer Wants</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="40－Waves.analysis.html">
+        <span class="lesson-no">Lesson 40</span>
+        <strong>Waves</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="41－Training Elephants.analysis.html">
+        <span class="lesson-no">Lesson 41</span>
+        <strong>Training Elephants</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="42－Recording an Earthquake.analysis.html">
+        <span class="lesson-no">Lesson 42</span>
+        <strong>Recording an Earthquake</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="43－Are There Strangers in Space.analysis.html">
+        <span class="lesson-no">Lesson 43</span>
+        <strong>Are There Strangers in Space</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="44－Patterns of Culture.analysis.html">
+        <span class="lesson-no">Lesson 44</span>
+        <strong>Patterns of Culture</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="45－Of Men and Galaxies.analysis.html">
+        <span class="lesson-no">Lesson 45</span>
+        <strong>Of Men and Galaxies</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="46－Hobbies.analysis.html">
+        <span class="lesson-no">Lesson 46</span>
+        <strong>Hobbies</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="47－The Great Escape.analysis.html">
+        <span class="lesson-no">Lesson 47</span>
+        <strong>The Great Escape</strong>
+        <span>已生成</span>
+      </a>
+      <a class="lesson-card" href="48－Planning a Share Portfolio.analysis.html">
+        <span class="lesson-no">Lesson 48</span>
+        <strong>Planning a Share Portfolio</strong>
+        <span>已生成</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

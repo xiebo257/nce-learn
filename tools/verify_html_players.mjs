@@ -6,6 +6,7 @@ const targets = [
   ['NCE1', 'NCE1/html'],
   ['NCE2', 'NCE2/html'],
   ['NCE3', 'NCE3/html'],
+  ['NCE4', 'NCE4/html'],
 ];
 
 const failures = [];

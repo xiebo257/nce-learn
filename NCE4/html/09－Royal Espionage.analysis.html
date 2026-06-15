@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 09 - Royal Espionage</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 09 - Royal Espionage</h1>
+      <p class="meta">问题: What important thing did King Alfred learn when he penetrated the Danish camp of Guthrum?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="20.72" data-end="29.54">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Alfred <span class="weak">the</span> <span class="linking">Great</span> <span class="linking">acted</span> <span class="weak linking">as</span> <span class="weak linking">his</span> <span class="linking">own</span> spy, visiting Danish camps <span class="linking">disguised</span> <span class="weak linking">as</span> <span class="weak linking">a</span> minstrel.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/alfred <span class="weak">ðə</span> ɡreɪt<span class="linking">‿</span>æk<span class="linking">‿</span><span class="weak">əz</span> hɪz<span class="linking">‿</span>oʊn spaɪ ˈvɪzədɪŋ ˈdeɪnɪʃ kæmp dəˈskaɪz<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> ˈmɪnstrl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɡreɪt‿æk‿əz、hɪz‿oʊn、dəˈskaɪz‿əz‿ə 连读；ðə、ə、əz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>阿尔弗雷德大帝充当自己的间谍，伪装成吟游诗人访问丹麦营地。</p></div>
+      <div class="field words"><span>词</span><p>alfred 阿尔弗雷德； great 伟大的； acted 采取行动； visiting 来访；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="29.54" data-end="34.45">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">In</span> those days wandering minstrels <span class="weak">were</span> <span class="linking">welcome</span> <span class="linking">everywhere.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn ðoʊz deɪ ˈwɑndrɪŋ ˈmɪnstrl <span class="weak">wɚ</span> ˈwɛlkəm<span class="linking">‿</span>ˈɛvriˌwɛr/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈwɛlkəm‿ˈɛvriˌwɛr 连读；wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>那时，流浪的吟游诗人到处都受到欢迎。</p></div>
+      <div class="field words"><span>词</span><p>those 那些； days 天； wandering 徘徊； minstrels 吟游诗人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="34.45" data-end="39.2">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">They</span> <span class="weak">were</span> not fighting <span class="linking">men,</span> <span class="weak linking">and</span> <span class="weak">their</span> harp <span class="weak">was</span> <span class="weak">their</span> passport.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ <span class="weak">wɚ</span> nɑt ˈfaɪdɪŋ men<span class="linking">‿</span><span class="weak">ən</span> ðɛr hɑrp <span class="weak">wəz</span> ðɛr ˈpæsˌpɔrt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>men‿ən 连读；ən、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他们不是战士，他们的竖琴就是他们的护照。</p></div>
+      <div class="field words"><span>词</span><p>fighting 斗争； harp 竖琴； passport 护照；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="39.2" data-end="49.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Alfred <span class="weak">had</span> learned <span class="linking">many</span> <span class="weak linking">of</span> <span class="weak">their</span> <span class="linking">ballads</span> <span class="weak linking">in</span> <span class="weak">his</span> <span class="linking">youth</span> <span class="weak linking">and</span> <span class="weak">could</span> vary <span class="weak">his</span> programme <span class="linking">with</span> <span class="linking">acrobatic</span> <span class="linking">tricks</span> <span class="weak linking">and</span> simple conjuring.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/alfred <span class="weak">həd</span> ˈlərnəd ˈmɛni <span class="weak">əv</span> ðɛr ˈbæləd<span class="linking">‿</span>ɪn hɪz juθ<span class="linking">‿</span><span class="weak">ən</span> kəd ˈvɛri hɪz ˈproʊˌɡræm wɪð<span class="linking">‿</span>ˌækrəˈbædɪk trɪk<span class="linking">‿</span><span class="weak">ən</span> simple ˈkɑndʒərɪŋ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈbæləd‿ɪn、juθ‿ən、wɪð‿ˌækrəˈbædɪk、trɪk‿ən 连读；ən、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>阿尔弗雷德年轻时就学过他们的许多歌谣，并且可以通过杂技技巧和简单的魔术来改变他的节目。</p></div>
+      <div class="field words"><span>词</span><p>alfred 阿尔弗雷德； learned 学到了； many 许多； ballads 歌谣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.17" data-end="62.26">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">While Alfred's <span class="linking">little</span> <span class="linking">army</span> slowly began <span class="weak">to</span> <span class="linking">gather</span> <span class="weak linking">at</span> Athelney, <span class="weak">the</span> king himself set out <span class="weak">to</span> penetrate <span class="weak">the</span> <span class="linking">camp</span> <span class="weak linking">of</span> Guthrum, <span class="weak">the</span> <span class="linking">commander</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">Danish</span> <span class="linking">invaders.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/waɪl alfred's ˈlɪdl<span class="linking">‿</span>ˈɑrmi ˈsloʊli bəˈɡæn <span class="weak">tə</span> ˈɡæðər<span class="linking">‿</span><span class="weak">ət</span> athelney <span class="weak">ðə</span> kɪŋ hɪmˈsɛlf sɛt aʊt <span class="weak">tə</span> ˈpɛnəˌtreɪt <span class="weak">ðə</span> kæmp<span class="linking">‿</span><span class="weak">əv</span> guthrum <span class="weak">ðə</span> kəˈmændər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈdeɪnɪʃ<span class="linking">‿</span>ɪnˈveɪdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈlɪdl‿ˈɑrmi、ˈɡæðər‿ət、kæmp‿əv、kəˈmændər‿əv、ˈdeɪnɪʃ‿ɪnˈveɪdər 连读；ðə、ət、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>当阿尔弗雷德的小军队开始慢慢地在阿瑟尔尼集结时，国王亲自出发渗透丹麦入侵者指挥官古斯鲁姆的营地。</p></div>
+      <div class="field words"><span>词</span><p>while 尽管； alfred's 阿尔弗雷德的； little 小的； army 军队；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="62.26" data-end="69.32">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">These <span class="weak">had</span> settled down <span class="weak">for</span> <span class="weak">the</span> <span class="linking">winter</span> <span class="weak linking">at</span> Chippenham: thither Alfred went.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðiz <span class="weak">həd</span> ˈsɛdld daʊn <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈwɪnər<span class="linking">‿</span><span class="weak">ət</span> chippenham ˈθɪðər alfred wɛnt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈwɪnər‿ət 连读；ðə、ət、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他们在奇彭纳姆定居过冬：阿尔弗雷德去了那里。</p></div>
+      <div class="field words"><span>词</span><p>these 这些； settled 定居； down 向下； winter 冬天；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="69.32" data-end="81.06">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">He</span> <span class="linking">noticed</span> <span class="weak linking">at</span> once <span class="weak">that</span> discipline <span class="weak">was</span> slack: <span class="weak">the</span> Danes <span class="weak">had</span> <span class="weak">the</span> <span class="linking">self-confidence</span> <span class="weak linking">of</span> <span class="linking">conquerors,</span> <span class="weak linking">and</span> <span class="weak">their</span> security precautions <span class="weak">were</span> casual.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi ˈnoʊdəs<span class="linking">‿</span><span class="weak">ət</span> wəns ðæt ˈdɪsəplən <span class="weak">wəz</span> slæk <span class="weak">ðə</span> deɪn <span class="weak">həd</span> <span class="weak">ðə</span> selfconfidence <span class="weak">əv</span> ˈkɑŋkərər<span class="linking">‿</span><span class="weak">ən</span> ðɛr security priˈkɔʃən <span class="weak">wɚ</span> ˈkæʒuəl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈnoʊdəs‿ət、ˈkɑŋkərər‿ən 连读；ðə、ən、ət、əv、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他立刻注意到纪律松懈：丹麦人有着征服者般的自信，他们的安全预防措施也很随意。</p></div>
+      <div class="field words"><span>词</span><p>noticed 注意到； once 一次； discipline 纪律； slack 松弛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="81.06" data-end="86.77">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">They</span> lived <span class="linking">well,</span> <span class="linking">on</span> <span class="weak">the</span> <span class="linking">proceeds</span> <span class="weak linking">of</span> <span class="linking">raids</span> <span class="linking">on</span> neighbouring regions.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ lived wɛl<span class="linking">‿</span>ɔn <span class="weak">ðə</span> ˈproʊˌsidz<span class="linking">‿</span><span class="weak">əv</span> reɪd<span class="linking">‿</span>ɔn ˈneɪbrɪŋ ˈridʒn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɛl‿ɔn、ˈproʊˌsidz‿əv、reɪd‿ɔn 连读；ðə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>他们靠袭击邻近地区的收入过着很好的生活。</p></div>
+      <div class="field words"><span>词</span><p>lived 住过； well 出色地； proceeds 收益； raids 袭击；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="86.77" data-end="94.89">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">There</span> <span class="weak">they</span> collected <span class="linking">women</span> <span class="weak linking">as</span> <span class="linking">well</span> <span class="weak linking">as</span> <span class="linking">food</span> <span class="weak linking">and</span> <span class="linking">drink,</span> <span class="weak linking">and</span> <span class="weak linking">a</span> <span class="linking">life</span> <span class="weak linking">of</span> <span class="linking">ease</span> <span class="weak">had</span> made <span class="weak">them</span> soft.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr ðeɪ kəˈlɛktəd women<span class="linking">‿</span><span class="weak">əz</span> wɛl<span class="linking">‿</span><span class="weak">əz</span> fud<span class="linking">‿</span><span class="weak">ən</span> drɪŋk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> laɪf<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>iz <span class="weak">həd</span> meɪd ðəm sɔft/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>women‿əz、wɛl‿əz、fud‿ən、drɪŋk‿ən‿ə、laɪf‿əv‿iz 连读；ə、ən、əz、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他们在那里收集女人以及食物和饮料，安逸的生活使他们变得柔软。</p></div>
+      <div class="field words"><span>词</span><p>collected 集； women 女性； well 出色地； food 食物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="94.89" data-end="100.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Alfred <span class="linking">stayed</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">camp</span> <span class="weak linking">a</span> week before <span class="weak">he</span> returned <span class="weak">to</span> Athelney.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/alfred steɪ ɪn <span class="weak">ðə</span> kæmp<span class="linking">‿</span><span class="weak">ə</span> wik bəˈfɔr hi rəˈtərn <span class="weak">tə</span> athelney/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kæmp‿ə 连读；ðə、ə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>阿尔弗雷德在返回阿瑟尔尼之前在营地待了一周。</p></div>
+      <div class="field words"><span>词</span><p>alfred 阿尔弗雷德； stayed 留下来； camp 营； week 星期；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="100.13" data-end="105.12">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> force <span class="weak linking">there</span> <span class="linking">assembled</span> <span class="weak">was</span> trivial compared with <span class="weak">the</span> Danish horde.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> force ðɛr<span class="linking">‿</span><span class="weak">ə</span>ˈsɛmbl <span class="weak">wəz</span> ˈtrɪviəl kəmˈpɛr wɪð <span class="weak">ðə</span> ˈdeɪnɪʃ hɔrd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɛr‿əˈsɛmbl 连读；ðə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>与丹麦游牧部落相比，那里集结的兵力微不足道。</p></div>
+      <div class="field words"><span>词</span><p>force 力量； assembled 组装的； trivial 琐碎的； compared 比较的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="105.12" data-end="118.52">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">But</span> Alfred <span class="weak">had</span> deduced <span class="weak">that</span> <span class="weak">the</span> Danes <span class="weak">were</span> no longer fit <span class="weak">for</span> prolonged <span class="linking">battle:</span> <span class="weak linking">and</span> <span class="weak">that</span> <span class="weak">their</span> commissariat <span class="weak">had</span> no organization, <span class="weak">but</span> <span class="linking">depended</span> <span class="linking">on</span> <span class="linking">irregular</span> raids.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət alfred <span class="weak">həd</span> dəˈdus ðæt <span class="weak">ðə</span> deɪn <span class="weak">wɚ</span> noʊ lɔŋ fɪt <span class="weak">fɚ</span> prəˈlɔŋd ˈbædl<span class="linking">‿</span><span class="weak">ən</span> ðæt ðɛr ˌkɑməˈsɛriət <span class="weak">həd</span> noʊ organization bət dəˈpɛnd<span class="linking">‿</span>ɔn<span class="linking">‿</span>ɪˈrɛɡjələr reɪd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈbædl‿ən、dəˈpɛnd‿ɔn‿ɪˈrɛɡjələr 连读；ðə、ən、wɚ、fɚ、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>但阿尔弗雷德推断丹麦人不再适合长期战斗：他们的粮食部门没有组织，只能依靠不定期的袭击。</p></div>
+      <div class="field words"><span>词</span><p>alfred 阿尔弗雷德； deduced 推论出； danes 丹麦人； longer 更长；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="118.52" data-end="126.57">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">So, faced with <span class="weak">the</span> <span class="linking">Danish</span> <span class="linking">advance,</span> Alfred did not <span class="linking">risk</span> <span class="linking">open</span> battle <span class="weak">but</span> harried <span class="weak">the</span> enemy.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/soʊ faced wɪð <span class="weak">ðə</span> ˈdeɪnɪʃ<span class="linking">‿</span>ədˈvæns alfred dɪd nɑt rɪsk<span class="linking">‿</span>ˈoʊpn ˈbædl bət ˈhɛri <span class="weak">ði</span><span class="linking">‿</span>ˈɛnəmi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈdeɪnɪʃ‿ədˈvæns、rɪsk‿ˈoʊpn、ði‿ˈɛnəmi 连读；ðə、ði 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>因此，面对丹麦人的进攻，阿尔弗雷德没有冒险公开战斗，而是骚扰敌人。</p></div>
+      <div class="field words"><span>词</span><p>faced 面对； with 和； danish 丹麦语的； advance 进步；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="126.57" data-end="131.58">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">He</span> <span class="weak">was</span> constantly on <span class="weak">the</span> move, drawing <span class="weak">the</span> <span class="linking">Danes</span> <span class="linking">after</span> <span class="weak">him.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span> ˈkɑnstnli ɔn <span class="weak">ðə</span> move ˈdrɔɪŋ <span class="weak">ðə</span> deɪn<span class="linking">‿</span>ˈæftər hɪm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>deɪn‿ˈæftər 连读；ðə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他不断地移动，吸引着丹麦人追随他。</p></div>
+      <div class="field words"><span>词</span><p>constantly 不断地； move 移动； drawing 绘画； danes 丹麦人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="131.58" data-end="137.97">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">His</span> patrols halted <span class="weak">the</span> raiding parties: <span class="linking">hunger</span> <span class="linking">assailed</span> <span class="weak">the</span> <span class="linking">Danish</span> <span class="linking">army.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hɪz pəˈtroʊl hɔlt <span class="weak">ðə</span> reɪd ˈpɑrdi ˈhəŋɡər<span class="linking">‿</span><span class="weak">ə</span>ˈseɪl <span class="weak">ðə</span> ˈdeɪnɪʃ<span class="linking">‿</span>ˈɑrmi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈhəŋɡər‿əˈseɪl、ˈdeɪnɪʃ‿ˈɑrmi 连读；ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>他的巡逻阻止了突袭队伍：饥饿袭击了丹麦军队。</p></div>
+      <div class="field words"><span>词</span><p>patrols 巡逻； halted 停止了； raiding 袭击； parties 聚会；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="137.97" data-end="145.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Now Alfred <span class="linking">began</span> <span class="weak linking">a</span> long <span class="linking">series</span> <span class="weak linking">of</span> <span class="linking">skirmishes</span> <span class="linking">--</span> <span class="weak linking">and</span> <span class="linking">within</span> <span class="weak linking">a</span> month <span class="weak">the</span> Danes <span class="weak">had</span> surrendered.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/naʊ alfred bəˈɡæn<span class="linking">‿</span><span class="weak">ə</span> long ˈsɪriz<span class="linking">‿</span><span class="weak">əv</span> ˈskərmɪʃ<span class="linking">‿</span><span class="weak">ən</span> wəˈðɪn<span class="linking">‿</span><span class="weak">ə</span> mənθ <span class="weak">ðə</span> deɪn <span class="weak">həd</span> səˈrɛndər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bəˈɡæn‿ə、ˈsɪriz‿əv、ˈskərmɪʃ‿ən、wəˈðɪn‿ə 连读；ðə、ə、ən、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>现在阿尔弗雷德开始了一系列的小冲突——不到一个月，丹麦人就投降了。</p></div>
+      <div class="field words"><span>词</span><p>alfred 阿尔弗雷德； began 开始； long 长的； series 系列；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="145.74" data-end="151.66">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> episode <span class="weak">could</span> reasonably <span class="linking">serve</span> <span class="weak linking">as</span> <span class="weak linking">a</span> <span class="linking">unique</span> <span class="linking">epic</span> <span class="weak linking">of</span> <span class="linking">royal</span> <span class="linking">espionage!</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈɛpəˌsoʊd kəd ˈrizənəbli sərv<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> ˌjuˈnik<span class="linking">‿</span>ˈɛpɪk<span class="linking">‿</span><span class="weak">əv</span> ˈrɔɪl<span class="linking">‿</span>ˈɛspiəˌnɑʒ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˈɛpəˌsoʊd、sərv‿əz‿ə、ˌjuˈnik‿ˈɛpɪk‿əv、ˈrɔɪl‿ˈɛspiəˌnɑʒ 连读；ði、ə、əz、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>这一集可以说是一部独特的皇家间谍史诗！</p></div>
+      <div class="field words"><span>词</span><p>episode 插曲； reasonably 合理地； serve 服务； unique 独特的；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>alfred 阿尔弗雷德； great 伟大的； acted 采取行动； visiting 来访； those 那些； days 天； wandering 徘徊； minstrels 吟游诗人； fighting 斗争； harp 竖琴； passport 护照； alfred 阿尔弗雷德； learned 学到了； many 许多； ballads 歌谣； while 尽管； alfred's 阿尔弗雷德的； little 小的；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>原因或结果关系连接分句； 主语 + 谓语 + 宾语/补足语的基础叙述句； 并列结构连接动作或信息； 时间状语从句交代动作先后； 不定式短语补充目的、结果或宾语； 含定语从句或名词性从句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 一般过去时叙述故事主线； 过去完成时说明更早发生的动作； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>4. Alfred had learned many of their ballads in his youth and could vary his programme with acrobatic tricks and simple conjuring.； 17. The episode could reasonably serve as a unique epic of royal espionage!。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ɡreɪt‿æk‿əz、hɪz‿oʊn、dəˈskaɪz‿əz‿ə 连读；ðə、ə、əz 弱读/弱化； ˈwɛlkəm‿ˈɛvriˌwɛr 连读；wɚ 弱读/弱化； men‿ən 连读；ən、wəz、wɚ 弱读/弱化； ˈbæləd‿ɪn、juθ‿ən、wɪð‿ˌækrəˈbædɪk、trɪk‿ən 连读；ən、əv、həd 弱读/弱化； ˈlɪdl‿ˈɑrmi、ˈɡæðər‿ət、kæmp‿əv、kəˈmændər‿əv、ˈdeɪnɪʃ‿ɪnˈveɪdər 连读；ðə、ət、tə、əv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Royal Espionage</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../09－Royal Espionage.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":20.72,"end":29.54,"text":"Alfred the Great acted as his own spy, visiting Danish camps disguised as a minstrel."},{"index":2,"start":29.54,"end":34.45,"text":"In those days wandering minstrels were welcome everywhere."},{"index":3,"start":34.45,"end":39.2,"text":"They were not fighting men, and their harp was their passport."},{"index":4,"start":39.2,"end":49.17,"text":"Alfred had learned many of their ballads in his youth and could vary his programme with acrobatic tricks and simple conjuring."},{"index":5,"start":49.17,"end":62.26,"text":"While Alfred's little army slowly began to gather at Athelney, the king himself set out to penetrate the camp of Guthrum, the commander of the Danish invaders."},{"index":6,"start":62.26,"end":69.32,"text":"These had settled down for the winter at Chippenham: thither Alfred went."},{"index":7,"start":69.32,"end":81.06,"text":"He noticed at once that discipline was slack: the Danes had the self-confidence of conquerors, and their security precautions were casual."},{"index":8,"start":81.06,"end":86.77,"text":"They lived well, on the proceeds of raids on neighbouring regions."},{"index":9,"start":86.77,"end":94.89,"text":"There they collected women as well as food and drink, and a life of ease had made them soft."},{"index":10,"start":94.89,"end":100.13,"text":"Alfred stayed in the camp a week before he returned to Athelney."},{"index":11,"start":100.13,"end":105.12,"text":"The force there assembled was trivial compared with the Danish horde."},{"index":12,"start":105.12,"end":118.52,"text":"But Alfred had deduced that the Danes were no longer fit for prolonged battle: and that their commissariat had no organization, but depended on irregular raids."},{"index":13,"start":118.52,"end":126.57,"text":"So, faced with the Danish advance, Alfred did not risk open battle but harried the enemy."},{"index":14,"start":126.57,"end":131.58,"text":"He was constantly on the move, drawing the Danes after him."},{"index":15,"start":131.58,"end":137.97,"text":"His patrols halted the raiding parties: hunger assailed the Danish army."},{"index":16,"start":137.97,"end":145.74,"text":"Now Alfred began a long series of skirmishes -- and within a month the Danes had surrendered."},{"index":17,"start":145.74,"end":151.66,"text":"The episode could reasonably serve as a unique epic of royal espionage!"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 30 - Exploring the Sea-Floor</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 30 - Exploring the Sea-Floor</h1>
+      <p class="meta">问题: How did people probably imagine the sea-floor before it was investigated?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="17.45" data-end="33.53">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">Our</span> <span class="linking">knowledge</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">oceans</span> <span class="weak linking">a</span> hundred <span class="linking">years</span> <span class="linking">ago</span> <span class="weak">was</span> confined <span class="weak">to</span> <span class="weak">the</span> two-dimensional <span class="linking">shape</span> <span class="weak linking">of</span> <span class="weak">the</span> sea <span class="linking">surface</span> <span class="weak linking">and</span> <span class="weak">the</span> <span class="linking">hazards</span> <span class="weak linking">of</span> navigation presented by <span class="weak">the</span> <span class="linking">irregularities</span> <span class="weak linking">in</span> <span class="linking">depth</span> <span class="weak linking">of</span> <span class="weak">the</span> shallow water close <span class="weak">to</span> <span class="weak">the</span> land.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aʊɚ ˈnɑlədʒ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈoʊʃən<span class="linking">‿</span><span class="weak">ə</span> ˈhəndrəd jɪr<span class="linking">‿</span><span class="weak">ə</span>ˈɡoʊ <span class="weak">wəz</span> <span class="weak">kən</span>ˈfaɪnd <span class="weak">tə</span> <span class="weak">ðə</span> twodimensional ʃeɪp<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> si ˈsərfəs<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> ˈhæzərd<span class="linking">‿</span><span class="weak">əv</span> ˌnævəˈɡeɪʃən ˈprɛznt baɪ <span class="weak">ði</span><span class="linking">‿</span>ˌɪˌrɛɡjəˈlɛrədi ɪn dɛpθ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈʃæloʊ ˈwɔdər kloʊs <span class="weak">tə</span> <span class="weak">ðə</span> lænd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈnɑlədʒ‿əv、ði‿ˈoʊʃən‿ə、jɪr‿əˈɡoʊ、ʃeɪp‿əv、ˈsərfəs‿ən 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>一百年前，我们对海洋的了解仅限于海面的二维形状以及靠近陆地的浅水深度不规则所带来的航行危险。</p></div>
+      <div class="field words"><span>词</span><p>knowledge 知识； oceans 海洋； hundred 百； years 年；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="33.53" data-end="45.67">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">The</span> open sea <span class="weak">was</span> <span class="linking">deep</span> <span class="weak linking">and</span> <span class="linking">mysterious,</span> <span class="weak linking">and</span> <span class="linking">anyone</span> who gave more <span class="linking">than</span> <span class="weak linking">a</span> passing thought <span class="weak">to</span> <span class="weak">the</span> bottom <span class="linking">confines</span> <span class="weak linking">of</span> <span class="weak">the</span> oceans probably assumed <span class="weak">that</span> <span class="weak">the</span> sea-bed <span class="weak">was</span> flat.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>ˈoʊpn si <span class="weak">wəz</span> dip<span class="linking">‿</span><span class="weak">ən</span> məˈstɪriəs<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛniˌwən who ɡeɪv mɔr ðæn<span class="linking">‿</span><span class="weak">ə</span> ˈpæsɪŋ θɔt <span class="weak">tə</span> <span class="weak">ðə</span> ˈbɑdəm <span class="weak">kən</span>ˈfaɪn<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈoʊʃən ˈprɑbəbli <span class="weak">ə</span>ˈsum ðæt <span class="weak">ðə</span> ˈsiˌbɛd <span class="weak">wəz</span> flæt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˈoʊpn、dip‿ən、məˈstɪriəs‿ən‿ˈɛniˌwən、ðæn‿ə、kənˈfaɪn‿əv 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>公海深邃而神秘，任何对海底有过深入思考的人都可能认为海床是平坦的。</p></div>
+      <div class="field words"><span>词</span><p>open 打开； deep 深的； mysterious 神秘； anyone 任何人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="45.67" data-end="56.3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Sir James Clark Ross <span class="weak linking">had</span> <span class="linking">obtained</span> <span class="weak linking">a</span> <span class="linking">sounding</span> <span class="weak linking">of</span> <span class="linking">over</span> <span class="linking">2,</span> <span class="linking">400</span> <span class="linking">fathoms</span> <span class="weak linking">in</span> <span class="linking">1839,</span> <span class="weak linking">but</span> <span class="weak linking">it</span> <span class="weak">was</span> <span class="linking">not</span> <span class="linking">until</span> 1869, when H.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sər dʒæmz clark ross <span class="weak">həd</span><span class="linking">‿</span>əbˈteɪn<span class="linking">‿</span><span class="weak">ə</span> ˈsaʊndɪŋ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈoʊvər ˈfæðəm<span class="linking">‿</span>ɪn bət<span class="linking">‿</span>ɪt <span class="weak">wəz</span> nɑɾ<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈtɪl wɛn eɪtʃ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həd‿əbˈteɪn‿ə、ˈsaʊndɪŋ‿əv‿ˈoʊvər、ˈfæðəm‿ɪn、bət‿ɪt、nɑɾ‿ˌənˈtɪl 连读；ə、əv、wəz、həd 弱读/弱化；nɑɾ‿ˌənˈtɪl 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>詹姆斯·克拉克·罗斯爵士 (Sir James Clark Ross) 在 1839 年测得了超过 2, 400 英寻的水深，但直到 1869 年，H.</p></div>
+      <div class="field words"><span>词</span><p>james 詹姆斯； clark 克拉克； ross 罗斯； obtained 获得；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="56.3" data-end="56.8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">M.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɛm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句按意群朗读，重读 主要实词。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>M。</p></div>
+      <div class="field words"><span>词</span><p>；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="56.48" data-end="56.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">S.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句按意群朗读，重读 主要实词。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>S。</p></div>
+      <div class="field words"><span>词</span><p>；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="56.75" data-end="71.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Porcupine <span class="weak">was</span> <span class="linking">put</span> <span class="weak linking">at</span> <span class="weak">the</span> <span class="linking">disposal</span> <span class="weak linking">of</span> <span class="weak">the</span> Royal Society <span class="weak">for</span> several cruises <span class="weak linking">that</span> <span class="weak linking">a</span> <span class="linking">series</span> <span class="weak linking">of</span> deep soundings <span class="weak linking">was</span> <span class="linking">obtained</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">Atlantic</span> <span class="weak linking">and</span> <span class="weak">the</span> first samples <span class="weak">were</span> collected by dredging <span class="weak">the</span> bottom.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈpɔrkjəˌpaɪn <span class="weak">wəz</span> pʊt<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ðə</span> dəˈspoʊzl<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈrɔɪl səˈsaɪədi <span class="weak">fɚ</span> ˈsɛvrəl kruz ðæt<span class="linking">‿</span><span class="weak">ə</span> ˈsɪriz<span class="linking">‿</span><span class="weak">əv</span> dip ˈsaʊndɪŋ <span class="weak">wəz</span><span class="linking">‿</span>əbˈteɪn<span class="linking">‿</span>ɪn <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ət</span>ˈlænɪk<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> fərst ˈsæmpl <span class="weak">wɚ</span> kəˈlɛktəd baɪ drɛdʒ <span class="weak">ðə</span> ˈbɑdəm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>pʊt‿ət、dəˈspoʊzl‿əv、ðæt‿ə、ˈsɪriz‿əv、wəz‿əbˈteɪn‿ɪn 连读；ðə、ði、ə、ən、ət、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>豪猪号被英国皇家学会用于几次巡航，在大西洋进行了一系列深度探测，并通过疏浚海底收集了第一批样本。</p></div>
+      <div class="field words"><span>词</span><p>porcupine 豪猪； disposal 处理； royal 皇家的； society 社会；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="71.84" data-end="74.21">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Shortly after this <span class="weak">the</span> famous H.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈʃɔrtli ˈæftər ðɪs <span class="weak">ðə</span> ˈfeɪməs eɪtʃ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>此后不久，著名的 H.</p></div>
+      <div class="field words"><span>词</span><p>shortly 不久； after 后； this 这； famous 著名的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="74.21" data-end="74.71">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">M.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɛm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句按意群朗读，重读 主要实词。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>M。</p></div>
+      <div class="field words"><span>词</span><p>；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="74.35" data-end="74.85">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">S.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>本句按意群朗读，重读 主要实词。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>S。</p></div>
+      <div class="field words"><span>词</span><p>；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="74.57" data-end="84.37">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">Challenger</span> <span class="linking">expedition</span> <span class="linking">established</span> <span class="weak">the</span> <span class="linking">study</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">sea-floor</span> <span class="weak linking">as</span> <span class="weak linking">a</span> subject <span class="linking">worthy</span> <span class="weak linking">of</span> <span class="weak">the</span> most qualified <span class="linking">physicists</span> <span class="weak linking">and</span> geologists.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈtʃæləndʒər<span class="linking">‿</span>ˌɛkspəˈdɪʃən<span class="linking">‿</span><span class="weak">ə</span>ˈstæblɪʃt <span class="weak">ðə</span> ˈstədi <span class="weak">əv</span> <span class="weak">ðə</span> seafloor<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> ˈsəbdʒək ˈwərði <span class="weak">əv</span> <span class="weak">ðə</span> moʊst ˈkwɑləˌfaɪd ˈfɪzəsəst<span class="linking">‿</span><span class="weak">ən</span> dʒiˈɑlədʒəst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈtʃæləndʒər‿ˌɛkspəˈdɪʃən‿əˈstæblɪʃt、seafloor‿əz‿ə、ˈfɪzəsəst‿ən 连读；ðə、ə、ən、əz、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>挑战者号探险队将海底研究确立为最有资格的物理学家和地质学家值得研究的课题。</p></div>
+      <div class="field words"><span>词</span><p>challenger 挑战者； expedition 远征； established 已确立的； study 学习；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="84.37" data-end="102.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">A</span> <span class="linking">burst</span> <span class="weak linking">of</span> activity associated with <span class="weak">the</span> <span class="linking">laying</span> <span class="weak linking">of</span> submarine cables soon confirmed <span class="weak">the</span> <span class="linking">Challenger's</span> <span class="linking">observation</span> <span class="weak">that</span> many <span class="linking">parts</span> <span class="weak linking">of</span> <span class="weak">the</span> ocean <span class="weak">were</span> two <span class="weak">to</span> three miles <span class="linking">deep,</span> <span class="weak linking">and</span> <span class="weak">the</span> <span class="linking">existence</span> <span class="weak linking">of</span> <span class="linking">underwater</span> <span class="linking">features</span> <span class="weak linking">of</span> considerable magnitude.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> bərst<span class="linking">‿</span><span class="weak">əv</span> activity <span class="weak">ə</span>ˈsoʊsiˌeɪt wɪð <span class="weak">ðə</span> leɪ <span class="weak">əv</span> ˈsəbməˌrin ˈkeɪbl sun <span class="weak">kən</span>ˈfərmd <span class="weak">ðə</span> challenger's<span class="linking">‿</span>ˌɑbzərˈveɪʃən ðæt ˈmɛni pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈoʊʃən <span class="weak">wɚ</span> tu <span class="weak">tə</span> θri maɪl dip<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ði</span><span class="linking">‿</span>ɪɡˈzɪstns<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˌəndərˈwɔdər ˈfitʃər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">kən</span>ˈsɪdrəbl ˈmæɡnəˌtud/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bərst‿əv、challengers‿ˌɑbzərˈveɪʃən、pɑrt‿əv、ði‿ˈoʊʃən、dip‿ən 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>与海底电缆铺设相关的一系列活动很快证实了挑战者号的观察，即海洋的许多部分有两到三英里深，并且存在相当大的水下特征。</p></div>
+      <div class="field words"><span>词</span><p>burst 爆裂； activity 活动； associated 联系； with 和；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="102.74" data-end="114.78">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Today, enough <span class="linking">soundings</span> <span class="weak linking">are</span> <span class="linking">available</span> <span class="weak">to</span> <span class="linking">enable</span> <span class="weak linking">a</span> relief <span class="linking">map</span> <span class="weak linking">of</span> <span class="weak">the</span> Atlantic <span class="weak">to</span> <span class="weak">be</span> <span class="linking">drawn</span> <span class="weak linking">and</span> <span class="weak">we</span> know <span class="linking">something</span> <span class="weak linking">of</span> <span class="weak">the</span> great <span class="linking">variety</span> <span class="weak linking">of</span> <span class="weak">the</span> sea bed's topography.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span>ˈdeɪ ɪˈnəf ˈsaʊndɪŋ<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span><span class="weak">ə</span>ˈveɪləbl <span class="weak">tə</span> ɪˈneɪbl<span class="linking">‿</span><span class="weak">ə</span> rəˈlif mæp<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ət</span>ˈlænɪk <span class="weak">tə</span> bi drɔn<span class="linking">‿</span><span class="weak">ən</span> wi noʊ ˈsəmˌθɪŋ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ɡreɪt vəˈraɪədi <span class="weak">əv</span> <span class="weak">ðə</span> si bed's <span class="weak">tə</span>ˈpɑɡrəfi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈsaʊndɪŋ‿ɑr‿əˈveɪləbl、ɪˈneɪbl‿ə、mæp‿əv、ði‿ətˈlænɪk、drɔn‿ən 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>如今，已有足够的探测数据可以绘制大西洋地形图，并且我们对海床地形的多样性有所了解。</p></div>
+      <div class="field words"><span>词</span><p>today 今天； enough 足够的； soundings 测深； available 可用的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="114.78" data-end="133.05">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">Since <span class="weak">the</span> sea covers <span class="weak">the</span> greater <span class="linking">part</span> <span class="weak linking">of</span> <span class="weak">the</span> earth's <span class="linking">surface,</span> <span class="weak linking">it</span> <span class="weak linking">is</span> quite reasonable <span class="weak">to</span> regard <span class="weak">the</span> sea <span class="linking">floor</span> <span class="weak linking">as</span> <span class="weak">the</span> basic <span class="linking">form</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">crust</span> <span class="weak linking">of</span> <span class="weak">the</span> earth, with <span class="linking">superimposed</span> <span class="linking">upon</span> <span class="weak linking">it</span> <span class="weak">the</span> continents, together with <span class="weak">the</span> <span class="linking">islands</span> <span class="weak linking">and</span> <span class="linking">other</span> <span class="linking">features</span> <span class="weak linking">of</span> <span class="weak">the</span> oceans.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sɪns <span class="weak">ðə</span> si ˈkəvər <span class="weak">ðə</span> ɡreɪt pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> earth's ˈsərfəs<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> kwaɪt ˈrizənəbl <span class="weak">tə</span> rəˈɡɑrd <span class="weak">ðə</span> si flɔr<span class="linking">‿</span><span class="weak">əz</span> <span class="weak">ðə</span> ˈbeɪsɪk form<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> krəst<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ərθ wɪð ˌsuprəmˈpoʊz<span class="linking">‿</span><span class="weak">ə</span>ˈpɑn<span class="linking">‿</span>ɪt <span class="weak">ðə</span> ˈkɑntnənt <span class="weak">tə</span>ˈɡɛðər wɪð <span class="weak">ði</span><span class="linking">‿</span>islands<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈəðər ˈfitʃər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈoʊʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>pɑrt‿əv、ˈsərfəs‿ɪt‿ɪz、flɔr‿əz、form‿əv、krəst‿əv 连读；ðə、ði、ən、əz、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>由于海洋覆盖了地球表面的大部分，因此将海底视为地壳的基本形式，并在其上叠加大陆、岛屿和海洋的其他特征是相当合理的。</p></div>
+      <div class="field words"><span>词</span><p>since 自从； covers 封面； greater 更大； part 部分；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="133.05" data-end="140.95">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> continents form rugged tablelands which stand nearly three <span class="linking">miles</span> <span class="linking">above</span> <span class="weak">the</span> <span class="linking">floor</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">open</span> <span class="linking">ocean.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkɑntnənt form ˈrəɡəd ˈteɪbəlˌænd wɪtʃ stænd ˈnɪrli θri maɪl<span class="linking">‿</span><span class="weak">ə</span>ˈbəv <span class="weak">ðə</span> flɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈoʊpn<span class="linking">‿</span>ˈoʊʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>maɪl‿əˈbəv、flɔr‿əv、ði‿ˈoʊpn‿ˈoʊʃən 连读；ðə、ði、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这些大陆形成崎岖的台地，高出公海海底近三英里。</p></div>
+      <div class="field words"><span>词</span><p>continents 各大洲； form 形式； rugged 崎岖； tablelands 高原；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="140.95" data-end="155.45">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">From</span> <span class="weak">the</span> shore line, out <span class="weak linking">to</span> <span class="weak linking">a</span> distance which may <span class="weak">be</span> anywhere <span class="weak linking">from</span> <span class="weak linking">a</span> few miles <span class="weak linking">to</span> <span class="weak linking">a</span> few hundred miles, runs <span class="weak">the</span> gentle <span class="linking">slope</span> <span class="weak linking">of</span> <span class="weak">the</span> continental shelf, geologically <span class="linking">part</span> <span class="weak linking">of</span> <span class="weak">the</span> continents.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> <span class="weak">ðə</span> ʃɔr laɪn aʊt <span class="weak">tə</span> <span class="weak">ə</span> ˈdɪstns wɪtʃ meɪ bi ˈɛniˌwɛr <span class="weak">frəm</span><span class="linking">‿</span><span class="weak">ə</span> fju maɪl <span class="weak">tə</span> <span class="weak">ə</span> fju ˈhəndrəd maɪl rən <span class="weak">ðə</span> ˈdʒɛnəl sloʊp<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˌkɑnəˈnɛnəl ʃɛlf geologically pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈkɑntnənt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>frəm‿ə、sloʊp‿əv、pɑrt‿əv 连读；ðə、ə、tə、əv、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>从海岸线到几英里到几百英里不等的地方，有大陆架的缓坡，在地质上是大陆的一部分。</p></div>
+      <div class="field words"><span>词</span><p>shore 支撑； line 线； distance 距离； which 哪个；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="155.45" data-end="162.7">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> real dividing line between <span class="linking">continents</span> <span class="weak linking">and</span> <span class="linking">oceans</span> <span class="linking">occurs</span> <span class="weak linking">at</span> <span class="weak">the</span> <span class="linking">foot</span> <span class="weak linking">of</span> <span class="weak linking">a</span> steeper slope.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ril dəˈvaɪdɪŋ laɪn bəˈtwin ˈkɑntnənt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈoʊʃən<span class="linking">‿</span><span class="weak">ə</span>ˈkər<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ðə</span> fʊt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> stip sloʊp/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈkɑntnənt‿ən‿ˈoʊʃən‿əˈkər‿ət、fʊt‿əv‿ə 连读；ðə、ə、ən、ət、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>大陆和海洋之间的真正分界线出现在更陡峭的斜坡脚下。</p></div>
+      <div class="field words"><span>词</span><p>real 真实的； dividing 划分； line 线； between 之间；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="162.7" data-end="179.08">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">This continental slope usually <span class="linking">starts</span> <span class="weak linking">at</span> <span class="weak linking">a</span> place somewhere near <span class="weak">the</span> 100-fathom <span class="linking">mark</span> <span class="weak linking">and</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">course</span> <span class="weak linking">of</span> <span class="weak linking">a</span> few hundred miles reaches <span class="weak">the</span> true ocean <span class="linking">floor</span> <span class="weak linking">at</span> 2, 500-3, 500 fathoms.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs ˌkɑnəˈnɛnəl sloʊp ˈjuʒəli stɑrt<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> pleɪs ˈsəmˌwɛr nɪr <span class="weak">ðə</span> ˈfæðəm mark<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn <span class="weak">ðə</span> kɔrs<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> fju ˈhəndrəd maɪl ritʃ <span class="weak">ðə</span> tru ˈoʊʃən flɔr<span class="linking">‿</span><span class="weak">ət</span> ˈfæðəm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>stɑrt‿ət‿ə、mark‿ən‿ɪn、kɔrs‿əv‿ə、flɔr‿ət 连读；ðə、ə、ən、ət、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这个大陆坡通常从接近 100 噚的地方开始，在几百英里的过程中到达真正的海底 2, 500-3, 500 噚。</p></div>
+      <div class="field words"><span>词</span><p>this 这； continental 欧陆式； slope 坡； usually 通常；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="179.08" data-end="201.53">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">The</span> <span class="linking">slope</span> <span class="linking">averages</span> <span class="linking">about</span> <span class="linking">1</span> <span class="weak linking">in</span> 30, <span class="weak">but</span> contains steep, probably vertical, <span class="linking">cliffs,</span> <span class="weak linking">and</span> gentle sediment-covered <span class="linking">terraces,</span> <span class="weak linking">and</span> <span class="linking">near</span> <span class="linking">its</span> lower reaches <span class="weak linking">there</span> <span class="weak linking">is</span> <span class="weak linking">a</span> long tailing-off <span class="linking">which</span> <span class="weak linking">is</span> <span class="linking">almost</span> certainly <span class="weak">the</span> <span class="linking">result</span> <span class="weak linking">of</span> material transported out <span class="weak">to</span> deep <span class="linking">water</span> <span class="linking">after</span> <span class="linking">being</span> <span class="linking">eroded</span> <span class="weak">from</span> <span class="weak">the</span> continental masses.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> sloʊp<span class="linking">‿</span>ˈævrɪdʒ<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt<span class="linking">‿</span>ɪn bət <span class="weak">kən</span>ˈteɪn stip ˈprɑbəbli ˈvərdəkl klɪf<span class="linking">‿</span><span class="weak">ən</span> ˈdʒɛnəl sedimentcovered ˈtɛrəs<span class="linking">‿</span><span class="weak">ən</span> nɪr<span class="linking">‿</span>its lower ritʃ ðɛr<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> long tailingoff wɪtʃ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈɔlmoʊst ˈsərtnli <span class="weak">ðə</span> rəˈzəlt<span class="linking">‿</span><span class="weak">əv</span> məˈtɪriəl ˈtrænsˌpɔrt aʊt <span class="weak">tə</span> dip ˈwɔdər<span class="linking">‿</span>ˈæftər ˈbiɪŋ<span class="linking">‿</span><span class="weak">ə</span>ˈroʊd <span class="weak">frəm</span> <span class="weak">ðə</span> ˌkɑnəˈnɛnəl mæs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>sloʊp‿ˈævrɪdʒ‿əˈbaʊt‿ɪn、klɪf‿ən、ˈtɛrəs‿ən、nɪr‿its、ðɛr‿ɪz‿ə 连读；ðə、ə、ən、tə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>坡度平均约为三十分之一，但包含陡峭的、可能是垂直的悬崖和平缓的沉积物覆盖的阶地，在其下游附近有一个很长的斜坡，几乎可以肯定，这是大陆块侵蚀后物质被输送到深水的结果。</p></div>
+      <div class="field words"><span>词</span><p>slope 坡； averages 平均值； about 关于； contains 包含；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>knowledge 知识； oceans 海洋； hundred 百； years 年； open 打开； deep 深的； mysterious 神秘； anyone 任何人； james 詹姆斯； clark 克拉克； ross 罗斯； obtained 获得； porcupine 豪猪； disposal 处理； royal 皇家的； society 社会； shortly 不久； after 后；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>含被动结构； 并列结构连接动作或信息； 含定语从句或名词性从句； when 引导时间状语从句； 时间状语从句交代动作先后； 主语 + 谓语 + 宾语/补足语的基础叙述句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般过去时叙述故事主线； 过去完成时说明更早发生的动作； 一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>15. From the shore line, out to a distance which may be anywhere from a few miles to a few hundred miles, runs the gentle slope of the continental shelf, geologically part of the continents.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ˈnɑlədʒ‿əv、ði‿ˈoʊʃən‿ə、jɪr‿əˈɡoʊ、ʃeɪp‿əv、ˈsərfəs‿ən 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化； ði‿ˈoʊpn、dip‿ən、məˈstɪriəs‿ən‿ˈɛniˌwən、ðæn‿ə、kənˈfaɪn‿əv 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化； həd‿əbˈteɪn‿ə、ˈsaʊndɪŋ‿əv‿ˈoʊvər、ˈfæðəm‿ɪn、bət‿ɪt、nɑɾ‿ˌənˈtɪl 连读；ə、əv、wəz、həd 弱读/弱化；nɑɾ‿ˌənˈtɪl 中 /ɾ/ 为美式闪音； pʊt‿ət、dəˈspoʊzl‿əv、ðæt‿ə、ˈsɪriz‿əv、wəz‿əbˈteɪn‿ɪn 连读；ðə、ði、ə、ən、ət、əv 弱读/弱化； ˈtʃæləndʒər‿ˌɛkspəˈdɪʃən‿əˈstæblɪʃt、seafloor‿əz‿ə、ˈfɪzəsəst‿ən 连读；ðə、ə、ən、əz、əv 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Exploring the Sea-Floor</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../30－Exploring the Sea-Floor.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.45,"end":33.53,"text":"Our knowledge of the oceans a hundred years ago was confined to the two-dimensional shape of the sea surface and the hazards of navigation presented by the irregularities in depth of the shallow water close to the land."},{"index":2,"start":33.53,"end":45.67,"text":"The open sea was deep and mysterious, and anyone who gave more than a passing thought to the bottom confines of the oceans probably assumed that the sea-bed was flat."},{"index":3,"start":45.67,"end":56.3,"text":"Sir James Clark Ross had obtained a sounding of over 2, 400 fathoms in 1839, but it was not until 1869, when H."},{"index":4,"start":56.3,"end":56.8,"text":"M."},{"index":5,"start":56.48,"end":56.98,"text":"S."},{"index":6,"start":56.75,"end":71.84,"text":"Porcupine was put at the disposal of the Royal Society for several cruises that a series of deep soundings was obtained in the Atlantic and the first samples were collected by dredging the bottom."},{"index":7,"start":71.84,"end":74.21,"text":"Shortly after this the famous H."},{"index":8,"start":74.21,"end":74.71,"text":"M."},{"index":9,"start":74.35,"end":74.85,"text":"S."},{"index":10,"start":74.57,"end":84.37,"text":"Challenger expedition established the study of the sea-floor as a subject worthy of the most qualified physicists and geologists."},{"index":11,"start":84.37,"end":102.74,"text":"A burst of activity associated with the laying of submarine cables soon confirmed the Challenger's observation that many parts of the ocean were two to three miles deep, and the existence of underwater features of considerable magnitude."},{"index":12,"start":102.74,"end":114.78,"text":"Today, enough soundings are available to enable a relief map of the Atlantic to be drawn and we know something of the great variety of the sea bed's topography."},{"index":13,"start":114.78,"end":133.05,"text":"Since the sea covers the greater part of the earth's surface, it is quite reasonable to regard the sea floor as the basic form of the crust of the earth, with superimposed upon it the continents, together with the islands and other features of the oceans."},{"index":14,"start":133.05,"end":140.95,"text":"The continents form rugged tablelands which stand nearly three miles above the floor of the open ocean."},{"index":15,"start":140.95,"end":155.45,"text":"From the shore line, out to a distance which may be anywhere from a few miles to a few hundred miles, runs the gentle slope of the continental shelf, geologically part of the continents."},{"index":16,"start":155.45,"end":162.7,"text":"The real dividing line between continents and oceans occurs at the foot of a steeper slope."},{"index":17,"start":162.7,"end":179.08,"text":"This continental slope usually starts at a place somewhere near the 100-fathom mark and in the course of a few hundred miles reaches the true ocean floor at 2, 500-3, 500 fathoms."},{"index":18,"start":179.08,"end":201.53,"text":"The slope averages about 1 in 30, but contains steep, probably vertical, cliffs, and gentle sediment-covered terraces, and near its lower reaches there is a long tailing-off which is almost certainly the result of material transported out to deep water after being eroded from the continental masses."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 17 - A Man-made Disease</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 17 - A Man-made Disease</h1>
+      <p class="meta">问题: What factor helped to spread the disease of myxomatosis?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.28" data-end="28.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> early <span class="linking">days</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">settlement</span> <span class="weak linking">of</span> <span class="linking">Australia,</span> enterprising <span class="linking">settlers</span> <span class="linking">unwisely</span> introduced <span class="weak">the</span> European rabbit.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn <span class="weak">ði</span><span class="linking">‿</span>ˈərli deɪ <span class="weak">əv</span> <span class="weak">ðə</span> ˈsɛdlmənt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔˈstreɪljə ˈɛnərˌpraɪzɪŋ ˈsɛdlər<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈwaɪzli ˌɪntrəˈdus <span class="weak">ðə</span> ˌjʊrəˈpiən ˈræbət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˈərli、ˈsɛdlmənt‿əv‿ɔˈstreɪljə、ˈsɛdlər‿ˌənˈwaɪzli 连读；ðə、ði、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在澳大利亚定居初期，有进取心的定居者不明智地引入了欧洲兔。</p></div>
+      <div class="field words"><span>词</span><p>early 早期的； days 天； settlement 沉降； australia 澳大利亚；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="28.42" data-end="40.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">This rabbit <span class="weak">had</span> no <span class="linking">natural</span> <span class="linking">enemies</span> <span class="weak linking">in</span> <span class="weak">the</span> Antipodes, so <span class="weak linking">that</span> <span class="weak linking">it</span> multiplied with <span class="weak">that</span> <span class="linking">promiscuous</span> <span class="linking">abandon</span> <span class="linking">characteristic</span> <span class="weak linking">of</span> rabbits.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs ˈræbət <span class="weak">həd</span> noʊ ˈnætʃərl<span class="linking">‿</span>ˈɛnəmi ɪn <span class="weak">ði</span><span class="linking">‿</span>ænˈtɪpədiz soʊ ðæt<span class="linking">‿</span>ɪt ˈməltəˌplaɪ wɪð ðæt prəˈmɪskjəwəs<span class="linking">‿</span><span class="weak">ə</span>ˈbændən ˌkɛrktəˈrɪstɪk<span class="linking">‿</span><span class="weak">əv</span> ˈræbət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈnætʃərl‿ˈɛnəmi、ði‿ænˈtɪpədiz、ðæt‿ɪt、prəˈmɪskjəwəs‿əˈbændən、ˌkɛrktəˈrɪstɪk‿əv 连读；ði、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>这种兔子在对足动物中没有天敌，因此它以兔子的混杂抛弃特性繁殖。</p></div>
+      <div class="field words"><span>词</span><p>this 这； rabbit 兔子； natural 自然的； enemies 敌人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="40.42" data-end="43.87">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak linking">It</span> <span class="linking">overran</span> <span class="weak linking">a</span> whole continent.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span>ˌoʊvəˈræn<span class="linking">‿</span><span class="weak">ə</span> hoʊl ˈkɑntnənt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ˌoʊvəˈræn‿ə 连读；ə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>它覆盖了整个大陆。</p></div>
+      <div class="field words"><span>词</span><p>overran 超越； whole 整个的； continent 大陆；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="43.87" data-end="52.99">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">It</span> caused devastation by <span class="linking">burrowing</span> <span class="weak linking">and</span> by devouring <span class="weak">the</span> herbage which might <span class="weak">have</span> maintained <span class="linking">millions</span> <span class="weak linking">of</span> <span class="linking">sheep</span> <span class="weak linking">and</span> cattle.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt kɔz ˌdɛvəˈsteɪʃən baɪ ˈbəroʊ <span class="weak">ən</span> baɪ dəˈvaʊrɪŋ <span class="weak">ðə</span> herbage wɪtʃ maɪt <span class="weak">həv</span> meɪnˈteɪn ˈmɪljən<span class="linking">‿</span><span class="weak">əv</span> ʃip<span class="linking">‿</span><span class="weak">ən</span> ˈkædl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈmɪljən‿əv、ʃip‿ən 连读；ðə、ən、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>它通过挖洞和吞噬原本可以养活数百万只羊和牛的牧草而造成破坏。</p></div>
+      <div class="field words"><span>词</span><p>caused 造成的； devastation 破坏； burrowing 挖洞； devouring 吞噬；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="52.99" data-end="66.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Scientists discovered <span class="weak">that</span> this particular <span class="linking">variety</span> <span class="weak linking">of</span> <span class="linking">rabbit</span> <span class="weak linking">(and</span> <span class="linking">apparently</span> no <span class="linking">other</span> <span class="linking">animal)</span> <span class="weak">was</span> susceptible <span class="weak linking">to</span> <span class="weak linking">a</span> fatal virus disease, myxomatosis.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈsaɪəntəst dəˈskəvər ðæt ðɪs pəˈtɪkjələr vəˈraɪədi <span class="weak">əv</span> ˈræbət<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span>ˈpɛrənli noʊ ˈəðər<span class="linking">‿</span>ˈænəml <span class="weak">wəz</span> səˈsɛptəbl <span class="weak">tə</span> <span class="weak">ə</span> ˈfeɪdl ˈvaɪrəs dəˈziz mɪkˌsoʊməˈtoʊsəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈræbət‿ən‿əˈpɛrənli、ˈəðər‿ˈænəml 连读；ə、ən、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>科学家发现，这种特殊品种的兔子（显然没有其他动物）容易感染致命的病毒性疾病——粘液瘤病。</p></div>
+      <div class="field words"><span>词</span><p>scientists 科学家； discovered 发现了； this 这； particular 特别的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="66.84" data-end="75.06">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">By <span class="linking">infecting</span> <span class="linking">animals</span> <span class="weak linking">and</span> letting <span class="weak">them</span> <span class="linking">loose</span> <span class="weak linking">in</span> <span class="weak">the</span> burrows, <span class="linking">local</span> <span class="linking">epidemics</span> <span class="weak linking">of</span> this disease <span class="weak">could</span> <span class="weak">be</span> created.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/baɪ ɪnˈfɛk<span class="linking">‿</span>ˈænəml<span class="linking">‿</span><span class="weak">ən</span> lɛt ðəm lus<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈbəroʊ ˈloʊkəl<span class="linking">‿</span>ˌɛpəˈdɛmɪk<span class="linking">‿</span><span class="weak">əv</span> ðɪs dəˈziz kəd bi kriˈeɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪnˈfɛk‿ˈænəml‿ən、lus‿ɪn、ˈloʊkəl‿ˌɛpəˈdɛmɪk‿əv 连读；ðə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>通过感染动物并将它们释放到洞穴中，可能会造成这种疾病的局部流行。</p></div>
+      <div class="field words"><span>词</span><p>infecting 感染； animals 动物； letting 出租； loose 松动的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="75.06" data-end="83.84">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Later</span> <span class="weak linking">it</span> <span class="weak">was</span> found <span class="weak">that</span> <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak linking">a</span> <span class="linking">type</span> <span class="weak linking">of</span> mosquito <span class="linking">which</span> <span class="linking">acted</span> <span class="weak linking">as</span> <span class="weak">the</span> <span class="linking">carrier</span> <span class="weak linking">of</span> this <span class="linking">disease</span> <span class="weak linking">and</span> <span class="linking">passed</span> <span class="weak linking">it</span> <span class="linking">on</span> <span class="weak">to</span> <span class="weak">the</span> rabbits.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈleɪdər<span class="linking">‿</span>ɪt <span class="weak">wəz</span> found ðæt ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> type <span class="weak">əv</span> məˈskidoʊ wɪtʃ<span class="linking">‿</span>æk<span class="linking">‿</span><span class="weak">əz</span> <span class="weak">ðə</span> ˈkɛriər<span class="linking">‿</span><span class="weak">əv</span> ðɪs dəˈziz<span class="linking">‿</span><span class="weak">ən</span> pæs<span class="linking">‿</span>ɪt<span class="linking">‿</span>ɔn <span class="weak">tə</span> <span class="weak">ðə</span> ˈræbət/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈleɪdər‿ɪt、wəz‿ə、wɪtʃ‿æk‿əz、ˈkɛriər‿əv、dəˈziz‿ən 连读；ðə、ə、ən、əz、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>后来发现有一种蚊子是这种疾病的携带者，并将其传染给兔子。</p></div>
+      <div class="field words"><span>词</span><p>later 之后； found 成立； type 类型； mosquito 蚊子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="83.84" data-end="91.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">So while <span class="weak">the</span> <span class="linking">rest</span> <span class="weak linking">of</span> <span class="weak">the</span> world <span class="weak">was</span> trying <span class="weak">to</span> get <span class="linking">rid</span> <span class="weak linking">of</span> mosquitoes, Australia <span class="weak linking">was</span> <span class="linking">encouraging</span> <span class="linking">this</span> <span class="linking">one.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/soʊ waɪl <span class="weak">ðə</span> rɛst<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> wərld <span class="weak">wəz</span> ˈtraɪɪŋ <span class="weak">tə</span> ɡɛt rɪd<span class="linking">‿</span><span class="weak">əv</span> məˈskidoʊ ɔˈstreɪljə <span class="weak">wəz</span><span class="linking">‿</span>ɪnˈkərɪdʒɪŋ ðɪs<span class="linking">‿</span>one/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rɛst‿əv、rɪd‿əv、wəz‿ɪnˈkərɪdʒɪŋ、ðɪs‿one 连读；ðə、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>时间状语从句交代动作先后；原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>因此，当世界其他国家都在努力消灭蚊子时，澳大利亚却在鼓励这种蚊子。</p></div>
+      <div class="field words"><span>词</span><p>while 尽管； rest 休息； world 世界； trying 尝试；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="91.14" data-end="99.62">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">It</span> <span class="linking">effectively</span> spread <span class="weak">the</span> <span class="linking">disease</span> <span class="linking">all</span> <span class="linking">over</span> <span class="weak">the</span> <span class="linking">continent</span> <span class="weak linking">and</span> drastically reduced <span class="weak">the</span> rabit population.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ə</span>ˈfɛktəvli sprɛd <span class="weak">ðə</span> dəˈziz<span class="linking">‿</span>ɔl<span class="linking">‿</span>ˈoʊvər <span class="weak">ðə</span> ˈkɑntnənt<span class="linking">‿</span><span class="weak">ən</span> ˈdræstəkli rəˈdust <span class="weak">ðə</span> rabit ˌpɑpjəˈleɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿əˈfɛktəvli、dəˈziz‿ɔl‿ˈoʊvər、ˈkɑntnənt‿ən 连读；ðə、ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>它有效地将疾病传播到整个大陆，并大幅减少了兔子的数量。</p></div>
+      <div class="field words"><span>词</span><p>effectively 有效地； spread 传播； disease 疾病； over 超过；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="99.62" data-end="111.88">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">It</span> later <span class="linking">became</span> <span class="linking">apparent</span> <span class="weak">that</span> rabbits <span class="weak">were</span> <span class="linking">developing</span> <span class="weak linking">a</span> <span class="linking">degree</span> <span class="weak linking">of</span> resistance <span class="weak">to</span> this disease, so <span class="weak">that</span> <span class="weak">the</span> rabbit population <span class="weak linking">was</span> <span class="linking">unlikely</span> <span class="weak">to</span> <span class="weak">be</span> completely exterminated.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt ˈleɪdər bəˈkeɪm<span class="linking">‿</span><span class="weak">ə</span>ˈpɛrənt ðæt ˈræbət <span class="weak">wɚ</span> dəˈvɛləpɪŋ<span class="linking">‿</span><span class="weak">ə</span> dəˈɡri <span class="weak">əv</span> rəˈzɪstns <span class="weak">tə</span> ðɪs dəˈziz soʊ ðæt <span class="weak">ðə</span> ˈræbət ˌpɑpjəˈleɪʃən <span class="weak">wəz</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈlaɪkli <span class="weak">tə</span> bi kəmˈplitli ɪkˈstərməˌneɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bəˈkeɪm‿əˈpɛrənt、dəˈvɛləpɪŋ‿ə、wəz‿ˌənˈlaɪkli 连读；ðə、ə、tə、əv、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>过去进行时描写当时正在发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>后来人们发现兔子对这种疾病产生了一定程度的抵抗力，因此兔子种群不太可能被完全灭绝。</p></div>
+      <div class="field words"><span>词</span><p>later 之后； became 成为； apparent 明显的； rabbits 兔子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="111.88" data-end="118.72">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">There</span> <span class="weak">were</span> hopes, however, <span class="weak">that</span> <span class="weak">the</span> <span class="linking">problem</span> <span class="weak linking">of</span> <span class="weak">the</span> rabbit <span class="weak">would</span> become manageable.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr <span class="weak">wɚ</span> hoʊp haʊˈɛvər ðæt <span class="weak">ðə</span> ˈprɑbləm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈræbət wəd bəˈkəm ˈmænədʒəbl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈprɑbləm‿əv 连读；ðə、əv、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>然而，人们希望兔子的问题能够得到解决。</p></div>
+      <div class="field words"><span>词</span><p>hopes 希望； however 然而； problem 问题； rabbit 兔子；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="118.72" data-end="129.37">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Ironically, Europe, which <span class="weak">had</span> bequeathed <span class="weak">the</span> <span class="linking">rabbit</span> <span class="weak linking">as</span> <span class="weak linking">a</span> pest <span class="weak">to</span> Australia, acquired this man-made <span class="linking">disease</span> <span class="weak linking">as</span> <span class="weak linking">a</span> pestilence.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪˈrɑnəkli ˈjʊrəp wɪtʃ <span class="weak">həd</span> bəˈkwið <span class="weak">ðə</span> ˈræbət<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> pɛst <span class="weak">tə</span> ɔˈstreɪljə <span class="weak">ə</span>ˈkwaɪrd ðɪs ˈmænˌmeɪd dəˈziz<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> ˈpɛstələns/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈræbət‿əz‿ə、dəˈziz‿əz‿ə 连读；ðə、ə、əz、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>具有讽刺意味的是，欧洲将兔子作为害虫遗赠给了澳大利亚，却将这种人造疾病作为瘟疫传染给了澳大利亚。</p></div>
+      <div class="field words"><span>词</span><p>ironically 讽刺地； europe 欧洲； which 哪个； bequeathed 遗赠的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="129.37" data-end="137.03">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">A</span> French physician decided <span class="weak">to</span> get <span class="linking">rid</span> <span class="weak linking">of</span> <span class="weak">the</span> wild <span class="linking">rabbits</span> <span class="linking">on</span> <span class="weak linking">his</span> <span class="linking">own</span> <span class="linking">estate</span> <span class="weak linking">and</span> <span class="linking">introduced</span> myxomatosis.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> frɛnʃ fəˈzɪʃən dəˈsaɪdəd <span class="weak">tə</span> ɡɛt rɪd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> waɪld ˈræbət<span class="linking">‿</span>ɔn hɪz<span class="linking">‿</span>oʊn<span class="linking">‿</span><span class="weak">ə</span>ˈsteɪt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌɪntrəˈdus mɪkˌsoʊməˈtoʊsəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>rɪd‿əv、ˈræbət‿ɔn、hɪz‿oʊn‿əˈsteɪt‿ən‿ˌɪntrəˈdus 连读；ðə、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>一位法国医生决定消灭他自己庄园里的野兔，并引入了粘液瘤病。</p></div>
+      <div class="field words"><span>词</span><p>french 法语； physician 医生； decided 决定； wild 荒野；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="137.03" data-end="142.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">It</span> did not, however, remain within <span class="weak">the</span> <span class="linking">confines</span> <span class="weak linking">of</span> <span class="linking">this</span> <span class="linking">estate.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt dɪd nɑt haʊˈɛvər rəˈmeɪn wəˈðɪn <span class="weak">ðə</span> <span class="weak">kən</span>ˈfaɪn<span class="linking">‿</span><span class="weak">əv</span> ðɪs<span class="linking">‿</span><span class="weak">ə</span>ˈsteɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kənˈfaɪn‿əv、ðɪs‿əˈsteɪt 连读；ðə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>然而，它并没有留在这个庄园的范围内。</p></div>
+      <div class="field words"><span>词</span><p>however 然而； remain 保持； within 之内； confines 限制；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="142.13" data-end="165.5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">It</span> spread through France, where wild <span class="linking">rabbits</span> <span class="weak linking">are</span> not generally <span class="linking">regarded</span> <span class="weak linking">as</span> <span class="weak linking">a</span> pest <span class="weak linking">but</span> <span class="weak linking">as</span> <span class="weak linking">a</span> <span class="linking">sport</span> <span class="weak linking">and</span> <span class="weak linking">a</span> useful food <span class="linking">supply,</span> <span class="weak linking">and</span> <span class="weak linking">it</span> spread <span class="weak">to</span> Britain where wild <span class="linking">rabbits</span> <span class="weak linking">are</span> <span class="linking">regarded</span> <span class="weak linking">as</span> <span class="weak linking">a</span> pest <span class="weak">but</span> where domesticated <span class="linking">rabbits,</span> <span class="linking">equally</span> susceptible <span class="weak">to</span> <span class="weak">the</span> <span class="linking">disease,</span> <span class="weak linking">are</span> <span class="weak">the</span> <span class="linking">basis</span> <span class="weak linking">of</span> <span class="weak linking">a</span> profitable <span class="linking">fur</span> <span class="linking">industry.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt sprɛd θru fræns wɛr waɪld ˈræbət<span class="linking">‿</span><span class="weak">ɑr</span> nɑt ˈdʒɛnrəli rəˈɡɑrd<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> pɛst bət<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> spɔrt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> ˈjusfl fud səˈplaɪ <span class="weak">ən</span><span class="linking">‿</span>ɪt sprɛd <span class="weak">tə</span> ˈbrɪtn wɛr waɪld ˈræbət<span class="linking">‿</span><span class="weak">ɑr</span> rəˈɡɑrd<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> pɛst bət wɛr dəˈmɛstəˌkeɪdəd ˈræbət<span class="linking">‿</span>ˈikwəli səˈsɛptəbl <span class="weak">tə</span> <span class="weak">ðə</span> dəˈziz<span class="linking">‿</span><span class="weak">ɑr</span> <span class="weak">ðə</span> ˈbeɪsəs<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈprɑfədəbl fər<span class="linking">‿</span>ˈɪndəstri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈræbət‿ɑr、rəˈɡɑrd‿əz‿ə、bət‿əz‿ə、spɔrt‿ən‿ə、ən‿ɪt 连读；ðə、ə、ən、əz、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>它传播到了法国，在法国，野兔通常不被视为害虫，而是一种运动和有用的食物供应。它传播到了英国，在英国，野兔被视为害虫，但同样容易感染这种疾病的家兔是有利可图的毛皮工业的基础。</p></div>
+      <div class="field words"><span>词</span><p>spread 传播； through 通过； france 法国； where 在哪里；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="165.5" data-end="172.25">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak">The</span> question <span class="linking">became</span> <span class="linking">one</span> <span class="weak linking">of</span> whether Man <span class="weak">could</span> control <span class="weak">the</span> disease <span class="weak">he</span> <span class="weak linking">had</span> <span class="linking">invented.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈkwɛstʃn bəˈkeɪm<span class="linking">‿</span>one <span class="weak">əv</span> ˈwɛðər mæn kəd control <span class="weak">ðə</span> dəˈziz hi <span class="weak">həd</span><span class="linking">‿</span>ɪnˈvɛnt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bəˈkeɪm‿one、həd‿ɪnˈvɛnt 连读；ðə、əv、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>问题之一是人类能否控制他发明的疾病。</p></div>
+      <div class="field words"><span>词</span><p>question 问题； became 成为； whether 无论； control 控制；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>early 早期的； days 天； settlement 沉降； australia 澳大利亚； this 这； rabbit 兔子； natural 自然的； enemies 敌人； overran 超越； whole 整个的； continent 大陆； caused 造成的； devastation 破坏； burrowing 挖洞； devouring 吞噬； scientists 科学家； discovered 发现了； this 这；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 原因或结果关系连接分句； 含定语从句或名词性从句； 并列结构连接动作或信息； 含被动结构； 时间状语从句交代动作先后。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 一般过去时叙述故事主线； 现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 过去进行时描写当时正在发生的动作； 过去完成时说明更早发生的动作。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>4. It caused devastation by burrowing and by devouring the herbage which might have maintained millions of sheep and cattle.； 6. By infecting animals and letting them loose in the burrows, local epidemics of this disease could be created.； 11. There were hopes, however, that the problem of the rabbit would become manageable.； 16. The question became one of whether Man could control the disease he had invented.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ði‿ˈərli、ˈsɛdlmənt‿əv‿ɔˈstreɪljə、ˈsɛdlər‿ˌənˈwaɪzli 连读；ðə、ði、əv 弱读/弱化； ˈnætʃərl‿ˈɛnəmi、ði‿ænˈtɪpədiz、ðæt‿ɪt、prəˈmɪskjəwəs‿əˈbændən、ˌkɛrktəˈrɪstɪk‿əv 连读；ði、əv、həd 弱读/弱化； ɪt‿ˌoʊvəˈræn‿ə 连读；ə 弱读/弱化； ˈmɪljən‿əv、ʃip‿ən 连读；ðə、ən、əv、həv 弱读/弱化； ˈræbət‿ən‿əˈpɛrənli、ˈəðər‿ˈænəml 连读；ə、ən、tə、əv、wəz 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">A Man-made Disease</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../17－A Man-made Disease.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.28,"end":28.42,"text":"In the early days of the settlement of Australia, enterprising settlers unwisely introduced the European rabbit."},{"index":2,"start":28.42,"end":40.42,"text":"This rabbit had no natural enemies in the Antipodes, so that it multiplied with that promiscuous abandon characteristic of rabbits."},{"index":3,"start":40.42,"end":43.87,"text":"It overran a whole continent."},{"index":4,"start":43.87,"end":52.99,"text":"It caused devastation by burrowing and by devouring the herbage which might have maintained millions of sheep and cattle."},{"index":5,"start":52.99,"end":66.84,"text":"Scientists discovered that this particular variety of rabbit (and apparently no other animal) was susceptible to a fatal virus disease, myxomatosis."},{"index":6,"start":66.84,"end":75.06,"text":"By infecting animals and letting them loose in the burrows, local epidemics of this disease could be created."},{"index":7,"start":75.06,"end":83.84,"text":"Later it was found that there was a type of mosquito which acted as the carrier of this disease and passed it on to the rabbits."},{"index":8,"start":83.84,"end":91.14,"text":"So while the rest of the world was trying to get rid of mosquitoes, Australia was encouraging this one."},{"index":9,"start":91.14,"end":99.62,"text":"It effectively spread the disease all over the continent and drastically reduced the rabit population."},{"index":10,"start":99.62,"end":111.88,"text":"It later became apparent that rabbits were developing a degree of resistance to this disease, so that the rabbit population was unlikely to be completely exterminated."},{"index":11,"start":111.88,"end":118.72,"text":"There were hopes, however, that the problem of the rabbit would become manageable."},{"index":12,"start":118.72,"end":129.37,"text":"Ironically, Europe, which had bequeathed the rabbit as a pest to Australia, acquired this man-made disease as a pestilence."},{"index":13,"start":129.37,"end":137.03,"text":"A French physician decided to get rid of the wild rabbits on his own estate and introduced myxomatosis."},{"index":14,"start":137.03,"end":142.13,"text":"It did not, however, remain within the confines of this estate."},{"index":15,"start":142.13,"end":165.5,"text":"It spread through France, where wild rabbits are not generally regarded as a pest but as a sport and a useful food supply, and it spread to Britain where wild rabbits are regarded as a pest but where domesticated rabbits, equally susceptible to the disease, are the basis of a profitable fur industry."},{"index":16,"start":165.5,"end":172.25,"text":"The question became one of whether Man could control the disease he had invented."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

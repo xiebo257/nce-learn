@@ -365,7 +365,7 @@
             </div>
         </a>
 
-        <div class="book-card is-disabled" aria-disabled="true">
+        <a class="book-card" href="#nce4-lessons">
             <div class="cover-wrap">
                 <img src="../../images/NCE4.jpg" alt="New Concept English Fluency in English">
             </div>
@@ -375,10 +375,10 @@
                 <div class="book-subtitle">流利英语</div>
                 <div class="book-meta">
                     <span class="pill">48课</span>
-                    <span class="pill pending">分析 HTML 未生成</span>
+                    <span class="pill available">已生成 1-48</span>
                 </div>
             </div>
-        </div>
+        </a>
     </section>
 
     <p class="note">
@@ -417,6 +417,17 @@
             <span class="pill available" id="nce3-count">0 pages</span>
         </div>
         <div class="lesson-grid" id="nce3-grid"></div>
+    </section>
+
+    <section class="section" id="nce4-lessons">
+        <div class="section-head">
+            <div class="section-title">
+                <h2>第四册分析 HTML</h2>
+                <p>Lessons 1-48, sentence-by-sentence analysis pages.</p>
+            </div>
+            <span class="pill available" id="nce4-count">0 pages</span>
+        </div>
+        <div class="lesson-grid" id="nce4-grid"></div>
     </section>
 
     <footer>
@@ -662,6 +673,57 @@
         "96－The Dead Return.analysis.html"
     ];
 
+    const nce4Files = [
+        "01－Finding Fossil Man.analysis.html",
+        "02－Spare That Spider.analysis.html",
+        "03－Matterhorn Man.analysis.html",
+        "04－Seeing Hands.analysis.html",
+        "05－Youth.analysis.html",
+        "06－The Sporting Spirit.analysis.html",
+        "07－Bats.analysis.html",
+        "08－Trading Standards.analysis.html",
+        "09－Royal Espionage.analysis.html",
+        "10－Silicon Valley.analysis.html",
+        "11－How to Grow Old.analysis.html",
+        "12－Banks and Their Customers.analysis.html",
+        "13－The Search for Oil.analysis.html",
+        "14－The Butterfly Effect.analysis.html",
+        "15－Secrecy in Industry.analysis.html",
+        "16－The Modern City.analysis.html",
+        "17－A Man-made Disease.analysis.html",
+        "18－Porpoises.analysis.html",
+        "19－The Stuff of Dreams.analysis.html",
+        "20－Snake Poison.analysis.html",
+        "21－William S. Hart and the Early Western Film.analysis.html",
+        "22－Knowledge and Progress.analysis.html",
+        "23－Bird Flight.analysis.html",
+        "24－Beauty.analysis.html",
+        "25－Non-Auditory Effects of Noise.analysis.html",
+        "26－The Past Life of the Earth.analysis.html",
+        "27－The vasa.analysis.html",
+        "28－Patients and Doctors.analysis.html",
+        "29－The Hovercraft.analysis.html",
+        "30－Exploring the Sea-Floor.analysis.html",
+        "31－The Sculptor Speaks.analysis.html",
+        "32－Galileo Reborn.analysis.html",
+        "33－Education.analysis.html",
+        "34－Adolescence.analysis.html",
+        "35－Space Odyssey.analysis.html",
+        "36－The Cost of Government.analysis.html",
+        "37－The Process of Ageing.analysis.html",
+        "38－Water and the Traveller.analysis.html",
+        "39－What Every Writer Wants.analysis.html",
+        "40－Waves.analysis.html",
+        "41－Training Elephants.analysis.html",
+        "42－Recording an Earthquake.analysis.html",
+        "43－Are There Strangers in Space.analysis.html",
+        "44－Patterns of Culture.analysis.html",
+        "45－Of Men and Galaxies.analysis.html",
+        "46－Hobbies.analysis.html",
+        "47－The Great Escape.analysis.html",
+        "48－Planning a Share Portfolio.analysis.html"
+    ];
+
     function lessonParts(fileName) {
         const clean = fileName.replace(".analysis.html", "");
         const splitAt = clean.indexOf("－");
@@ -697,6 +759,7 @@
     renderLessons("nce1-grid", "nce1-count", nce1Files, "");
     renderLessons("nce2-grid", "nce2-count", nce2Files, "../../NCE2/html/");
     renderLessons("nce3-grid", "nce3-count", nce3Files, "../../NCE3/html/");
+    renderLessons("nce4-grid", "nce4-count", nce4Files, "../../NCE4/html/");
 </script>
 </body>
 </html>

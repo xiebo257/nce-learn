@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 46 - Hobbies</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 46 - Hobbies</h1>
+      <p class="meta">问题: Who, according to the author, are 'Fortune's favoured children'?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+      <a href="#sentence-27">27</a>
+      <a href="#sentence-28">28</a>
+      <a href="#sentence-29">29</a>
+      <a href="#sentence-30">30</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="16.63" data-end="27.45">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">A</span> <span class="linking">gifted</span> <span class="linking">American</span> psychologist <span class="weak">has</span> said, <span class="linking">'Worry</span> <span class="weak linking">is</span> <span class="weak linking">a</span> <span class="linking">spasm</span> <span class="weak linking">of</span> <span class="weak">the</span> emotion; <span class="weak">the</span> mind catches <span class="linking">hold</span> <span class="weak linking">of</span> <span class="linking">something</span> <span class="weak linking">and</span> <span class="weak">will</span> not <span class="linking">let</span> <span class="weak linking">it</span> go.'</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> ˈɡɪftəd<span class="linking">‿</span><span class="weak">ə</span>ˈmɛrkn saɪˈkɑlədʒəst <span class="weak">həz</span> sɛd ˈwəri <span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈspæzəm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈmoʊʃən <span class="weak">ðə</span> maɪnd kɛtʃ hoʊld<span class="linking">‿</span><span class="weak">əv</span> ˈsəmˌθɪŋ<span class="linking">‿</span><span class="weak">ən</span> wɪl nɑt lɛt<span class="linking">‿</span>ɪt ɡoʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈɡɪftəd‿əˈmɛrkn、ɪz‿ə、ˈspæzəm‿əv、ði‿əˈmoʊʃən、hoʊld‿əv 连读；ðə、ði、ə、ən、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；将来结构表示预期或安排；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>一位才华横溢的美国心理学家曾说过：“忧虑是一种情绪的痉挛；忧虑是一种情绪的痉挛；忧虑是情绪的痉挛。头脑抓住某些东西并且不会放开它。</p></div>
+      <div class="field words"><span>词</span><p>gifted 天才； american 美国人； psychologist 心理学家； said 说；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="27.45" data-end="30.89">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> useless <span class="weak">to</span> argue with <span class="weak">the</span> <span class="linking">mind</span> <span class="weak linking">in</span> this condition.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> ˈjusləs <span class="weak">tə</span> ˈɑrɡju wɪð <span class="weak">ðə</span> maɪnd<span class="linking">‿</span>ɪn ðɪs <span class="weak">kən</span>ˈdɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、maɪnd‿ɪn 连读；ðə、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在这种情况下与头脑争论是没有用的。</p></div>
+      <div class="field words"><span>词</span><p>useless 无用； argue 争论； with 和； mind 头脑；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="30.89" data-end="34.54">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> stronger <span class="weak">the</span> <span class="weak">will,</span> <span class="weak">the</span> more futile <span class="weak">the</span> task.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> strɔŋ <span class="weak">ðə</span> wɪl <span class="weak">ðə</span> mɔr ˈfjudl <span class="weak">ðə</span> tæsk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>意志越坚强，任务就越徒劳。</p></div>
+      <div class="field words"><span>词</span><p>stronger 更强； more 更多的； futile 无用的； task 任务；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="34.54" data-end="39.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">One <span class="weak linking">can</span> <span class="linking">only</span> gently insinuate <span class="linking">something</span> <span class="linking">else</span> <span class="linking">into</span> its convulsive grasp.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one <span class="weak">kən</span><span class="linking">‿</span>ˈoʊnli ˈdʒɛnli ɪnˈsɪnjəˌweɪt ˈsəmˌθɪŋ<span class="linking">‿</span>ɛls<span class="linking">‿</span>ˈɪntu its <span class="weak">kən</span>ˈvəlsɪv ɡræsp/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>kən‿ˈoʊnli、ˈsəmˌθɪŋ‿ɛls‿ˈɪntu 连读；kən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>一个人只能轻轻地将其他东西引入它的痉挛之中。</p></div>
+      <div class="field words"><span>词</span><p>only 仅有的； gently 轻轻地； insinuate 暗示； something 某物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="39.98" data-end="59.3">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak linking">And</span> <span class="linking">if</span> this <span class="linking">something</span> <span class="linking">else</span> <span class="weak linking">is</span> rightly <span class="linking">chosen,</span> <span class="linking">if</span> <span class="weak linking">it</span> <span class="weak linking">is</span> really attended by <span class="weak">the</span> <span class="linking">illumination</span> <span class="weak linking">of</span> <span class="linking">another</span> <span class="linking">field</span> <span class="weak linking">of</span> <span class="linking">interest,</span> <span class="linking">gradually,</span> <span class="weak linking">and</span> <span class="linking">often</span> quite swiftly, <span class="weak">the</span> <span class="linking">old</span> <span class="linking">undue</span> grip <span class="linking">relaxes</span> <span class="weak linking">and</span> <span class="weak">the</span> <span class="linking">process</span> <span class="weak linking">of</span> <span class="linking">recuperation</span> <span class="weak linking">and</span> repair begins.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ən</span><span class="linking">‿</span>ɪf ðɪs ˈsəmˌθɪŋ<span class="linking">‿</span>ɛls<span class="linking">‿</span><span class="weak">ɪz</span> ˈraɪtli ˈtʃoʊzn<span class="linking">‿</span>ɪf<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> ˈrili <span class="weak">ə</span>ˈtɛnd baɪ <span class="weak">ði</span><span class="linking">‿</span>ɪˌluməˈneɪʃən<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span>ˈnəðər fild<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɪntrəst ˈɡrædʒwəli <span class="weak">ən</span><span class="linking">‿</span>ˈɔfn kwaɪt ˈswɪfli <span class="weak">ði</span><span class="linking">‿</span>oʊld<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈdu ɡrɪp rəˈlæks<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ðə</span> ˈprɑˌsɛs<span class="linking">‿</span><span class="weak">əv</span> rəˌkupəˈreɪʃən<span class="linking">‿</span><span class="weak">ən</span> rəˈpɛr bəˈɡɪn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ən‿ɪf、ˈsəmˌθɪŋ‿ɛls‿ɪz、ˈtʃoʊzn‿ɪf‿ɪt‿ɪz、ði‿ɪˌluməˈneɪʃən‿əv‿əˈnəðər、fild‿əv‿ˈɪntrəst 连读；ðə、ði、ən、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>如果正确地选择了其他事物，如果它确实伴随着另一个感兴趣领域的启发，那么旧的不适当的束缚就会逐渐地、通常很快地放松下来，恢复和修复的过程就会开始。</p></div>
+      <div class="field words"><span>词</span><p>this 这； something 某物； else 别的； rightly 正确地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="59.3" data-end="67.87">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">The</span> <span class="linking">cultivation</span> <span class="weak linking">of</span> <span class="weak linking">a</span> <span class="linking">hobby</span> <span class="weak linking">and</span> new <span class="linking">forms</span> <span class="weak linking">of</span> <span class="linking">interest</span> <span class="weak linking">is</span> <span class="linking">therefore</span> <span class="weak linking">a</span> <span class="linking">policy</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">first</span> <span class="linking">importance</span> <span class="weak linking">to</span> <span class="weak linking">a</span> public man.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˌkəltəˈveɪʃən<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ˈhɑbi <span class="weak">ən</span> nu forms<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span><span class="weak">ɪz</span> ˈðɛrˌfɔr<span class="linking">‿</span><span class="weak">ə</span> ˈpɑləsi <span class="weak">əv</span> <span class="weak">ðə</span> fərst<span class="linking">‿</span>ɪmˈpɔrtns <span class="weak">tə</span> <span class="weak">ə</span> ˈpəblɪk mæn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˌkəltəˈveɪʃən‿əv‿ə、forms‿əv‿ˈɪntrəst‿ɪz、ˈðɛrˌfɔr‿ə、fərst‿ɪmˈpɔrtns 连读；ðə、ə、ən、tə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>因此，培养一种爱好和新的兴趣形式对于一个公众人物来说是最重要的政策。</p></div>
+      <div class="field words"><span>词</span><p>cultivation 栽培； hobby 爱好； forms 形式； interest 兴趣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="67.87" data-end="75.76">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak">But</span> <span class="linking">this</span> <span class="weak linking">is</span> <span class="linking">not</span> <span class="weak linking">a</span> business <span class="weak">that</span> <span class="weak">can</span> <span class="weak">be</span> <span class="linking">undertaken</span> <span class="weak linking">in</span> <span class="weak linking">a</span> day or swiftly improvised <span class="linking">by</span> <span class="weak linking">a</span> mere <span class="linking">command</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="weak">will.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət ðɪs<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span> ˈbɪznəs ðæt <span class="weak">kən</span> bi ˌəndərˈteɪk<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> deɪ ɔr ˈswɪfli ˈɪmprəˌvaɪz baɪ <span class="weak">ə</span> mɪr kəˈmænd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> wɪl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz、nɑɾ‿ə、ˌəndərˈteɪk‿ɪn‿ə、kəˈmænd‿əv 连读；ðə、ə、kən、əv、ɪz 弱读/弱化；nɑɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>但这不是一天就能完成的事情，也不是仅仅靠意志就能迅速完成的事情。</p></div>
+      <div class="field words"><span>词</span><p>this 这； business 事情/业务； undertaken 进行； swiftly 迅速地；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="75.76" data-end="80.65">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">The</span> <span class="linking">growth</span> <span class="weak linking">of</span> <span class="linking">alternative</span> <span class="linking">mental</span> <span class="linking">interests</span> <span class="weak linking">is</span> <span class="weak linking">a</span> long process.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ɡroʊθ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔlˈtərnədɪv ˈmɛnl<span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> long ˈprɑˌsɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɡroʊθ‿əv‿ɔlˈtərnədɪv、ˈmɛnl‿ˈɪntrəst‿ɪz‿ə 连读；ðə、ə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>另类心理兴趣的成长是一个漫长的过程。</p></div>
+      <div class="field words"><span>词</span><p>growth 生长； alternative 选择； mental 精神的； interests 兴趣；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="80.65" data-end="92.62">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">The</span> seeds must <span class="weak">be</span> carefully chosen; <span class="weak">they</span> must <span class="linking">fall</span> <span class="linking">on</span> good ground; <span class="weak">they</span> must <span class="weak">be</span> sedulously <span class="linking">tended,</span> <span class="linking">if</span> <span class="weak">the</span> vivifying <span class="linking">fruits</span> <span class="weak linking">are</span> <span class="weak">to</span> <span class="weak linking">be</span> <span class="weak linking">at</span> hand when needed.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> sid məst bi ˈkɛrfli ˈtʃoʊzn ðeɪ məst fɔl<span class="linking">‿</span>ɔn ɡʊd ɡraʊnd ðeɪ məst bi ˈsɛdʒələsli tɛnd<span class="linking">‿</span>ɪf <span class="weak">ðə</span> ˈvɪvəˌfaɪ frut<span class="linking">‿</span><span class="weak">ɑr</span> <span class="weak">tə</span> bi <span class="weak">ət</span> hænd wɛn nid/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>fɔl‿ɔn、tɛnd‿ɪf、frut‿ɑr 连读；ðə、ət、tə、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>种子必须经过精心挑选；他们必须落在良好的基础上；如果要在需要时获得充满活力的果实，就必须精心照料它们。</p></div>
+      <div class="field words"><span>词</span><p>seeds 种子； must 必须； carefully 小心； chosen 选择的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="92.62" data-end="100.91">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">To</span> <span class="weak">be</span> really <span class="linking">happy</span> <span class="weak linking">and</span> really safe, one ought <span class="weak">to</span> <span class="weak linking">have</span> <span class="weak linking">at</span> least two or three <span class="linking">hobbies,</span> <span class="weak linking">and</span> <span class="weak">they</span> <span class="linking">must</span> <span class="linking">all</span> <span class="weak">be</span> real.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span> bi ˈrili ˈhæpi <span class="weak">ən</span> ˈrili safe one ɔt <span class="weak">tə</span> <span class="weak">həv</span><span class="linking">‿</span><span class="weak">ət</span> list tu ɔr θri ˈhɑbi <span class="weak">ən</span> ðeɪ məst<span class="linking">‿</span>ɔl bi ril/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həv‿ət、məst‿ɔl 连读；ən、ət、tə、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>要想真正快乐、真正安全，一个人至少应该有两到三种爱好，而且它们都必须是真实的。</p></div>
+      <div class="field words"><span>词</span><p>really 真的； happy 快乐的； safe 安全的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="100.91" data-end="106.63">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> no use starting <span class="linking">late</span> <span class="weak linking">in</span> life <span class="weak">to</span> say: <span class="weak">'I</span> <span class="weak">will</span> <span class="linking">take</span> <span class="weak linking">an</span> <span class="linking">interest</span> <span class="weak linking">in</span> <span class="linking">this</span> <span class="linking">or</span> <span class="weak">that.'</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> noʊ jus stɑrt leɪt<span class="linking">‿</span>ɪn laɪf <span class="weak">tə</span> seɪ aɪ wɪl teɪk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span>ɪn ðɪs<span class="linking">‿</span>ɔr ðæt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、leɪt‿ɪn、teɪk‿ən‿ˈɪntrəst‿ɪn、ðɪs‿ɔr 连读；ən、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>在晚年才说：“我会对这个或那个感兴趣”是没有用的。</p></div>
+      <div class="field words"><span>词</span><p>starting 开始； late 晚的； life 生活； take 拿；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="106.63" data-end="111.36">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">Such</span> <span class="weak linking">an</span> <span class="linking">attempt</span> <span class="linking">only</span> aggravates <span class="weak">the</span> <span class="linking">strain</span> <span class="weak linking">of</span> <span class="linking">mental</span> <span class="linking">effort.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/sətʃ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span>ˈtɛmt<span class="linking">‿</span>ˈoʊnli ˈæɡrəˌveɪt <span class="weak">ðə</span> streɪn<span class="linking">‿</span><span class="weak">əv</span> ˈmɛnl<span class="linking">‿</span>ˈɛfərt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>sətʃ‿ən‿əˈtɛmt‿ˈoʊnli、streɪn‿əv、ˈmɛnl‿ˈɛfərt 连读；ðə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这种尝试只会加剧脑力劳动的压力。</p></div>
+      <div class="field words"><span>词</span><p>such 这样的； attempt 试图； only 仅有的； aggravates 加重；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="111.36" data-end="120.13">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">A</span> man may acquire great <span class="linking">knowledge</span> <span class="weak linking">of</span> <span class="linking">topics</span> <span class="linking">unconnected</span> with <span class="weak">his</span> daily <span class="linking">work,</span> <span class="weak linking">and</span> yet get hardly any <span class="linking">benefit</span> <span class="linking">or</span> relief.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ə</span> mæn meɪ <span class="weak">ə</span>ˈkwaɪr ɡreɪt ˈnɑlədʒ<span class="linking">‿</span><span class="weak">əv</span> ˈtɑpɪk<span class="linking">‿</span>ˌənkəˈnɛktəd wɪð hɪz daily wərk<span class="linking">‿</span><span class="weak">ən</span> jɛt ɡɛt ˈhɑrdli ˈɛni ˈbɛnəfɪt<span class="linking">‿</span>ɔr rəˈlif/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈnɑlədʒ‿əv、ˈtɑpɪk‿ˌənkəˈnɛktəd、wərk‿ən、ˈbɛnəfɪt‿ɔr 连读；ə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>一个人可能会获得与日常工作无关的大量知识，但几乎得不到任何好处或缓解。</p></div>
+      <div class="field words"><span>词</span><p>acquire 获得； great 伟大的； knowledge 知识； topics 主题；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="120.13" data-end="124.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> no use doing what <span class="weak">you</span> like; <span class="weak">you</span> <span class="weak">have</span> got <span class="weak">to</span> like what <span class="weak">you</span> <span class="weak">do.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> noʊ jus ˈduɪŋ wət ju like ju <span class="weak">həv</span> ɡɑt <span class="weak">tə</span> like wət ju du/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz 连读；tə、ɪz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>做自己喜欢的事是没有用的；你必须喜欢你所做的事情。</p></div>
+      <div class="field words"><span>词</span><p>doing 正在做； what 什么； like 喜欢；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="124.74" data-end="138.48">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Broadly speaking, human beings may <span class="weak">be</span> <span class="linking">divided</span> <span class="linking">into</span> three classes: those <span class="linking">who</span> <span class="weak linking">are</span> toiled <span class="weak">to</span> death, those <span class="linking">who</span> <span class="weak linking">are</span> worried <span class="weak">to</span> <span class="linking">death,</span> <span class="weak linking">and</span> those <span class="linking">who</span> <span class="weak linking">are</span> bored <span class="weak">to</span> death.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈbrɔdli ˈspikɪŋ ˈjumən ˈbiɪŋ meɪ bi dəˈvaɪdəd<span class="linking">‿</span>ˈɪntu θri klæs ðoʊz who <span class="weak">ɑr</span> tɔɪl <span class="weak">tə</span> dɛθ ðoʊz who <span class="weak">ɑr</span> ˈwərid <span class="weak">tə</span> dɛθ<span class="linking">‿</span><span class="weak">ən</span> ðoʊz who <span class="weak">ɑr</span> bɔrd <span class="weak">tə</span> dɛθ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəˈvaɪdəd‿ˈɪntu、dɛθ‿ən 连读；ən、tə、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>从广义上讲，人可以分为三类：劳累死的人、忧虑死的人、无聊死的人。</p></div>
+      <div class="field words"><span>词</span><p>broadly 广泛地； speaking 请讲； human 人类； beings 众生；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="138.48" data-end="149.96">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> no <span class="linking">use</span> <span class="linking">offering</span> <span class="weak">the</span> manual labourer, tired out <span class="linking">with</span> <span class="weak linking">a</span> hard week's <span class="linking">sweat</span> <span class="weak linking">and</span> <span class="linking">effort</span> <span class="weak">the</span> <span class="linking">chance</span> <span class="weak linking">of</span> <span class="linking">playing</span> <span class="weak linking">a</span> <span class="linking">game</span> <span class="weak linking">of</span> <span class="linking">football</span> <span class="linking">or</span> <span class="linking">baseball</span> <span class="linking">on</span> Saturday afternoon.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> noʊ jus<span class="linking">‿</span>ˈɔfərɪŋ <span class="weak">ðə</span> ˈmænjəl ˈleɪbrər ˈtaɪrd aʊt wɪð<span class="linking">‿</span><span class="weak">ə</span> hɑrd week's swɛt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɛfərt <span class="weak">ðə</span> tʃæns<span class="linking">‿</span><span class="weak">əv</span> pleɪ <span class="weak">ə</span> game <span class="weak">əv</span> ˈfʊtˌbɔl<span class="linking">‿</span>ɔr ˈbeɪsˌbɔl<span class="linking">‿</span>ɔn ˈsædərˌdeɪ ˌæftərˈnun/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、jus‿ˈɔfərɪŋ、wɪð‿ə、swɛt‿ən‿ˈɛfərt、tʃæns‿əv 连读；ðə、ə、ən、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>为体力劳动者提供在周六下午踢足球或棒球的机会是没有意义的，因为一周辛苦的汗水和努力已经让他们筋疲力尽。</p></div>
+      <div class="field words"><span>词</span><p>offering 奉献； manual 手动的； labourer 劳动者； tired 疲劳的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="149.96" data-end="164.75">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> no <span class="linking">use</span> <span class="linking">inviting</span> <span class="weak">the</span> <span class="linking">politician</span> <span class="linking">or</span> <span class="weak">the</span> <span class="linking">professional</span> <span class="linking">or</span> business man, who <span class="weak">has</span> <span class="weak">been</span> <span class="linking">working</span> <span class="linking">or</span> <span class="linking">worrying</span> <span class="linking">about</span> serious things <span class="weak">for</span> six days, <span class="weak">to</span> <span class="linking">work</span> <span class="linking">or</span> worry about trifling <span class="linking">things</span> <span class="weak linking">at</span> <span class="weak">the</span> weekend.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> noʊ jus<span class="linking">‿</span>ɪnˈvaɪdɪŋ <span class="weak">ðə</span> ˌpɑləˈtɪʃən<span class="linking">‿</span>ɔr <span class="weak">ðə</span> prəˈfɛʃnəl<span class="linking">‿</span>ɔr ˈbɪznəs mæn who <span class="weak">həz</span> bɪn ˈwərkɪŋ<span class="linking">‿</span>ɔr ˈwəriɪŋ<span class="linking">‿</span><span class="weak">ə</span>ˈbaʊt ˈsɪriəs θɪŋ <span class="weak">fɚ</span> sɪks deɪ <span class="weak">tə</span> wərk<span class="linking">‿</span>ɔr ˈwəri <span class="weak">ə</span>ˈbaʊt ˈtraɪflɪŋ θɪŋ<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ðə</span> ˈwikˌɛnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、jus‿ɪnˈvaɪdɪŋ、ˌpɑləˈtɪʃən‿ɔr、prəˈfɛʃnəl‿ɔr、ˈwərkɪŋ‿ɔr 连读；ðə、ət、tə、ɪz、fɚ、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>邀请已经工作或担心了六天严肃事情的政客、专业人士或商人在周末工作或担心琐事是没有用的。</p></div>
+      <div class="field words"><span>词</span><p>inviting 邀请； politician 政治家； professional 专业的； business 事情/业务；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="164.75" data-end="182.4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">As</span> <span class="weak">for</span> <span class="weak">the</span> unfortunate people who <span class="weak">can</span> <span class="linking">command</span> <span class="linking">everything</span> <span class="weak">they</span> want, who <span class="weak">can</span> gratify every <span class="linking">caprice</span> <span class="weak linking">and</span> lay <span class="weak">their</span> <span class="linking">hands</span> <span class="linking">on</span> <span class="linking">almost</span> <span class="linking">every</span> <span class="linking">object</span> <span class="weak linking">of</span> desire--for <span class="weak linking">them</span> <span class="weak linking">a</span> new <span class="linking">pleasure</span> <span class="weak linking">a</span> new <span class="linking">excitement</span> <span class="weak linking">is</span> <span class="linking">only</span> <span class="weak linking">an</span> <span class="linking">additional</span> satiation.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əz</span> <span class="weak">fɚ</span> <span class="weak">ði</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈfɔrtʃnət ˈpipl who <span class="weak">kən</span> kəˈmænd<span class="linking">‿</span>ˈɛvriˌθɪŋ ðeɪ wɑnt who <span class="weak">kən</span> ˈɡrædəˌfaɪ ˈɛvri kəˈpris<span class="linking">‿</span><span class="weak">ən</span> leɪ ðɛr hænd<span class="linking">‿</span>ɔn<span class="linking">‿</span>ˈɔlmoʊst<span class="linking">‿</span>ˈɛvri object<span class="linking">‿</span><span class="weak">əv</span> desirefor ðəm<span class="linking">‿</span><span class="weak">ə</span> nu ˈplɛʒər<span class="linking">‿</span><span class="weak">ə</span> nu ɪkˈsaɪtmənt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈoʊnli <span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span>ˈdɪʃənl ˌseɪʃiˈeɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˌənˈfɔrtʃnət、kəˈmænd‿ˈɛvriˌθɪŋ、kəˈpris‿ən、hænd‿ɔn‿ˈɔlmoʊst‿ˈɛvri、object‿əv 连读；ði、ə、ən、əz、kən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>至于那些不幸的人，他们可以掌控他们想要的一切，可以满足他们的任性，几乎可以得到所有欲望的对象——对他们来说，新的快乐、新的兴奋只是一种额外的满足。</p></div>
+      <div class="field words"><span>词</span><p>unfortunate 不幸； people 人们； command 命令； everything 一切；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="182.4" data-end="191.88">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak">In</span> vain <span class="weak">they</span> rush frantically round <span class="weak">from</span> place <span class="weak">to</span> place, trying <span class="weak">to</span> escape <span class="weak linking">from</span> <span class="linking">avenging</span> boredom by mere <span class="linking">clatter</span> <span class="weak linking">and</span> motion.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn veɪn ðeɪ rəʃ ˈfrænəkli raʊnd <span class="weak">frəm</span> pleɪs <span class="weak">tə</span> pleɪs ˈtraɪɪŋ <span class="weak">tə</span> <span class="weak">ə</span>ˈskeɪp <span class="weak">frəm</span><span class="linking">‿</span><span class="weak">ə</span>ˈvɛndʒɪŋ ˈbɔrdəm baɪ mɪr ˈklædər<span class="linking">‿</span><span class="weak">ən</span> motion/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>frəm‿əˈvɛndʒɪŋ、ˈklædər‿ən 连读；ən、tə、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>他们徒劳地疯狂地从一个地方跑到另一个地方，试图仅仅通过叮当声和动作来摆脱无聊的报复。</p></div>
+      <div class="field words"><span>词</span><p>vain 徒劳的； rush 匆忙； frantically 疯狂地； round 圆形的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="191.88" data-end="198.49">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">For</span> <span class="weak">them</span> <span class="linking">discipline</span> <span class="weak linking">in</span> <span class="linking">one</span> <span class="linking">form</span> <span class="linking">or</span> <span class="linking">another</span> <span class="weak linking">is</span> <span class="weak">the</span> most hopeful path.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> ðəm ˈdɪsəplən<span class="linking">‿</span>ɪn<span class="linking">‿</span>one form<span class="linking">‿</span>ɔr<span class="linking">‿</span><span class="weak">ə</span>ˈnəðər<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> moʊst ˈhoʊpfl pæθ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈdɪsəplən‿ɪn‿one、form‿ɔr‿əˈnəðər‿ɪz 连读；ðə、ɪz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>对他们来说，某种形式的纪律是最有希望的道路。</p></div>
+      <div class="field words"><span>词</span><p>discipline 纪律； form 形式； another 其他； most 最多；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="198.49" data-end="215.49">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">It</span> may also <span class="weak">be</span> said <span class="weak">that</span> <span class="linking">rational,</span> <span class="linking">industrious,</span> useful human <span class="linking">beings</span> <span class="weak linking">are</span> <span class="linking">divided</span> <span class="linking">into</span> two classes: first, those whose <span class="linking">work</span> <span class="weak linking">is</span> <span class="linking">work</span> <span class="weak linking">and</span> whose <span class="linking">pleasure</span> <span class="weak linking">is</span> <span class="linking">pleasure;</span> <span class="weak linking">and</span> secondly, those whose <span class="linking">work</span> <span class="weak linking">and</span> <span class="linking">pleasure</span> <span class="weak linking">are</span> <span class="linking">one.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt meɪ ˈɔlsoʊ bi sɛd ðæt ˈræʃnəl<span class="linking">‿</span>ɪnˈdəstriəs ˈjusfl ˈjumən ˈbiɪŋ<span class="linking">‿</span><span class="weak">ɑr</span> dəˈvaɪdəd<span class="linking">‿</span>ˈɪntu tu klæs fərst ðoʊz huz wərk<span class="linking">‿</span><span class="weak">ɪz</span> wərk<span class="linking">‿</span><span class="weak">ən</span> huz ˈplɛʒər<span class="linking">‿</span><span class="weak">ɪz</span> ˈplɛʒər<span class="linking">‿</span><span class="weak">ən</span> ˈsɛkənli ðoʊz huz wərk<span class="linking">‿</span><span class="weak">ən</span> ˈplɛʒər<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>one/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈræʃnəl‿ɪnˈdəstriəs、ˈbiɪŋ‿ɑr、dəˈvaɪdəd‿ˈɪntu、wərk‿ɪz、wərk‿ən 连读；ən、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>也可以说，理性的、勤奋的、有用的人可以分为两类：第一类，工作就是工作，快乐就是快乐；第二类，工作就是工作，快乐就是快乐；第二类，工作就是工作，快乐就是快乐。其次，那些工作与娱乐合二为一的人。</p></div>
+      <div class="field words"><span>词</span><p>also 还； said 说； rational 合理的； industrious 勤劳；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="215.49" data-end="218.23">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="weak">Of</span> these <span class="weak">the</span> <span class="linking">former</span> <span class="weak linking">are</span> <span class="weak">the</span> majority.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əv</span> ðiz <span class="weak">ðə</span> ˈfɔrmər<span class="linking">‿</span><span class="weak">ɑr</span> <span class="weak">ðə</span> məˈdʒɔrədi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈfɔrmər‿ɑr 连读；ðə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>其中，前者占大多数。</p></div>
+      <div class="field words"><span>词</span><p>these 这些； former 以前的； majority 多数；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="218.23" data-end="220.4">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text"><span class="weak">They</span> <span class="weak">have</span> <span class="weak">their</span> compensations.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðeɪ <span class="weak">həv</span> ðɛr ˌkɑmpənˈseɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>他们有他们的补偿。</p></div>
+      <div class="field words"><span>词</span><p>compensations 补偿；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="220.4" data-end="233.8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text"><span class="weak">The</span> long <span class="linking">hours</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">office</span> <span class="linking">or</span> <span class="weak">the</span> factory bring with <span class="weak linking">them</span> <span class="weak linking">as</span> <span class="weak">their</span> reward, <span class="linking">not</span> <span class="linking">only</span> <span class="weak">the</span> <span class="linking">means</span> <span class="weak linking">of</span> sustenance, <span class="weak linking">but</span> <span class="weak linking">a</span> <span class="linking">keen</span> <span class="linking">appetite</span> <span class="weak">for</span> <span class="linking">pleasure</span> <span class="linking">even</span> <span class="weak linking">in</span> <span class="linking">its</span> <span class="linking">simplest</span> <span class="weak linking">and</span> most modest forms.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> long ˈaʊr<span class="linking">‿</span>ɪn <span class="weak">ði</span><span class="linking">‿</span>ˈɔfəs<span class="linking">‿</span>ɔr <span class="weak">ðə</span> ˈfæktri brɪŋ wɪð ðəm<span class="linking">‿</span><span class="weak">əz</span> ðɛr rəˈwɔrd nɑɾ<span class="linking">‿</span>ˈoʊnli <span class="weak">ðə</span> minz<span class="linking">‿</span><span class="weak">əv</span> ˈsəstənəns bət<span class="linking">‿</span><span class="weak">ə</span> kin<span class="linking">‿</span>ˈæpəˌtaɪt <span class="weak">fɚ</span> ˈplɛʒər<span class="linking">‿</span>ˈivən<span class="linking">‿</span>ɪn<span class="linking">‿</span>its simplest<span class="linking">‿</span><span class="weak">ən</span> moʊst ˈmɑdəst forms/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈaʊr‿ɪn、ði‿ˈɔfəs‿ɔr、ðəm‿əz、nɑɾ‿ˈoʊnli、minz‿əv 连读；ðə、ði、ə、ən、əz、əv 弱读/弱化；nɑɾ‿ˈoʊnli 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>在办公室或工厂里长时间工作给他们带来的回报不仅是谋生手段，还有对快乐的强烈渴望，即使是最简单、最朴素的形式。</p></div>
+      <div class="field words"><span>词</span><p>long 长的； hours 小时； office 办公室； factory 工厂；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="233.8" data-end="238.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">But</span> Fortune's favoured children belong <span class="weak">to</span> <span class="weak">the</span> second class.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət fortune's ˈfeɪvərd ˈtʃɪldrn bəˈlɔŋ <span class="weak">tə</span> <span class="weak">ðə</span> ˈsɛkənd klæs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>但命运眷顾的孩子却属于第二等。</p></div>
+      <div class="field words"><span>词</span><p>fortune's 财富的； favoured 受到青睐； children 孩子们； belong 属于；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="238.17" data-end="241.28">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text"><span class="weak">Their</span> <span class="linking">life</span> <span class="weak linking">is</span> <span class="weak linking">a</span> natural harmony.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɛr laɪf<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈnætʃərl ˈhɑrməni/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>laɪf‿ɪz‿ə 连读；ə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>他们的生活是自然和谐的。</p></div>
+      <div class="field words"><span>词</span><p>life 生活； natural 自然的； harmony 和谐；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-27" data-start="241.28" data-end="244.92">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="27" aria-label="Play sentence 27">▶</button><span class="sentence-num">27</span><p class="en-text"><span class="weak">For</span> <span class="weak">them</span> <span class="weak">the</span> working <span class="linking">hours</span> <span class="weak linking">are</span> never <span class="linking">long</span> <span class="linking">enough.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> ðəm <span class="weak">ðə</span> ˈwərkɪŋ ˈaʊr<span class="linking">‿</span><span class="weak">ɑr</span> ˈnɛvər long<span class="linking">‿</span>ɪˈnəf/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈaʊr‿ɑr、long‿ɪˈnəf 连读；ðə、ɑr、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>对他们来说，工作时间永远不够长。</p></div>
+      <div class="field words"><span>词</span><p>working 在职的； hours 小时； never 绝不； long 长的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-28" data-start="244.92" data-end="255.26">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="28" aria-label="Play sentence 28">▶</button><span class="sentence-num">28</span><p class="en-text">Each <span class="linking">day</span> <span class="weak linking">is</span> <span class="weak linking">a</span> <span class="linking">holiday,</span> <span class="weak linking">and</span> <span class="linking">ordinary</span> holidays, when <span class="weak">they</span> <span class="linking">come,</span> <span class="weak linking">are</span> <span class="linking">grudged</span> <span class="weak linking">as</span> <span class="linking">enforced</span> <span class="linking">interruptions</span> <span class="weak linking">in</span> <span class="weak linking">an</span> <span class="linking">absorbing</span> vocation.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/itʃ deɪ <span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> ˈhɑləˌdeɪ <span class="weak">ən</span><span class="linking">‿</span>ˈɔrdnˌɛri ˈhɑləˌdeɪ wɛn ðeɪ kəm<span class="linking">‿</span><span class="weak">ɑr</span> ɡrədʒ<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ɪnˈfɔrst<span class="linking">‿</span>ˌɪnəˈrəpʃən<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əbˈzɔrbɪŋ voʊˈkeɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪz‿ə、ən‿ˈɔrdnˌɛri、kəm‿ɑr、ɡrədʒ‿əz‿ɪnˈfɔrst‿ˌɪnəˈrəpʃən‿ɪn‿ən‿əbˈzɔrbɪŋ 连读；ə、ən、əz、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；原因或结果关系连接分句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>每天都是假期，而普通的假期一旦到来，就会被视为强行打断令人着迷的职业而感到不情愿。</p></div>
+      <div class="field words"><span>词</span><p>each 每个； holiday 假期； ordinary 普通的； holidays 假期；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-29" data-start="255.26" data-end="265.22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="29" aria-label="Play sentence 29">▶</button><span class="sentence-num">29</span><p class="en-text">Yet <span class="weak">to</span> both classes, <span class="weak">the</span> <span class="linking">need</span> <span class="weak linking">of</span> <span class="weak linking">an</span> <span class="linking">alternative</span> <span class="linking">outlook,</span> <span class="weak linking">of</span> <span class="weak linking">a</span> <span class="linking">change</span> <span class="weak linking">of</span> <span class="linking">atmosphere</span> <span class="weak linking">of</span> <span class="weak linking">a</span> <span class="linking">diversion</span> <span class="weak linking">of</span> <span class="linking">effort,</span> <span class="weak linking">is</span> <span class="linking">essential.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/jɛt <span class="weak">tə</span> boʊθ klæs <span class="weak">ðə</span> nid<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɔlˈtərnədɪv ˈaʊtˌlʊk<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> change <span class="weak">əv</span><span class="linking">‿</span>ˈætməˌsfɪr<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> dəˈvərʒən<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɛfərt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span>ˈsɛnʃl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>nid‿əv‿ən‿ɔlˈtərnədɪv、ˈaʊtˌlʊk‿əv‿ə、əv‿ˈætməˌsfɪr‿əv‿ə、dəˈvərʒən‿əv‿ˈɛfərt‿ɪz‿əˈsɛnʃl 连读；ðə、ə、ən、tə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>然而，对于这两个阶级来说，需要另一种观点、改变气氛或转移精力，这是至关重要的。</p></div>
+      <div class="field words"><span>词</span><p>both 两个都； classes 类； need 需要； alternative 选择；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-30" data-start="265.22" data-end="277.14">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="30" aria-label="Play sentence 30">▶</button><span class="sentence-num">30</span><p class="en-text"><span class="linking">Indeed,</span> <span class="weak linking">it</span> may well <span class="weak">be</span> <span class="weak">that</span> those whose <span class="linking">work</span> <span class="weak linking">is</span> <span class="weak">their</span> <span class="linking">pleasure</span> <span class="weak linking">are</span> those who most need <span class="weak">the</span> <span class="linking">means</span> <span class="weak linking">of</span> <span class="linking">banishing</span> <span class="weak linking">it</span> <span class="weak linking">at</span> <span class="linking">intervals</span> <span class="weak">from</span> <span class="weak">their</span> minds.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪnˈdid<span class="linking">‿</span>ɪt meɪ wɛl bi ðæt ðoʊz huz wərk<span class="linking">‿</span><span class="weak">ɪz</span> ðɛr ˈplɛʒər<span class="linking">‿</span><span class="weak">ɑr</span> ðoʊz who moʊst nid <span class="weak">ðə</span> minz<span class="linking">‿</span><span class="weak">əv</span> ˈbænɪʃ<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span>ˈɪnərvl <span class="weak">frəm</span> ðɛr maɪnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪnˈdid‿ɪt、wərk‿ɪz、ˈplɛʒər‿ɑr、minz‿əv、ˈbænɪʃ‿ɪt‿ət‿ˈɪnərvl 连读；ðə、ət、əv、ɑr、ɪz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>事实上，那些以工作为乐的人很可能最需要时不时地把工作从自己的脑海中驱逐出去的人。</p></div>
+      <div class="field words"><span>词</span><p>indeed 的确； well 出色地； those 那些； whose 谁；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>gifted 天才； american 美国人； psychologist 心理学家； said 说； useless 无用； argue 争论； with 和； mind 头脑； stronger 更强； more 更多的； futile 无用的； task 任务； only 仅有的； gently 轻轻地； insinuate 暗示； something 某物； this 这； something 某物；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>直接引语与叙述语结合； 并列结构连接动作或信息； 主语 + 谓语 + 宾语/补足语的基础叙述句； 含定语从句或名词性从句； when 引导时间状语从句； 不定式短语补充目的、结果或宾语。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 将来结构表示预期或安排； 一般过去时叙述故事主线； 一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>1. A gifted American psychologist has said, 'Worry is a spasm of the emotion; the mind catches hold of something and will not let it go.'； 3. The stronger the will, the more futile the task.； 4. One can only gently insinuate something else into its convulsive grasp.； 7. But this is not a business that can be undertaken in a day or swiftly improvised by a mere command of the will.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ˈɡɪftəd‿əˈmɛrkn、ɪz‿ə、ˈspæzəm‿əv、ði‿əˈmoʊʃən、hoʊld‿əv 连读；ðə、ði、ə、ən、əv、ɪz 弱读/弱化； ɪt‿ɪz、maɪnd‿ɪn 连读；ðə、tə、ɪz 弱读/弱化； kən‿ˈoʊnli、ˈsəmˌθɪŋ‿ɛls‿ˈɪntu 连读；kən 弱读/弱化； ən‿ɪf、ˈsəmˌθɪŋ‿ɛls‿ɪz、ˈtʃoʊzn‿ɪf‿ɪt‿ɪz、ði‿ɪˌluməˈneɪʃən‿əv‿əˈnəðər、fild‿əv‿ˈɪntrəst 连读；ðə、ði、ən、əv、ɪz 弱读/弱化； ˌkəltəˈveɪʃən‿əv‿ə、forms‿əv‿ˈɪntrəst‿ɪz、ˈðɛrˌfɔr‿ə、fərst‿ɪmˈpɔrtns 连读；ðə、ə、ən、tə、əv、ɪz 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Hobbies</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../46－Hobbies.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":16.63,"end":27.45,"text":"A gifted American psychologist has said, 'Worry is a spasm of the emotion; the mind catches hold of something and will not let it go.'"},{"index":2,"start":27.45,"end":30.89,"text":"It is useless to argue with the mind in this condition."},{"index":3,"start":30.89,"end":34.54,"text":"The stronger the will, the more futile the task."},{"index":4,"start":34.54,"end":39.98,"text":"One can only gently insinuate something else into its convulsive grasp."},{"index":5,"start":39.98,"end":59.3,"text":"And if this something else is rightly chosen, if it is really attended by the illumination of another field of interest, gradually, and often quite swiftly, the old undue grip relaxes and the process of recuperation and repair begins."},{"index":6,"start":59.3,"end":67.87,"text":"The cultivation of a hobby and new forms of interest is therefore a policy of the first importance to a public man."},{"index":7,"start":67.87,"end":75.76,"text":"But this is not a business that can be undertaken in a day or swiftly improvised by a mere command of the will."},{"index":8,"start":75.76,"end":80.65,"text":"The growth of alternative mental interests is a long process."},{"index":9,"start":80.65,"end":92.62,"text":"The seeds must be carefully chosen; they must fall on good ground; they must be sedulously tended, if the vivifying fruits are to be at hand when needed."},{"index":10,"start":92.62,"end":100.91,"text":"To be really happy and really safe, one ought to have at least two or three hobbies, and they must all be real."},{"index":11,"start":100.91,"end":106.63,"text":"It is no use starting late in life to say: 'I will take an interest in this or that.'"},{"index":12,"start":106.63,"end":111.36,"text":"Such an attempt only aggravates the strain of mental effort."},{"index":13,"start":111.36,"end":120.13,"text":"A man may acquire great knowledge of topics unconnected with his daily work, and yet get hardly any benefit or relief."},{"index":14,"start":120.13,"end":124.74,"text":"It is no use doing what you like; you have got to like what you do."},{"index":15,"start":124.74,"end":138.48,"text":"Broadly speaking, human beings may be divided into three classes: those who are toiled to death, those who are worried to death, and those who are bored to death."},{"index":16,"start":138.48,"end":149.96,"text":"It is no use offering the manual labourer, tired out with a hard week's sweat and effort the chance of playing a game of football or baseball on Saturday afternoon."},{"index":17,"start":149.96,"end":164.75,"text":"It is no use inviting the politician or the professional or business man, who has been working or worrying about serious things for six days, to work or worry about trifling things at the weekend."},{"index":18,"start":164.75,"end":182.4,"text":"As for the unfortunate people who can command everything they want, who can gratify every caprice and lay their hands on almost every object of desire--for them a new pleasure a new excitement is only an additional satiation."},{"index":19,"start":182.4,"end":191.88,"text":"In vain they rush frantically round from place to place, trying to escape from avenging boredom by mere clatter and motion."},{"index":20,"start":191.88,"end":198.49,"text":"For them discipline in one form or another is the most hopeful path."},{"index":21,"start":198.49,"end":215.49,"text":"It may also be said that rational, industrious, useful human beings are divided into two classes: first, those whose work is work and whose pleasure is pleasure; and secondly, those whose work and pleasure are one."},{"index":22,"start":215.49,"end":218.23,"text":"Of these the former are the majority."},{"index":23,"start":218.23,"end":220.4,"text":"They have their compensations."},{"index":24,"start":220.4,"end":233.8,"text":"The long hours in the office or the factory bring with them as their reward, not only the means of sustenance, but a keen appetite for pleasure even in its simplest and most modest forms."},{"index":25,"start":233.8,"end":238.17,"text":"But Fortune's favoured children belong to the second class."},{"index":26,"start":238.17,"end":241.28,"text":"Their life is a natural harmony."},{"index":27,"start":241.28,"end":244.92,"text":"For them the working hours are never long enough."},{"index":28,"start":244.92,"end":255.26,"text":"Each day is a holiday, and ordinary holidays, when they come, are grudged as enforced interruptions in an absorbing vocation."},{"index":29,"start":255.26,"end":265.22,"text":"Yet to both classes, the need of an alternative outlook, of a change of atmosphere of a diversion of effort, is essential."},{"index":30,"start":265.22,"end":277.14,"text":"Indeed, it may well be that those whose work is their pleasure are those who most need the means of banishing it at intervals from their minds."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

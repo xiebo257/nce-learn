@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 21 - William S. Hart and the Early &quot;Western&quot; Film</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 21 - William S. Hart and the Early &quot;Western&quot; Film</h1>
+      <p class="meta">问题: </p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="2.87" data-end="5.38">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">William</span> <span class="linking">S.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/william<span class="linking">‿</span>ɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>william‿ɛs 连读。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>威廉·S。</p></div>
+      <div class="field words"><span>词</span><p>william 威廉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="5.38" data-end="22.05">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="linking">Hart</span> <span class="weak linking">and</span> <span class="weak">the</span> early 'Western' film How did William Hart's childhood prepare <span class="weak">him</span> <span class="weak">for</span> <span class="weak linking">his</span> <span class="linking">acting</span> <span class="linking">role</span> <span class="weak linking">in</span> Western films?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hɑrt<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">ði</span><span class="linking">‿</span>ˈərli ˈwɛstərn fɪlm haʊ dɪd william hart's ˈtʃaɪlˌʊd priˈpɛr hɪm <span class="weak">fɚ</span> hɪz<span class="linking">‿</span>ˈæktɪŋ roʊl<span class="linking">‿</span>ɪn ˈwɛstərn fɪlm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɑrt‿ən、ði‿ˈərli、hɪz‿ˈæktɪŋ、roʊl‿ɪn 连读；ði、ən、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>哈特和早期的“西部”电影 威廉·哈特的童年是如何为他在西部电影中的表演做好准备的？</p></div>
+      <div class="field words"><span>词</span><p>hart 哈特； early 早期的； western 西； film 电影；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="22.05" data-end="23.24">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">William</span> <span class="linking">S.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/william<span class="linking">‿</span>ɛs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>william‿ɛs 连读。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>威廉·S。</p></div>
+      <div class="field words"><span>词</span><p>william 威廉；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="23.24" data-end="36.57">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Hart <span class="weak">was,</span> perhaps, <span class="weak">the</span> <span class="linking">greatest</span> <span class="weak linking">of</span> <span class="linking">all</span> Western stars, <span class="weak linking">for</span> <span class="linking">unlike</span> Gary <span class="linking">Cooper</span> <span class="weak linking">and</span> John Wayne <span class="weak">he</span> <span class="linking">appeared</span> <span class="weak linking">in</span> nothing <span class="weak">but</span> Westerns.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hɑrt <span class="weak">wəz</span> pərˈæps <span class="weak">ðə</span> ɡreɪt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl ˈwɛstərn stɑr <span class="weak">fɚ</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈlaɪk gary ˈkupər<span class="linking">‿</span><span class="weak">ən</span> dʒɑn wayne hi <span class="weak">ə</span>ˈpɪr<span class="linking">‿</span>ɪn ˈnəθɪŋ bət ˈwɛstərn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɡreɪt‿əv‿ɔl、fɚ‿ˌənˈlaɪk、ˈkupər‿ən、əˈpɪr‿ɪn 连读；ðə、ən、əv、wəz、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>哈特也许是所有西部片明星中最伟大的，因为与加里·库珀和约翰·韦恩不同，他只出现在西部片中。</p></div>
+      <div class="field words"><span>词</span><p>hart 哈特； perhaps 也许； greatest 最伟大的； western 西；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="36.57" data-end="43.99">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">From</span> 1914 <span class="weak">to</span> 1924 <span class="weak">he</span> <span class="weak">was</span> <span class="linking">supreme</span> <span class="weak linking">and</span> <span class="linking">unchallenged.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> <span class="weak">tə</span> hi <span class="weak">wəz</span> səˈprim<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈtʃæləndʒd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>səˈprim‿ən‿ˌənˈtʃæləndʒd 连读；ən、tə、wəz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>从1914年到1924年，他处于至高无上的地位，无人能挑战。</p></div>
+      <div class="field words"><span>词</span><p>supreme 最高； unchallenged 不受挑战的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="43.99" data-end="73.78">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">It</span> <span class="weak">was</span> Hart who created <span class="weak">the</span> basic <span class="linking">formula</span> <span class="weak linking">of</span> <span class="weak">the</span> Western <span class="linking">film,</span> <span class="weak linking">and</span> devised <span class="weak">the</span> protagonist <span class="weak">he</span> <span class="linking">played</span> <span class="weak linking">in</span> <span class="linking">every</span> film <span class="weak">he</span> made, <span class="weak">the</span> good-bad man, <span class="weak">the</span> accidental, noble outlaw, or <span class="weak">the</span> honest, <span class="weak">but</span> framed cowboy, or <span class="weak">the</span> sheriff made suspect by vicious <span class="linking">gossip;</span> <span class="weak linking">in</span> short, <span class="weak">the</span> <span class="linking">individual</span> <span class="weak linking">in</span> conflict with <span class="linking">himself</span> <span class="weak linking">and</span> <span class="weak">his</span> frontier environment.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">wəz</span> hɑrt who kriˈeɪt <span class="weak">ðə</span> ˈbeɪsɪk ˈfɔrmjələ <span class="weak">əv</span> <span class="weak">ðə</span> ˈwɛstərn fɪlm<span class="linking">‿</span><span class="weak">ən</span> dəˈvaɪz <span class="weak">ðə</span> prəˈtæɡənəst hi pleɪ ɪn<span class="linking">‿</span>ˈɛvri fɪlm hi meɪd <span class="weak">ðə</span> goodbad mæn <span class="weak">ði</span><span class="linking">‿</span>ˌæksəˈdɛnl ˈnoʊbl ˈaʊtˌlɔ ɔr <span class="weak">ði</span><span class="linking">‿</span>ˈɑnəst bət freɪm ˈkaʊˌbɔɪ ɔr <span class="weak">ðə</span> ˈʃɛrəf meɪd səˈspɛk baɪ ˈvɪʃəs ˈɡɑsəp<span class="linking">‿</span>ɪn ʃɔrt <span class="weak">ði</span><span class="linking">‿</span>ˌɪndəˈvɪdʒwəl<span class="linking">‿</span>ɪn ˈkɑnˌflɪk wɪð hɪmˈsɛlf<span class="linking">‿</span><span class="weak">ən</span> hɪz ˌfrənˈtɪr environment/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>fɪlm‿ən、ɪn‿ˈɛvri、ði‿ˌæksəˈdɛnl、ði‿ˈɑnəst、ˈɡɑsəp‿ɪn 连读；ðə、ði、ən、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>正是哈特创造了西部片的基本模式，并设计了他在每一部电影中扮演的主角，好人坏人，偶然的、高贵的亡命之徒，或者诚实但被陷害的牛仔，或者被恶意流言蜚语怀疑的警长；简而言之，个人与自己及其前沿环境发生冲突。</p></div>
+      <div class="field words"><span>词</span><p>hart 哈特； created 已创建； basic 基本的； formula 公式；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="73.78" data-end="81.02">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Unlike <span class="linking">most</span> <span class="weak linking">of</span> <span class="weak">his</span> <span class="linking">contemporaries</span> <span class="weak linking">in</span> Hollywood, <span class="linking">Hart</span> <span class="linking">actually</span> knew <span class="linking">something</span> <span class="weak linking">of</span> <span class="weak">the</span> old West.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˌ<span class="weak">ən</span>ˈlaɪk moʊst<span class="linking">‿</span><span class="weak">əv</span> hɪz <span class="weak">kən</span>ˈtɛmpəˌrɛri ɪn hollywood hɑrt<span class="linking">‿</span>ˈækʃəli nu ˈsəmˌθɪŋ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>oʊld wɛst/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moʊst‿əv、hɑrt‿ˈækʃəli、ˈsəmˌθɪŋ‿əv、ði‿oʊld 连读；ði、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>与好莱坞的大多数同时代人不同，哈特实际上对旧西部有所了解。</p></div>
+      <div class="field words"><span>词</span><p>unlike 不像； most 最多； contemporaries 同时代人； hollywood 好莱坞；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="81.02" data-end="115.22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">He</span> <span class="weak">had</span> <span class="linking">lived</span> <span class="weak linking">in</span> <span class="weak linking">it</span> <span class="weak linking">as</span> <span class="weak linking">a</span> child <span class="linking">when</span> <span class="weak linking">it</span> <span class="weak linking">was</span> <span class="linking">already</span> <span class="linking">disappearing,</span> <span class="weak linking">and</span> <span class="weak">his</span> hero <span class="weak">was</span> firmly <span class="linking">rooted</span> <span class="weak linking">in</span> <span class="weak">his</span> <span class="linking">memories</span> <span class="weak linking">and</span> <span class="linking">experiences,</span> <span class="weak linking">and</span> <span class="weak linking">in</span> both <span class="weak">the</span> <span class="linking">history</span> <span class="weak linking">and</span> <span class="weak">the</span> <span class="linking">mythology</span> <span class="weak linking">of</span> <span class="weak">the</span> vanished <span class="linking">frontier,</span> <span class="weak linking">And</span> <span class="linking">although</span> no <span class="linking">period</span> <span class="linking">or</span> <span class="linking">place</span> <span class="weak linking">in</span> <span class="linking">American</span> history <span class="weak">has</span> <span class="weak">been</span> <span class="linking">more</span> <span class="linking">absurdly</span> romanticized, <span class="linking">myth</span> <span class="weak linking">and</span> reality did join <span class="linking">hands</span> <span class="weak linking">in</span> <span class="weak linking">at</span> <span class="linking">least</span> <span class="linking">one</span> arena, <span class="weak">the</span> conflict between <span class="weak">the</span> <span class="linking">individual</span> <span class="weak linking">and</span> <span class="linking">encroaching</span> civilization.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">həd</span> lived<span class="linking">‿</span>ɪn<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span><span class="weak">ə</span> tʃaɪld wɛn<span class="linking">‿</span>ɪt <span class="weak">wəz</span><span class="linking">‿</span>ˌɔlˈrɛdi ˌdɪsəˈpɪr<span class="linking">‿</span><span class="weak">ən</span> hɪz ˈhɪroʊ <span class="weak">wəz</span> ˈfərmli rut<span class="linking">‿</span>ɪn hɪz ˈmɛmri <span class="weak">ən</span><span class="linking">‿</span>ɪkˈspɪriəns<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn boʊθ <span class="weak">ðə</span> ˈhɪstri <span class="weak">ən</span> <span class="weak">ðə</span> məˈθɑlədʒi <span class="weak">əv</span> <span class="weak">ðə</span> ˈvænɪʃt ˌfrənˈtɪr<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɔlˈðoʊ noʊ ˈpɪriəd<span class="linking">‿</span>ɔr pleɪs<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span>ˈmɛrkn ˈhɪstri <span class="weak">həz</span> bɪn mɔr<span class="linking">‿</span>əbˈsərdli roʊˈmænəˌsaɪz mɪθ<span class="linking">‿</span><span class="weak">ən</span> riˈælədi dɪd dʒɔɪn hænd<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ət</span> list<span class="linking">‿</span>one <span class="weak">ə</span>ˈrinə <span class="weak">ðə</span> ˈkɑnˌflɪk bəˈtwin <span class="weak">ði</span><span class="linking">‿</span>ˌɪndəˈvɪdʒwəl<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪnˈkroʊtʃ ˌsɪvələˈzeɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>lived‿ɪn‿ɪt‿əz‿ə、wɛn‿ɪt、wəz‿ˌɔlˈrɛdi、ˌdɪsəˈpɪr‿ən、rut‿ɪn 连读；ðə、ði、ə、ən、əz、ət 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；现在完成时强调结果或经历；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>当它还是个孩子的时候，他就生活在其中，当时它已经消失了，他的英雄深深植根于他的记忆和经历中，植根于消失的边疆的历史和神话中。尽管美国历史上没有哪个时期或地方比这更荒谬地浪漫化，但神话和现实确实在至少一个舞台上携手并进，即个人与入侵文明之间的冲突。</p></div>
+      <div class="field words"><span>词</span><p>lived 住过； child 孩子； when 什么时候； already 已经；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="115.22" data-end="131.49">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">Men</span> <span class="linking">accustomed</span> <span class="weak">to</span> struggling <span class="weak">for</span> <span class="linking">survival</span> <span class="linking">against</span> <span class="weak">the</span> <span class="linking">elements</span> <span class="weak linking">and</span> <span class="linking">Indians</span> <span class="weak">were</span> bewildered by politicians, <span class="linking">bankers</span> <span class="weak linking">and</span> <span class="linking">businessmen,</span> <span class="weak linking">and</span> <span class="linking">unhorsed</span> by fences, <span class="linking">laws</span> <span class="weak linking">and</span> alien taboos.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/men<span class="linking">‿</span><span class="weak">ə</span>ˈkəstəmd <span class="weak">tə</span> ˈstrəɡlɪŋ <span class="weak">fɚ</span> sərˈvaɪvl<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛnst <span class="weak">ði</span><span class="linking">‿</span>ˈɛləmənt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪndiən <span class="weak">wɚ</span> bəˈwɪldərd baɪ ˌpɑləˈtɪʃən ˈbæŋkər<span class="linking">‿</span><span class="weak">ən</span> ˈbɪznəsˌmæn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈhɔrs baɪ fɛns lɔ <span class="weak">ən</span> ˈeɪljən <span class="weak">tə</span>ˈbu/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>men‿əˈkəstəmd、sərˈvaɪvl‿əˈɡɛnst、ði‿ˈɛləmənt‿ən‿ˈɪndiən、ˈbæŋkər‿ən、ˈbɪznəsˌmæn‿ən‿ˌənˈhɔrs 连读；ði、ən、tə、wɚ、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>习惯于与自然环境作斗争的人和印第安人对政治家、银行家和商人感到困惑，并因栅栏、法律和外来禁忌而被赶下马。</p></div>
+      <div class="field words"><span>词</span><p>accustomed 习惯了； struggling 挣扎； survival 生存； against 反对；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="131.49" data-end="156.66">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Hart's good-bad man <span class="weak linking">was</span> <span class="linking">always</span> <span class="weak linking">an</span> <span class="linking">outsider,</span> <span class="linking">always</span> <span class="linking">one</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">disinherited,</span> <span class="weak linking">and</span> <span class="linking">if</span> <span class="weak">he</span> <span class="linking">found</span> <span class="weak linking">it</span> necessary <span class="weak">to</span> <span class="linking">shoot</span> <span class="weak linking">a</span> <span class="linking">sheriff</span> <span class="linking">or</span> <span class="linking">rob</span> <span class="weak linking">a</span> <span class="linking">bank</span> <span class="linking">along</span> <span class="weak">the</span> way, <span class="weak linking">his</span> <span class="linking">early</span> audiences <span class="linking">found</span> <span class="weak linking">it</span> <span class="linking">easy</span> <span class="weak">to</span> <span class="linking">understand</span> <span class="weak linking">and</span> <span class="linking">forgive,</span> <span class="linking">especially</span> <span class="linking">when</span> <span class="weak linking">it</span> <span class="weak">was</span> Hart <span class="linking">who,</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">end,</span> <span class="linking">overcame</span> <span class="weak">the</span> <span class="linking">attacking</span> <span class="linking">Indians.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hart's goodbad mæn <span class="weak">wəz</span><span class="linking">‿</span>ˈɔlˌweɪz<span class="linking">‿</span><span class="weak">ən</span> ˌaʊtˈsaɪdər<span class="linking">‿</span>ˈɔlˌweɪz<span class="linking">‿</span>one <span class="weak">əv</span> <span class="weak">ðə</span> ˌdɪsənˈhɛrɪt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪf hi found<span class="linking">‿</span>ɪt ˈnɛsəˌsɛri <span class="weak">tə</span> ʃut<span class="linking">‿</span><span class="weak">ə</span> ˈʃɛrəf<span class="linking">‿</span>ɔr rɑb<span class="linking">‿</span><span class="weak">ə</span> bæŋk<span class="linking">‿</span><span class="weak">ə</span>ˈlɔŋ <span class="weak">ðə</span> weɪ hɪz<span class="linking">‿</span>ˈərli ˈɔdiəns found<span class="linking">‿</span>ɪt<span class="linking">‿</span>ˈizi <span class="weak">tə</span> ˌəndərˈstænd<span class="linking">‿</span><span class="weak">ən</span> fərˈɡɪv<span class="linking">‿</span>əsˈpɛʃəli wɛn<span class="linking">‿</span>ɪt <span class="weak">wəz</span> hɑrt who ɪn <span class="weak">ði</span><span class="linking">‿</span>ɛnd<span class="linking">‿</span>ˌoʊvərˈkeɪm <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈtæk<span class="linking">‿</span>ˈɪndiən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿ˈɔlˌweɪz‿ən、ˌaʊtˈsaɪdər‿ˈɔlˌweɪz‿one、ˌdɪsənˈhɛrɪt‿ən‿ɪf、found‿ɪt、ʃut‿ə 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>哈特扮演的好坏人始终是一个局外人，总是一个被剥夺继承权的人，如果他发现有必要一路上射杀治安官或抢劫银行，他的早期观众发现很容易理解和原谅，特别是当哈特最终战胜了进攻的印第安人时。</p></div>
+      <div class="field words"><span>词</span><p>in the end 最后； hart's 哈特的； goodbad 好坏； always 总是； outsider 局外人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="156.66" data-end="166.64">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">Audiences</span> <span class="weak linking">in</span> <span class="weak">the</span> second <span class="linking">decade</span> <span class="weak linking">of</span> <span class="weak">the</span> twentieth century <span class="linking">found</span> <span class="weak linking">it</span> pleasant <span class="weak">to</span> escape <span class="weak linking">to</span> <span class="weak linking">a</span> time when life, though hard, <span class="weak">was</span> relatively simple.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɔdiəns<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈsɛkənd ˈdɛˌkeɪd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈtwɛniəθ ˈsɛnʃri found<span class="linking">‿</span>ɪt ˈplɛznt <span class="weak">tə</span> <span class="weak">ə</span>ˈskeɪp <span class="weak">tə</span> <span class="weak">ə</span> time wɛn laɪf ðoʊ hɑrd <span class="weak">wəz</span> ˈrɛlədəvli simple/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈɔdiəns‿ɪn、ˈdɛˌkeɪd‿əv、found‿ɪt 连读；ðə、ə、tə、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>二十世纪第二个十年的观众发现，逃离到生活虽然艰苦但相对简单的时代是件愉快的事。</p></div>
+      <div class="field words"><span>词</span><p>audiences 观众； second 第二； decade 十年； twentieth 第二十；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="166.64" data-end="182.89">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">We</span> still <span class="weak">do;</span> <span class="linking">living</span> <span class="weak linking">in</span> <span class="weak linking">a</span> <span class="linking">world</span> <span class="weak linking">in</span> <span class="linking">which</span> <span class="linking">undeclared</span> <span class="linking">aggression,</span> war, hypocrisy, chicanery, <span class="linking">anarchy</span> <span class="weak linking">and</span> <span class="linking">impending</span> <span class="linking">immolation</span> <span class="weak linking">are</span> <span class="linking">part</span> <span class="weak linking">of</span> <span class="weak">our</span> daily lives, <span class="weak">we</span> all <span class="linking">want</span> <span class="weak linking">a</span> code <span class="weak">to</span> live by.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi stɪl du living<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> wərld<span class="linking">‿</span>ɪn wɪtʃ<span class="linking">‿</span>ˌəndəˈklɛrd<span class="linking">‿</span><span class="weak">ə</span>ˈɡrɛʃən wɔr həˈpɑkrəsi ʃəˈkeɪnri ˈænərki <span class="weak">ən</span><span class="linking">‿</span>ɪmˈpɛndɪŋ<span class="linking">‿</span>immolation<span class="linking">‿</span><span class="weak">ɑr</span> pɑrt<span class="linking">‿</span><span class="weak">əv</span> aʊɚ daily lives wi ɔl wɑnt<span class="linking">‿</span><span class="weak">ə</span> koʊd <span class="weak">tə</span> live baɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>living‿ɪn‿ə、wərld‿ɪn、wɪtʃ‿ˌəndəˈklɛrd‿əˈɡrɛʃən、ən‿ɪmˈpɛndɪŋ‿immolation‿ɑr、pɑrt‿əv 连读；ə、ən、tə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们仍然这样做；生活在一个不公开的侵略、战争、虚伪、欺骗、无政府状态和即将发生的自焚成为我们日常生活一部分的世界，我们都希望有一个生活准则。</p></div>
+      <div class="field words"><span>词</span><p>still 仍然； living 活的； world 世界； which 哪个；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>william 威廉； hart 哈特； early 早期的； western 西； film 电影； william 威廉； hart 哈特； perhaps 也许； greatest 最伟大的； western 西； supreme 最高； unchallenged 不受挑战的； hart 哈特； created 已创建； basic 基本的； formula 公式； unlike 不像； most 最多；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 原因或结果关系连接分句； 并列结构连接动作或信息； 含定语从句或名词性从句； when 引导时间状语从句； 含被动结构。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 一般过去时叙述故事主线； 过去完成时说明更早发生的动作； 现在完成时强调结果或经历。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>william‿ɛs 连读； hɑrt‿ən、ði‿ˈərli、hɪz‿ˈæktɪŋ、roʊl‿ɪn 连读；ði、ən、fɚ 弱读/弱化； william‿ɛs 连读； ɡreɪt‿əv‿ɔl、fɚ‿ˌənˈlaɪk、ˈkupər‿ən、əˈpɪr‿ɪn 连读；ðə、ən、əv、wəz、fɚ 弱读/弱化； səˈprim‿ən‿ˌənˈtʃæləndʒd 连读；ən、tə、wəz、frəm 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">William S. Hart and the Early &quot;Western&quot; Film</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../21－William S. Hart and the Early Western Film.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":2.87,"end":5.38,"text":"William S."},{"index":2,"start":5.38,"end":22.05,"text":"Hart and the early 'Western' film How did William Hart's childhood prepare him for his acting role in Western films?"},{"index":3,"start":22.05,"end":23.24,"text":"William S."},{"index":4,"start":23.24,"end":36.57,"text":"Hart was, perhaps, the greatest of all Western stars, for unlike Gary Cooper and John Wayne he appeared in nothing but Westerns."},{"index":5,"start":36.57,"end":43.99,"text":"From 1914 to 1924 he was supreme and unchallenged."},{"index":6,"start":43.99,"end":73.78,"text":"It was Hart who created the basic formula of the Western film, and devised the protagonist he played in every film he made, the good-bad man, the accidental, noble outlaw, or the honest, but framed cowboy, or the sheriff made suspect by vicious gossip; in short, the individual in conflict with himself and his frontier environment."},{"index":7,"start":73.78,"end":81.02,"text":"Unlike most of his contemporaries in Hollywood, Hart actually knew something of the old West."},{"index":8,"start":81.02,"end":115.22,"text":"He had lived in it as a child when it was already disappearing, and his hero was firmly rooted in his memories and experiences, and in both the history and the mythology of the vanished frontier, And although no period or place in American history has been more absurdly romanticized, myth and reality did join hands in at least one arena, the conflict between the individual and encroaching civilization."},{"index":9,"start":115.22,"end":131.49,"text":"Men accustomed to struggling for survival against the elements and Indians were bewildered by politicians, bankers and businessmen, and unhorsed by fences, laws and alien taboos."},{"index":10,"start":131.49,"end":156.66,"text":"Hart's good-bad man was always an outsider, always one of the disinherited, and if he found it necessary to shoot a sheriff or rob a bank along the way, his early audiences found it easy to understand and forgive, especially when it was Hart who, in the end, overcame the attacking Indians."},{"index":11,"start":156.66,"end":166.64,"text":"Audiences in the second decade of the twentieth century found it pleasant to escape to a time when life, though hard, was relatively simple."},{"index":12,"start":166.64,"end":182.89,"text":"We still do; living in a world in which undeclared aggression, war, hypocrisy, chicanery, anarchy and impending immolation are part of our daily lives, we all want a code to live by."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

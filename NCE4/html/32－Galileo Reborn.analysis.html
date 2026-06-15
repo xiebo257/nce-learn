@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 32 - Galileo Reborn</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 32 - Galileo Reborn</h1>
+      <p class="meta">问题: What has modified our traditional view of Galileo in recent times?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="17.77" data-end="34.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">In</span> <span class="weak linking">his</span> <span class="linking">own</span> lifetime Galileo <span class="weak">was</span> <span class="weak">the</span> <span class="linking">centre</span> <span class="weak linking">of</span> violent controversy, <span class="weak">but</span> <span class="weak">the</span> scientific dust <span class="weak">has</span> long since <span class="linking">settled,</span> <span class="weak linking">and</span> today <span class="weak">we</span> <span class="weak">can</span> see even <span class="weak">his</span> famous clash with <span class="weak">the</span> <span class="linking">Inquisition</span> <span class="weak linking">in</span> something like its proper perspective.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn hɪz<span class="linking">‿</span>oʊn ˈlaɪfˌtaɪm galileo <span class="weak">wəz</span> <span class="weak">ðə</span> ˈsɛnər<span class="linking">‿</span><span class="weak">əv</span> ˈvaɪlənt ˈkɑntrəˌvərsi bət <span class="weak">ðə</span> ˌsaɪənˈtɪfɪk dəst <span class="weak">həz</span> long sɪns ˈsɛdld<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span>ˈdeɪ wi <span class="weak">kən</span> si ˈivən hɪz ˈfeɪməs klæʃ wɪð <span class="weak">ði</span><span class="linking">‿</span>ˌɪnkwəˈzɪʃən<span class="linking">‿</span>ɪn ˈsəmˌθɪŋ like its ˈprɑpər pərˈspɛktɪv/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>hɪz‿oʊn、ˈsɛnər‿əv、ˈsɛdld‿ən、ði‿ˌɪnkwəˈzɪʃən‿ɪn 连读；ðə、ði、ən、kən、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>伽利略在世时曾是激烈争议的中心，但科学尘埃早已尘埃落定，今天我们甚至可以从正确的角度看待他与宗教裁判所的著名冲突。</p></div>
+      <div class="field words"><span>词</span><p>lifetime 寿命； galileo 伽利略； centre 中心； violent 暴力；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="34.42" data-end="44.11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak linking">But,</span> <span class="weak linking">in</span> <span class="linking">contrast,</span> <span class="weak linking">it</span> <span class="weak linking">is</span> <span class="linking">only</span> <span class="weak linking">in</span> modern times <span class="weak">that</span> Galileo <span class="weak">has</span> <span class="linking">become</span> <span class="weak linking">a</span> problem child <span class="weak">for</span> <span class="linking">historians</span> <span class="weak linking">of</span> science.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span>ɪn ˈkɑnˌtræst<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈoʊnli ɪn ˈmɑdərn times ðæt galileo <span class="weak">həz</span> bəˈkəm<span class="linking">‿</span><span class="weak">ə</span> ˈprɑbləm tʃaɪld <span class="weak">fɚ</span> hɪˈstɔriən<span class="linking">‿</span><span class="weak">əv</span> ˈsaɪəns/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ɪn、ˈkɑnˌtræst‿ɪt‿ɪz‿ˈoʊnli、bəˈkəm‿ə、hɪˈstɔriən‿əv 连读；ə、əv、ɪz、fɚ、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>但相比之下，直到现代伽利略才成为科学史学家的问题儿童。</p></div>
+      <div class="field words"><span>词</span><p>contrast 对比； only 仅有的； modern 现代的； times 次；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="44.11" data-end="48.63">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> old <span class="linking">view</span> <span class="weak linking">of</span> Galileo <span class="weak">was</span> delightfully uncomplicated.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>oʊld view<span class="linking">‿</span><span class="weak">əv</span> galileo <span class="weak">wəz</span> dəˈlaɪtfəli ˌ<span class="weak">ən</span>ˈkɑmpləˌkeɪdəd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿oʊld、view‿əv 连读；ði、əv、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>伽利略的旧观点非常简单。</p></div>
+      <div class="field words"><span>词</span><p>view 看法； galileo 伽利略； delightfully 愉快地； uncomplicated 简单；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="48.63" data-end="65.65">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">He</span> <span class="weak linking">was,</span> <span class="linking">above</span> <span class="linking">all,</span> <span class="weak linking">a</span> man who experimented: who despised <span class="weak">the</span> <span class="linking">prejudice</span> <span class="weak linking">and</span> book <span class="linking">learning</span> <span class="weak linking">of</span> <span class="weak">the</span> Aristotelians, who put <span class="weak">his</span> questions <span class="weak">to</span> <span class="linking">nature</span> <span class="linking">instead</span> <span class="weak linking">of</span> <span class="weak">to</span> <span class="weak">the</span> <span class="linking">ancients,</span> <span class="weak linking">and</span> who drew <span class="weak">his</span> conclusions fearlessly.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span>ˈbəv<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">ə</span> mæn who ɪkˈspɛrəmənt who dəˈspaɪz <span class="weak">ðə</span> ˈprɛdʒədəs<span class="linking">‿</span><span class="weak">ən</span> bʊk ˈlərnɪŋ<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˌrɪstəˈtiliən who pʊt hɪz ˈkwɛstʃn <span class="weak">tə</span> ˈneɪtʃər<span class="linking">‿</span>ɪnˈstɛd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">tə</span> <span class="weak">ðə</span> ˈeɪnʃənt<span class="linking">‿</span><span class="weak">ən</span> who dru hɪz <span class="weak">kən</span>ˈkluʒən ˈfɪrləsli/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wəz‿əˈbəv‿ɔl‿ə、ˈprɛdʒədəs‿ən、ˈlərnɪŋ‿əv、ði‿əˌrɪstəˈtiliən、ˈneɪtʃər‿ɪnˈstɛd‿əv 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>首先，他是一个勇于实验的人：他鄙视亚里士多德学派的偏见和书本知识，他向自然而不是古人提出问题，并且无所畏惧地得出结论。</p></div>
+      <div class="field words"><span>词</span><p>above 多于； experimented 进行过实验； despised 被鄙视的； prejudice 偏见；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="65.65" data-end="75.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">He</span> <span class="weak">had</span> <span class="weak">been</span> <span class="weak">the</span> first <span class="weak">to</span> <span class="linking">turn</span> <span class="weak linking">a</span> telescope <span class="weak">to</span> <span class="weak">the</span> <span class="linking">sky,</span> <span class="weak linking">and</span> <span class="weak">he</span> <span class="weak">had</span> seen <span class="weak linking">there</span> <span class="linking">evidence</span> <span class="linking">enough</span> <span class="weak">to</span> overthrow <span class="linking">Aristotle</span> <span class="weak linking">and</span> Ptolemy together.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">həd</span> bɪn <span class="weak">ðə</span> fərst <span class="weak">tə</span> tɝn<span class="linking">‿</span><span class="weak">ə</span> ˈtɛləˌskoʊp <span class="weak">tə</span> <span class="weak">ðə</span> skaɪ <span class="weak">ən</span> hi <span class="weak">həd</span> sin ðɛr<span class="linking">‿</span>ˈɛvədns<span class="linking">‿</span>ɪˈnəf <span class="weak">tə</span> ˌoʊvərˈθroʊ aristotle <span class="weak">ən</span> ptolemy <span class="weak">tə</span>ˈɡɛðər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>tɝn‿ə、ðɛr‿ˈɛvədns‿ɪˈnəf 连读；ðə、ə、ən、tə、həd 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>过去完成时说明更早发生的动作；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他是第一个将望远镜转向天空的人，他在那里看到的证据足以推翻亚里士多德和托勒密。</p></div>
+      <div class="field words"><span>词</span><p>first 第一的； turn 转动； telescope 望远镜； seen 见过；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="75.98" data-end="93.86">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak">He</span> <span class="weak">was</span> <span class="weak">the</span> man who climbed <span class="weak">the</span> Leaning <span class="linking">Tower</span> <span class="weak linking">of</span> <span class="linking">Pisa</span> <span class="weak linking">and</span> dropped various weights <span class="weak">from</span> <span class="weak">the</span> top, who rolled balls <span class="linking">down</span> <span class="linking">inclined</span> <span class="linking">planes,</span> <span class="weak linking">and</span> then generalized <span class="weak">the</span> <span class="linking">results</span> <span class="weak linking">of</span> <span class="weak">his</span> many <span class="linking">experiments</span> <span class="linking">into</span> <span class="weak">the</span> famous <span class="linking">law</span> <span class="weak linking">of</span> free fall.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hi <span class="weak">wəz</span> <span class="weak">ðə</span> mæn who klaɪm <span class="weak">ðə</span> ˈlinɪŋ ˈtaʊər<span class="linking">‿</span><span class="weak">əv</span> pisa <span class="weak">ən</span> dropped ˈvɛriəs weɪt <span class="weak">frəm</span> <span class="weak">ðə</span> tɑp who roʊl bɔl daʊn<span class="linking">‿</span>ɪnˈklaɪnd pleɪn<span class="linking">‿</span><span class="weak">ən</span> ðɛn ˈdʒɛnrəˌlaɪzd <span class="weak">ðə</span> rəˈzəlt<span class="linking">‿</span><span class="weak">əv</span> hɪz ˈmɛni ɪkˈspɛrəmənt<span class="linking">‿</span>ˈɪntu <span class="weak">ðə</span> ˈfeɪməs lɔ <span class="weak">əv</span> free fɔl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈtaʊər‿əv、daʊn‿ɪnˈklaɪnd、pleɪn‿ən、rəˈzəlt‿əv、ɪkˈspɛrəmənt‿ˈɪntu 连读；ðə、ən、əv、wəz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他登上了比萨斜塔，从塔顶扔下各种重物，将球滚下斜面，然后将他的许多实验结果推广到著名的自由落体定律。</p></div>
+      <div class="field words"><span>词</span><p>climbed 爬了； leaning 倾斜； tower 塔； pisa 比萨；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="93.86" data-end="109.86">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak linking">But</span> <span class="weak linking">a</span> closer <span class="linking">study</span> <span class="weak linking">of</span> <span class="weak">the</span> evidence, supported <span class="linking">by</span> <span class="weak linking">a</span> deeper <span class="linking">sense</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">period,</span> <span class="weak linking">and</span> particularly <span class="linking">by</span> <span class="weak linking">a</span> new <span class="linking">consciousness</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">philosophical</span> <span class="linking">undercurrents</span> <span class="weak linking">in</span> <span class="weak">the</span> scientific revolution, <span class="weak">has</span> profoundly modified this <span class="linking">view</span> <span class="weak linking">of</span> Galileo.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span><span class="weak">ə</span> kloʊs ˈstədi <span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɛvədns supported baɪ <span class="weak">ə</span> dip sɛns<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈpɪriəd<span class="linking">‿</span><span class="weak">ən</span> pəˈtɪkjələrli baɪ <span class="weak">ə</span> nu ˈkɑnʃəsnəs<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˌfɪləˈsɑfəkl<span class="linking">‿</span>ˈəndərˌkərənt<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˌsaɪənˈtɪfɪk ˌrɛvəˈluʃən <span class="weak">həz</span> prəˈfaʊnli ˈmɑdəˌfaɪ ðɪs view<span class="linking">‿</span><span class="weak">əv</span> galileo/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ə、ði‿ˈɛvədns、sɛns‿əv、ˈpɪriəd‿ən、ˈkɑnʃəsnəs‿əv 连读；ðə、ði、ə、ən、əv、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>但对证据的更仔细研究，加上对那个时代的更深刻认识，特别是对科学革命中哲学暗流的新认识的支持，深刻地改变了伽利略的这一观点。</p></div>
+      <div class="field words"><span>词</span><p>closer 更近； study 学习； evidence 证据； supported 支持；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="109.86" data-end="121.49">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Today, although <span class="weak">the</span> old Galileo <span class="linking">lives</span> <span class="linking">on</span> <span class="weak linking">in</span> many popular <span class="linking">writings,</span> <span class="linking">among</span> <span class="linking">historians</span> <span class="weak linking">of</span> <span class="linking">science</span> <span class="weak linking">a</span> <span class="linking">new</span> <span class="weak linking">and</span> more sophisticated picture <span class="weak linking">has</span> <span class="linking">emerged.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">tə</span>ˈdeɪ ɔlˈðoʊ <span class="weak">ði</span><span class="linking">‿</span>oʊld galileo lives<span class="linking">‿</span>ɔn<span class="linking">‿</span>ɪn ˈmɛni ˈpɑpjələr writings<span class="linking">‿</span><span class="weak">ə</span>ˈməŋ hɪˈstɔriən<span class="linking">‿</span><span class="weak">əv</span> ˈsaɪəns<span class="linking">‿</span><span class="weak">ə</span> nu <span class="weak">ən</span> mɔr səˈfɪstəˌkeɪdəd picture <span class="weak">həz</span><span class="linking">‿</span><span class="weak">ə</span>ˈmərdʒ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿oʊld、lives‿ɔn‿ɪn、writings‿əˈməŋ、hɪˈstɔriən‿əv、ˈsaɪəns‿ə 连读；ði、ə、ən、əv、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>如今，尽管古老的伽利略在许多流行著作中仍然存在，但科学史学家们却出现了一幅新的、更复杂的图景。</p></div>
+      <div class="field words"><span>词</span><p>today 今天； although 虽然； galileo 伽利略； lives 生活；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="121.49" data-end="126.42">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">At</span> <span class="weak">the</span> same time <span class="weak">our</span> sympathy <span class="weak">for</span> <span class="linking">Galileo's</span> <span class="linking">opponents</span> <span class="weak">has</span> grown somewhat.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ət</span> <span class="weak">ðə</span> seɪm time aʊɚ ˈsɪmpəθi <span class="weak">fɚ</span> galileo's<span class="linking">‿</span><span class="weak">ə</span>ˈpoʊnənt <span class="weak">həz</span> ɡroʊn ˈsəmˌwɑt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>galileos‿əˈpoʊnənt 连读；ðə、ət、fɚ、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>与此同时，我们对伽利略的反对者的同情有所增加。</p></div>
+      <div class="field words"><span>词</span><p>same 相同的； time 时间； sympathy 同情； galileo's 伽利略的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="126.42" data-end="144.6">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">His</span> <span class="linking">telescopic</span> <span class="linking">observations</span> <span class="weak linking">are</span> justly immortal; <span class="weak">they</span> aroused <span class="linking">great</span> <span class="linking">interest</span> <span class="weak linking">at</span> <span class="weak">the</span> time, <span class="weak">they</span> <span class="weak linking">had</span> <span class="linking">important</span> theoretical <span class="linking">consequences,</span> <span class="weak linking">and</span> <span class="weak">they</span> <span class="linking">provided</span> <span class="weak linking">a</span> striking <span class="linking">demonstration</span> <span class="weak linking">of</span> <span class="weak">the</span> potentialities <span class="linking">hidden</span> <span class="weak linking">in</span> <span class="linking">instruments</span> <span class="weak linking">and</span> <span class="linking">apparatus.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/hɪz ˌtɛləˈskɑpɪk<span class="linking">‿</span>ˌɑbzərˈveɪʃən<span class="linking">‿</span><span class="weak">ɑr</span> ˈdʒəsli ɪˈmɔrdl ðeɪ <span class="weak">ə</span>ˈraʊz ɡreɪt<span class="linking">‿</span>ˈɪntrəst<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ðə</span> time ðeɪ <span class="weak">həd</span><span class="linking">‿</span>ɪmˈpɔrtnt ˌθiəˈrɛdəkl ˈkɑnsəkwəns<span class="linking">‿</span><span class="weak">ən</span> ðeɪ prəˈvaɪdəd<span class="linking">‿</span><span class="weak">ə</span> ˈstraɪkɪŋ ˌdɛmənˈstreɪʃən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> pəˌtɛnʃiˈælədi hidden<span class="linking">‿</span>ɪn<span class="linking">‿</span>ˈɪnstrəmənt<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˌæpəˈrædəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˌtɛləˈskɑpɪk‿ˌɑbzərˈveɪʃən‿ɑr、ɡreɪt‿ˈɪntrəst‿ət、həd‿ɪmˈpɔrtnt、ˈkɑnsəkwəns‿ən、prəˈvaɪdəd‿ə 连读；ðə、ə、ən、ət、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>他的望远镜观察结果确实是不朽的。它们在当时引起了极大的兴趣，产生了重要的理论后果，并且令人震惊地展示了仪器和设备中隐藏的潜力。</p></div>
+      <div class="field words"><span>词</span><p>telescopic 伸缩式的； observations 观察； justly 公正地； immortal 不朽；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="144.6" data-end="160.5">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">But</span> <span class="weak">can</span> <span class="weak">we</span> blame those who <span class="linking">looked</span> <span class="weak linking">and</span> failed <span class="weak">to</span> see what Galileo saw, if <span class="weak">we</span> remember <span class="weak">that</span> <span class="weak">to</span> <span class="linking">use</span> <span class="weak linking">a</span> <span class="linking">telescope</span> <span class="weak linking">at</span> <span class="weak">the</span> <span class="linking">limit</span> <span class="weak linking">of</span> <span class="linking">its</span> powers calls <span class="weak">for</span> <span class="linking">long</span> <span class="linking">experience</span> <span class="weak linking">and</span> <span class="linking">intimate</span> familiarity <span class="linking">with</span> <span class="linking">one's</span> <span class="linking">instrument?</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət <span class="weak">kən</span> wi bleɪm ðoʊz who lʊkt<span class="linking">‿</span><span class="weak">ən</span> feɪld <span class="weak">tə</span> si wət galileo sɔ ɪf wi rəˈmɛmbər ðæt <span class="weak">tə</span> jus<span class="linking">‿</span><span class="weak">ə</span> ˈtɛləˌskoʊp<span class="linking">‿</span><span class="weak">ət</span> <span class="weak">ðə</span> ˈlɪmət<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>its powers kɔl <span class="weak">fɚ</span> long<span class="linking">‿</span>ɪkˈspɪriəns<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪnəmət fəˌmɪliˈɛrədi wɪð<span class="linking">‿</span>one's<span class="linking">‿</span>ˈɪnstrəmənt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>lʊkt‿ən、jus‿ə、ˈtɛləˌskoʊp‿ət、ˈlɪmət‿əv‿its、long‿ɪkˈspɪriəns‿ən‿ˈɪnəmət 连读；ðə、ə、ən、ət、tə、kən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>但是，如果我们记得使用望远镜的极限能力需要长期的经验和对仪器的熟悉，我们是否可以责怪那些看过但未能看到伽利略所看到的东西的人呢？</p></div>
+      <div class="field words"><span>词</span><p>blame 责备； those 那些； looked 看起来； failed 失败的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="160.5" data-end="177.31">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">Was</span> <span class="weak">the</span> philosopher who refused <span class="weak">to</span> look through Galileo's telescope more culpable than those who alleged <span class="weak">that</span> <span class="weak">the</span> spiral nebulae observed with Lord Rosse's great <span class="linking">telescope</span> <span class="weak linking">in</span> <span class="weak">the</span> 1840s <span class="weak">were</span> scratches left by <span class="weak">the</span> grinder?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">wəz</span> <span class="weak">ðə</span> fəˈlɑsfər who rəˈfjuz <span class="weak">tə</span> lʊk θru galileo's ˈtɛləˌskoʊp mɔr ˈkəlpəbl ðæn ðoʊz who <span class="weak">ə</span>ˈlɛdʒd ðæt <span class="weak">ðə</span> ˈspaɪrəl ˈnɛbjələ əbˈzərv wɪð lɔrd rosse's ɡreɪt ˈtɛləˌskoʊp<span class="linking">‿</span>ɪn <span class="weak">ði</span><span class="linking">‿</span>ɛs <span class="weak">wɚ</span> skrætʃ lɛft baɪ <span class="weak">ðə</span> ˈɡraɪndər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈtɛləˌskoʊp‿ɪn、ði‿ɛs 连读；ðə、ði、tə、wəz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>那些拒绝通过伽利略望远镜观察的哲学家是否比那些声称 1840 年代用罗塞勋爵的大望远镜观察到的螺旋星云是研磨机留下的划痕的哲学家更有罪？</p></div>
+      <div class="field words"><span>词</span><p>philosopher 哲学家； refused 拒绝； look 看； through 通过；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="177.31" data-end="203.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">We</span> <span class="weak">can</span> perhaps forgive those who said <span class="weak">the</span> <span class="linking">moons</span> <span class="weak linking">of</span> Jupiter <span class="weak">were</span> produced by Galileo's <span class="linking">spyglass</span> <span class="linking">if</span> <span class="weak">we</span> recall <span class="weak linking">that</span> <span class="weak linking">in</span> <span class="weak">his</span> <span class="linking">day,</span> <span class="weak linking">as</span> <span class="weak">for</span> centuries before, curved glass <span class="weak">was</span> <span class="weak">the</span> popular contrivance <span class="weak">for</span> producing not truth <span class="weak linking">but</span> <span class="linking">illusion,</span> <span class="linking">untruth;</span> <span class="weak linking">and</span> <span class="linking">if</span> <span class="weak linking">a</span> single curved glass <span class="weak">would</span> distort nature, how much more <span class="weak linking">would</span> <span class="weak linking">a</span> <span class="linking">pair</span> <span class="weak linking">of</span> <span class="weak">them?</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi <span class="weak">kən</span> pərˈæps fərˈɡɪv ðoʊz who sɛd <span class="weak">ðə</span> mun<span class="linking">‿</span><span class="weak">əv</span> ˈdʒupədər <span class="weak">wɚ</span> prəˈdus baɪ galileo's ˈspaɪˌɡlæs<span class="linking">‿</span>ɪf wi rəˈkɔl ðæt<span class="linking">‿</span>ɪn hɪz deɪ <span class="weak">əz</span> <span class="weak">fɚ</span> ˈsɛnʃri bəˈfɔr kərvd ɡlæs <span class="weak">wəz</span> <span class="weak">ðə</span> ˈpɑpjələr <span class="weak">kən</span>ˈtraɪvns <span class="weak">fɚ</span> prəˈdusɪŋ nɑt truθ bət<span class="linking">‿</span>ɪˈluʒn<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈtruθ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪf<span class="linking">‿</span><span class="weak">ə</span> ˈsɪŋɡl kərvd ɡlæs wəd dəˈstɔrt ˈneɪtʃər haʊ mətʃ mɔr wəd<span class="linking">‿</span><span class="weak">ə</span> pɛr<span class="linking">‿</span><span class="weak">əv</span> ðəm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mun‿əv、ˈspaɪˌɡlæs‿ɪf、ðæt‿ɪn、bət‿ɪˈluʒn‿ˌənˈtruθ‿ən‿ɪf‿ə、wəd‿ə 连读；ðə、ə、ən、əz、kən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>直接引语与叙述语结合；时间状语从句交代动作先后；原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>如果我们回想一下，在他那个时代，就像几个世纪之前一样，曲面玻璃是流行的发明，它不是产生真理，而是产生幻觉和谎言，那么我们也许可以原谅那些说木星的卫星是由伽利略的望远镜产生的人。如果单块曲面玻璃都会扭曲自然，那么一对曲面玻璃更会扭曲自然吗？</p></div>
+      <div class="field words"><span>词</span><p>perhaps 也许； forgive 原谅； those 那些； said 说；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>lifetime 寿命； galileo 伽利略； centre 中心； violent 暴力； contrast 对比； only 仅有的； modern 现代的； times 次； view 看法； galileo 伽利略； delightfully 愉快地； uncomplicated 简单； above 多于； experimented 进行过实验； despised 被鄙视的； prejudice 偏见； first 第一的； turn 转动；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>并列结构连接动作或信息； 原因或结果关系连接分句； 含定语从句或名词性从句； 主语 + 谓语 + 宾语/补足语的基础叙述句； 不定式短语补充目的、结果或宾语； 直接引语与叙述语结合。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 一般过去时叙述故事主线； 过去完成时说明更早发生的动作。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>1. In his own lifetime Galileo was the centre of violent controversy, but the scientific dust has long since settled, and today we can see even his famous clash with the Inquisition in something like its proper perspective.； 11. But can we blame those who looked and failed to see what Galileo saw, if we remember that to use a telescope at the limit of its powers calls for long experience and intimate familiarity with one's instrument?； 13. We can perhaps forgive those who said the moons of Jupiter were produced by Galileo's spyglass if we recall that in his day, as for centuries before, curved glass was the popular contrivance for producing not truth but illusion, untruth; and if a single curved glass would distort nature, how much more would a pair of them?。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>hɪz‿oʊn、ˈsɛnər‿əv、ˈsɛdld‿ən、ði‿ˌɪnkwəˈzɪʃən‿ɪn 连读；ðə、ði、ən、kən、əv、wəz 弱读/弱化； bət‿ɪn、ˈkɑnˌtræst‿ɪt‿ɪz‿ˈoʊnli、bəˈkəm‿ə、hɪˈstɔriən‿əv 连读；ə、əv、ɪz、fɚ、həz 弱读/弱化； ði‿oʊld、view‿əv 连读；ði、əv、wəz 弱读/弱化； wəz‿əˈbəv‿ɔl‿ə、ˈprɛdʒədəs‿ən、ˈlərnɪŋ‿əv、ði‿əˌrɪstəˈtiliən、ˈneɪtʃər‿ɪnˈstɛd‿əv 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化； tɝn‿ə、ðɛr‿ˈɛvədns‿ɪˈnəf 连读；ðə、ə、ən、tə、həd 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Galileo Reborn</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../32－Galileo Reborn.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":17.77,"end":34.42,"text":"In his own lifetime Galileo was the centre of violent controversy, but the scientific dust has long since settled, and today we can see even his famous clash with the Inquisition in something like its proper perspective."},{"index":2,"start":34.42,"end":44.11,"text":"But, in contrast, it is only in modern times that Galileo has become a problem child for historians of science."},{"index":3,"start":44.11,"end":48.63,"text":"The old view of Galileo was delightfully uncomplicated."},{"index":4,"start":48.63,"end":65.65,"text":"He was, above all, a man who experimented: who despised the prejudice and book learning of the Aristotelians, who put his questions to nature instead of to the ancients, and who drew his conclusions fearlessly."},{"index":5,"start":65.65,"end":75.98,"text":"He had been the first to turn a telescope to the sky, and he had seen there evidence enough to overthrow Aristotle and Ptolemy together."},{"index":6,"start":75.98,"end":93.86,"text":"He was the man who climbed the Leaning Tower of Pisa and dropped various weights from the top, who rolled balls down inclined planes, and then generalized the results of his many experiments into the famous law of free fall."},{"index":7,"start":93.86,"end":109.86,"text":"But a closer study of the evidence, supported by a deeper sense of the period, and particularly by a new consciousness of the philosophical undercurrents in the scientific revolution, has profoundly modified this view of Galileo."},{"index":8,"start":109.86,"end":121.49,"text":"Today, although the old Galileo lives on in many popular writings, among historians of science a new and more sophisticated picture has emerged."},{"index":9,"start":121.49,"end":126.42,"text":"At the same time our sympathy for Galileo's opponents has grown somewhat."},{"index":10,"start":126.42,"end":144.6,"text":"His telescopic observations are justly immortal; they aroused great interest at the time, they had important theoretical consequences, and they provided a striking demonstration of the potentialities hidden in instruments and apparatus."},{"index":11,"start":144.6,"end":160.5,"text":"But can we blame those who looked and failed to see what Galileo saw, if we remember that to use a telescope at the limit of its powers calls for long experience and intimate familiarity with one's instrument?"},{"index":12,"start":160.5,"end":177.31,"text":"Was the philosopher who refused to look through Galileo's telescope more culpable than those who alleged that the spiral nebulae observed with Lord Rosse's great telescope in the 1840s were scratches left by the grinder?"},{"index":13,"start":177.31,"end":203.98,"text":"We can perhaps forgive those who said the moons of Jupiter were produced by Galileo's spyglass if we recall that in his day, as for centuries before, curved glass was the popular contrivance for producing not truth but illusion, untruth; and if a single curved glass would distort nature, how much more would a pair of them?"}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

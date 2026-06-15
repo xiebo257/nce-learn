@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 02 - Spare That Spider</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 02 - Spare That Spider</h1>
+      <p class="meta">问题: How much of each year do spiders spend killing insects?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="19.15" data-end="26.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Because <span class="weak">they</span> destroy so many <span class="linking">insects,</span> <span class="weak linking">and</span> <span class="linking">insects</span> <span class="linking">include</span> <span class="linking">some</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">greatest</span> <span class="linking">enemies</span> <span class="weak linking">of</span> <span class="weak">the</span> human race.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bəˈkəz ðeɪ dəˈstrɔɪ soʊ ˈmɛni ˈɪnˌsɛk<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪnˌsɛk<span class="linking">‿</span>ɪnˈklud səm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ɡreɪt<span class="linking">‿</span>ˈɛnəmi <span class="weak">əv</span> <span class="weak">ðə</span> ˈjumən reɪs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈɪnˌsɛk‿ən‿ˈɪnˌsɛk‿ɪnˈklud、səm‿əv、ɡreɪt‿ˈɛnəmi 连读；ðə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>因为它们消灭了如此多的昆虫，而昆虫中包括一些人类最大的敌人。</p></div>
+      <div class="field words"><span>词</span><p>because 因为； destroy 破坏； many 许多； insects 昆虫；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="26.74" data-end="39.77">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Insects <span class="weak">would</span> <span class="linking">make</span> <span class="weak linking">it</span> <span class="linking">impossible</span> <span class="weak linking">for</span> <span class="linking">us</span> <span class="weak">to</span> <span class="linking">live</span> <span class="weak linking">in</span> <span class="weak">the</span> world; <span class="weak">they</span> <span class="weak">would</span> <span class="linking">devour</span> <span class="linking">all</span> <span class="weak">our</span> <span class="linking">crops</span> <span class="weak linking">and</span> kill <span class="weak">our</span> <span class="linking">flocks</span> <span class="weak linking">and</span> <span class="linking">herds,</span> <span class="linking">if</span> <span class="weak linking">it</span> <span class="weak">were</span> not <span class="weak">for</span> <span class="weak">the</span> protection <span class="weak">we</span> get <span class="weak linking">from</span> <span class="linking">insect</span> <span class="linking">eating</span> <span class="linking">animals.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈɪnˌsɛk wəd make ɪt<span class="linking">‿</span>ɪmˈpɑsəbl <span class="weak">fɚ</span><span class="linking">‿</span>əs <span class="weak">tə</span> live ɪn <span class="weak">ðə</span> wərld ðeɪ wəd dəˈvaʊr<span class="linking">‿</span>ɔl aʊɚ krɑp<span class="linking">‿</span><span class="weak">ən</span> kɪl aʊɚ flɑk<span class="linking">‿</span><span class="weak">ən</span> hərd<span class="linking">‿</span>ɪf<span class="linking">‿</span>ɪt <span class="weak">wɚ</span> nɑt <span class="weak">fɚ</span> <span class="weak">ðə</span> prəˈtɛkʃən wi ɡɛt <span class="weak">frəm</span><span class="linking">‿</span>ˈɪnˌsɛk<span class="linking">‿</span>ˈidɪŋ<span class="linking">‿</span>ˈænəml/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪmˈpɑsəbl、fɚ‿əs、dəˈvaʊr‿ɔl、krɑp‿ən、flɑk‿ən 连读；ðə、ən、tə、wɚ、fɚ、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿；一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>昆虫会让我们无法在这个世界上生存；如果没有我们得到食虫动物的保护，它们就会吃掉我们所有的庄稼，杀死我们的牛羊。</p></div>
+      <div class="field words"><span>词</span><p>insects 昆虫； make 制作； impossible 不可能的； live 居住；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="39.77" data-end="49.79">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">We</span> <span class="linking">owe</span> <span class="weak linking">a</span> lot <span class="weak">to</span> <span class="weak">the</span> <span class="linking">birds</span> <span class="weak linking">and</span> beasts who <span class="linking">eat</span> <span class="linking">insects</span> <span class="weak linking">but</span> <span class="linking">all</span> <span class="weak linking">of</span> <span class="weak">them</span> put together <span class="linking">kill</span> <span class="linking">only</span> <span class="weak linking">a</span> <span class="linking">fraction</span> <span class="weak linking">of</span> <span class="weak">the</span> number destroyed by spiders.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi oʊ <span class="weak">ə</span> lɑt <span class="weak">tə</span> <span class="weak">ðə</span> bərd<span class="linking">‿</span><span class="weak">ən</span> bist who it<span class="linking">‿</span>ˈɪnˌsɛk bət<span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">əv</span> ðəm pʊt <span class="weak">tə</span>ˈɡɛðər kɪl<span class="linking">‿</span>ˈoʊnli <span class="weak">ə</span> ˈfrækʃən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈnəmbər dəˈstrɔɪ baɪ ˈspaɪdər/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bərd‿ən、it‿ˈɪnˌsɛk、bət‿ɔl‿əv、kɪl‿ˈoʊnli、ˈfrækʃən‿əv 连读；ðə、ə、ən、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们对以昆虫为食的鸟类和野兽有很多感激之情，但所有这些昆虫加起来只杀死了被蜘蛛杀死的一小部分。</p></div>
+      <div class="field words"><span>词</span><p>birds 鸟类； beasts 野兽； insects 昆虫； together 一起；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="49.79" data-end="58.72">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="linking">Moreover,</span> <span class="linking">unlike</span> <span class="linking">some</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">other</span> <span class="linking">insect</span> <span class="linking">eaters,</span> spiders never <span class="weak">do</span> <span class="weak">the</span> least harm <span class="weak">to</span> <span class="linking">us</span> <span class="linking">or</span> <span class="weak">our</span> belongings.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/mɔˈroʊvər<span class="linking">‿</span>ˌ<span class="weak">ən</span>ˈlaɪk səm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈəðər<span class="linking">‿</span>ˈɪnˌsɛk<span class="linking">‿</span>ˈidər ˈspaɪdər ˈnɛvər du <span class="weak">ðə</span> list hɑrm <span class="weak">tə</span> əs<span class="linking">‿</span>ɔr aʊɚ bəˈlɔŋɪŋz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mɔˈroʊvər‿ˌənˈlaɪk、səm‿əv、ði‿ˈəðər‿ˈɪnˌsɛk‿ˈidər、əs‿ɔr 连读；ðə、ði、tə、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>此外，与其他一些食虫动物不同，蜘蛛永远不会对我们或我们的财产造成最小的伤害。</p></div>
+      <div class="field words"><span>词</span><p>moreover 而且； unlike 不像； some 一些； other 其他；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="58.72" data-end="65.22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Spiders</span> <span class="weak linking">are</span> <span class="linking">not</span> <span class="linking">insects,</span> <span class="weak linking">as</span> many people think, <span class="linking">nor</span> <span class="linking">even</span> nearly related <span class="weak">to</span> <span class="weak">them.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈspaɪdər<span class="linking">‿</span><span class="weak">ɑr</span> nɑɾ<span class="linking">‿</span>ˈɪnˌsɛk<span class="linking">‿</span><span class="weak">əz</span> ˈmɛni ˈpipl θɪŋk nɔr<span class="linking">‿</span>ˈivən ˈnɪrli rəˈleɪdəd <span class="weak">tə</span> ðəm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈspaɪdər‿ɑr、nɑɾ‿ˈɪnˌsɛk‿əz、nɔr‿ˈivən 连读；əz、tə、ɑr 弱读/弱化；nɑɾ‿ˈɪnˌsɛk‿əz 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>正如许多人认为的那样，蜘蛛不是昆虫，甚至与昆虫也没有近亲关系。</p></div>
+      <div class="field words"><span>词</span><p>spiders 蜘蛛； insects 昆虫； many 许多； people 人们；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="65.22" data-end="74.93">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">One <span class="weak">can</span> tell <span class="weak">the</span> <span class="linking">difference</span> <span class="linking">almost</span> <span class="weak linking">at</span> <span class="weak linking">a</span> glance, <span class="weak linking">for</span> <span class="weak linking">a</span> <span class="linking">spider</span> <span class="linking">always</span> <span class="weak">has</span> eight <span class="linking">legs</span> <span class="weak linking">and</span> <span class="weak linking">an</span> <span class="linking">insect</span> never more than six.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one <span class="weak">kən</span> tɛl <span class="weak">ðə</span> ˈdɪfrəns<span class="linking">‿</span>ˈɔlmoʊst<span class="linking">‿</span><span class="weak">ət</span><span class="linking">‿</span><span class="weak">ə</span> ɡlæns <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> ˈspaɪdər<span class="linking">‿</span>ˈɔlˌweɪz <span class="weak">həz</span> eɪt lɛɡ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪnˌsɛk ˈnɛvər mɔr ðæn sɪks/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈdɪfrəns‿ˈɔlmoʊst‿ət‿ə、fɚ‿ə、ˈspaɪdər‿ˈɔlˌweɪz、lɛɡ‿ən‿ən‿ˈɪnˌsɛk 连读；ðə、ə、ən、ət、kən、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>人们几乎一眼就能看出区别，因为蜘蛛总是有八条腿，而昆虫永远不会超过六条。</p></div>
+      <div class="field words"><span>词</span><p>tell 告诉； difference 不同之处； almost 几乎； glance 一眼；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="74.93" data-end="79.25">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">How many <span class="linking">spiders</span> <span class="weak linking">are</span> <span class="linking">engaged</span> <span class="weak linking">in</span> this <span class="linking">work</span> <span class="linking">on</span> <span class="weak">our</span> behalf?</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/haʊ ˈmɛni ˈspaɪdər<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ɪnˈɡeɪdʒd<span class="linking">‿</span>ɪn ðɪs wərk<span class="linking">‿</span>ɔn aʊɚ bəˈhæf/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈspaɪdər‿ɑr‿ɪnˈɡeɪdʒd‿ɪn、wərk‿ɔn 连读；ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>有多少蜘蛛代表我们从事这项工作？</p></div>
+      <div class="field words"><span>词</span><p>many 许多； spiders 蜘蛛； engaged 已订婚的； this 这；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="79.25" data-end="99.86">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">One authority on spiders <span class="linking">made</span> <span class="weak linking">a</span> <span class="linking">census</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">spiders</span> <span class="weak linking">in</span> <span class="weak linking">a</span> grass <span class="linking">field</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">south</span> <span class="weak linking">of</span> <span class="linking">England,</span> <span class="weak linking">and</span> <span class="weak">he</span> estimated <span class="weak">that</span> <span class="weak">there</span> <span class="weak">were</span> more <span class="linking">than</span> <span class="linking">2,</span> <span class="linking">250,</span> <span class="linking">000</span> <span class="weak linking">in</span> <span class="linking">one</span> acre; <span class="weak linking">that</span> <span class="weak linking">is</span> something like <span class="linking">6,</span> <span class="linking">000,</span> <span class="linking">000</span> <span class="linking">spiders</span> <span class="weak linking">of</span> different <span class="linking">kinds</span> <span class="linking">on</span> <span class="weak linking">a</span> football pitch.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/one <span class="weak">ə</span>ˈθɔrədi ɔn ˈspaɪdər meɪd<span class="linking">‿</span><span class="weak">ə</span> ˈsɛnsəs<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈspaɪdər<span class="linking">‿</span>ɪn<span class="linking">‿</span><span class="weak">ə</span> ɡræs fild<span class="linking">‿</span>ɪn <span class="weak">ðə</span> saʊθ<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɪŋlənd<span class="linking">‿</span><span class="weak">ən</span> hi ˈɛstəmət ðæt ðɛr <span class="weak">wɚ</span> mɔr ðæn<span class="linking">‿</span>ɪn<span class="linking">‿</span>one ˈeɪkər ðæt<span class="linking">‿</span><span class="weak">ɪz</span> ˈsəmˌθɪŋ like ˈspaɪdər<span class="linking">‿</span><span class="weak">əv</span> ˈdɪfrənt kaɪnd<span class="linking">‿</span>ɔn<span class="linking">‿</span><span class="weak">ə</span> ˈfʊtˌbɔl pɪtʃ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>meɪd‿ə、ˈsɛnsəs‿əv、ˈspaɪdər‿ɪn‿ə、fild‿ɪn、saʊθ‿əv‿ˈɪŋlənd‿ən 连读；ðə、ə、ən、əv、ɪz、wɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>一位蜘蛛研究权威对英格兰南部一片草地上的蜘蛛进行了普查，他估计一英亩土地上有超过 2, 250, 000 只蜘蛛；相当于足球场上有 6, 000, 000 只不同种类的蜘蛛。</p></div>
+      <div class="field words"><span>词</span><p>authority 权威； spiders 蜘蛛； made 制成； census 人口普查；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="99.86" data-end="104.98">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="linking">Spiders</span> <span class="weak linking">are</span> busy <span class="weak linking">for</span> <span class="weak linking">at</span> least half <span class="weak">the</span> <span class="linking">year</span> <span class="weak linking">in</span> <span class="linking">killing</span> <span class="linking">insects.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˈspaɪdər<span class="linking">‿</span><span class="weak">ɑr</span> ˈbɪzi <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ət</span> list hæf <span class="weak">ðə</span> jɪr<span class="linking">‿</span>ɪn ˈkɪlɪŋ<span class="linking">‿</span>ˈɪnˌsɛk/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈspaɪdər‿ɑr、fɚ‿ət、jɪr‿ɪn、ˈkɪlɪŋ‿ˈɪnˌsɛk 连读；ðə、ət、ɑr、fɚ 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>蜘蛛至少有半年时间忙于捕杀昆虫。</p></div>
+      <div class="field words"><span>词</span><p>spiders 蜘蛛； busy 忙碌的； least 至少； half 一半；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="104.98" data-end="115.88">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="linking">impossible</span> <span class="weak">to</span> make more than <span class="weak">the</span> wildest <span class="linking">guess</span> <span class="weak linking">at</span> how many <span class="weak">they</span> kill, <span class="weak">but</span> <span class="weak linking">they</span> <span class="weak linking">are</span> hungry creatures, not content <span class="linking">with</span> <span class="linking">only</span> three <span class="linking">meals</span> <span class="weak linking">a</span> day.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ɪmˈpɑsəbl <span class="weak">tə</span> make mɔr ðæn <span class="weak">ðə</span> waɪld ɡɛs<span class="linking">‿</span><span class="weak">ət</span> haʊ ˈmɛni ðeɪ kɪl bət ðeɪ <span class="weak">ɑr</span> ˈhəŋɡri ˈkritʃər nɑt <span class="weak">kən</span>ˈtɛnt wɪð<span class="linking">‿</span>ˈoʊnli θri mil<span class="linking">‿</span><span class="weak">ə</span> deɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz‿ɪmˈpɑsəbl、ɡɛs‿ət、wɪð‿ˈoʊnli、mil‿ə 连读；ðə、ə、ət、tə、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们无法对它们杀死的数量做出最疯狂的猜测，但它们是饥饿的生物，不满足于一日三餐。</p></div>
+      <div class="field words"><span>词</span><p>impossible 不可能的； make 制作； more 更多的； than 比；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="115.88" data-end="130.8">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">It</span> <span class="weak">has</span> <span class="weak linking">been</span> <span class="linking">estimated</span> <span class="weak">that</span> <span class="weak">the</span> <span class="linking">weight</span> <span class="weak linking">of</span> <span class="linking">all</span> <span class="weak">the</span> insects destroyed by <span class="linking">spiders</span> <span class="weak linking">in</span> <span class="linking">Britain</span> <span class="weak linking">in</span> <span class="linking">one</span> year <span class="weak">would</span> <span class="weak">be</span> greater than <span class="weak">the</span> total <span class="linking">weight</span> <span class="weak linking">of</span> <span class="linking">all</span> <span class="weak">the</span> human <span class="linking">beings</span> <span class="weak linking">in</span> <span class="weak">the</span> country.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">həz</span> bɪn<span class="linking">‿</span>ˈɛstəmət ðæt <span class="weak">ðə</span> weɪt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl <span class="weak">ði</span><span class="linking">‿</span>ˈɪnˌsɛk dəˈstrɔɪ baɪ ˈspaɪdər<span class="linking">‿</span>ɪn ˈbrɪtn<span class="linking">‿</span>ɪn<span class="linking">‿</span>one jɪr wəd bi ɡreɪt ðæn <span class="weak">ðə</span> ˈtoʊdl weɪt<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ɔl <span class="weak">ðə</span> ˈjumən ˈbiɪŋ<span class="linking">‿</span>ɪn <span class="weak">ðə</span> ˈkəntri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bɪn‿ˈɛstəmət、weɪt‿əv‿ɔl、ði‿ˈɪnˌsɛk、ˈspaɪdər‿ɪn、ˈbrɪtn‿ɪn‿one 连读；ðə、ði、əv、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>据估计，英国一年内被蜘蛛消灭的所有昆虫的重量将超过该国所有人类的总重量。</p></div>
+      <div class="field words"><span>词</span><p>estimated 估计的； weight 重量； insects 昆虫； destroyed 被摧毁；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>because 因为； destroy 破坏； many 许多； insects 昆虫； insects 昆虫； make 制作； impossible 不可能的； live 居住； birds 鸟类； beasts 野兽； insects 昆虫； together 一起； moreover 而且； unlike 不像； some 一些； other 其他； spiders 蜘蛛； insects 昆虫；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>原因或结果关系连接分句； 并列结构连接动作或信息； 含定语从句或名词性从句； 主语 + 谓语 + 宾语/补足语的基础叙述句； 含被动结构； 不定式短语补充目的、结果或宾语。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>一般现在时或基础事实陈述； 情态结构表达能力、义务、推测或意愿； 一般过去时叙述故事主线； 现在完成时强调结果或经历。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>2. Insects would make it impossible for us to live in the world; they would devour all our crops and kill our flocks and herds, if it were not for the protection we get from insect eating animals.； 6. One can tell the difference almost at a glance, for a spider always has eight legs and an insect never more than six.； 11. It has been estimated that the weight of all the insects destroyed by spiders in Britain in one year would be greater than the total weight of all the human beings in the country.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>ˈɪnˌsɛk‿ən‿ˈɪnˌsɛk‿ɪnˈklud、səm‿əv、ɡreɪt‿ˈɛnəmi 连读；ðə、ən、əv 弱读/弱化； ɪt‿ɪmˈpɑsəbl、fɚ‿əs、dəˈvaʊr‿ɔl、krɑp‿ən、flɑk‿ən 连读；ðə、ən、tə、wɚ、fɚ、frəm 弱读/弱化； bərd‿ən、it‿ˈɪnˌsɛk、bət‿ɔl‿əv、kɪl‿ˈoʊnli、ˈfrækʃən‿əv 连读；ðə、ə、ən、tə、əv 弱读/弱化； mɔˈroʊvər‿ˌənˈlaɪk、səm‿əv、ði‿ˈəðər‿ˈɪnˌsɛk‿ˈidər、əs‿ɔr 连读；ðə、ði、tə、əv 弱读/弱化； ˈspaɪdər‿ɑr、nɑɾ‿ˈɪnˌsɛk‿əz、nɔr‿ˈivən 连读；əz、tə、ɑr 弱读/弱化；nɑɾ‿ˈɪnˌsɛk‿əz 中 /ɾ/ 为美式闪音。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Spare That Spider</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../02－Spare That Spider.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":19.15,"end":26.74,"text":"Because they destroy so many insects, and insects include some of the greatest enemies of the human race."},{"index":2,"start":26.74,"end":39.77,"text":"Insects would make it impossible for us to live in the world; they would devour all our crops and kill our flocks and herds, if it were not for the protection we get from insect eating animals."},{"index":3,"start":39.77,"end":49.79,"text":"We owe a lot to the birds and beasts who eat insects but all of them put together kill only a fraction of the number destroyed by spiders."},{"index":4,"start":49.79,"end":58.72,"text":"Moreover, unlike some of the other insect eaters, spiders never do the least harm to us or our belongings."},{"index":5,"start":58.72,"end":65.22,"text":"Spiders are not insects, as many people think, nor even nearly related to them."},{"index":6,"start":65.22,"end":74.93,"text":"One can tell the difference almost at a glance, for a spider always has eight legs and an insect never more than six."},{"index":7,"start":74.93,"end":79.25,"text":"How many spiders are engaged in this work on our behalf?"},{"index":8,"start":79.25,"end":99.86,"text":"One authority on spiders made a census of the spiders in a grass field in the south of England, and he estimated that there were more than 2, 250, 000 in one acre; that is something like 6, 000, 000 spiders of different kinds on a football pitch."},{"index":9,"start":99.86,"end":104.98,"text":"Spiders are busy for at least half the year in killing insects."},{"index":10,"start":104.98,"end":115.88,"text":"It is impossible to make more than the wildest guess at how many they kill, but they are hungry creatures, not content with only three meals a day."},{"index":11,"start":115.88,"end":130.8,"text":"It has been estimated that the weight of all the insects destroyed by spiders in Britain in one year would be greater than the total weight of all the human beings in the country."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

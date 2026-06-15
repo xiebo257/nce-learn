@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NCE4 Lesson 45 - Of Men and Galaxies</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
+    .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-size: clamp(26px, 4vw, 42px); line-height: 1.18; letter-spacing: 0; }
+    .meta { margin: 10px 0 0; color: #d1d5db; font-size: 14px; }
+    main { padding: 22px 0 40px; }
+    .pron-note { margin: 0 0 18px; padding: 12px 14px; background: #f8fafc; border: 1px solid #dbeafe; border-left: 4px solid #0f766e; border-radius: 8px; color: #334155; font-size: 14px; }
+    .pron-note strong { color: #0f766e; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
+    .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
+    .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
+    .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
+    .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
+    .field { display: grid; grid-template-columns: 76px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid #f1f5f9; }
+    .field span { color: #4b5563; font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .field p { margin: 0; color: #374151; font-size: 15px; }
+    .ipa p { color: #0f766e; font-family: "Charis SIL", "Doulos SIL", "Times New Roman", serif; font-size: 16px; }
+    .linking { color: #15803d; font-weight: 700; }
+    .weak { color: #92400e; font-weight: 700; }
+    .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .cn p { color: #7c2d12; font-weight: 600; }
+    .words p { color: #581c87; }
+    .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
+    .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
+    .summary-section p { margin: 8px 0; color: #374151; }
+    code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
+    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
+    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .progress-wrap { display: grid; gap: 5px; min-width: 0; }
+    .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
+    .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
+    .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
+    .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+  </style>
+</head>
+<body id="top">
+  <header class="page-header">
+    <div class="inner">
+      <p class="eyebrow">New Concept English 4</p>
+      <h1>NCE4 Lesson 45 - Of Men and Galaxies</h1>
+      <p class="meta">问题: What is the most influential factor in any human society?</p>
+    </div>
+  </header>
+  <main>
+    <p class="pron-note"><strong>发音说明:</strong> 美音发音以 macOS Dictionary 的 AmE 单词读音为基础，并保留句子里的 connected speech：连读、弱读和美式闪音。</p>
+    <nav class="toc" aria-label="Sentence navigation">
+      <a href="#sentence-1">1</a>
+      <a href="#sentence-2">2</a>
+      <a href="#sentence-3">3</a>
+      <a href="#sentence-4">4</a>
+      <a href="#sentence-5">5</a>
+      <a href="#sentence-6">6</a>
+      <a href="#sentence-7">7</a>
+      <a href="#sentence-8">8</a>
+      <a href="#sentence-9">9</a>
+      <a href="#sentence-10">10</a>
+      <a href="#sentence-11">11</a>
+      <a href="#sentence-12">12</a>
+      <a href="#sentence-13">13</a>
+      <a href="#sentence-14">14</a>
+      <a href="#sentence-15">15</a>
+      <a href="#sentence-16">16</a>
+      <a href="#sentence-17">17</a>
+      <a href="#sentence-18">18</a>
+      <a href="#sentence-19">19</a>
+      <a href="#sentence-20">20</a>
+      <a href="#sentence-21">21</a>
+      <a href="#sentence-22">22</a>
+      <a href="#sentence-23">23</a>
+      <a href="#sentence-24">24</a>
+      <a href="#sentence-25">25</a>
+      <a href="#sentence-26">26</a>
+    </nav>
+    <article class="sentence-card" id="sentence-1" data-start="18.75" data-end="25.22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">In</span> <span class="linking">man's</span> <span class="linking">early</span> days, competition <span class="linking">with</span> <span class="linking">other</span> creatures must <span class="weak">have</span> <span class="weak">been</span> critical.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪn man's<span class="linking">‿</span>ˈərli deɪ ˌkɑmpəˈtɪʃən wɪð<span class="linking">‿</span>ˈəðər ˈkritʃər məst <span class="weak">həv</span> bɪn ˈkrɪdəkl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>mans‿ˈərli、wɪð‿ˈəðər 连读；həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>在人类早期，与其他生物的竞争一定是至关重要的。</p></div>
+      <div class="field words"><span>词</span><p>man's 男人的； early 早期的； days 天； competition 竞赛；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-2" data-start="25.22" data-end="28.88">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text"><span class="weak">But</span> this <span class="linking">phase</span> <span class="weak linking">of</span> <span class="weak">our</span> <span class="linking">development</span> <span class="weak linking">is</span> now finished.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət ðɪs feɪz<span class="linking">‿</span><span class="weak">əv</span> aʊɚ dəˈvɛləpmənt<span class="linking">‿</span><span class="weak">ɪz</span> naʊ ˈfɪnəʃt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>feɪz‿əv、dəˈvɛləpmənt‿ɪz 连读；əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>但我们的这一阶段的开发现已结束。</p></div>
+      <div class="field words"><span>词</span><p>this 这； phase 阶段； development 发展； finished 完成的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-3" data-start="28.88" data-end="35.97">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">Indeed, <span class="weak">we</span> lack <span class="linking">practice</span> <span class="weak linking">and</span> <span class="linking">experience</span> <span class="linking">nowadays</span> <span class="weak linking">in</span> dealing with primitive conditions.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪnˈdid wi læk ˈpræktəs<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪkˈspɪriəns ˈnaʊəˌdeɪz<span class="linking">‿</span>ɪn ˈdilɪŋ wɪð ˈprɪmədɪv <span class="weak">kən</span>ˈdɪʃən/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈpræktəs‿ən‿ɪkˈspɪriəns、ˈnaʊəˌdeɪz‿ɪn 连读；ən 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>事实上，我们现在缺乏处理原始条件的实践和经验。</p></div>
+      <div class="field words"><span>词</span><p>indeed 的确； lack 缺少； practice 实践； experience 经验；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-4" data-start="35.97" data-end="49.65">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">I</span> <span class="weak">am</span> sure <span class="weak">that,</span> without modern weapons, <span class="weak">I</span> <span class="weak">would</span> <span class="linking">make</span> <span class="weak linking">a</span> very poor <span class="linking">show</span> <span class="weak linking">of</span> disputing <span class="weak">the</span> <span class="linking">ownership</span> <span class="weak linking">of</span> <span class="weak linking">a</span> cave <span class="linking">with</span> <span class="weak linking">a</span> <span class="linking">bear,</span> <span class="weak linking">and</span> <span class="weak linking">in</span> this <span class="weak">I</span> <span class="weak">do</span> not think <span class="weak">that</span> <span class="weak">I</span> <span class="linking">stand</span> <span class="linking">alone.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ am ʃʊr ðæt wəˈðaʊt ˈmɑdərn ˈwɛpən aɪ wəd make <span class="weak">ə</span> ˈvɛri pʊr ʃoʊ <span class="weak">əv</span> dəˈspjut <span class="weak">ði</span><span class="linking">‿</span>ˈoʊnərˌʃɪp<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> keɪv wɪð<span class="linking">‿</span><span class="weak">ə</span> bɛr<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪn ðɪs aɪ du nɑt θɪŋk ðæt aɪ stænd<span class="linking">‿</span><span class="weak">ə</span>ˈloʊn/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿ˈoʊnərˌʃɪp‿əv‿ə、wɪð‿ə、bɛr‿ən‿ɪn、stænd‿əˈloʊn 连读；ði、ə、ən、əv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我确信，如果没有现代武器，我在与熊争论洞穴所有权时会表现得非常糟糕，在这方面我不认为我是孤立的。</p></div>
+      <div class="field words"><span>词</span><p>sure 当然； without 没有； modern 现代的； weapons 武器；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-5" data-start="49.65" data-end="53.96">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="weak">The</span> last creature <span class="weak">to</span> compete with man <span class="weak">was</span> <span class="weak">the</span> mosquito.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> læst ˈkritʃər <span class="weak">tə</span> kəmˈpit wɪð mæn <span class="weak">wəz</span> <span class="weak">ðə</span> məˈskidoʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðə、tə、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>最后一个与人类竞争的生物是蚊子。</p></div>
+      <div class="field words"><span>词</span><p>last 最后的； creature 生物； compete 竞争； with 和；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-6" data-start="53.96" data-end="61.53">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text"><span class="weak linking">But</span> <span class="linking">even</span> <span class="weak">the</span> mosquito <span class="weak">has</span> <span class="weak">been</span> subdued by attention <span class="weak">to</span> <span class="linking">drainage</span> <span class="weak linking">and</span> by chemical sprays.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət<span class="linking">‿</span>ˈivən <span class="weak">ðə</span> məˈskidoʊ <span class="weak">həz</span> bɪn səbˈdud baɪ <span class="weak">ə</span>ˈtɛnʃən <span class="weak">tə</span> ˈdreɪnɪdʒ<span class="linking">‿</span><span class="weak">ən</span> baɪ ˈkɛməkl spreɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bət‿ˈivən、ˈdreɪnɪdʒ‿ən 连读；ðə、ən、tə、həz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含被动结构；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>但即使是蚊子也因注意排水和化学喷雾而被抑制住了。</p></div>
+      <div class="field words"><span>词</span><p>even 甚至； mosquito 蚊子； subdued 压抑的； attention 注意；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-7" data-start="61.53" data-end="74.55">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Competition between ourselves, <span class="linking">person</span> <span class="linking">against</span> person, community against community, still persists, <span class="linking">however;</span> <span class="weak linking">and</span> <span class="weak linking">it</span> <span class="weak linking">is</span> <span class="weak linking">as</span> <span class="linking">fierce</span> <span class="weak linking">as</span> <span class="weak linking">it</span> <span class="linking">ever</span> <span class="weak">was.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ˌkɑmpəˈtɪʃən bəˈtwin aʊrˈsɛlvz ˈpərsn<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛnst ˈpərsn kəˈmjunədi <span class="weak">ə</span>ˈɡɛnst kəˈmjunədi stɪl pərˈsɪst haʊˈɛvər<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">əz</span> fɪrs<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ɪt<span class="linking">‿</span>ˈɛvər <span class="weak">wəz</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈpərsn‿əˈɡɛnst、haʊˈɛvər‿ən‿ɪt‿ɪz‿əz、fɪrs‿əz‿ɪt‿ˈɛvər 连读；ən、əz、ɪz、wəz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般过去时叙述故事主线。</p></div>
+      <div class="field cn"><span>中</span><p>然而，我们之间、人与人之间、社区与社区之间的竞争仍然存在。而且还是一如既往的猛烈。</p></div>
+      <div class="field words"><span>词</span><p>competition 竞赛； between 之间； ourselves 我们自己； person 人；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-8" data-start="74.55" data-end="81.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">But</span> <span class="weak">the</span> <span class="linking">competition</span> <span class="weak linking">of</span> <span class="linking">man</span> <span class="linking">against</span> <span class="linking">man</span> <span class="weak linking">is</span> not <span class="weak">the</span> simple <span class="linking">process</span> <span class="linking">envisioned</span> <span class="weak linking">in</span> biology.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/bət <span class="weak">ðə</span> ˌkɑmpəˈtɪʃən<span class="linking">‿</span><span class="weak">əv</span> mæn<span class="linking">‿</span><span class="weak">ə</span>ˈɡɛnst mæn<span class="linking">‿</span><span class="weak">ɪz</span> nɑt <span class="weak">ðə</span> simple ˈprɑˌsɛs<span class="linking">‿</span>ɪnˈvɪʒən<span class="linking">‿</span>ɪn baɪˈɑlədʒi/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˌkɑmpəˈtɪʃən‿əv、mæn‿əˈɡɛnst、mæn‿ɪz、ˈprɑˌsɛs‿ɪnˈvɪʒən‿ɪn 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>但人与人之间的竞争并不是生物学中想象的简单过程。</p></div>
+      <div class="field words"><span>词</span><p>competition 竞赛； against 反对； simple 简单的； process 过程；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-9" data-start="81.74" data-end="95.73">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="linking">not</span> <span class="weak linking">a</span> simple competition <span class="weak linking">for</span> <span class="weak linking">a</span> <span class="linking">fixed</span> <span class="linking">amount</span> <span class="weak linking">of</span> food determined by <span class="weak">the</span> physical environment, because <span class="weak">the</span> environment <span class="weak">that</span> determines <span class="weak linking">our</span> <span class="linking">evolution</span> <span class="weak linking">is</span> no <span class="linking">longer</span> <span class="linking">essentially</span> physical.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> nɑɾ<span class="linking">‿</span><span class="weak">ə</span> simple ˌkɑmpəˈtɪʃən <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ə</span> fɪkst<span class="linking">‿</span><span class="weak">ə</span>ˈmaʊnt<span class="linking">‿</span><span class="weak">əv</span> fud dəˈtərmənd baɪ <span class="weak">ðə</span> ˈfɪzəkl environment bəˈkəz <span class="weak">ðə</span> environment ðæt dəˈtərmən aʊɚ<span class="linking">‿</span>ˌɛvəˈluʃən<span class="linking">‿</span><span class="weak">ɪz</span> noʊ lɔŋ<span class="linking">‿</span><span class="weak">ə</span>ˈsɛnʃəli ˈfɪzəkl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、nɑɾ‿ə、fɚ‿ə、fɪkst‿əˈmaʊnt‿əv、aʊɚ‿ˌɛvəˈluʃən‿ɪz 连读；ðə、ə、əv、ɪz、fɚ 弱读/弱化；nɑɾ‿ə 中 /ɾ/ 为美式闪音。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>它不是由物理环境决定的固定食物量的简单竞争，因为决定我们进化的环境本质上不再是物理的。</p></div>
+      <div class="field words"><span>词</span><p>simple 简单的； competition 竞赛； fixed 固定的； amount 数量；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-10" data-start="95.73" data-end="101.69">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">Our</span> <span class="linking">environment</span> <span class="weak linking">is</span> chiefly conditoned by <span class="weak">the</span> things <span class="weak">we</span> believe.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aʊɚ environment<span class="linking">‿</span><span class="weak">ɪz</span> ˈtʃifli conditoned baɪ <span class="weak">ðə</span> θɪŋ wi bəˈliv/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>environment‿ɪz 连读；ðə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们的环境主要取决于我们所信仰的事物。</p></div>
+      <div class="field words"><span>词</span><p>environment 环境； chiefly 主要是； conditoned 调理过的； things 事物；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-11" data-start="101.69" data-end="115.79">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="linking">Morocco</span> <span class="weak linking">and</span> <span class="linking">California</span> <span class="weak linking">are</span> <span class="linking">bits</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">Earth</span> <span class="weak linking">in</span> very similar latitudes, <span class="linking">both</span> <span class="linking">on</span> <span class="weak">the</span> west <span class="linking">coasts</span> <span class="weak linking">of</span> continents with similar <span class="linking">climates,</span> <span class="weak linking">and</span> probably with rather similar natural resources.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/məˈrɑkoʊ <span class="weak">ən</span> ˌkæləˈfɔrnjə <span class="weak">ɑr</span> bɪt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ərθ<span class="linking">‿</span>ɪn ˈvɛri ˈsɪmlər ˈlædəˌtud boʊθ<span class="linking">‿</span>ɔn <span class="weak">ðə</span> wɛst koʊst<span class="linking">‿</span><span class="weak">əv</span> ˈkɑntnənt wɪð ˈsɪmlər ˈklaɪmət<span class="linking">‿</span><span class="weak">ən</span> ˈprɑbəbli wɪð ˈræðər ˈsɪmlər ˈnætʃərl ˈriˌsɔrs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>bɪt‿əv、ði‿ərθ‿ɪn、boʊθ‿ɔn、koʊst‿əv、ˈklaɪmət‿ən 连读；ðə、ði、ən、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>摩洛哥和加利福尼亚州是地球上纬度非常相似的两个国家，都位于气候相似的大陆西海岸，并且可能拥有相当相似的自然资源。</p></div>
+      <div class="field words"><span>词</span><p>morocco 摩洛哥； california 加利福尼亚州； bits 位； earth 地球；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-12" data-start="115.79" data-end="129.45">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Yet <span class="weak">their</span> present <span class="linking">development</span> <span class="weak linking">is</span> wholly different, not so much <span class="linking">because</span> <span class="weak linking">of</span> different <span class="linking">people</span> <span class="linking">even,</span> <span class="weak">but</span> <span class="linking">because</span> <span class="weak linking">of</span> <span class="weak">the</span> different thoughts <span class="weak linking">that</span> <span class="linking">exist</span> <span class="weak linking">in</span> <span class="weak">the</span> <span class="linking">minds</span> <span class="weak linking">of</span> <span class="weak linking">their</span> <span class="linking">inhabitants.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/jɛt ðɛr ˈprɛznt dəˈvɛləpmənt<span class="linking">‿</span><span class="weak">ɪz</span> ˈhoʊli ˈdɪfrənt nɑt soʊ mətʃ bəˈkəz<span class="linking">‿</span><span class="weak">əv</span> ˈdɪfrənt ˈpipl<span class="linking">‿</span>ˈivən bət bəˈkəz<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈdɪfrənt θɔt ðæt<span class="linking">‿</span>ɪɡˈzɪst<span class="linking">‿</span>ɪn <span class="weak">ðə</span> maɪnd<span class="linking">‿</span><span class="weak">əv</span> ðɛr<span class="linking">‿</span>ɪnˈhæbədənt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>dəˈvɛləpmənt‿ɪz、bəˈkəz‿əv、ˈpipl‿ˈivən、bəˈkəz‿əv、ðæt‿ɪɡˈzɪst‿ɪn 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>然而他们目前的发展却完全不同，这并不是因为不同的人，而是因为他们的居民心中存在着不同的想法。</p></div>
+      <div class="field words"><span>词</span><p>present 展示； development 发展； wholly 完全地； different 不同的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-13" data-start="129.45" data-end="132.44">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">This</span> <span class="weak linking">is</span> <span class="weak">the</span> point <span class="weak">I</span> wish <span class="weak">to</span> emphasize.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> pɔɪnt aɪ wɪʃ <span class="weak">tə</span> ˈɛmfəˌsaɪz/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz 连读；ðə、tə、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>这是我想强调的一点。</p></div>
+      <div class="field words"><span>词</span><p>this 这； point 观点； wish 希望； emphasize 强调；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-14" data-start="132.44" data-end="139.02">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> <span class="linking">most</span> <span class="linking">important</span> <span class="linking">factor</span> <span class="weak linking">in</span> <span class="weak">our</span> <span class="linking">environment</span> <span class="weak linking">is</span> <span class="weak">the</span> <span class="linking">state</span> <span class="weak linking">of</span> <span class="weak linking">our</span> <span class="linking">own</span> minds.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> moʊst<span class="linking">‿</span>ɪmˈpɔrtnt ˈfæktər<span class="linking">‿</span>ɪn aʊɚ environment<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> steɪt<span class="linking">‿</span><span class="weak">əv</span> aʊɚ<span class="linking">‿</span>oʊn maɪnd/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>moʊst‿ɪmˈpɔrtnt、ˈfæktər‿ɪn、environment‿ɪz、steɪt‿əv、aʊɚ‿oʊn 连读；ðə、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>我们的环境中最重要的因素是我们自己的心态。</p></div>
+      <div class="field words"><span>词</span><p>most 最多； important 重要的； factor 因素； environment 环境；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-15" data-start="139.02" data-end="151.35">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> well known <span class="weak">that</span> where <span class="weak">the</span> white man <span class="weak linking">has</span> <span class="linking">invaded</span> <span class="weak linking">a</span> primitive culture, <span class="weak">the</span> most <span class="linking">destructive</span> <span class="linking">effects</span> <span class="weak">have</span> come not <span class="weak">from</span> physical weapons <span class="weak">but</span> <span class="weak">from</span> ideas.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span> wɛl noʊn ðæt wɛr <span class="weak">ðə</span> waɪt mæn <span class="weak">həz</span><span class="linking">‿</span>ɪnˈveɪd<span class="linking">‿</span><span class="weak">ə</span> ˈprɪmədɪv ˈkəltʃər <span class="weak">ðə</span> moʊst dəˈstrəktɪv<span class="linking">‿</span><span class="weak">ə</span>ˈfɛk <span class="weak">həv</span> kəm nɑt <span class="weak">frəm</span> ˈfɪzəkl ˈwɛpən bət <span class="weak">frəm</span> aɪˈdiə/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、həz‿ɪnˈveɪd‿ə、dəˈstrəktɪv‿əˈfɛk 连读；ðə、ə、ɪz、frəm、həz、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历。</p></div>
+      <div class="field cn"><span>中</span><p>众所周知，在白人入侵原始文化的地方，最具破坏性的影响不是来自物质武器，而是来自思想。</p></div>
+      <div class="field words"><span>词</span><p>well 出色地； known 已知的； where 在哪里； white 白色的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-16" data-start="151.35" data-end="154.29">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text"><span class="linking">Ideas</span> <span class="weak linking">are</span> dangerous.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪˈdiə <span class="weak">ɑr</span> ˈdeɪndʒrəs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>想法是危险的。</p></div>
+      <div class="field words"><span>词</span><p>ideas 想法； dangerous 危险的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-17" data-start="154.29" data-end="161.11">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text"><span class="weak">The</span> Holy Office knew this full well <span class="linking">when</span> <span class="weak linking">it</span> caused heretics <span class="weak">to</span> <span class="weak">be</span> <span class="linking">burned</span> <span class="weak linking">in</span> days gone by.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈhoʊli ˈɔfəs nu ðɪs full wɛl wɛn<span class="linking">‿</span>ɪt kɔz ˈhɛrəˌtɪk <span class="weak">tə</span> bi burned<span class="linking">‿</span>ɪn deɪ ɡɔn baɪ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>wɛn‿ɪt、burned‿ɪn 连读；ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>神圣办公室在过去导致异端分子被烧死的时候就清楚地知道这一点。</p></div>
+      <div class="field words"><span>词</span><p>holy 圣； office 办公室； knew 知道； this 这；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-18" data-start="161.11" data-end="180.76">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Indeed, <span class="weak">the</span> <span class="linking">concept</span> <span class="weak linking">of</span> free <span class="linking">speech</span> <span class="linking">only</span> <span class="linking">exists</span> <span class="weak linking">in</span> <span class="weak">our</span> modern society because when <span class="weak linking">you</span> <span class="weak linking">are</span> <span class="linking">inside</span> <span class="weak linking">a</span> community, <span class="weak linking">you</span> <span class="weak linking">are</span> conditioned by <span class="weak">the</span> <span class="linking">conventions</span> <span class="weak linking">of</span> <span class="weak">the</span> community <span class="weak">to</span> <span class="linking">such</span> <span class="weak linking">a</span> degree <span class="weak linking">that</span> <span class="weak linking">it</span> <span class="weak linking">is</span> very difficult <span class="weak">to</span> <span class="linking">conceive</span> <span class="weak linking">of</span> <span class="linking">anything</span> really destructive.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪnˈdid <span class="weak">ðə</span> ˈkɑnˌsɛpt<span class="linking">‿</span><span class="weak">əv</span> free speech<span class="linking">‿</span>ˈoʊnli ɪɡˈzɪst<span class="linking">‿</span>ɪn aʊɚ ˈmɑdərn səˈsaɪədi bəˈkəz wɛn ju <span class="weak">ɑr</span><span class="linking">‿</span>ɪnˈsaɪd<span class="linking">‿</span><span class="weak">ə</span> kəˈmjunədi ju <span class="weak">ɑr</span> <span class="weak">kən</span>ˈdɪʃən baɪ <span class="weak">ðə</span> <span class="weak">kən</span>ˈvɛnʃən<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> kəˈmjunədi <span class="weak">tə</span> sətʃ<span class="linking">‿</span><span class="weak">ə</span> dəˈɡri ðæt<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> ˈvɛri ˈdɪfəkəlt <span class="weak">tə</span> <span class="weak">kən</span>ˈsiv<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>ˈɛniˌθɪŋ ˈrili dəˈstrəktɪv/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ˈkɑnˌsɛpt‿əv、speech‿ˈoʊnli、ɪɡˈzɪst‿ɪn、ɑr‿ɪnˈsaɪd‿ə、kənˈvɛnʃən‿əv 连读；ðə、ə、tə、əv、ɑr、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>when 引导时间状语从句；原因或结果关系连接分句；含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>一般现在时或基础事实陈述。</p></div>
+      <div class="field cn"><span>中</span><p>事实上，言论自由的概念只存在于我们的现代社会中，因为当你身处一个社区时，你会受到社区习俗的制约，以至于很难想象出任何真正具有破坏性的东西。</p></div>
+      <div class="field words"><span>词</span><p>indeed 的确； concept 概念； free 自由的； speech 演讲；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-19" data-start="180.76" data-end="187.35">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="linking">only</span> someone <span class="linking">looking</span> <span class="linking">on</span> <span class="weak">from</span> outside <span class="weak">that</span> <span class="weak linking">can</span> <span class="linking">inject</span> <span class="weak">the</span> dangerous thoughts.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span>ˈoʊnli ˈsəmˌwən lʊkɪŋ<span class="linking">‿</span>ɔn <span class="weak">frəm</span> ˌaʊtˈsaɪd ðæt <span class="weak">kən</span><span class="linking">‿</span>ɪnˈdʒɛk <span class="weak">ðə</span> ˈdeɪndʒrəs θɔt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz‿ˈoʊnli、lʊkɪŋ‿ɔn、kən‿ɪnˈdʒɛk 连读；ðə、kən、ɪz、frəm 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>只有旁观者才能注入危险的想法。</p></div>
+      <div class="field words"><span>词</span><p>only 仅有的； someone 某人； looking 寻找； outside 外部；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-20" data-start="187.35" data-end="195.04">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text"><span class="weak">I</span> <span class="weak">do</span> not doubt <span class="weak linking">that</span> <span class="weak linking">it</span> <span class="weak">would</span> <span class="weak">be</span> possible <span class="weak">to</span> inject ideas into <span class="weak">the</span> modern world <span class="weak">that</span> <span class="weak linking">would</span> <span class="linking">utterly</span> destroy us.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ du nɑt daʊt ðæt<span class="linking">‿</span>ɪt wəd bi ˈpɑsəbl <span class="weak">tə</span> ɪnˈdʒɛk aɪˈdiə ˈɪntu <span class="weak">ðə</span> ˈmɑdərn wərld ðæt wəd<span class="linking">‿</span>ˈədərli dəˈstrɔɪ əs/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪt、wəd‿ˈədərli 连读；ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我毫不怀疑，向现代世界注入会彻底摧毁我们的思想是可能的。</p></div>
+      <div class="field words"><span>词</span><p>doubt 怀疑； possible 可能的； inject 注入； ideas 想法；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-21" data-start="195.04" data-end="201.17">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="weak">I</span> <span class="weak">would</span> like <span class="weak">to</span> give <span class="weak linking">you</span> <span class="weak linking">an</span> <span class="linking">example,</span> <span class="weak">but</span> fortunately <span class="weak">I</span> cannot <span class="weak">do</span> so.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ wəd like <span class="weak">tə</span> ɡɪv ju <span class="weak">ən</span><span class="linking">‿</span>ɪɡˈzæmpəl bət ˈfɔrtʃnətli aɪ ˈkæˌnɑt du soʊ/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ən‿ɪɡˈzæmpəl 连读；ən、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我想给你举个例子，但幸运的是我不能这样做。</p></div>
+      <div class="field words"><span>词</span><p>like 喜欢； give 给； example 例子； fortunately 幸运的是；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-22" data-start="201.17" data-end="205.22">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text"><span class="linking">Perhaps</span> <span class="weak linking">it</span> <span class="weak">will</span> suffice <span class="weak">to</span> mention <span class="weak">the</span> nuclear bomb.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/pərˈæps<span class="linking">‿</span>ɪt wɪl səˈfaɪs <span class="weak">tə</span> ˈmɛnʃn <span class="weak">ðə</span> ˈnukliər bɑm/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>pərˈæps‿ɪt 连读；ðə、tə 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>主语 + 谓语 + 宾语/补足语的基础叙述句。</p></div>
+      <div class="field tense"><span>时态</span><p>将来结构表示预期或安排。</p></div>
+      <div class="field cn"><span>中</span><p>也许只要提一下核弹就足够了。</p></div>
+      <div class="field words"><span>词</span><p>perhaps 也许； suffice 够了； mention 提到； nuclear 核；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-23" data-start="205.22" data-end="234.74">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="23" aria-label="Play sentence 23">▶</button><span class="sentence-num">23</span><p class="en-text">Imagine <span class="weak">the</span> <span class="linking">effect</span> <span class="linking">on</span> <span class="weak linking">a</span> reasonably advanced technological society, one <span class="weak">that</span> still <span class="weak">does</span> not possess <span class="weak">the</span> <span class="linking">bomb,</span> <span class="weak linking">of</span> <span class="linking">making</span> <span class="weak linking">it</span> <span class="linking">aware</span> <span class="weak linking">of</span> <span class="weak">the</span> <span class="linking">possibility,</span> <span class="weak linking">of</span> supplying suffcient details <span class="weak">to</span> enable <span class="weak">the</span> thing <span class="weak">to</span> <span class="weak">be</span> <span class="linking">constructed.</span> <span class="linking">20</span> <span class="linking">or</span> <span class="linking">30</span> <span class="linking">pages</span> <span class="weak linking">of</span> <span class="linking">information</span> handed <span class="weak">to</span> <span class="linking">any</span> <span class="weak linking">of</span> <span class="weak">the</span> major world powers around <span class="weak">the</span> year 1925, <span class="weak">would</span> <span class="weak">have</span> <span class="weak">been</span> sufficient <span class="weak">to</span> change <span class="weak">the</span> <span class="linking">course</span> <span class="weak linking">of</span> world history.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪˈmædʒən <span class="weak">ði</span><span class="linking">‿</span><span class="weak">ə</span>ˈfɛk<span class="linking">‿</span>ɔn<span class="linking">‿</span><span class="weak">ə</span> ˈrizənəbli ədˈvænst ˌtɛknəˈlɑdʒəkl səˈsaɪədi one ðæt stɪl dəz nɑt pəˈzɛs <span class="weak">ðə</span> bɑm<span class="linking">‿</span><span class="weak">əv</span> ˈmeɪkɪŋ<span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ə</span>ˈwɛr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˌpɑsəˈbɪlədi <span class="weak">əv</span> səˈplaɪ suffcient dəˈteɪl <span class="weak">tə</span> ɪˈneɪbl <span class="weak">ðə</span> θɪŋ <span class="weak">tə</span> bi <span class="weak">kən</span>ˈstrək<span class="linking">‿</span>ɔr peɪdʒɪz<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span>information ˈhændəd <span class="weak">tə</span> ˈɛni <span class="weak">əv</span> <span class="weak">ðə</span> ˈmeɪdʒər wərld powers around <span class="weak">ðə</span> jɪr wəd <span class="weak">həv</span> bɪn səˈfɪʃənt <span class="weak">tə</span> change <span class="weak">ðə</span> kɔrs<span class="linking">‿</span><span class="weak">əv</span> wərld ˈhɪstri/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ði‿əˈfɛk‿ɔn‿ə、bɑm‿əv、ˈmeɪkɪŋ‿ɪt‿əˈwɛr‿əv、kənˈstrək‿ɔr、peɪdʒɪz‿əv‿information 连读；ðə、ði、ə、tə、əv、həv 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>想象一下，在一个相当先进的技术社会中，一个仍然不拥有炸弹的社会，让其意识到这种可能性，并提供足够的细节来建造这种东西，会产生怎样的影响。 1925 年左右，向世界任何主要大国提供 20 或 30 页的信息就足以改变世界历史的进程。</p></div>
+      <div class="field words"><span>词</span><p>imagine 想象； effect 影响； reasonably 合理地； advanced 先进的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-24" data-start="234.74" data-end="252.66">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="24" aria-label="Play sentence 24">▶</button><span class="sentence-num">24</span><p class="en-text"><span class="weak linking">It</span> <span class="weak linking">is</span> <span class="weak linking">a</span> strange thought, <span class="weak">but</span> <span class="weak">I</span> <span class="linking">believe</span> <span class="weak linking">a</span> <span class="linking">correct</span> <span class="linking">one,</span> <span class="weak">that</span> twenty or thirty <span class="linking">pages</span> <span class="weak linking">of</span> <span class="linking">ideas</span> <span class="weak linking">and</span> <span class="linking">information</span> <span class="weak">would</span> <span class="weak">be</span> <span class="linking">capable</span> <span class="weak linking">of</span> turning <span class="weak">the</span> present-day <span class="linking">world</span> <span class="linking">upside</span> <span class="linking">down,</span> <span class="linking">or</span> <span class="linking">even</span> <span class="linking">destroying</span> <span class="weak linking">it.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/ɪt<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ə</span> streɪndʒ θɔt bət aɪ bəˈliv<span class="linking">‿</span><span class="weak">ə</span> kəˈrɛk<span class="linking">‿</span>one ðæt ˈtwɛni ɔr ˈθərdi peɪdʒɪz<span class="linking">‿</span><span class="weak">əv</span> aɪˈdiə <span class="weak">ən</span><span class="linking">‿</span>information wəd bi ˈkeɪpəbl<span class="linking">‿</span><span class="weak">əv</span> ˈtərnɪŋ <span class="weak">ðə</span> presentday wərld<span class="linking">‿</span>ˈəpˌsaɪd daʊn<span class="linking">‿</span>ɔr<span class="linking">‿</span>ˈivən dəˈstrɔɪ ɪt/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz‿ə、bəˈliv‿ə、kəˈrɛk‿one、peɪdʒɪz‿əv、ən‿information 连读；ðə、ə、ən、əv、ɪz 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；并列结构连接动作或信息。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>这是一个奇怪的想法，但我相信这是一个正确的想法，二十或三十页的想法和信息将能够颠覆当今世界，甚至摧毁它。</p></div>
+      <div class="field words"><span>词</span><p>strange 奇怪的； thought 想法； believe 相信； correct 正确的；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-25" data-start="252.66" data-end="266.81">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="25" aria-label="Play sentence 25">▶</button><span class="sentence-num">25</span><p class="en-text"><span class="weak">I</span> <span class="weak linking">have</span> <span class="linking">often</span> tried <span class="weak">to</span> <span class="linking">conceive</span> <span class="weak linking">of</span> what those pages might contain, <span class="weak linking">but</span> <span class="weak linking">of</span> course <span class="weak">I</span> cannot <span class="weak">do</span> so because <span class="weak">I</span> <span class="weak linking">am</span> <span class="weak linking">a</span> <span class="linking">prisoner</span> <span class="weak linking">of</span> <span class="weak">the</span> present-day world, <span class="linking">just</span> <span class="weak linking">as</span> <span class="linking">all</span> <span class="weak linking">of</span> <span class="weak linking">you</span> <span class="weak linking">are.</span></p></div>
+      <div class="field ipa"><span>美音发音</span><p>/aɪ <span class="weak">həv</span><span class="linking">‿</span>ˈɔfn traɪd <span class="weak">tə</span> <span class="weak">kən</span>ˈsiv<span class="linking">‿</span><span class="weak">əv</span> wət ðoʊz peɪdʒɪz maɪt <span class="weak">kən</span>ˈteɪn bət<span class="linking">‿</span><span class="weak">əv</span> kɔrs aɪ ˈkæˌnɑt du soʊ bəˈkəz aɪ am<span class="linking">‿</span><span class="weak">ə</span> ˈprɪznər<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> presentday wərld dʒəst<span class="linking">‿</span><span class="weak">əz</span><span class="linking">‿</span>ɔl<span class="linking">‿</span><span class="weak">əv</span> ju <span class="weak">ɑr</span>/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>həv‿ˈɔfn、kənˈsiv‿əv、bət‿əv、am‿ə、ˈprɪznər‿əv 连读；ðə、ə、əz、tə、əv、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>原因或结果关系连接分句；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>现在完成时强调结果或经历；情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我经常尝试设想这些页面可能包含什么内容，但我当然不能这样做，因为我是当今世界的囚犯，就像你们所有人一样。</p></div>
+      <div class="field words"><span>词</span><p>often 经常； tried 尝试过； conceive 构想； what 什么；</p></div>
+    </article>
+    <article class="sentence-card" id="sentence-26" data-start="266.81" data-end="282.37">
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="26" aria-label="Play sentence 26">▶</button><span class="sentence-num">26</span><p class="en-text"><span class="weak">We</span> cannot think outside <span class="weak">the</span> particular patterns <span class="weak">that</span> <span class="weak">our</span> <span class="linking">brains</span> <span class="weak linking">are</span> conditioned <span class="weak">to,</span> or, <span class="weak">to</span> <span class="weak">be</span> <span class="linking">more</span> <span class="linking">accurate</span> <span class="weak">we</span> <span class="weak">can</span> <span class="linking">think</span> <span class="linking">only</span> <span class="weak linking">a</span> very little way <span class="linking">outside</span> <span class="weak linking">and</span> <span class="linking">then</span> <span class="linking">only</span> if <span class="weak linking">we</span> <span class="weak linking">are</span> very original.</p></div>
+      <div class="field ipa"><span>美音发音</span><p>/wi ˈkæˌnɑt θɪŋk ˌaʊtˈsaɪd <span class="weak">ðə</span> pəˈtɪkjələr ˈpædərn ðæt aʊɚ breɪn<span class="linking">‿</span><span class="weak">ɑr</span> <span class="weak">kən</span>ˈdɪʃən <span class="weak">tə</span> ɔr <span class="weak">tə</span> bi mɔr<span class="linking">‿</span>ˈækjərət wi <span class="weak">kən</span> θɪŋk<span class="linking">‿</span>ˈoʊnli <span class="weak">ə</span> ˈvɛri ˈlɪdl weɪ ˌaʊtˈsaɪd<span class="linking">‿</span><span class="weak">ən</span> ðɛn<span class="linking">‿</span>ˈoʊnli ɪf wi <span class="weak">ɑr</span> ˈvɛri <span class="weak">ə</span>ˈrɪdʒənl/</p></div>
+      <div class="field liaison"><span>连读分析</span><p>breɪn‿ɑr、mɔr‿ˈækjərət、θɪŋk‿ˈoʊnli、ˌaʊtˈsaɪd‿ən、ðɛn‿ˈoʊnli 连读；ðə、ə、ən、tə、kən、ɑr 弱读/弱化。</p></div>
+      <div class="field structure"><span>结构</span><p>含定语从句或名词性从句；含被动结构；不定式短语补充目的、结果或宾语。</p></div>
+      <div class="field tense"><span>时态</span><p>情态结构表达能力、义务、推测或意愿。</p></div>
+      <div class="field cn"><span>中</span><p>我们不能在我们的大脑所适应的特定模式之外思考，或者更准确地说，我们只能在非常有限的范围之外思考，而且只有当我们非常有创意时。</p></div>
+      <div class="field words"><span>词</span><p>cannot 不能； think 思考； outside 外部； particular 特别的；</p></div>
+    </article>
+    <section class="summary-section"><h2>词汇总结</h2><p>man's 男人的； early 早期的； days 天； competition 竞赛； this 这； phase 阶段； development 发展； finished 完成的； indeed 的确； lack 缺少； practice 实践； experience 经验； sure 当然； without 没有； modern 现代的； weapons 武器； last 最后的； creature 生物；</p></section>
+    <section class="summary-section"><h2>句型总结</h2><p>主语 + 谓语 + 宾语/补足语的基础叙述句； 并列结构连接动作或信息； 含定语从句或名词性从句； 含被动结构； 原因或结果关系连接分句； when 引导时间状语从句。</p></section>
+    <section class="summary-section"><h2>时态总结</h2><p>现在完成时强调结果或经历； 情态结构表达能力、义务、推测或意愿； 一般现在时或基础事实陈述； 一般过去时叙述故事主线； 将来结构表示预期或安排。</p></section>
+    <section class="summary-section"><h2>情态/语气总结</h2><p>1. In man's early days, competition with other creatures must have been critical.； 4. I am sure that, without modern weapons, I would make a very poor show of disputing the ownership of a cave with a bear, and in this I do not think that I stand alone.； 19. It is only someone looking on from outside that can inject the dangerous thoughts.； 20. I do not doubt that it would be possible to inject ideas into the modern world that would utterly destroy us.。</p></section>
+    <section class="summary-section"><h2>本课连读注意点</h2><p>mans‿ˈərli、wɪð‿ˈəðər 连读；həv 弱读/弱化； feɪz‿əv、dəˈvɛləpmənt‿ɪz 连读；əv、ɪz 弱读/弱化； ˈpræktəs‿ən‿ɪkˈspɪriəns、ˈnaʊəˌdeɪz‿ɪn 连读；ən 弱读/弱化； ði‿ˈoʊnərˌʃɪp‿əv‿ə、wɪð‿ə、bɛr‿ən‿ɪn、stænd‿əˈloʊn 连读；ði、ə、ən、əv 弱读/弱化； bət‿ˈivən、ˈdreɪnɪdʒ‿ən 连读；ðə、ən、tə、həz 弱读/弱化。</p></section>
+  </main>
+  <a class="back-top" href="#top">Top</a>
+  <div class="audio-dock" role="region" aria-label="Lesson audio player">
+    <div class="inner">
+      <div class="player-row">
+        <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <div class="progress-wrap">
+          <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
+          <div class="progress-line">
+            <span id="dock-current">0:00</span>
+            <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
+            <span id="dock-duration">0:00</span>
+          </div>
+        </div>
+        <div class="dock-title">Of Men and Galaxies</div>
+      </div>
+      <audio id="lesson-audio" preload="auto" src="../45－Of Men and Galaxies.mp3"></audio>
+    </div>
+  </div>
+  <script>
+    const subtitles = [{"index":1,"start":18.75,"end":25.22,"text":"In man's early days, competition with other creatures must have been critical."},{"index":2,"start":25.22,"end":28.88,"text":"But this phase of our development is now finished."},{"index":3,"start":28.88,"end":35.97,"text":"Indeed, we lack practice and experience nowadays in dealing with primitive conditions."},{"index":4,"start":35.97,"end":49.65,"text":"I am sure that, without modern weapons, I would make a very poor show of disputing the ownership of a cave with a bear, and in this I do not think that I stand alone."},{"index":5,"start":49.65,"end":53.96,"text":"The last creature to compete with man was the mosquito."},{"index":6,"start":53.96,"end":61.53,"text":"But even the mosquito has been subdued by attention to drainage and by chemical sprays."},{"index":7,"start":61.53,"end":74.55,"text":"Competition between ourselves, person against person, community against community, still persists, however; and it is as fierce as it ever was."},{"index":8,"start":74.55,"end":81.74,"text":"But the competition of man against man is not the simple process envisioned in biology."},{"index":9,"start":81.74,"end":95.73,"text":"It is not a simple competition for a fixed amount of food determined by the physical environment, because the environment that determines our evolution is no longer essentially physical."},{"index":10,"start":95.73,"end":101.69,"text":"Our environment is chiefly conditoned by the things we believe."},{"index":11,"start":101.69,"end":115.79,"text":"Morocco and California are bits of the Earth in very similar latitudes, both on the west coasts of continents with similar climates, and probably with rather similar natural resources."},{"index":12,"start":115.79,"end":129.45,"text":"Yet their present development is wholly different, not so much because of different people even, but because of the different thoughts that exist in the minds of their inhabitants."},{"index":13,"start":129.45,"end":132.44,"text":"This is the point I wish to emphasize."},{"index":14,"start":132.44,"end":139.02,"text":"The most important factor in our environment is the state of our own minds."},{"index":15,"start":139.02,"end":151.35,"text":"It is well known that where the white man has invaded a primitive culture, the most destructive effects have come not from physical weapons but from ideas."},{"index":16,"start":151.35,"end":154.29,"text":"Ideas are dangerous."},{"index":17,"start":154.29,"end":161.11,"text":"The Holy Office knew this full well when it caused heretics to be burned in days gone by."},{"index":18,"start":161.11,"end":180.76,"text":"Indeed, the concept of free speech only exists in our modern society because when you are inside a community, you are conditioned by the conventions of the community to such a degree that it is very difficult to conceive of anything really destructive."},{"index":19,"start":180.76,"end":187.35,"text":"It is only someone looking on from outside that can inject the dangerous thoughts."},{"index":20,"start":187.35,"end":195.04,"text":"I do not doubt that it would be possible to inject ideas into the modern world that would utterly destroy us."},{"index":21,"start":195.04,"end":201.17,"text":"I would like to give you an example, but fortunately I cannot do so."},{"index":22,"start":201.17,"end":205.22,"text":"Perhaps it will suffice to mention the nuclear bomb."},{"index":23,"start":205.22,"end":234.74,"text":"Imagine the effect on a reasonably advanced technological society, one that still does not possess the bomb, of making it aware of the possibility, of supplying suffcient details to enable the thing to be constructed. 20 or 30 pages of information handed to any of the major world powers around the year 1925, would have been sufficient to change the course of world history."},{"index":24,"start":234.74,"end":252.66,"text":"It is a strange thought, but I believe a correct one, that twenty or thirty pages of ideas and information would be capable of turning the present-day world upside down, or even destroying it."},{"index":25,"start":252.66,"end":266.81,"text":"I have often tried to conceive of what those pages might contain, but of course I cannot do so because I am a prisoner of the present-day world, just as all of you are."},{"index":26,"start":266.81,"end":282.37,"text":"We cannot think outside the particular patterns that our brains are conditioned to, or, to be more accurate we can think only a very little way outside and then only if we are very original."}];
+    const audio = document.getElementById("lesson-audio");
+    const dockPlay = document.getElementById("dock-play");
+    const subtitleEl = document.getElementById("dock-subtitle");
+    const currentEl = document.getElementById("dock-current");
+    const durationEl = document.getElementById("dock-duration");
+    const trackEl = document.getElementById("dock-track");
+    const fillEl = document.getElementById("dock-fill");
+    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    function formatTime(value) { if (!Number.isFinite(value)) return "0:00"; const minutes = Math.floor(value / 60); const seconds = Math.floor(value % 60).toString().padStart(2, "0"); return minutes + ":" + seconds; }
+    function activeSubtitle(time) { return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1]; }
+    function setActiveSentence(item) { sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index)); if (item) subtitleEl.textContent = item.text; }
+    function updateProgress(time) { const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; currentEl.textContent = formatTime(time); durationEl.textContent = formatTime(duration); fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%"; const item = activeSubtitle(time); if (item) setActiveSentence(item); }
+    function seekTo(time) { audio.currentTime = time; updateProgress(time); }
+    function whenAudioReady(callback) { if (audio.readyState >= 2) { callback(); return; } let done = false; const runOnce = () => { if (done) return; done = true; callback(); }; audio.addEventListener("canplay", runOnce, { once: true }); audio.addEventListener("loadedmetadata", runOnce, { once: true }); }
+    function playFrom(index) { const item = subtitles.find((entry) => entry.index === index); if (!item) return; setActiveSentence(item); whenAudioReady(() => { seekTo(item.start); audio.play().catch(() => {}); }); }
+    document.querySelectorAll(".sentence-play").forEach((button) => { button.addEventListener("click", () => playFrom(Number(button.dataset.sentence))); });
+    dockPlay.addEventListener("click", () => { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener("play", () => { dockPlay.textContent = "Ⅱ"; });
+    audio.addEventListener("pause", () => { dockPlay.textContent = "▶"; });
+    audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener("timeupdate", () => { updateProgress(audio.currentTime); });
+    trackEl.addEventListener("click", (event) => { const rect = trackEl.getBoundingClientRect(); const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)); const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0; audio.currentTime = ratio * duration; updateProgress(audio.currentTime); });
+  </script>
+</body>
+</html>

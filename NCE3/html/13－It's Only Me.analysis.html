@@ -76,11 +76,15 @@
     }
     .sentence-head {
       display: grid;
-      grid-template-columns: 38px 1fr;
+      grid-template-columns: 34px 34px 38px 1fr;
       gap: 12px;
       align-items: start;
       margin-bottom: 12px;
     }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-num {
       display: inline-flex;
       width: 34px;
@@ -177,11 +181,11 @@
       main { width: min(100% - 20px, 1080px); }
       .sentence-card,
       .summary-section { padding: 14px; }
-      .sentence-head { grid-template-columns: 32px 1fr; gap: 10px; }
+      .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; }
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { display: none; }
+      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
     }
   </style>
 </head>
@@ -214,7 +218,7 @@
       <a href="#sentence-16">16</a>
     </nav>
     <article class="sentence-card" id="sentence-1" data-start="16.42" data-end="24.96">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">After <span class="weak">her</span> husband <span class="weak">had</span> gone <span class="weak">to</span> work, Mrs. Richards sent <span class="weak">her</span> children <span class="weak">to</span> <span class="linking">school</span> <span class="weak">and</span> <span class="linking">went</span> upstairs <span class="weak">to</span> <span class="weak">her</span> bedroom.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text">After <span class="weak">her</span> husband <span class="weak">had</span> gone <span class="weak">to</span> work, Mrs. Richards sent <span class="weak">her</span> children <span class="weak">to</span> <span class="linking">school</span> <span class="weak">and</span> <span class="linking">went</span> upstairs <span class="weak">to</span> <span class="weak">her</span> bedroom.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ <span class="weak">hɚ</span> ˈhʌzbənd <span class="weak">həd</span> ɡɔn <span class="weak">tə</span> wɝk ˈmɪsɪz ˈrɪtʃɚdz sɛnt <span class="weak">hɚ</span> ˈtʃɪldrən <span class="weak">tə</span> skul<span class="linking">‿</span><span class="weak">ən</span> wɛnt<span class="linking">‿</span>ʌpˈstɛrz <span class="weak">tə</span> <span class="weak">hɚ</span> ˈbɛdˌrum/</p></div>
     <div class="field liaison"><span>连读分析</span><p>skul‿ən、wɛnt‿ʌpˈstɛrz 连读；hɚ、həd、tə、ən 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>After 引导时间状语从句；sent 和 went 为并列谓语。</p></div>
@@ -223,7 +227,7 @@
     <div class="field words"><span>词</span><p>go to work 上班； upstairs 楼上； bedroom 卧室；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2" data-start="24.96" data-end="34.89">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">She <span class="weak">was</span> too excited <span class="weak">to</span> do any housework <span class="weak">that</span> morning, <span class="weak linking">for</span> <span class="weak">in</span> <span class="weak">the</span> evening she <span class="weak">would</span> <span class="weak">be</span> going <span class="weak">to</span> <span class="weak">a</span> fancy-dress party with <span class="weak">her</span> husband.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">She <span class="weak">was</span> too excited <span class="weak">to</span> do any housework <span class="weak">that</span> morning, <span class="weak linking">for</span> <span class="weak">in</span> <span class="weak">the</span> evening she <span class="weak">would</span> <span class="weak">be</span> going <span class="weak">to</span> <span class="weak">a</span> fancy-dress party with <span class="weak">her</span> husband.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi <span class="weak">wəz</span> <span class="weak">tu</span> ɪkˈsaɪɾɪd <span class="weak">tə</span> du ˈɛni ˈhaʊsˌwɝk ðæt ˈmɔrnɪŋ <span class="weak">fɚ</span><span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ˈivnɪŋ ʃi wʊd bi ˈɡoʊɪŋ <span class="weak">tʊ</span><span class="linking">‿</span><span class="weak">ə</span> ˈfænsi drɛs ˈpɑrti wɪð <span class="weak">hɚ</span> ˈhʌzbənd/</p></div>
     <div class="field liaison"><span>连读分析</span><p>fɚ‿ɪn、tʊ‿ə 连读；wəz、tu、tə、fɚ、ɪn、ði 弱读/弱化；ɪkˈsaɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>too...to... 表“太……而不能”；for 引导原因分句。</p></div>
@@ -232,7 +236,7 @@
     <div class="field words"><span>词</span><p>too...to 太……而不能； housework 家务； fancy-dress party 化装舞会；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3" data-start="34.89" data-end="44.23">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">She intended <span class="weak">to</span> <span class="linking">dress</span> <span class="linking">up</span> <span class="weak linking">as</span> <span class="weak">a</span> <span class="linking">ghost</span> <span class="weak linking">and</span> <span class="weak">as</span> she <span class="weak">had</span> made <span class="weak">her</span> costume <span class="weak">the</span> night before, she <span class="weak linking">was</span> impatient <span class="weak">to</span> <span class="linking">try</span> <span class="weak linking">it</span> on.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text">She intended <span class="weak">to</span> <span class="linking">dress</span> <span class="linking">up</span> <span class="weak linking">as</span> <span class="weak">a</span> <span class="linking">ghost</span> <span class="weak linking">and</span> <span class="weak">as</span> she <span class="weak">had</span> made <span class="weak">her</span> costume <span class="weak">the</span> night before, she <span class="weak linking">was</span> impatient <span class="weak">to</span> <span class="linking">try</span> <span class="weak linking">it</span> on.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi ɪnˈtɛndɪd <span class="weak">tə</span> drɛs<span class="linking">‿</span>ʌp<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ɡoʊst<span class="linking">‿</span><span class="weak">ən</span> æz ʃi <span class="weak">həd</span> meɪd <span class="weak">hɚ</span> ˈkɑstum <span class="weak">ðə</span> naɪt bɪˈfɔr ʃi <span class="weak">wəz</span> ɪmˈpeɪʃənt <span class="weak">tə</span> traɪ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ɑn/</p></div>
     <div class="field liaison"><span>连读分析</span><p>drɛs‿ʌp‿æz‿ə、ɡoʊst‿ən、traɪ‿ɪɾ‿ɑn 连读；tə、ə、ən、həd、hɚ、ðə 弱读/弱化；traɪ‿ɪɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>and 连接并列分句；as 引导原因状语从句；to try it on 作原因/方面补足。</p></div>
@@ -241,7 +245,7 @@
     <div class="field words"><span>词</span><p>intend to do 打算做； dress up as 装扮成； costume 服装； impatient 急切的； try on 试穿；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4" data-start="44.23" data-end="49.62">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Though <span class="weak">the</span> costume <span class="linking">consisted</span> <span class="linking">only</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">sheet</span>, <span class="weak">it</span> <span class="weak">was</span> <span class="linking">very</span> effective.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text">Though <span class="weak">the</span> costume <span class="linking">consisted</span> <span class="linking">only</span> <span class="weak linking">of</span> <span class="weak">a</span> <span class="linking">sheet</span>, <span class="weak">it</span> <span class="weak">was</span> <span class="linking">very</span> effective.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðoʊ <span class="weak">ðə</span> ˈkɑstum kənˈsɪstɪd ˈoʊnli<span class="linking">‿</span><span class="weak">əv</span><span class="linking">‿</span><span class="weak">ə</span> ʃit ɪt <span class="weak">wəz</span> ˈvɛri ɪˈfɛktɪv/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈoʊnli‿əv‿ə 连读；ðə、əv、ə、wəz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；主句主系表。</p></div>
@@ -250,7 +254,7 @@
     <div class="field words"><span>词</span><p>consist of 由……组成； sheet 床单； effective 有效果的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5" data-start="49.62" data-end="53.93">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">After <span class="linking">putting</span> <span class="weak linking">it</span> on, Mrs. Richards went downstairs.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text">After <span class="linking">putting</span> <span class="weak linking">it</span> on, Mrs. Richards went downstairs.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈæftɚ ˈpʊɾɪŋ<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ɑn ˈmɪsɪz ˈrɪtʃɚdz wɛnt ˌdaʊnˈstɛrz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈpʊɾɪŋ‿ɪɾ‿ɑn 连读；ˈpʊɾɪŋ‿ɪɾ‿ɑn 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>After + 动名词短语作时间状语。</p></div>
@@ -259,7 +263,7 @@
     <div class="field words"><span>词</span><p>put on 穿上； downstairs 楼下；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6" data-start="53.93" data-end="58.27">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">She wanted <span class="weak">to</span> <span class="linking">find</span> out <span class="linking">whether</span> <span class="weak">it</span> <span class="weak">would</span> <span class="weak">be</span> comfortable <span class="weak">to</span> wear.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">She wanted <span class="weak">to</span> <span class="linking">find</span> out <span class="linking">whether</span> <span class="weak">it</span> <span class="weak">would</span> <span class="weak">be</span> comfortable <span class="weak">to</span> wear.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi ˈwɑntɪd <span class="weak">tə</span> faɪnd<span class="linking">‿</span>aʊt ˈwɛðɚ<span class="linking">‿</span>ɪt wʊd bi ˈkʌmftɚbəl <span class="weak">tə</span> wɛr/</p></div>
     <div class="field liaison"><span>连读分析</span><p>faɪnd‿aʊt、ˈwɛðɚ‿ɪt 连读；tə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>whether 引导宾语从句；to wear 作形容词补足。</p></div>
@@ -268,7 +272,7 @@
     <div class="field words"><span>词</span><p>find out 弄清楚； comfortable 舒服的； wear 穿；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7" data-start="58.27" data-end="64.84">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Just</span> <span class="weak">as</span> Mrs. Richards <span class="weak linking">was</span> entering <span class="weak">the</span> dining-room, <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> <span class="linking">knock</span> on <span class="weak">the</span> front door.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text"><span class="linking">Just</span> <span class="weak">as</span> Mrs. Richards <span class="weak linking">was</span> entering <span class="weak">the</span> dining-room, <span class="weak">there</span> <span class="weak linking">was</span> <span class="weak">a</span> <span class="linking">knock</span> on <span class="weak">the</span> front door.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/dʒʌst<span class="linking">‿</span>æz ˈmɪsɪz ˈrɪtʃɚdz <span class="weak">wəz</span> ˈɛntɚrɪŋ <span class="weak">ðə</span> ˈdaɪnɪŋ rum ðɛr <span class="weak">wəz</span><span class="linking">‿</span><span class="weak">ə</span> nɑk<span class="linking">‿</span>ɑn <span class="weak">ðə</span> frʌnt dɔr/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dʒʌst‿æz、wəz‿ə、nɑk‿ɑn 连读；wəz、ðə、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Just as 引导时间状语从句；主句 There be。</p></div>
@@ -277,7 +281,7 @@
     <div class="field words"><span>词</span><p>just as 正当……时； dining-room 餐厅； knock 敲门声；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8" data-start="64.84" data-end="67.48">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">She knew <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> baker.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text">She knew <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> baker.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi nu ðæt<span class="linking">‿</span>ɪt mʌst bi <span class="weak">ðə</span> ˈbeɪkɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪt 连读；ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>that 引导宾语从句；must be 表肯定推测。</p></div>
@@ -286,7 +290,7 @@
     <div class="field words"><span>词</span><p>baker 面包师； must be 一定是；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9" data-start="67.48" data-end="74.42">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">She <span class="weak">had</span> told <span class="weak">him</span> <span class="weak">to</span> come <span class="linking">straight</span> <span class="weak linking">in</span> <span class="linking">if</span> ever she failed <span class="weak">to</span> open <span class="weak">the</span> <span class="linking">door</span> <span class="weak">and</span> <span class="weak">to</span> leave <span class="weak">the</span> <span class="linking">bread</span> on <span class="weak">the</span> kitchen table.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text">She <span class="weak">had</span> told <span class="weak">him</span> <span class="weak">to</span> come <span class="linking">straight</span> <span class="weak linking">in</span> <span class="linking">if</span> ever she failed <span class="weak">to</span> open <span class="weak">the</span> <span class="linking">door</span> <span class="weak">and</span> <span class="weak">to</span> leave <span class="weak">the</span> <span class="linking">bread</span> on <span class="weak">the</span> kitchen table.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi <span class="weak">həd</span> toʊld <span class="weak">hɪm</span> <span class="weak">tə</span> kʌm streɪt<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ɪf ˈɛvɚ ʃi feɪld <span class="weak">tʊ</span><span class="linking">‿</span>ˈoʊpən <span class="weak">ðə</span> dɔr<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">tə</span> liv <span class="weak">ðə</span> brɛd<span class="linking">‿</span>ɑn <span class="weak">ðə</span> ˈkɪtʃən ˈteɪbəl/</p></div>
     <div class="field liaison"><span>连读分析</span><p>streɪt‿ɪn‿ɪf、tʊ‿ˈoʊpən、dɔr‿ən、brɛd‿ɑn 连读；həd、hɪm、tə、ɪn、tʊ、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>tell sb to do；if ever 引导条件从句；两个不定式并列。</p></div>
@@ -295,7 +299,7 @@
     <div class="field words"><span>词</span><p>come straight in 直接进来； if ever 如果； fail to do 没能做；</p></div>
     </article>
     <article class="sentence-card" id="sentence-10" data-start="74.42" data-end="82.13">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Not wanting <span class="weak">to</span> frighten <span class="weak">the</span> poor man, Mrs. Richards quickly <span class="linking">hid</span> <span class="weak">in</span> <span class="weak">the</span> small <span class="linking">storeroom</span> under <span class="weak">the</span> stairs.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><button class="sentence-toggle" type="button" data-sentence="10" aria-label="Pause or resume sentence 10">Ⅱ</button><span class="sentence-num">10</span><p class="en-text">Not wanting <span class="weak">to</span> frighten <span class="weak">the</span> poor man, Mrs. Richards quickly <span class="linking">hid</span> <span class="weak">in</span> <span class="weak">the</span> small <span class="linking">storeroom</span> under <span class="weak">the</span> stairs.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/nɑt ˈwɑntɪŋ <span class="weak">tə</span> ˈfraɪtən <span class="weak">ðə</span> pʊr mæn ˈmɪsɪz ˈrɪtʃɚdz ˈkwɪkli hɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> smɔl ˈstɔrˌrum ˈʌndɚ <span class="weak">ðə</span> stɛrz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>hɪd‿ɪn 连读；tə、ðə、ɪn 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Not wanting... 为现在分词否定短语作原因状语。</p></div>
@@ -304,7 +308,7 @@
     <div class="field words"><span>词</span><p>frighten 吓唬； hide 躲藏； storeroom 储藏室； under the stairs 楼梯下；</p></div>
     </article>
     <article class="sentence-card" id="sentence-11" data-start="82.13" data-end="87.05">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">She heard <span class="weak">the</span> front <span class="linking">door</span> <span class="linking">open</span> <span class="weak">and</span> heavy <span class="linking">footsteps</span> <span class="weak">in</span> <span class="weak">the</span> hall.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><button class="sentence-toggle" type="button" data-sentence="11" aria-label="Pause or resume sentence 11">Ⅱ</button><span class="sentence-num">11</span><p class="en-text">She heard <span class="weak">the</span> front <span class="linking">door</span> <span class="linking">open</span> <span class="weak">and</span> heavy <span class="linking">footsteps</span> <span class="weak">in</span> <span class="weak">the</span> hall.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi hɝd <span class="weak">ðə</span> frʌnt dɔr ˈoʊpən<span class="linking">‿</span><span class="weak">ən</span> ˈhɛvi ˈfʊtˌstɛps<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> hɔl/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈoʊpən‿ən、ˈfʊtˌstɛps‿ɪn 连读；ðə、ən、ɪn 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>heard 后接宾语和宾补；and 连接两个听到的内容。</p></div>
@@ -313,7 +317,7 @@
     <div class="field words"><span>词</span><p>footsteps 脚步声； hall 大厅/门厅；</p></div>
     </article>
     <article class="sentence-card" id="sentence-12" data-start="87.05" data-end="91.48">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">Suddenly <span class="weak">the</span> <span class="linking">door</span> <span class="weak">of</span> <span class="weak">the</span> storeroom <span class="weak linking">was</span> <span class="linking">opened</span> <span class="weak linking">and</span> <span class="weak">a</span> <span class="linking">man</span> entered.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><button class="sentence-toggle" type="button" data-sentence="12" aria-label="Pause or resume sentence 12">Ⅱ</button><span class="sentence-num">12</span><p class="en-text">Suddenly <span class="weak">the</span> <span class="linking">door</span> <span class="weak">of</span> <span class="weak">the</span> storeroom <span class="weak linking">was</span> <span class="linking">opened</span> <span class="weak linking">and</span> <span class="weak">a</span> <span class="linking">man</span> entered.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈsʌdənli <span class="weak">ðə</span> dɔr<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈstɔrˌrum <span class="weak">wəz</span> ˈoʊpənd<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span><span class="weak">ə</span> mæn ˈɛntɚd/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɔr‿əv、ˈoʊpənd‿ən‿ə 连读；ðə、əv、wəz、ən、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>and 连接两个并列分句；前半句被动。</p></div>
@@ -322,7 +326,7 @@
     <div class="field words"><span>词</span><p>enter 进入；</p></div>
     </article>
     <article class="sentence-card" id="sentence-13" data-start="91.48" data-end="98.78">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">Mrs. Richards realized <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> man <span class="weak">from</span> <span class="weak">the</span> Electricity Board who <span class="weak">had</span> come <span class="weak">to</span> read <span class="weak">the</span> metre.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><button class="sentence-toggle" type="button" data-sentence="13" aria-label="Pause or resume sentence 13">Ⅱ</button><span class="sentence-num">13</span><p class="en-text">Mrs. Richards realized <span class="weak linking">that</span> <span class="weak">it</span> must <span class="weak">be</span> <span class="weak">the</span> man <span class="weak">from</span> <span class="weak">the</span> Electricity Board who <span class="weak">had</span> come <span class="weak">to</span> read <span class="weak">the</span> metre.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈmɪsɪz ˈrɪtʃɚdz ˈriəˌlaɪzd ðæt<span class="linking">‿</span>ɪt mʌst bi <span class="weak">ðə</span> mæn <span class="weak">frəm</span> <span class="weak">ði</span> ɪˌlɛkˈtrɪsəti bɔrd hu <span class="weak">həd</span> kʌm <span class="weak">tə</span> rid <span class="weak">ðə</span> ˈmiɾɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðæt‿ɪt 连读；ðə、frəm、ði、həd、tə 弱读/弱化；ˈmiɾɚ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>that 引导宾语从句；who 引导定语从句；must be 表推测。</p></div>
@@ -331,7 +335,7 @@
     <div class="field words"><span>词</span><p>Electricity Board 电力局； read the metre 读电表； realize 意识到；</p></div>
     </article>
     <article class="sentence-card" id="sentence-14" data-start="98.78" data-end="106.49">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">She tried <span class="weak">to</span> explain <span class="weak">the</span> situation, <span class="linking">saying</span> '<span class="linking">It's</span> only me', <span class="linking">but</span> <span class="weak">it</span> <span class="weak">was</span> too late.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><button class="sentence-toggle" type="button" data-sentence="14" aria-label="Pause or resume sentence 14">Ⅱ</button><span class="sentence-num">14</span><p class="en-text">She tried <span class="weak">to</span> explain <span class="weak">the</span> situation, <span class="linking">saying</span> '<span class="linking">It's</span> only me', <span class="linking">but</span> <span class="weak">it</span> <span class="weak">was</span> too late.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ʃi traɪd <span class="weak">tʊ</span><span class="linking">‿</span>ɪkˈspleɪn <span class="weak">ðə</span> ˌsɪtʃuˈeɪʃən ˈseɪɪŋ ɪts ˈoʊnli mi bət<span class="linking">‿</span>ɪt <span class="weak">wəz</span> <span class="weak">tu</span> leɪt/</p></div>
     <div class="field liaison"><span>连读分析</span><p>tʊ‿ɪkˈspleɪn、bət‿ɪt 连读；tʊ、ðə、wəz、tu 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>saying... 为伴随状语；but 连接转折；too late 作表语。</p></div>
@@ -340,7 +344,7 @@
     <div class="field words"><span>词</span><p>explain 解释； situation 情况； too late 太晚；</p></div>
     </article>
     <article class="sentence-card" id="sentence-15" data-start="106.49" data-end="111.82">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> man <span class="linking">let</span> <span class="linking">out</span> <span class="weak">a</span> <span class="linking">cry</span> <span class="weak">and</span> jumped back several paces.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><button class="sentence-toggle" type="button" data-sentence="15" aria-label="Pause or resume sentence 15">Ⅱ</button><span class="sentence-num">15</span><p class="en-text"><span class="weak">The</span> man <span class="linking">let</span> <span class="linking">out</span> <span class="weak">a</span> <span class="linking">cry</span> <span class="weak">and</span> jumped back several paces.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mæn lɛɾ<span class="linking">‿</span>aʊt<span class="linking">‿</span><span class="weak">ə</span> kraɪ<span class="linking">‿</span><span class="weak">ən</span> dʒʌmpt bæk ˈsɛvrəl ˈpeɪsɪz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>lɛɾ‿aʊt‿ə、kraɪ‿ən 连读；ðə、ə、ən 弱读/弱化；lɛɾ‿aʊt‿ə 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>let out 和 jumped back 为并列谓语。</p></div>
@@ -349,7 +353,7 @@
     <div class="field words"><span>词</span><p>let out a cry 叫出声； jump back 向后跳； pace 一步；</p></div>
     </article>
     <article class="sentence-card" id="sentence-16" data-start="111.82" data-end="116.51">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">When Mrs. Richards walked towards <span class="weak">him</span>, he fled, slamming <span class="weak">the</span> door behind <span class="weak">him</span>.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><button class="sentence-toggle" type="button" data-sentence="16" aria-label="Pause or resume sentence 16">Ⅱ</button><span class="sentence-num">16</span><p class="en-text">When Mrs. Richards walked towards <span class="weak">him</span>, he fled, slamming <span class="weak">the</span> door behind <span class="weak">him</span>.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/wɛn ˈmɪsɪz ˈrɪtʃɚdz wɔkt təˈwɔrdz <span class="weak">hɪm</span> hi flɛd ˈslæmɪŋ <span class="weak">ðə</span> dɔr bɪˈhaɪnd <span class="weak">hɪm</span>/</p></div>
     <div class="field liaison"><span>连读分析</span><p>hɪm、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>When 引导时间状语从句；slamming... 为现在分词短语作伴随状语。</p></div>
@@ -416,6 +420,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -462,6 +467,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -476,6 +516,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -483,10 +527,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -495,6 +541,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

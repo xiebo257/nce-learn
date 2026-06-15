@@ -16,6 +16,12 @@ function countMatches(text, pattern) {
   return [...text.matchAll(pattern)].length;
 }
 
+function hasRuleValue(text, selector, property, value) {
+  const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rulePattern = new RegExp(`${escapedSelector}\\s*\\{[\\s\\S]*?${property}:\\s*${value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*;[\\s\\S]*?\\}`);
+  return rulePattern.test(text);
+}
+
 for (const [book, htmlDir] of targets) {
   const files = readdirSync(htmlDir).filter((file) => file.endsWith('.analysis.html')).sort();
   for (const file of files) {
@@ -23,6 +29,7 @@ for (const [book, htmlDir] of targets) {
     const html = readFileSync(htmlPath, 'utf8');
     const cardCount = countMatches(html, /<article class="sentence-card"/g);
     const buttonCount = countMatches(html, /class="sentence-play"/g);
+    const toggleCount = countMatches(html, /class="sentence-toggle"/g);
     const subtitleMatch = html.match(/const subtitles = (\[[\s\S]*?\]);/);
     let subtitleCount = 0;
 
@@ -49,6 +56,21 @@ for (const [book, htmlDir] of targets) {
     if (!html.includes('audio.play().catch(() => {});')) {
       failures.push(`${htmlPath}: playFrom does not start existing audio after seeking`);
     }
+    if (!html.includes('function toggleSentence(index)')) {
+      failures.push(`${htmlPath}: missing per-sentence pause/resume toggle`);
+    }
+    if (!hasRuleValue(html, '.sentence-head', 'grid-template-columns', '34px 34px 38px 1fr')) {
+      failures.push(`${htmlPath}: desktop sentence header grid does not fit play, pause/resume, number, and text`);
+    }
+    if (!hasRuleValue(html, '.sentence-head', 'grid-template-columns', '30px 30px 30px 1fr')) {
+      failures.push(`${htmlPath}: mobile sentence header grid does not fit play, pause/resume, number, and text`);
+    }
+    if (!html.includes('audio.pause();')) {
+      failures.push(`${htmlPath}: pause/resume toggle does not pause existing playback`);
+    }
+    if (!html.includes('isTimeInSentence(item)')) {
+      failures.push(`${htmlPath}: pause/resume toggle does not check the current sentence before resuming`);
+    }
     if (!html.includes('<div class="audio-dock"')) {
       failures.push(`${htmlPath}: missing bottom audio dock`);
     }
@@ -57,6 +79,9 @@ for (const [book, htmlDir] of targets) {
     }
     if (buttonCount !== cardCount) {
       failures.push(`${htmlPath}: sentence play buttons ${buttonCount} != sentence cards ${cardCount}`);
+    }
+    if (toggleCount !== cardCount) {
+      failures.push(`${htmlPath}: sentence pause/resume buttons ${toggleCount} != sentence cards ${cardCount}`);
     }
     if (subtitleCount !== cardCount) {
       failures.push(`${htmlPath}: subtitles ${subtitleCount} != sentence cards ${cardCount}`);

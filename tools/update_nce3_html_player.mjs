@@ -146,21 +146,39 @@ function addPlayerCss(html) {
   );
   next = next.replace(
     '.sentence-head { display: grid; grid-template-columns: 38px 1fr; gap: 12px;',
+    '.sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px;',
+  );
+  next = next.replace(
     '.sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px;',
+    '.sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px;',
   );
   if (!next.includes('.sentence-play {')) {
     next = next.replace(
-      '    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }\n',
-      '    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }\n'
-        + '    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }\n'
+      '    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }\n',
+      '    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }\n'
+        + '    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }\n'
         + '    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }\n'
+        + '    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }\n'
+        + '    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }\n'
         + '    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }\n',
+    );
+  }
+  next = next.replace(
+    '    .sentence-play { display: inline-flex;',
+    '    .sentence-play, .sentence-toggle { display: inline-flex;',
+  );
+  if (!next.includes('.sentence-toggle { background: #2563eb;')) {
+    next = next.replace(
+      '    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }\n',
+      '    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }\n'
+        + '    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }\n'
+        + '    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }\n',
     );
   }
   if (!next.includes('.audio-dock {')) {
     next = next.replace(
       '    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n',
-      '    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n'
+      '    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n'
         + '    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }\n'
         + '    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }\n'
         + '    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }\n'
@@ -175,8 +193,20 @@ function addPlayerCss(html) {
     );
   }
   next = next.replace(
+    '.back-top { position: fixed; right: 16px; bottom: 16px;',
+    '.back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30;',
+  );
+  next = next.replace(
     /@media \(max-width: 640px\) \{ \.page-header \.inner, main \{ width: min\(100% - 20px, 1080px\); \} \.sentence-card, \.summary-section \{ padding: 14px; \} \.sentence-head \{ grid-template-columns: 32px 1fr; gap: 10px; \} \.sentence-num \{ width: 30px; height: 30px; \} \.en-text \{ font-size: 16px; \} \.field \{ grid-template-columns: 1fr; gap: 2px; \} \.back-top \{ display: none; \} \}/,
-    '@media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }',
+    '@media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }',
+  );
+  next = next.replace(
+    '.sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; }',
+    '.sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; }',
+  );
+  next = next.replace(
+    '.back-top { display: none; }',
+    '.back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }',
   );
   return next;
 }
@@ -191,7 +221,11 @@ function addSentenceButtons(html, subtitles) {
     );
     next = next.replace(
       new RegExp(`<div class="sentence-head">(?!<button class="sentence-play"[^>]*data-sentence="${item.index}")<span class="sentence-num">${item.index}</span>`),
-      `<div class="sentence-head"><button class="sentence-play" type="button" data-sentence="${item.index}" aria-label="Play sentence ${item.index}">▶</button><span class="sentence-num">${item.index}</span>`,
+      `<div class="sentence-head"><button class="sentence-play" type="button" data-sentence="${item.index}" aria-label="Play sentence ${item.index}">▶</button><button class="sentence-toggle" type="button" data-sentence="${item.index}" aria-label="Pause or resume sentence ${item.index}">Ⅱ</button><span class="sentence-num">${item.index}</span>`,
+    );
+    next = next.replace(
+      new RegExp(`(<button class="sentence-play" type="button" data-sentence="${item.index}" aria-label="Play sentence ${item.index}">▶<\\/button>)(?!<button class="sentence-toggle")`),
+      `$1<button class="sentence-toggle" type="button" data-sentence="${item.index}" aria-label="Pause or resume sentence ${item.index}">Ⅱ</button>`,
     );
   }
   return next;
@@ -225,6 +259,7 @@ function playerMarkup(title, audioSrc, subtitles) {
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -281,8 +316,47 @@ function playerMarkup(title, audioSrc, subtitles) {
       });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     document.querySelectorAll(".sentence-play").forEach((button) => {
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
+    });
+
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
     });
 
     dockPlay.addEventListener("click", () => {
@@ -292,10 +366,12 @@ function playerMarkup(title, audioSrc, subtitles) {
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -304,6 +380,7 @@ function playerMarkup(title, audioSrc, subtitles) {
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

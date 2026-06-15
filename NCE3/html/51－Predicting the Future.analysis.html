@@ -19,9 +19,11 @@
     .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
-    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
-    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
     .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
@@ -38,7 +40,7 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -50,7 +52,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -88,7 +90,7 @@
       <a href="#sentence-22">22</a>
     </nav>
     <article class="sentence-card" id="sentence-1" data-start="19.4" data-end="23.21">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">Predicting <span class="weak">the</span> future <span class="weak">is</span> notoriously difficult.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text">Predicting <span class="weak">the</span> future <span class="weak">is</span> notoriously difficult.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/prɪˈdɪktɪŋ <span class="weak">ðə</span> ˈfjutʃɚ<span class="linking">‿</span><span class="weak">ɪz</span> noʊˈtɔriəsli ˈdɪfəkəlt/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈfjutʃɚ‿ɪz 连读；ðə、ɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>动名词短语 Predicting the future 作主语；is notoriously difficult 为系表结构。</p></div>
@@ -97,7 +99,7 @@
     <div class="field words"><span>词</span><p>predict 预测； future 未来； notoriously 众所周知地/出了名地； difficult 困难的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2" data-start="23.21" data-end="36.23">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Who <span class="weak">could</span> <span class="weak">have</span> <span class="linking">imagined</span>, <span class="weak">in</span> <span class="weak">the</span> mid 1970s, <span class="weak linking">for</span> example, <span class="weak">that</span> by <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> 20th century, computers <span class="weak">would</span> <span class="weak">be</span> <span class="weak">as</span> <span class="linking">common</span> <span class="weak">in</span> people's <span class="linking">homes</span> <span class="weak">as</span> TV sets?</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">Who <span class="weak">could</span> <span class="weak">have</span> <span class="linking">imagined</span>, <span class="weak">in</span> <span class="weak">the</span> mid 1970s, <span class="weak linking">for</span> example, <span class="weak">that</span> by <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> 20th century, computers <span class="weak">would</span> <span class="weak">be</span> <span class="weak">as</span> <span class="linking">common</span> <span class="weak">in</span> people's <span class="linking">homes</span> <span class="weak">as</span> TV sets?</p></div>
     <div class="field ipa"><span>美音发音</span><p>/hu kʊdəv<span class="linking">‿</span>ɪˈmædʒənd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> mɪd ˌnaɪntin ˈsɛvənɾiz fər<span class="linking">‿</span>ɪɡˈzæmpəl ðæt baɪ <span class="weak">ði</span><span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈtwɛntiəθ ˈsɛntʃəri kəmˈpjuɾɚz wʊd bi<span class="linking">‿</span>æz ˈkɑmən<span class="linking">‿</span><span class="weak">ɪn</span> ˈpipəlz hoʊmz<span class="linking">‿</span>æz ˈtiˈvi sɛts/</p></div>
     <div class="field liaison"><span>连读分析</span><p>kʊdəv‿ɪˈmædʒənd‿ɪn、fər‿ɪɡˈzæmpəl、ði‿ɛnd‿əv、bi‿æz、ˈkɑmən‿ɪn 连读；ɪn、ðə、ði、əv 弱读/弱化；ˈsɛvənɾiz、kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>Who could have imagined 为反问句主干；that 引导宾语从句；as...as... 表同级比较。</p></div>
@@ -106,7 +108,7 @@
     <div class="field words"><span>词</span><p>could have done 本可能做/竟会做； in the mid 1970s 在 20 世纪 70 年代中期； by the end of 到……末； as common as 像……一样普遍；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3" data-start="36.23" data-end="47.2">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> 1970s, computers <span class="weak">were</span> <span class="linking">common</span> enough, <span class="linking">but</span> <span class="linking">only</span> <span class="weak">in</span> big business, government <span class="linking">departments</span> <span class="weak">and</span> large organizations.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> 1970s, computers <span class="weak">were</span> <span class="linking">common</span> enough, <span class="linking">but</span> <span class="linking">only</span> <span class="weak">in</span> big business, government <span class="linking">departments</span> <span class="weak">and</span> large organizations.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ðə</span> ˈsɛvənɾiz kəmˈpjuɾɚz <span class="weak">wɚ</span> ˈkɑmən<span class="linking">‿</span>ɪˈnʌf bəɾ<span class="linking">‿</span>ˈoʊnli<span class="linking">‿</span><span class="weak">ɪn</span> bɪɡ ˈbɪznəs ˈɡʌvɚnmənt dɪˈpɑrtmənts<span class="linking">‿</span><span class="weak">ən</span> lɑrdʒ<span class="linking">‿</span>ˌɔrɡənəˈzeɪʃənz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈkɑmən‿ɪˈnʌf、bəɾ‿ˈoʊnli‿ɪn、dɪˈpɑrtmənts‿ən、lɑrdʒ‿ˌɔrɡənəˈzeɪʃənz 连读；ɪn、ðə、wɚ、ən 弱读/弱化；ˈsɛvənɾiz、kəmˈpjuɾɚz、bəɾ‿ˈoʊnli‿ɪn 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>but 表转折；only in... 限定 common 的范围。</p></div>
@@ -115,7 +117,7 @@
     <div class="field words"><span>词</span><p>common enough 相当普遍； big business 大企业； government department 政府部门； organization 机构；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4" data-start="47.2" data-end="52.06">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">These <span class="weak">were</span> <span class="weak">the</span> so-called mainframe machines.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text">These <span class="weak">were</span> <span class="weak">the</span> so-called mainframe machines.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðiz <span class="weak">wɚ</span> <span class="weak">ðə</span> ˈsoʊ kɔld ˈmeɪnˌfreɪm məˈʃinz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>wɚ、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>主系表结构；so-called 作定语。</p></div>
@@ -124,7 +126,7 @@
     <div class="field words"><span>词</span><p>so-called 所谓的； mainframe 大型机； machine 机器；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5" data-start="52.06" data-end="65.11">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">Mainframe computers <span class="weak">were</span> very large <span class="linking">indeed</span>, <span class="linking">often</span> occupying whole air-conditioned <span class="linking">rooms</span>, employing full-time <span class="linking">technicians</span> <span class="weak">and</span> <span class="linking">run</span> on specially-written software.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text">Mainframe computers <span class="weak">were</span> very large <span class="linking">indeed</span>, <span class="linking">often</span> occupying whole air-conditioned <span class="linking">rooms</span>, employing full-time <span class="linking">technicians</span> <span class="weak">and</span> <span class="linking">run</span> on specially-written software.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈmeɪnˌfreɪm kəmˈpjuɾɚz <span class="weak">wɚ</span> ˈvɛri lɑrdʒ<span class="linking">‿</span>ɪnˈdid<span class="linking">‿</span>ˈɔfən<span class="linking">‿</span>ˈɑkjəˌpaɪɪŋ hoʊl<span class="linking">‿</span>er kənˈdɪʃənd rumz<span class="linking">‿</span>ɪmˈplɔɪɪŋ fʊl taɪm tɛkˈnɪʃənz<span class="linking">‿</span><span class="weak">ən</span> rʌn<span class="linking">‿</span>ɑn ˈspɛʃəli ˈrɪɾən ˈsɔftˌwer/</p></div>
     <div class="field liaison"><span>连读分析</span><p>lɑrdʒ‿ɪnˈdid‿ˈɔfən‿ˈɑkjəˌpaɪɪŋ、hoʊl‿er、rumz‿ɪmˈplɔɪɪŋ、tɛkˈnɪʃənz‿ən、rʌn‿ɑn 连读；wɚ、ən 弱读/弱化；kəmˈpjuɾɚz、ˈrɪɾən 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>主系表结构；occupying/employing 为现在分词短语作补充说明；run on... 为过去分词/省略结构，说明运行方式。</p></div>
@@ -133,7 +135,7 @@
     <div class="field words"><span>词</span><p>indeed 确实； occupy 占用； air-conditioned 有空调的； technician 技术员； run on 运行于； specially-written 专门编写的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6" data-start="65.11" data-end="78.12">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Though these large machines <span class="linking">still</span> exist, <span class="linking">many</span> <span class="weak">of</span> their functions <span class="weak">have</span> <span class="weak">been</span> <span class="linking">taken</span> over by small powerful personal computers, commonly <span class="linking">known</span> <span class="weak">as</span> PCs.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">Though these large machines <span class="linking">still</span> exist, <span class="linking">many</span> <span class="weak">of</span> their functions <span class="weak">have</span> <span class="weak">been</span> <span class="linking">taken</span> over by small powerful personal computers, commonly <span class="linking">known</span> <span class="weak">as</span> PCs.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðoʊ ðiz lɑrdʒ məˈʃinz stɪl<span class="linking">‿</span>ɪɡˈzɪst ˈmɛni<span class="linking">‿</span><span class="weak">əv</span> ðer ˈfʌŋkʃənz <span class="weak">həv</span> bɪn ˈteɪkən<span class="linking">‿</span>ˈoʊvɚ baɪ smɔl ˈpaʊɚfəl ˈpɝsənəl kəmˈpjuɾɚz ˈkɑmənli noʊn<span class="linking">‿</span>æz ˌpiˈsiz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>stɪl‿ɪɡˈzɪst、ˈmɛni‿əv、ˈteɪkən‿ˈoʊvɚ、noʊn‿æz 连读；əv、həv 弱读/弱化；kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>Though 引导让步状语从句；主句为现在完成时被动语态；known as PCs 为过去分词短语作定语。</p></div>
@@ -142,7 +144,7 @@
     <div class="field words"><span>词</span><p>function 功能； take over 接管； personal computer 个人电脑； commonly known as 通常被称为；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7" data-start="78.12" data-end="86.54">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text"><span class="weak linking">In</span> 1975, <span class="weak">a</span> primitive machine called <span class="weak">the</span> Altair <span class="weak">was</span> <span class="linking">launched</span> <span class="weak">in</span> <span class="weak">the</span> USA.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text"><span class="weak linking">In</span> 1975, <span class="weak">a</span> primitive machine called <span class="weak">the</span> Altair <span class="weak">was</span> <span class="linking">launched</span> <span class="weak">in</span> <span class="weak">the</span> USA.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ˌnaɪntin ˌsɛvəntiˈfaɪv<span class="linking">‿</span><span class="weak">ə</span> ˈprɪmədɪv məˈʃin kɔld <span class="weak">ði</span><span class="linking">‿</span>ælˈter <span class="weak">wəz</span> lɔntʃt<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span><span class="linking">‿</span>ju ɛs<span class="linking">‿</span>ˈeɪ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˌsɛvəntiˈfaɪv‿ə、ði‿ælˈter、lɔntʃt‿ɪn、ði‿ju、ɛs‿ˈeɪ 连读；ɪn、ə、ði、wəz 弱读/弱化；ˈprɪmədɪv 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>called the Altair 为过去分词短语作后置定语；was launched 为被动语态。</p></div>
@@ -151,7 +153,7 @@
     <div class="field words"><span>词</span><p>primitive 原始的； launch 推出/发布； the USA 美国；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8" data-start="86.54" data-end="93.58">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">It</span> <span class="weak">can</span> properly <span class="weak">be</span> <span class="linking">described</span> <span class="weak">as</span> <span class="weak">the</span> first 'home <span class="linking">computer</span>' <span class="weak linking">and</span> <span class="weak">it</span> pointed <span class="weak">the</span> way <span class="weak">to</span> <span class="weak">the</span> future.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text"><span class="weak">It</span> <span class="weak">can</span> properly <span class="weak">be</span> <span class="linking">described</span> <span class="weak">as</span> <span class="weak">the</span> first 'home <span class="linking">computer</span>' <span class="weak linking">and</span> <span class="weak">it</span> pointed <span class="weak">the</span> way <span class="weak">to</span> <span class="weak">the</span> future.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ɪt <span class="weak">kən</span> ˈprɑpɚli bi dɪˈskraɪbd<span class="linking">‿</span>æz <span class="weak">ðə</span> fɝst hoʊm kəmˈpjuɾɚ<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ɪt ˈpɔɪntɪd <span class="weak">ðə</span> weɪ <span class="weak">tə</span> <span class="weak">ðə</span> ˈfjutʃɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɪˈskraɪbd‿æz、kəmˈpjuɾɚ‿ən‿ɪt 连读；kən、ðə、ən、tə 弱读/弱化；kəmˈpjuɾɚ‿ən‿ɪt 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>and 连接两个并列分句；be described as 为被动结构；point the way to 表“指明通往……”。</p></div>
@@ -160,7 +162,7 @@
     <div class="field words"><span>词</span><p>properly 恰当地； describe as 描述为； point the way to 指明通向……的路；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9" data-start="93.58" data-end="101.09">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">This <span class="weak">was</span> <span class="linking">followed</span>, at <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> 1970s, <span class="linking">by</span> <span class="weak">a</span> machine <span class="linking">called</span> <span class="weak linking">an</span> Apple.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text">This <span class="weak">was</span> <span class="linking">followed</span>, at <span class="weak">the</span> <span class="linking">end</span> <span class="weak">of</span> <span class="weak">the</span> 1970s, <span class="linking">by</span> <span class="weak">a</span> machine <span class="linking">called</span> <span class="weak linking">an</span> Apple.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðɪs <span class="weak">wəz</span> ˈfɑloʊd<span class="linking">‿</span>æt <span class="weak">ði</span><span class="linking">‿</span>ɛnd<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈsɛvənɾiz baɪ<span class="linking">‿</span><span class="weak">ə</span> məˈʃin kɔld<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈæpəl/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈfɑloʊd‿æt、ði‿ɛnd‿əv、baɪ‿ə、kɔld‿ən‿ˈæpəl 连读；wəz、ði、əv、ðə、ə、ən 弱读/弱化；ˈsɛvənɾiz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>被动语态；at the end... 为插入时间状语；called an Apple 作后置定语。</p></div>
@@ -169,7 +171,7 @@
     <div class="field words"><span>词</span><p>be followed by 随后是； at the end of 在……末；</p></div>
     </article>
     <article class="sentence-card" id="sentence-10" data-start="101.09" data-end="109.76">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> early 1980s, <span class="weak">the</span> computer <span class="linking">giant</span>, IBM produced <span class="weak">the</span> world's first Personal Computer.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><button class="sentence-toggle" type="button" data-sentence="10" aria-label="Pause or resume sentence 10">Ⅱ</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> <span class="weak">the</span> early 1980s, <span class="weak">the</span> computer <span class="linking">giant</span>, IBM produced <span class="weak">the</span> world's first Personal Computer.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɝli ˌnaɪntin<span class="linking">‿</span>ˈeɪɾiz <span class="weak">ðə</span> kəmˈpjuɾɚ ˈdʒaɪənt ˌaɪ bi ˈɛm prəˈdust <span class="weak">ðə</span> wɝldz fɝst ˈpɝsənəl kəmˈpjuɾɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ði‿ˈɝli、ˌnaɪntin‿ˈeɪɾiz 连读；ɪn、ði、ðə 弱读/弱化；ˌnaɪntin‿ˈeɪɾiz、kəmˈpjuɾɚ、kəmˈpjuɾɚ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>In... 作时间状语；IBM 为 the computer giant 的同位语；主谓宾结构。</p></div>
@@ -178,7 +180,7 @@
     <div class="field words"><span>词</span><p>giant 巨头； produce 生产； Personal Computer 个人电脑；</p></div>
     </article>
     <article class="sentence-card" id="sentence-11" data-start="109.76" data-end="119.19">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">This <span class="linking">ran</span> <span class="linking">on</span> <span class="weak linking">an</span> 'operating system' called DOS, produced <span class="linking">by</span> <span class="weak">a</span> then small company named Microsoft.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><button class="sentence-toggle" type="button" data-sentence="11" aria-label="Pause or resume sentence 11">Ⅱ</button><span class="sentence-num">11</span><p class="en-text">This <span class="linking">ran</span> <span class="linking">on</span> <span class="weak linking">an</span> 'operating system' called DOS, produced <span class="linking">by</span> <span class="weak">a</span> then small company named Microsoft.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðɪs ræn<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɑpəˌreɪɾɪŋ ˈsɪstəm kɔld dɔs prəˈdust baɪ<span class="linking">‿</span><span class="weak">ə</span> ðɛn smɔl ˈkʌmpəni neɪmd ˈmaɪkrəˌsɔft/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ræn‿ɑn‿ən‿ˈɑpəˌreɪɾɪŋ、baɪ‿ə 连读；ən、ə 弱读/弱化；ræn‿ɑn‿ən‿ˈɑpəˌreɪɾɪŋ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>ran on 为谓语；called DOS 和 produced by... 为过去分词短语作后置定语。</p></div>
@@ -187,7 +189,7 @@
     <div class="field words"><span>词</span><p>operating system 操作系统； DOS 磁盘操作系统； then 当时的； named 名为；</p></div>
     </article>
     <article class="sentence-card" id="sentence-12" data-start="119.19" data-end="123.75">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> IBM Personal Computer <span class="weak">was</span> widely copied.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><button class="sentence-toggle" type="button" data-sentence="12" aria-label="Pause or resume sentence 12">Ⅱ</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> IBM Personal Computer <span class="weak">was</span> widely copied.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span><span class="linking">‿</span>aɪ bi ɛm ˈpɝsənəl kəmˈpjuɾɚ <span class="weak">wəz</span> ˈwaɪdli ˈkɑpid/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ði‿aɪ 连读；ði、wəz 弱读/弱化；kəmˈpjuɾɚ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>主语 + 被动谓语。</p></div>
@@ -196,7 +198,7 @@
     <div class="field words"><span>词</span><p>widely 广泛地； copy 仿制/复制；</p></div>
     </article>
     <article class="sentence-card" id="sentence-13" data-start="123.75" data-end="136.32">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">From</span> those humble beginnings, we <span class="weak">have</span> seen <span class="weak">the</span> <span class="linking">development</span> <span class="weak">of</span> <span class="weak">the</span> user-friendly home <span class="linking">computers</span> <span class="weak">and</span> multimedia machines <span class="linking">which</span> <span class="weak">are</span> <span class="weak">in</span> <span class="linking">common</span> use today.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><button class="sentence-toggle" type="button" data-sentence="13" aria-label="Pause or resume sentence 13">Ⅱ</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">From</span> those humble beginnings, we <span class="weak">have</span> seen <span class="weak">the</span> <span class="linking">development</span> <span class="weak">of</span> <span class="weak">the</span> user-friendly home <span class="linking">computers</span> <span class="weak">and</span> multimedia machines <span class="linking">which</span> <span class="weak">are</span> <span class="weak">in</span> <span class="linking">common</span> use today.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> ðoʊz ˈhʌmbəl bɪˈɡɪnɪŋz wi <span class="weak">həv</span> sin <span class="weak">ðə</span> dɪˈvɛləpmənt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈjuzɚ ˈfrɛndli hoʊm kəmˈpjuɾɚz<span class="linking">‿</span><span class="weak">ən</span> ˌmʌltiˈmidiə məˈʃinz wɪtʃ<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span><span class="weak">ɪn</span> ˈkɑmən jus təˈdeɪ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɪˈvɛləpmənt‿əv、kəmˈpjuɾɚz‿ən、wɪtʃ‿ɑr‿ɪn 连读；frəm、həv、ðə、əv、ən、ɑr 弱读/弱化；kəmˈpjuɾɚz‿ən 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>From... 作来源状语；which 引导定语从句，修饰 computers and machines。</p></div>
@@ -205,7 +207,7 @@
     <div class="field words"><span>词</span><p>humble beginnings 卑微/不起眼的开端； development 发展； user-friendly 用户友好的； multimedia 多媒体； in common use 普遍使用；</p></div>
     </article>
     <article class="sentence-card" id="sentence-14" data-start="136.32" data-end="154.98">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">Considering how recent these <span class="linking">developments</span> <span class="weak">are</span>, <span class="weak linking">it</span> <span class="weak linking">is</span> even more remarkable <span class="weak linking">that</span> <span class="weak">as</span> <span class="linking">long</span> ago <span class="weak">as</span> <span class="weak">the</span> 1960<span class="linking">s</span>, <span class="weak linking">an</span> Englishman, Leon Bagrit, <span class="weak linking">was</span> able <span class="weak">to</span> predict some <span class="weak">of</span> <span class="weak">the</span> <span class="linking">uses</span> <span class="weak">of</span> computers which we know today.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><button class="sentence-toggle" type="button" data-sentence="14" aria-label="Pause or resume sentence 14">Ⅱ</button><span class="sentence-num">14</span><p class="en-text">Considering how recent these <span class="linking">developments</span> <span class="weak">are</span>, <span class="weak linking">it</span> <span class="weak linking">is</span> even more remarkable <span class="weak linking">that</span> <span class="weak">as</span> <span class="linking">long</span> ago <span class="weak">as</span> <span class="weak">the</span> 1960<span class="linking">s</span>, <span class="weak linking">an</span> Englishman, Leon Bagrit, <span class="weak linking">was</span> able <span class="weak">to</span> predict some <span class="weak">of</span> <span class="weak">the</span> <span class="linking">uses</span> <span class="weak">of</span> computers which we know today.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/kənˈsɪdərɪŋ haʊ ˈrisənt ðiz dɪˈvɛləpmənts<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>ɪɾɪz<span class="linking">‿</span>ˈivən mɔr rɪˈmɑrkəbəl ðæɾ<span class="linking">‿</span>æz lɔŋ<span class="linking">‿</span>əˈɡoʊ<span class="linking">‿</span>æz <span class="weak">ðə</span> ˈsɪkstiz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈɪŋɡlɪʃmən ˈliɑn ˈbæɡrɪt <span class="weak">wəz</span><span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> prɪˈdɪkt səm<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈjusəz<span class="linking">‿</span><span class="weak">əv</span> kəmˈpjuɾɚz wɪtʃ wi noʊ təˈdeɪ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɪˈvɛləpmənts‿ɑr‿ɪɾɪz‿ˈivən、ðæɾ‿æz、lɔŋ‿əˈɡoʊ‿æz、ˈsɪkstiz‿ən‿ˈɪŋɡlɪʃmən、wəz‿ˈeɪbəl 连读；ɑr、ðə、ən、wəz、tə、əv 弱读/弱化；dɪˈvɛləpmənts‿ɑr‿ɪɾɪz‿ˈivən、ðæɾ‿æz、kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>Considering... 为介词/分词短语作让步背景；it is remarkable that... 为形式主语结构；which we know today 为定语从句。</p></div>
@@ -214,7 +216,7 @@
     <div class="field words"><span>词</span><p>considering 考虑到； recent 近来的； remarkable 非凡的； as long ago as 早在； predict 预测；</p></div>
     </article>
     <article class="sentence-card" id="sentence-15" data-start="154.98" data-end="165.76">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">Bagrit dismissed <span class="weak">the</span> idea <span class="weak">that</span> computers <span class="weak">would</span> learn <span class="weak">to</span> 'think' <span class="weak">for</span> <span class="linking">themselves</span> <span class="weak">and</span> <span class="weak">would</span> 'rule <span class="weak">the</span> world', which people liked <span class="weak">to</span> believe <span class="weak">in</span> those days.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><button class="sentence-toggle" type="button" data-sentence="15" aria-label="Pause or resume sentence 15">Ⅱ</button><span class="sentence-num">15</span><p class="en-text">Bagrit dismissed <span class="weak">the</span> idea <span class="weak">that</span> computers <span class="weak">would</span> learn <span class="weak">to</span> 'think' <span class="weak">for</span> <span class="linking">themselves</span> <span class="weak">and</span> <span class="weak">would</span> 'rule <span class="weak">the</span> world', which people liked <span class="weak">to</span> believe <span class="weak">in</span> those days.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈbæɡrɪt dɪsˈmɪst <span class="weak">ði</span><span class="linking">‿</span>aɪˈdiə ðæt kəmˈpjuɾɚz wʊd lɝn <span class="weak">tə</span> θɪŋk <span class="weak">fɚ</span> ðəmˈsɛlvz<span class="linking">‿</span><span class="weak">ən</span> wʊd rul <span class="weak">ðə</span> wɝld wɪtʃ ˈpipəl laɪkt <span class="weak">tə</span> bɪˈliv<span class="linking">‿</span><span class="weak">ɪn</span> ðoʊz deɪz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ði‿aɪˈdiə、ðəmˈsɛlvz‿ən、bɪˈliv‿ɪn 连读；ði、tə、fɚ、ən、ðə、ɪn 弱读/弱化；kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>that 引导同位语从句，说明 idea；which 引导非限制性定语从句，指代前面想法。</p></div>
@@ -223,7 +225,7 @@
     <div class="field words"><span>词</span><p>dismiss 否定/不予考虑； for oneself 独立地； rule the world 统治世界； in those days 当时；</p></div>
     </article>
     <article class="sentence-card" id="sentence-16" data-start="165.76" data-end="193.64">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Bagrit <span class="linking">foresaw</span> <span class="weak">a</span> time when computers <span class="weak">would</span> <span class="weak">be</span> <span class="linking">small</span> enough <span class="weak">to</span> <span class="linking">hold</span> <span class="weak">in</span> <span class="weak">the</span> hand, when they <span class="weak">would</span> <span class="weak">be</span> capable <span class="weak">of</span> <span class="linking">providing</span> <span class="linking">information</span> about traffic <span class="linking">jams</span> <span class="weak">and</span> <span class="linking">suggesting</span> alternative routes, when they <span class="weak">would</span> <span class="weak">be</span> <span class="linking">used</span> <span class="weak">in</span> hospitals <span class="weak">to</span> help doctors <span class="weak">to</span> diagnose illnesses, when they <span class="weak">would</span> relieve office <span class="linking">workers</span> <span class="weak linking">and</span> <span class="linking">accountants</span> <span class="weak">of</span> dull, repetitive clerical work.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><button class="sentence-toggle" type="button" data-sentence="16" aria-label="Pause or resume sentence 16">Ⅱ</button><span class="sentence-num">16</span><p class="en-text">Bagrit <span class="linking">foresaw</span> <span class="weak">a</span> time when computers <span class="weak">would</span> <span class="weak">be</span> <span class="linking">small</span> enough <span class="weak">to</span> <span class="linking">hold</span> <span class="weak">in</span> <span class="weak">the</span> hand, when they <span class="weak">would</span> <span class="weak">be</span> capable <span class="weak">of</span> <span class="linking">providing</span> <span class="linking">information</span> about traffic <span class="linking">jams</span> <span class="weak">and</span> <span class="linking">suggesting</span> alternative routes, when they <span class="weak">would</span> <span class="weak">be</span> <span class="linking">used</span> <span class="weak">in</span> hospitals <span class="weak">to</span> help doctors <span class="weak">to</span> diagnose illnesses, when they <span class="weak">would</span> relieve office <span class="linking">workers</span> <span class="weak linking">and</span> <span class="linking">accountants</span> <span class="weak">of</span> dull, repetitive clerical work.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈbæɡrɪt fɔrˈsɔ<span class="linking">‿</span><span class="weak">ə</span> taɪm wɛn kəmˈpjuɾɚz wʊd bi smɔl<span class="linking">‿</span>ɪˈnʌf <span class="weak">tə</span> hoʊld<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> hænd wɛn ðeɪ wʊd bi ˈkeɪpəbəl<span class="linking">‿</span><span class="weak">əv</span> prəˈvaɪdɪŋ<span class="linking">‿</span>ˌɪnfɚˈmeɪʃən<span class="linking">‿</span>əˈbaʊt ˈtræfɪk dʒæmz<span class="linking">‿</span><span class="weak">ən</span> səˈdʒɛstɪŋ<span class="linking">‿</span>ɔlˈtɝnəɾɪv ruts wɛn ðeɪ wʊd bi juzd<span class="linking">‿</span><span class="weak">ɪn</span> ˈhɑˌspɪɾəlz <span class="weak">tə</span> hɛlp ˈdɑktɚz <span class="weak">tə</span> ˈdaɪəɡˌnoʊs<span class="linking">‿</span>ˈɪlnəsɪz wɛn ðeɪ wʊd rɪˈliv<span class="linking">‿</span>ˈɔfɪs ˈwɝkɚz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>əˈkaʊntənts<span class="linking">‿</span><span class="weak">əv</span> dʌl rɪˈpɛɾəɾɪv ˈklɛrɪkəl wɝk/</p></div>
     <div class="field liaison"><span>连读分析</span><p>fɔrˈsɔ‿ə、smɔl‿ɪˈnʌf、hoʊld‿ɪn、ˈkeɪpəbəl‿əv、prəˈvaɪdɪŋ‿ˌɪnfɚˈmeɪʃən‿əˈbaʊt 连读；ə、tə、ɪn、ðə、əv、ən 弱读/弱化；kəmˈpjuɾɚz、səˈdʒɛstɪŋ‿ɔlˈtɝnəɾɪv、ˈhɑˌspɪɾəlz、rɪˈpɛɾəɾɪv 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>foresaw a time 后接多个 when 引导的定语从句，列举未来电脑用途；be capable of doing；be used to do；relieve sb of sth。</p></div>
@@ -232,7 +234,7 @@
     <div class="field words"><span>词</span><p>foresee 预见； be capable of 能够； traffic jam 交通堵塞； alternative route 替代路线； diagnose 诊断； relieve sb of sth 使某人免于； repetitive 重复的； clerical work 文书工作；</p></div>
     </article>
     <article class="sentence-card" id="sentence-17" data-start="193.64" data-end="197.96">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">All these computer uses <span class="weak">have</span> become commonplace.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><button class="sentence-toggle" type="button" data-sentence="17" aria-label="Pause or resume sentence 17">Ⅱ</button><span class="sentence-num">17</span><p class="en-text">All these computer uses <span class="weak">have</span> become commonplace.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ɔl ðiz kəmˈpjuɾɚ ˈjusɪz <span class="weak">həv</span> bɪˈkʌm ˈkɑmənˌpleɪs/</p></div>
     <div class="field liaison"><span>连读分析</span><p>həv 弱读/弱化；kəmˈpjuɾɚ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>主系表结构。</p></div>
@@ -241,7 +243,7 @@
     <div class="field words"><span>词</span><p>commonplace 司空见惯的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-18" data-start="197.96" data-end="217.49">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">Of</span> course, Leon Bagrit couldn't possibly <span class="weak">have</span> foreseen <span class="weak">the</span> <span class="linking">development</span> <span class="weak">of</span> <span class="weak">the</span> Internet, <span class="weak">the</span> worldwide system <span class="weak linking">that</span> <span class="linking">enables</span> us <span class="weak">to</span> communicate instantly <span class="linking">with</span> anyone <span class="weak linking">in</span> any <span class="linking">part</span> <span class="weak">of</span> <span class="weak">the</span> world <span class="linking">by</span> using computers linked <span class="weak">to</span> telephone networks.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><button class="sentence-toggle" type="button" data-sentence="18" aria-label="Pause or resume sentence 18">Ⅱ</button><span class="sentence-num">18</span><p class="en-text"><span class="weak">Of</span> course, Leon Bagrit couldn't possibly <span class="weak">have</span> foreseen <span class="weak">the</span> <span class="linking">development</span> <span class="weak">of</span> <span class="weak">the</span> Internet, <span class="weak">the</span> worldwide system <span class="weak linking">that</span> <span class="linking">enables</span> us <span class="weak">to</span> communicate instantly <span class="linking">with</span> anyone <span class="weak linking">in</span> any <span class="linking">part</span> <span class="weak">of</span> <span class="weak">the</span> world <span class="linking">by</span> using computers linked <span class="weak">to</span> telephone networks.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">əv</span> kɔrs ˈliɑn ˈbæɡrɪt kʊdn ˈpɑsəbli <span class="weak">həv</span> fɔrˈsin <span class="weak">ðə</span> dɪˈvɛləpmənt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ði</span><span class="linking">‿</span>ˈɪntɚˌnɛt <span class="weak">ðə</span> ˈwɝldˌwaɪd ˈsɪstəm ðæɾ<span class="linking">‿</span>ɪˈneɪbəlz<span class="linking">‿</span>ʌs <span class="weak">tə</span> kəˈmjunəˌkeɪɾ<span class="linking">‿</span>ˈɪnstəntli wɪð<span class="linking">‿</span>ˈɛniˌwʌn<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span>ˈɛni pɑrt<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> wɝld baɪ ˈjuzɪŋ kəmˈpjuɾɚz lɪŋkt <span class="weak">tə</span> ˈtɛləˌfoʊn ˈnɛtˌwɝks/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɪˈvɛləpmənt‿əv、ði‿ˈɪntɚˌnɛt、ðæɾ‿ɪˈneɪbəlz‿ʌs、kəˈmjunəˌkeɪɾ‿ˈɪnstəntli、wɪð‿ˈɛniˌwʌn‿ɪn‿ˈɛni 连读；əv、həv、ðə、ði、tə、ɪn 弱读/弱化；ðæɾ‿ɪˈneɪbəlz‿ʌs、kəˈmjunəˌkeɪɾ‿ˈɪnstəntli、kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>couldn't possibly have foreseen 表对过去不可能的判断；the worldwide system 为 Internet 的同位语；that 引导定语从句。</p></div>
@@ -250,7 +252,7 @@
     <div class="field words"><span>词</span><p>possibly 可能地； foresee 预见； worldwide 全球的； enable sb to do 使某人能够做； instantly 立即； be linked to 与……连接；</p></div>
     </article>
     <article class="sentence-card" id="sentence-19" data-start="217.49" data-end="231.87">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text">Nor <span class="weak">could</span> he <span class="weak">have</span> foreseen how we <span class="weak linking">could</span> use <span class="weak">the</span> Internet <span class="weak">to</span> <span class="linking">obtain</span> <span class="linking">information</span> <span class="linking">on</span> every known subject, so we <span class="weak">can</span> <span class="linking">read</span> <span class="weak linking">it</span> <span class="linking">on</span> <span class="weak">a</span> <span class="linking">screen</span> <span class="weak linking">in</span> our <span class="linking">homes</span> <span class="weak linking">and</span> even <span class="linking">print</span> <span class="weak linking">it</span> <span class="weak">as</span> <span class="linking">well</span> if we want <span class="weak">to</span>.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><button class="sentence-toggle" type="button" data-sentence="19" aria-label="Pause or resume sentence 19">Ⅱ</button><span class="sentence-num">19</span><p class="en-text">Nor <span class="weak">could</span> he <span class="weak">have</span> foreseen how we <span class="weak linking">could</span> use <span class="weak">the</span> Internet <span class="weak">to</span> <span class="linking">obtain</span> <span class="linking">information</span> <span class="linking">on</span> every known subject, so we <span class="weak">can</span> <span class="linking">read</span> <span class="weak linking">it</span> <span class="linking">on</span> <span class="weak">a</span> <span class="linking">screen</span> <span class="weak linking">in</span> our <span class="linking">homes</span> <span class="weak linking">and</span> even <span class="linking">print</span> <span class="weak linking">it</span> <span class="weak">as</span> <span class="linking">well</span> if we want <span class="weak">to</span>.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/nɔr kʊd hi <span class="weak">həv</span> fɔrˈsin haʊ wi kʊd juz <span class="weak">ði</span><span class="linking">‿</span>ˈɪntɚˌnɛt <span class="weak">tə</span><span class="linking">‿</span>əbˈteɪn<span class="linking">‿</span>ˌɪnfɚˈmeɪʃən<span class="linking">‿</span>ɑn<span class="linking">‿</span>ˈɛvri noʊn ˈsʌbdʒɪkt soʊ wi <span class="weak">kən</span> rid<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>ɑn<span class="linking">‿</span><span class="weak">ə</span> skrin<span class="linking">‿</span><span class="weak">ɪn</span> aʊr hoʊmz<span class="linking">‿</span><span class="weak">ən</span><span class="linking">‿</span>ˈivən prɪnt<span class="linking">‿</span>ɪɾ<span class="linking">‿</span>æz wɛl<span class="linking">‿</span>ɪf wi wɑnt <span class="weak">tə</span>/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ði‿ˈɪntɚˌnɛt、tə‿əbˈteɪn‿ˌɪnfɚˈmeɪʃən‿ɑn‿ˈɛvri、rid‿ɪɾ‿ɑn‿ə、skrin‿ɪn、hoʊmz‿ən‿ˈivən 连读；həv、ði、tə、kən、ə、ɪn 弱读/弱化；rid‿ɪɾ‿ɑn‿ə、prɪnt‿ɪɾ‿æz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>Nor 置句首引起部分倒装；how 引导宾语从句；so 引导结果分句；if 引导条件状语从句。</p></div>
@@ -259,7 +261,7 @@
     <div class="field words"><span>词</span><p>nor 也不； obtain 获得； subject 主题； as well 也；</p></div>
     </article>
     <article class="sentence-card" id="sentence-20" data-start="231.87" data-end="239.55">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">Computers <span class="weak">have</span> become <span class="linking">smaller</span> <span class="weak">and</span> smaller, more <span class="weak">and</span> more <span class="linking">powerful</span> <span class="weak">and</span> <span class="linking">cheaper</span> <span class="weak">and</span> cheaper.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><button class="sentence-toggle" type="button" data-sentence="20" aria-label="Pause or resume sentence 20">Ⅱ</button><span class="sentence-num">20</span><p class="en-text">Computers <span class="weak">have</span> become <span class="linking">smaller</span> <span class="weak">and</span> smaller, more <span class="weak">and</span> more <span class="linking">powerful</span> <span class="weak">and</span> <span class="linking">cheaper</span> <span class="weak">and</span> cheaper.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/kəmˈpjuɾɚz <span class="weak">həv</span> bɪˈkʌm ˈsmɔlɚ<span class="linking">‿</span><span class="weak">ən</span> ˈsmɔlɚ mɔr<span class="linking">‿</span><span class="weak">ən</span> mɔr ˈpaʊɚfəl<span class="linking">‿</span><span class="weak">ən</span> ˈtʃipɚ<span class="linking">‿</span><span class="weak">ən</span> ˈtʃipɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈsmɔlɚ‿ən、mɔr‿ən、ˈpaʊɚfəl‿ən、ˈtʃipɚ‿ən 连读；həv、ən 弱读/弱化；kəmˈpjuɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>have become + 多个比较级重复结构，表示持续变化。</p></div>
@@ -268,7 +270,7 @@
     <div class="field words"><span>词</span><p>smaller and smaller 越来越小； more and more 越来越； powerful 强大的； cheaper and cheaper 越来越便宜；</p></div>
     </article>
     <article class="sentence-card" id="sentence-21" data-start="239.55" data-end="244.91">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><span class="sentence-num">21</span><p class="en-text"><span class="linking">This</span> <span class="weak">is</span> what makes Leon Bagrit's predictions particularly remarkable.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="21" aria-label="Play sentence 21">▶</button><button class="sentence-toggle" type="button" data-sentence="21" aria-label="Pause or resume sentence 21">Ⅱ</button><span class="sentence-num">21</span><p class="en-text"><span class="linking">This</span> <span class="weak">is</span> what makes Leon Bagrit's predictions particularly remarkable.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðɪs<span class="linking">‿</span><span class="weak">ɪz</span> wʌt meɪks ˈliɑn ˈbæɡrɪts prɪˈdɪkʃənz pɚˈtɪkjəlɚli rɪˈmɑrkəbəl/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðɪs‿ɪz 连读；ɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>what 引导表语从句；makes...remarkable 为 make + 宾语 + 宾补。</p></div>
@@ -277,7 +279,7 @@
     <div class="field words"><span>词</span><p>prediction 预言； particularly 特别地； remarkable 非凡的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-22" data-start="244.91" data-end="251.53">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><span class="sentence-num">22</span><p class="en-text">If he, or someone like <span class="weak">him</span>, <span class="weak">were</span> alive today, he might <span class="weak">be</span> able <span class="weak">to</span> <span class="linking">tell</span> us what <span class="weak">to</span> <span class="linking">expect</span> <span class="weak">in</span> <span class="weak">the</span> next fifty years.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="22" aria-label="Play sentence 22">▶</button><button class="sentence-toggle" type="button" data-sentence="22" aria-label="Pause or resume sentence 22">Ⅱ</button><span class="sentence-num">22</span><p class="en-text">If he, or someone like <span class="weak">him</span>, <span class="weak">were</span> alive today, he might <span class="weak">be</span> able <span class="weak">to</span> <span class="linking">tell</span> us what <span class="weak">to</span> <span class="linking">expect</span> <span class="weak">in</span> <span class="weak">the</span> next fifty years.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ɪf hi ɔr ˈsʌmwʌn laɪk<span class="linking">‿</span>ɪm <span class="weak">wɚ</span><span class="linking">‿</span>əˈlaɪv təˈdeɪ hi maɪt bi<span class="linking">‿</span>ˈeɪbəl <span class="weak">tə</span> tɛl<span class="linking">‿</span>ʌs wʌt <span class="weak">tə</span><span class="linking">‿</span>ɪkˈspɛkt<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> nɛkst ˈfɪfti jɪrz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>laɪk‿ɪm、wɚ‿əˈlaɪv、bi‿ˈeɪbəl、tɛl‿ʌs、tə‿ɪkˈspɛkt‿ɪn 连读；wɚ、tə、ɪn、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>If 引导与现在事实相反的虚拟条件句；what to expect 为疑问词 + 不定式结构。</p></div>
@@ -353,6 +355,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -399,6 +402,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -413,6 +451,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -420,10 +462,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -432,6 +476,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

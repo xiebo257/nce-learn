@@ -19,9 +19,11 @@
     .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
-    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
-    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
     .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
@@ -38,7 +40,7 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -50,7 +52,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -80,7 +82,7 @@
       <a href="#sentence-14">14</a>
     </nav>
     <article class="sentence-card" id="sentence-1" data-start="16.83" data-end="24.76">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text">These days, people who do manual <span class="linking">work</span> often receive far more money <span class="weak">than</span> people who <span class="linking">work</span> <span class="weak linking">in</span> offices.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text">These days, people who do manual <span class="linking">work</span> often receive far more money <span class="weak">than</span> people who <span class="linking">work</span> <span class="weak linking">in</span> offices.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðiz deɪz ˈpipəl hu du ˈmænjuəl wɝk ˈɔfən rɪˈsiv fɑr mɔr ˈmʌni ðən ˈpipəl hu wɝk<span class="linking">‿</span><span class="weak">ɪn</span> ˈɔfəsɪz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>wɝk‿ɪn 连读；ɪn 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>people 作主语；两个 who 引导定语从句；far more...than... 比较结构。</p></div>
@@ -89,7 +91,7 @@
     <div class="field words"><span>词</span><p>these days 如今； manual work 体力劳动； receive 收到/获得； far more 多得多；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2" data-start="24.76" data-end="36.74">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">People who <span class="linking">work</span> <span class="weak linking">in</span> <span class="linking">offices</span> <span class="weak">are</span> frequently referred <span class="weak">to</span> <span class="weak">as</span> 'white-collar workers' <span class="weak">for</span> <span class="weak">the</span> simple reason <span class="weak">that</span> <span class="linking">they</span> usually <span class="linking">wear</span> <span class="weak">a</span> <span class="linking">collar</span> <span class="weak">and</span> tie <span class="weak">to</span> go <span class="weak">to</span> work.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">People who <span class="linking">work</span> <span class="weak linking">in</span> <span class="linking">offices</span> <span class="weak">are</span> frequently referred <span class="weak">to</span> <span class="weak">as</span> 'white-collar workers' <span class="weak">for</span> <span class="weak">the</span> simple reason <span class="weak">that</span> <span class="linking">they</span> usually <span class="linking">wear</span> <span class="weak">a</span> <span class="linking">collar</span> <span class="weak">and</span> tie <span class="weak">to</span> go <span class="weak">to</span> work.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈpipəl hu wɝk<span class="linking">‿</span><span class="weak">ɪn</span> ˈɔfəsɪz<span class="linking">‿</span><span class="weak">ɑr</span> ˈfrikwəntli rɪˈfɝd <span class="weak">tʊ</span><span class="linking">‿</span>æz waɪt ˈkɑlɚ ˈwɝkɚz <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈsɪmpəl ˈrizən ðæt ðeɪ ˈjuʒuəli wɛr<span class="linking">‿</span><span class="weak">ə</span> ˈkɑlɚ<span class="linking">‿</span><span class="weak">ən</span> taɪ <span class="weak">tə</span> ɡoʊ <span class="weak">tə</span> wɝk/</p></div>
     <div class="field liaison"><span>连读分析</span><p>wɝk‿ɪn、ˈɔfəsɪz‿ɑr、tʊ‿æz、wɛr‿ə、ˈkɑlɚ‿ən 连读；ɪn、ɑr、tʊ、fɚ、ðə、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>who 引导定语从句；are referred to as 为被动；that 引导同位语从句解释 reason。</p></div>
@@ -98,7 +100,7 @@
     <div class="field words"><span>词</span><p>frequently 经常； refer to as 称为； white-collar worker 白领工人； collar 衣领； tie 领带；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3" data-start="36.74" data-end="48.19">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Such</span> <span class="weak">is</span> human nature, <span class="weak linking">that</span> <span class="weak">a</span> great many people <span class="weak">are</span> often willing <span class="weak">to</span> sacrifice higher pay <span class="weak">for</span> <span class="weak">the</span> privilege <span class="weak">of</span> becoming white-collar workers.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text"><span class="linking">Such</span> <span class="weak">is</span> human nature, <span class="weak linking">that</span> <span class="weak">a</span> great many people <span class="weak">are</span> often willing <span class="weak">to</span> sacrifice higher pay <span class="weak">for</span> <span class="weak">the</span> privilege <span class="weak">of</span> becoming white-collar workers.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/sʌtʃ<span class="linking">‿</span><span class="weak">ɪz</span> ˈhjumən ˈneɪtʃɚ ðæt<span class="linking">‿</span><span class="weak">ə</span> ɡreɪt ˈmɛni ˈpipəl<span class="linking">‿</span><span class="weak">ɑr</span> ˈɔfən ˈwɪlɪŋ <span class="weak">tə</span> ˈsækrəˌfaɪs ˈhaɪɚ peɪ <span class="weak">fɚ</span> <span class="weak">ðə</span> ˈprɪvəlɪdʒ<span class="linking">‿</span><span class="weak">əv</span> bɪˈkʌmɪŋ waɪt ˈkɑlɚ ˈwɝkɚz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>sʌtʃ‿ɪz、ðæt‿ə、ˈpipəl‿ɑr、ˈprɪvəlɪdʒ‿əv 连读；ɪz、ə、ɑr、tə、fɚ、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Such is...that... 倒装强调句；that 引导结果从句；of becoming... 修饰 privilege。</p></div>
@@ -107,7 +109,7 @@
     <div class="field words"><span>词</span><p>human nature 人性； be willing to 愿意； sacrifice 牺牲； privilege 特权/荣幸；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4" data-start="48.19" data-end="60.78">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">This <span class="weak">can</span> give rise <span class="weak">to</span> curious <span class="linking">situations</span>, <span class="weak linking">as</span> <span class="weak">it</span> <span class="linking">did</span> <span class="weak">in</span> <span class="weak">the</span> case <span class="weak linking">of</span> Alfred Bloggs who <span class="linking">worked</span> <span class="weak linking">as</span> <span class="weak">a</span> dustman <span class="weak">for</span> <span class="weak">the</span> Ellesmere Corporation.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text">This <span class="weak">can</span> give rise <span class="weak">to</span> curious <span class="linking">situations</span>, <span class="weak linking">as</span> <span class="weak">it</span> <span class="linking">did</span> <span class="weak">in</span> <span class="weak">the</span> case <span class="weak linking">of</span> Alfred Bloggs who <span class="linking">worked</span> <span class="weak linking">as</span> <span class="weak">a</span> dustman <span class="weak">for</span> <span class="weak">the</span> Ellesmere Corporation.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðɪs <span class="weak">kən</span> ɡɪv raɪz <span class="weak">tə</span> ˈkjʊriəs ˌsɪtʃuˈeɪʃənz æz<span class="linking">‿</span>ɪt dɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ðə</span> keɪs<span class="linking">‿</span><span class="weak">əv</span> ˈælfrəd blɑɡz hu wɝkt<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ˈdʌstmən <span class="weak">fɚ</span> <span class="weak">ði</span> ˈɛlzmɪr ˌkɔrpəˈreɪʃən/</p></div>
     <div class="field liaison"><span>连读分析</span><p>æz‿ɪt、dɪd‿ɪn、keɪs‿əv、wɝkt‿æz‿ə 连读；kən、tə、ɪn、ðə、əv、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>give rise to 固定短语；as 引导方式从句；who 引导定语从句。</p></div>
@@ -116,7 +118,7 @@
     <div class="field words"><span>词</span><p>give rise to 引起； curious 奇怪的； in the case of 就……而言； dustman 清洁工； corporation 公司；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5" data-start="60.78" data-end="67.63">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">When he got <span class="linking">married</span>, Alf <span class="weak">was</span> too embarrassed <span class="weak">to</span> <span class="linking">say</span> anything <span class="weak">to</span> <span class="weak">his</span> wife about <span class="weak">his</span> job.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text">When he got <span class="linking">married</span>, Alf <span class="weak">was</span> too embarrassed <span class="weak">to</span> <span class="linking">say</span> anything <span class="weak">to</span> <span class="weak">his</span> wife about <span class="weak">his</span> job.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/wɛn hi ɡɑt ˈmærid ælf <span class="weak">wəz</span> <span class="weak">tu</span> ɪmˈbærəst <span class="weak">tə</span> seɪ ˈɛniˌθɪŋ <span class="weak">tə</span> <span class="weak">hɪz</span> waɪf<span class="linking">‿</span>əˈbaʊt <span class="weak">hɪz</span> dʒɑb/</p></div>
     <div class="field liaison"><span>连读分析</span><p>waɪf‿əˈbaʊt 连读；wəz、tu、tə、hɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>When 引导时间状语从句；too...to... 表“太……而不能”。</p></div>
@@ -125,7 +127,7 @@
     <div class="field words"><span>词</span><p>get married 结婚； embarrassed 尴尬的； too...to 太……而不能；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6" data-start="67.63" data-end="71.57">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">He simply told <span class="weak">her</span> <span class="weak">that</span> he worked <span class="weak">for</span> <span class="weak">the</span> Corporation.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">He simply told <span class="weak">her</span> <span class="weak">that</span> he worked <span class="weak">for</span> <span class="weak">the</span> Corporation.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/hi ˈsɪmpli toʊld <span class="weak">hɚ</span> ðæt hi wɝkt <span class="weak">fɚ</span> <span class="weak">ðə</span> ˌkɔrpəˈreɪʃən/</p></div>
     <div class="field liaison"><span>连读分析</span><p>hɚ、fɚ、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>that 引导宾语从句。</p></div>
@@ -134,7 +136,7 @@
     <div class="field words"><span>词</span><p>simply 只是； work for 为……工作；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7" data-start="71.57" data-end="76.45">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Every morning, he left home <span class="linking">dressed</span> <span class="weak linking">in</span> <span class="weak">a</span> smart black suit.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text">Every morning, he left home <span class="linking">dressed</span> <span class="weak linking">in</span> <span class="weak">a</span> smart black suit.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈɛvri ˈmɔrnɪŋ hi lɛft hoʊm drɛst<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> smɑrt blæk sut/</p></div>
     <div class="field liaison"><span>连读分析</span><p>drɛst‿ɪn‿ə 连读；ɪn、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Every morning 作时间状语；dressed in... 为过去分词短语作伴随状语。</p></div>
@@ -143,7 +145,7 @@
     <div class="field words"><span>词</span><p>dressed in 穿着； smart 漂亮的/整洁的； suit 西装；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8" data-start="76.45" data-end="82.9">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">He then <span class="linking">changed</span> into <span class="linking">overalls</span> <span class="weak">and</span> spent <span class="weak">the</span> <span class="linking">next</span> eight <span class="linking">hours</span> <span class="weak linking">as</span> <span class="weak">a</span> dustman.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text">He then <span class="linking">changed</span> into <span class="linking">overalls</span> <span class="weak">and</span> spent <span class="weak">the</span> <span class="linking">next</span> eight <span class="linking">hours</span> <span class="weak linking">as</span> <span class="weak">a</span> dustman.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/hi ðɛn tʃeɪndʒd ˈɪntu ˈoʊvɚˌɔlz<span class="linking">‿</span><span class="weak">ən</span> spɛnt <span class="weak">ðə</span> nɛkst eɪt ˈaʊɚz<span class="linking">‿</span>æz<span class="linking">‿</span><span class="weak">ə</span> ˈdʌstmən/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈoʊvɚˌɔlz‿ən、ˈaʊɚz‿æz‿ə 连读；ən、ðə、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>changed 和 spent 为并列谓语；as a dustman 作身份状语。</p></div>
@@ -152,7 +154,7 @@
     <div class="field words"><span>词</span><p>change into 换上； overalls 工作服； spend time as 以……身份度过时间；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9" data-start="82.9" data-end="89.02">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Before returning home at night, he <span class="linking">took</span> <span class="weak">a</span> <span class="linking">shower</span> <span class="weak">and</span> changed <span class="linking">back</span> into <span class="weak">his</span> suit.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text">Before returning home at night, he <span class="linking">took</span> <span class="weak">a</span> <span class="linking">shower</span> <span class="weak">and</span> changed <span class="linking">back</span> into <span class="weak">his</span> suit.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/bɪˈfɔr rɪˈtɝnɪŋ hoʊm<span class="linking">‿</span>æt naɪt hi tʊk<span class="linking">‿</span><span class="weak">ə</span> ˈʃaʊɚ<span class="linking">‿</span><span class="weak">ən</span> tʃeɪndʒd bæk ˈɪntu <span class="weak">hɪz</span> sut/</p></div>
     <div class="field liaison"><span>连读分析</span><p>hoʊm‿æt、tʊk‿ə、ˈʃaʊɚ‿ən 连读；ə、ən、hɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Before + 动名词短语作时间状语；took 和 changed 为并列谓语。</p></div>
@@ -161,7 +163,7 @@
     <div class="field words"><span>词</span><p>take a shower 洗澡； change back into 换回；</p></div>
     </article>
     <article class="sentence-card" id="sentence-10" data-start="89.02" data-end="95.66">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text">Alf did this <span class="weak linking">for</span> over two <span class="linking">years</span> <span class="weak">and</span> <span class="weak">his</span> fellow dustmen kept <span class="weak">his</span> secret.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><button class="sentence-toggle" type="button" data-sentence="10" aria-label="Pause or resume sentence 10">Ⅱ</button><span class="sentence-num">10</span><p class="en-text">Alf did this <span class="weak linking">for</span> over two <span class="linking">years</span> <span class="weak">and</span> <span class="weak">his</span> fellow dustmen kept <span class="weak">his</span> secret.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ælf dɪd ðɪs <span class="weak">fɚ</span> ˈoʊvɚ <span class="weak">tu</span> jɪrz<span class="linking">‿</span><span class="weak">ən</span> <span class="weak">hɪz</span> ˈfɛloʊ ˈdʌstmən kɛpt <span class="weak">hɪz</span> ˈsikrət/</p></div>
     <div class="field liaison"><span>连读分析</span><p>jɪrz‿ən 连读；fɚ、tu、ən、hɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>and 连接并列分句。</p></div>
@@ -170,7 +172,7 @@
     <div class="field words"><span>词</span><p>fellow 同伴的； keep a secret 保守秘密；</p></div>
     </article>
     <article class="sentence-card" id="sentence-11" data-start="95.66" data-end="104.47">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text">Alf's wife <span class="weak">has</span> never discovered <span class="weak">that</span> she <span class="linking">married</span> <span class="weak">a</span> <span class="linking">dustman</span> <span class="weak">and</span> she never will, <span class="weak linking">for</span> Alf <span class="weak">has</span> just <span class="linking">found</span> another job.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><button class="sentence-toggle" type="button" data-sentence="11" aria-label="Pause or resume sentence 11">Ⅱ</button><span class="sentence-num">11</span><p class="en-text">Alf's wife <span class="weak">has</span> never discovered <span class="weak">that</span> she <span class="linking">married</span> <span class="weak">a</span> <span class="linking">dustman</span> <span class="weak">and</span> she never will, <span class="weak linking">for</span> Alf <span class="weak">has</span> just <span class="linking">found</span> another job.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ælfs waɪf <span class="weak">həz</span> ˈnɛvɚ dɪˈskʌvɚd ðæt ʃi ˈmærid<span class="linking">‿</span><span class="weak">ə</span> ˈdʌstmən<span class="linking">‿</span><span class="weak">ən</span> ʃi ˈnɛvɚ wɪl <span class="weak">fɚ</span> ælf <span class="weak">həz</span> dʒʌst faʊnd<span class="linking">‿</span>əˈnʌðɚ dʒɑb/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈmærid‿ə、ˈdʌstmən‿ən、faʊnd‿əˈnʌðɚ 连读；həz、ə、ən、fɚ 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>that 引导宾语从句；and 连接并列分句；for 引导原因分句。</p></div>
@@ -179,7 +181,7 @@
     <div class="field words"><span>词</span><p>discover 发现； marry 嫁/娶； another job 另一份工作；</p></div>
     </article>
     <article class="sentence-card" id="sentence-12" data-start="104.47" data-end="107.61">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text">He will soon <span class="weak">be</span> <span class="linking">working</span> <span class="weak linking">in</span> <span class="weak linking">an</span> office.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><button class="sentence-toggle" type="button" data-sentence="12" aria-label="Pause or resume sentence 12">Ⅱ</button><span class="sentence-num">12</span><p class="en-text">He will soon <span class="weak">be</span> <span class="linking">working</span> <span class="weak linking">in</span> <span class="weak linking">an</span> office.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/hi wɪl sun bi ˈwɝkɪŋ<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ən</span> ˈɔfəs/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈwɝkɪŋ‿ɪn‿ən 连读；ɪn、ən 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>will be doing 表将来进行。</p></div>
@@ -188,7 +190,7 @@
     <div class="field words"><span>词</span><p>work in an office 在办公室工作；</p></div>
     </article>
     <article class="sentence-card" id="sentence-13" data-start="107.61" data-end="117.05">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text">He will <span class="weak">be</span> <span class="linking">earning</span> only <span class="linking">half</span> <span class="weak">as</span> <span class="linking">much</span> <span class="weak">as</span> he used <span class="weak">to</span>, but he feels <span class="weak">that</span> <span class="weak">his</span> rise <span class="weak">in</span> <span class="linking">status</span> <span class="weak">is</span> well worth <span class="weak">the</span> <span class="linking">loss</span> <span class="weak">of</span> money.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><button class="sentence-toggle" type="button" data-sentence="13" aria-label="Pause or resume sentence 13">Ⅱ</button><span class="sentence-num">13</span><p class="en-text">He will <span class="weak">be</span> <span class="linking">earning</span> only <span class="linking">half</span> <span class="weak">as</span> <span class="linking">much</span> <span class="weak">as</span> he used <span class="weak">to</span>, but he feels <span class="weak">that</span> <span class="weak">his</span> rise <span class="weak">in</span> <span class="linking">status</span> <span class="weak">is</span> well worth <span class="weak">the</span> <span class="linking">loss</span> <span class="weak">of</span> money.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/hi wɪl bi ˈɝnɪŋ ˈoʊnli hæf<span class="linking">‿</span>æz mʌtʃ<span class="linking">‿</span>æz hi jus <span class="weak">tə</span> bət hi filz ðæt <span class="weak">hɪz</span> raɪz<span class="linking">‿</span><span class="weak">ɪn</span> ˈstætəs<span class="linking">‿</span><span class="weak">ɪz</span> wɛl wɝθ <span class="weak">ðə</span> lɔs<span class="linking">‿</span><span class="weak">əv</span> ˈmʌni/</p></div>
     <div class="field liaison"><span>连读分析</span><p>hæf‿æz、mʌtʃ‿æz、raɪz‿ɪn、ˈstætəs‿ɪz、lɔs‿əv 连读；tə、hɪz、ɪn、ɪz、ðə、əv 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>half as much as... 比较结构；but 连接转折；that 引导宾语从句。</p></div>
@@ -197,7 +199,7 @@
     <div class="field words"><span>词</span><p>earn 挣钱； half as much as 是……的一半； rise in status 地位提升； be worth 值得； loss 损失；</p></div>
     </article>
     <article class="sentence-card" id="sentence-14" data-start="117.05" data-end="121.97">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">From</span> <span class="linking">now</span> on, he will <span class="linking">wear</span> <span class="weak">a</span> <span class="linking">suit</span> all <span class="linking">day</span> <span class="weak linking">and</span> others will call <span class="weak">him</span> 'Mr. Bloggs', <span class="linking">not</span> 'Alf'.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><button class="sentence-toggle" type="button" data-sentence="14" aria-label="Pause or resume sentence 14">Ⅱ</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">From</span> <span class="linking">now</span> on, he will <span class="linking">wear</span> <span class="weak">a</span> <span class="linking">suit</span> all <span class="linking">day</span> <span class="weak linking">and</span> others will call <span class="weak">him</span> 'Mr. Bloggs', <span class="linking">not</span> 'Alf'.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">frəm</span> naʊ<span class="linking">‿</span>ɑn hi wɪl wɛr<span class="linking">‿</span><span class="weak">ə</span> sut ɔl deɪ<span class="linking">‿</span><span class="weak">ən</span> ˈʌðɚz wɪl kɔl <span class="weak">hɪm</span> ˈmɪstɚ blɑɡz nɑt ælf/</p></div>
     <div class="field liaison"><span>连读分析</span><p>naʊ‿ɑn、wɛr‿ə、deɪ‿ən 连读；frəm、ə、ən、hɪm 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>From now on 作时间状语；and 连接并列分句。</p></div>
@@ -265,6 +267,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -311,6 +314,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -325,6 +363,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -332,10 +374,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -344,6 +388,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

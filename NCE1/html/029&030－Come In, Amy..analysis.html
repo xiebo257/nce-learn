@@ -19,9 +19,11 @@
     .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
-    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
-    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
     .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
@@ -38,7 +40,7 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -50,7 +52,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -75,7 +77,7 @@
       <a href="#sentence-9">9</a>
     </nav>
     <article class="sentence-card" id="sentence-1">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Come</span> <span class="linking">in,</span> <span class="linking">Amy.</span></p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Come</span> <span class="linking">in,</span> <span class="linking">Amy.</span></p></div>
       <div class="field ipa"><span>美音发音</span><p>/kʌm<span class="linking">‿</span>ɪn ˈeɪmi/</p></div>
       <div class="field liaison"><span>连读分析</span><p>kʌm‿ɪn 连读。</p></div>
       <div class="field structure"><span>结构</span><p>日常交际/祈使或省略句；省略主语或用于固定寒暄。</p></div>
@@ -84,7 +86,7 @@
       <div class="field words"><span>词</span><p>come in 进来；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Shut <span class="weak">the</span> door, please.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">Shut <span class="weak">the</span> door, please.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/ʃʌt ð<span class="weak">ə</span> dɔr pliz/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -93,7 +95,7 @@
       <div class="field words"><span>词</span><p>shut； door； please 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text">This bedroom's very <span class="linking">untidy.</span></p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text">This bedroom's very <span class="linking">untidy.</span></p></div>
       <div class="field ipa"><span>美音发音</span><p>/ðɪs ˈbɛdˌrumz ˈvɛri <span class="weak">ən</span>ˈtaɪdi/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 bedroom's / very / untidy。</p></div>
       <div class="field structure"><span>结构</span><p>指示/存在句；this/that/these/those/here/there 引出人或物。</p></div>
@@ -102,7 +104,7 @@
       <div class="field words"><span>词</span><p>bed 床； bedroom 卧室； untidy 不整洁的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">What must <span class="linking">I</span> do, Mrs. Jones?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text">What must <span class="linking">I</span> do, Mrs. Jones?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/wʌt mʌst aɪ du ˈmɪsɪz dʒoʊnz/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 what / must / mrs。</p></div>
       <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
@@ -111,7 +113,7 @@
       <div class="field words"><span>词</span><p>what； must； mrs； jones 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Open</span> <span class="weak">the</span> <span class="linking">window</span> <span class="weak linking">and</span> <span class="linking">air</span> <span class="weak">the</span> room.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text"><span class="linking">Open</span> <span class="weak">the</span> <span class="linking">window</span> <span class="weak linking">and</span> <span class="linking">air</span> <span class="weak">the</span> room.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/ˈoʊpən ð<span class="weak">ə</span> ˈwɪndoʊ <span class="weak">ən</span><span class="linking">‿</span>ɛr ð<span class="weak">ə</span> rum/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ən‿ɛr 连读；ðə、ən 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -120,7 +122,7 @@
       <div class="field words"><span>词</span><p>window 窗户；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Then put these <span class="linking">clothes</span> <span class="linking">in</span> <span class="weak">the</span> wardrobe.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">Then put these <span class="linking">clothes</span> <span class="linking">in</span> <span class="weak">the</span> wardrobe.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/ðɛn pʊt ðiz kloʊðz<span class="linking">‿</span>ɪn ð<span class="weak">ə</span> ˈwɔrˌdroʊb/</p></div>
       <div class="field liaison"><span>连读分析</span><p>kloʊðz‿ɪn 连读；ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -129,7 +131,7 @@
       <div class="field words"><span>词</span><p>clothes 衣服； wardrobe 衣柜；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Then make <span class="weak">the</span> bed.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text">Then make <span class="weak">the</span> bed.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/ðɛn meɪk ð<span class="weak">ə</span> bɛd/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -138,7 +140,7 @@
       <div class="field words"><span>词</span><p>bed 床；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">Dust <span class="weak">the</span> dressing table.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text">Dust <span class="weak">the</span> dressing table.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/dʌst ð<span class="weak">ə</span> ˈdrɛsɪŋ ˈteɪbəl/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -147,7 +149,7 @@
       <div class="field words"><span>词</span><p>dressing table 梳妆台； table 桌子；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">Then sweep <span class="weak">the</span> floor.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text">Then sweep <span class="weak">the</span> floor.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/ðɛn swip ð<span class="weak">ə</span> flɔr/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -203,6 +205,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -249,6 +252,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -263,6 +301,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -270,10 +312,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -282,6 +326,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

@@ -19,9 +19,11 @@
     .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
-    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
-    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
     .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
@@ -38,7 +40,7 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -50,7 +52,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -86,7 +88,7 @@
       <a href="#sentence-20">20</a>
     </nav>
     <article class="sentence-card" id="sentence-1">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Has</span> <span class="linking">Ian</span> sold his house yet?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text"><span class="linking">Has</span> <span class="linking">Ian</span> sold his house yet?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hæz<span class="linking">‿</span>ian soʊld hɪz haʊs jɛt/</p></div>
       <div class="field liaison"><span>连读分析</span><p>hæz‿ian 连读。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -95,7 +97,7 @@
       <div class="field words"><span>词</span><p>ian； sold； house； yet 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">Yes, <span class="weak">he</span> has.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">Yes, <span class="weak">he</span> has.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/jɛs hi hæz/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 yes。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -104,7 +106,7 @@
       <div class="field words"><span>词</span><p>yes 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">He</span> <span class="linking">sold</span> <span class="weak linking">it</span> last week.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">He</span> <span class="linking">sold</span> <span class="weak linking">it</span> last week.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hi soʊld<span class="linking">‿</span>ɪt læst wik/</p></div>
       <div class="field liaison"><span>连读分析</span><p>soʊld‿ɪt 连读。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -113,7 +115,7 @@
       <div class="field words"><span>词</span><p>sold； last； week 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text">Has <span class="weak">he</span> moved <span class="weak">to</span> his new house yet?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text">Has <span class="weak">he</span> moved <span class="weak">to</span> his new house yet?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hæz hi moved <span class="weak">tə</span> hɪz nu haʊs jɛt/</p></div>
       <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -122,7 +124,7 @@
       <div class="field words"><span>词</span><p>moved； new； house； yet 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">No, not yet.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text">No, not yet.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/noʊ nɑt jɛt/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 no / not / yet。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -131,7 +133,7 @@
       <div class="field words"><span>词</span><p>no； not； yet 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">He's still here.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">He's still here.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hiz stɪl hɪr/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 he's / still / here。</p></div>
       <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
@@ -140,7 +142,7 @@
       <div class="field words"><span>词</span><p>he's； still； here 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">He's going <span class="weak">to</span> move tomorrow.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text">He's going <span class="weak">to</span> move tomorrow.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hiz ˈɡoʊɪŋ <span class="weak">tə</span> move <span class="weak">tə</span>ˈmɔroʊ/</p></div>
       <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
@@ -149,7 +151,7 @@
       <div class="field words"><span>词</span><p>be going to 打算/将要；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">When? Tomorrow morning?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text">When? Tomorrow morning?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/wɛn <span class="weak">tə</span>ˈmɔroʊ ˈmɔrnɪŋ/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 when / tomorrow / morning。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -158,7 +160,7 @@
       <div class="field words"><span>词</span><p>when； tomorrow； morning 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text">No. Tomorrow <span class="linking">afternoon.</span></p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text">No. Tomorrow <span class="linking">afternoon.</span></p></div>
       <div class="field ipa"><span>美音发音</span><p>/noʊ <span class="weak">tə</span>ˈmɔroʊ ˌæftɚˈnun/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 no / tomorrow / afternoon。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -167,7 +169,7 @@
       <div class="field words"><span>词</span><p>no； tomorrow； afternoon 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-10">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">I'll</span> miss him.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><button class="sentence-toggle" type="button" data-sentence="10" aria-label="Pause or resume sentence 10">Ⅱ</button><span class="sentence-num">10</span><p class="en-text"><span class="linking">I'll</span> miss him.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/i'll mɪs hɪm/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 i'll / miss。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -176,7 +178,7 @@
       <div class="field words"><span>词</span><p>i'll； miss 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-11">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">He</span> <span class="linking">has</span> <span class="linking">always</span> <span class="linking">been</span> <span class="weak linking">a</span> good neighbour.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><button class="sentence-toggle" type="button" data-sentence="11" aria-label="Pause or resume sentence 11">Ⅱ</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">He</span> <span class="linking">has</span> <span class="linking">always</span> <span class="linking">been</span> <span class="weak linking">a</span> good neighbour.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hi hæz<span class="linking">‿</span>ˈɔlweɪz bɪn<span class="linking">‿</span><span class="weak">ə</span> ɡʊd ˈneɪbər/</p></div>
       <div class="field liaison"><span>连读分析</span><p>hæz‿ˈɔlweɪz、bɪn‿ə 连读；ə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -185,7 +187,7 @@
       <div class="field words"><span>词</span><p>good 好的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-12">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">He's</span> <span class="weak linking">a</span> very nice person.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><button class="sentence-toggle" type="button" data-sentence="12" aria-label="Pause or resume sentence 12">Ⅱ</button><span class="sentence-num">12</span><p class="en-text"><span class="linking">He's</span> <span class="weak linking">a</span> very nice person.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/hiz<span class="linking">‿</span><span class="weak">ə</span> ˈvɛri naɪs ˈpərsn/</p></div>
       <div class="field liaison"><span>连读分析</span><p>hiz‿ə 连读；ə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>主系表结构；be 动词连接主语和身份、状态或性质。</p></div>
@@ -194,7 +196,7 @@
       <div class="field words"><span>词</span><p>nice 好的/漂亮的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-13">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">We'll</span> <span class="linking">all</span> miss him.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><button class="sentence-toggle" type="button" data-sentence="13" aria-label="Pause or resume sentence 13">Ⅱ</button><span class="sentence-num">13</span><p class="en-text"><span class="linking">We'll</span> <span class="linking">all</span> miss him.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/we'll<span class="linking">‿</span>ɔl mɪs hɪm/</p></div>
       <div class="field liaison"><span>连读分析</span><p>well‿ɔl 连读。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -203,7 +205,7 @@
       <div class="field words"><span>词</span><p>we'll； all； miss 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-14">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text">When will <span class="weak">the</span> new people move <span class="linking">into</span> this house?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><button class="sentence-toggle" type="button" data-sentence="14" aria-label="Pause or resume sentence 14">Ⅱ</button><span class="sentence-num">14</span><p class="en-text">When will <span class="weak">the</span> new people move <span class="linking">into</span> this house?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/wɛn wɪl ð<span class="weak">ə</span> nu ˈpipl move ˈɪntu ðɪs haʊs/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
@@ -212,7 +214,7 @@
       <div class="field words"><span>词</span><p>when； will； new； people； move 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-15">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text"><span class="linking">I</span> think that they'll move <span class="linking">in</span> <span class="weak">the</span> day <span class="linking">after</span> tomorrow.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><button class="sentence-toggle" type="button" data-sentence="15" aria-label="Pause or resume sentence 15">Ⅱ</button><span class="sentence-num">15</span><p class="en-text"><span class="linking">I</span> think that they'll move <span class="linking">in</span> <span class="weak">the</span> day <span class="linking">after</span> tomorrow.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/aɪ θɪŋk ðæt they'll move ɪn ð<span class="weak">ə</span> deɪ ˈæftɚ <span class="weak">tə</span>ˈmɔroʊ/</p></div>
       <div class="field liaison"><span>连读分析</span><p>ðə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>含宾语从句或引语；动词后面说明说话、想法、记忆或判断的内容。</p></div>
@@ -221,7 +223,7 @@
       <div class="field words"><span>词</span><p>who/which/that 引导定语从句；</p></div>
     </article>
     <article class="sentence-card" id="sentence-16">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><span class="sentence-num">16</span><p class="en-text">Will <span class="weak">you</span> see <span class="linking">Ian</span> today, Jenny?</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="16" aria-label="Play sentence 16">▶</button><button class="sentence-toggle" type="button" data-sentence="16" aria-label="Pause or resume sentence 16">Ⅱ</button><span class="sentence-num">16</span><p class="en-text">Will <span class="weak">you</span> see <span class="linking">Ian</span> today, Jenny?</p></div>
       <div class="field ipa"><span>美音发音</span><p>/wɪl <span class="weak">jə</span> si ian <span class="weak">tə</span>ˈdeɪ jenny/</p></div>
       <div class="field liaison"><span>连读分析</span><p>jə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
@@ -230,7 +232,7 @@
       <div class="field words"><span>词</span><p>will； see； ian； today； jenny 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-17">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><span class="sentence-num">17</span><p class="en-text">Yes, <span class="linking">I</span> will.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="17" aria-label="Play sentence 17">▶</button><button class="sentence-toggle" type="button" data-sentence="17" aria-label="Pause or resume sentence 17">Ⅱ</button><span class="sentence-num">17</span><p class="en-text">Yes, <span class="linking">I</span> will.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/jɛs aɪ wɪl/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 yes / will。</p></div>
       <div class="field structure"><span>结构</span><p>情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。</p></div>
@@ -239,7 +241,7 @@
       <div class="field words"><span>词</span><p>yes； will 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-18">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><span class="sentence-num">18</span><p class="en-text">Please give him <span class="weak">my</span> regards.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="18" aria-label="Play sentence 18">▶</button><button class="sentence-toggle" type="button" data-sentence="18" aria-label="Pause or resume sentence 18">Ⅱ</button><span class="sentence-num">18</span><p class="en-text">Please give him <span class="weak">my</span> regards.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/pliz ɡɪv hɪm maɪ rəˈɡɑrd/</p></div>
       <div class="field liaison"><span>连读分析</span><p>本句没有明显跨词连读；按意群朗读，重读 please / give / regards。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -248,7 +250,7 @@
       <div class="field words"><span>词</span><p>please； give； regards 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-19">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">Poor</span> <span class="linking">Ian!</span> <span class="weak">He</span> didn't want <span class="weak">to</span> leave this house.</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="19" aria-label="Play sentence 19">▶</button><button class="sentence-toggle" type="button" data-sentence="19" aria-label="Pause or resume sentence 19">Ⅱ</button><span class="sentence-num">19</span><p class="en-text"><span class="linking">Poor</span> <span class="linking">Ian!</span> <span class="weak">He</span> didn't want <span class="weak">to</span> leave this house.</p></div>
       <div class="field ipa"><span>美音发音</span><p>/pʊr<span class="linking">‿</span>ian hi didn't wɑnt <span class="weak">tə</span> liv ðɪs haʊs/</p></div>
       <div class="field liaison"><span>连读分析</span><p>pʊr‿ian 连读；tə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -257,7 +259,7 @@
       <div class="field words"><span>词</span><p>poor； ian； didn't； want； leave 本句关键词；</p></div>
     </article>
     <article class="sentence-card" id="sentence-20">
-      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><span class="sentence-num">20</span><p class="en-text">No, <span class="weak">he</span> didn't want <span class="weak">to</span> leave, but his wife did!</p></div>
+      <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="20" aria-label="Play sentence 20">▶</button><button class="sentence-toggle" type="button" data-sentence="20" aria-label="Pause or resume sentence 20">Ⅱ</button><span class="sentence-num">20</span><p class="en-text">No, <span class="weak">he</span> didn't want <span class="weak">to</span> leave, but his wife did!</p></div>
       <div class="field ipa"><span>美音发音</span><p>/noʊ hi didn't wɑnt <span class="weak">tə</span> liv bət hɪz waɪf dɪd/</p></div>
       <div class="field liaison"><span>连读分析</span><p>tə 弱读/弱化。</p></div>
       <div class="field structure"><span>结构</span><p>简单句；适合按意群直接理解。</p></div>
@@ -313,6 +315,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -359,6 +362,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -373,6 +411,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -380,10 +422,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -392,6 +436,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

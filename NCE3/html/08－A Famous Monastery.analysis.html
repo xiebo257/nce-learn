@@ -19,9 +19,11 @@
     .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; padding: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05); }
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
-    .sentence-head { display: grid; grid-template-columns: 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
-    .sentence-play { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
     .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-num { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; background: #2563eb; font-weight: 700; font-size: 14px; line-height: 1; flex: 0 0 auto; }
     .en-text { margin: 0; color: #111827; font-size: 18px; font-weight: 700; line-height: 1.45; }
@@ -38,7 +40,7 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -50,7 +52,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { display: none; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -81,7 +83,7 @@
       <a href="#sentence-15">15</a>
     </nav>
     <article class="sentence-card" id="sentence-1" data-start="15.03" data-end="20.49">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> Great St. Bernard Pass connects Switzerland <span class="weak">to</span> Italy.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="1" aria-label="Play sentence 1">▶</button><button class="sentence-toggle" type="button" data-sentence="1" aria-label="Pause or resume sentence 1">Ⅱ</button><span class="sentence-num">1</span><p class="en-text"><span class="weak">The</span> Great St. Bernard Pass connects Switzerland <span class="weak">to</span> Italy.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ɡreɪt seɪnt bɚˈnɑrd pæs kəˈnɛkts ˈswɪtsɚlənd <span class="weak">tʊ</span><span class="linking">‿</span>ˈɪɾəli/</p></div>
     <div class="field liaison"><span>连读分析</span><p>tʊ‿ˈɪɾəli 连读；ðə、tʊ 弱读/弱化；tʊ‿ˈɪɾəli 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>主谓宾结构；connect...to... 表连接。</p></div>
@@ -90,7 +92,7 @@
     <div class="field words"><span>词</span><p>pass 山口； connect...to 连接……和……；</p></div>
     </article>
     <article class="sentence-card" id="sentence-2" data-start="20.49" data-end="28.15">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><span class="sentence-num">2</span><p class="en-text">At 2,473 <span class="linking">metres</span>, <span class="weak linking">it</span> <span class="weak">is</span> <span class="weak">the</span> highest mountain <span class="linking">pass</span> <span class="weak linking">in</span> Europe.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="2" aria-label="Play sentence 2">▶</button><button class="sentence-toggle" type="button" data-sentence="2" aria-label="Pause or resume sentence 2">Ⅱ</button><span class="sentence-num">2</span><p class="en-text">At 2,473 <span class="linking">metres</span>, <span class="weak linking">it</span> <span class="weak">is</span> <span class="weak">the</span> highest mountain <span class="linking">pass</span> <span class="weak linking">in</span> Europe.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/æt <span class="weak">tu</span> ˈθaʊzənd fɔr ˈhʌndrəd ˈsɛvənti θri ˈmiɾɚz ɪt<span class="linking">‿</span><span class="weak">ɪz</span> <span class="weak">ðə</span> ˈhaɪəst ˈmaʊntən pæs<span class="linking">‿</span><span class="weak">ɪn</span> ˈjʊrəp/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ɪt‿ɪz、pæs‿ɪn 连读；tu、ɪz、ðə、ɪn 弱读/弱化；ˈmiɾɚz 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>At... metres 作高度状语；最高级结构。</p></div>
@@ -99,7 +101,7 @@
     <div class="field words"><span>词</span><p>metre 米； mountain pass 山口； Europe 欧洲；</p></div>
     </article>
     <article class="sentence-card" id="sentence-3" data-start="28.15" data-end="36.95">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> famous <span class="linking">monastery</span> <span class="weak">of</span> St. Bernard, which <span class="weak">was</span> <span class="linking">founded</span> <span class="weak">in</span> <span class="weak">the</span> eleventh century, <span class="linking">lies</span> <span class="linking">about</span> <span class="weak">a</span> mile away.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="3" aria-label="Play sentence 3">▶</button><button class="sentence-toggle" type="button" data-sentence="3" aria-label="Pause or resume sentence 3">Ⅱ</button><span class="sentence-num">3</span><p class="en-text"><span class="weak">The</span> famous <span class="linking">monastery</span> <span class="weak">of</span> St. Bernard, which <span class="weak">was</span> <span class="linking">founded</span> <span class="weak">in</span> <span class="weak">the</span> eleventh century, <span class="linking">lies</span> <span class="linking">about</span> <span class="weak">a</span> mile away.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈfeɪməs ˈmɑnəˌstɛri<span class="linking">‿</span><span class="weak">əv</span> seɪnt bɚˈnɑrd wɪtʃ <span class="weak">wəz</span> ˈfaʊndɪd<span class="linking">‿</span><span class="weak">ɪn</span> <span class="weak">ði</span> ɪˈlɛvənθ ˈsɛntʃɚi laɪz<span class="linking">‿</span>əˈbaʊt<span class="linking">‿</span><span class="weak">ə</span> maɪl<span class="linking">‿</span>əˈweɪ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈmɑnəˌstɛri‿əv、ˈfaʊndɪd‿ɪn、laɪz‿əˈbaʊt‿ə、maɪl‿əˈweɪ 连读；ðə、əv、wəz、ɪn、ði、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>which 引导非限制性定语从句；主句 lie 表“位于”。</p></div>
@@ -108,7 +110,7 @@
     <div class="field words"><span>词</span><p>monastery 修道院； found 建立； century 世纪； lie 位于；</p></div>
     </article>
     <article class="sentence-card" id="sentence-4" data-start="36.95" data-end="44.64">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">For</span> <span class="linking">hundreds</span> <span class="weak">of</span> years, St. Bernard dogs <span class="weak">have</span> saved <span class="weak">the</span> <span class="linking">lives</span> <span class="weak">of</span> travellers crossing <span class="weak">the</span> dangerous Pass.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="4" aria-label="Play sentence 4">▶</button><button class="sentence-toggle" type="button" data-sentence="4" aria-label="Pause or resume sentence 4">Ⅱ</button><span class="sentence-num">4</span><p class="en-text"><span class="weak">For</span> <span class="linking">hundreds</span> <span class="weak">of</span> years, St. Bernard dogs <span class="weak">have</span> saved <span class="weak">the</span> <span class="linking">lives</span> <span class="weak">of</span> travellers crossing <span class="weak">the</span> dangerous Pass.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">fɚ</span> ˈhʌndrədz<span class="linking">‿</span><span class="weak">əv</span> jɪrz seɪnt bɚˈnɑrd dɔɡz <span class="weak">həv</span> seɪvd <span class="weak">ðə</span> laɪvz<span class="linking">‿</span><span class="weak">əv</span> ˈtrævəlɚz ˈkrɔsɪŋ <span class="weak">ðə</span> ˈdeɪndʒɚəs pæs/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈhʌndrədz‿əv、laɪvz‿əv 连读；fɚ、əv、həv、ðə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>For hundreds of years 作时间状语；crossing... 为现在分词短语作定语。</p></div>
@@ -117,7 +119,7 @@
     <div class="field words"><span>词</span><p>save the lives of 拯救……的生命； traveller 旅客； dangerous 危险的；</p></div>
     </article>
     <article class="sentence-card" id="sentence-5" data-start="44.64" data-end="53.39">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><span class="sentence-num">5</span><p class="en-text">These friendly dogs, which <span class="weak">were</span> first brought <span class="weak linking">from</span> Asia, <span class="weak">were</span> <span class="linking">used</span> <span class="weak">as</span> <span class="linking">watchdogs</span> <span class="linking">even</span> <span class="weak">in</span> Roman times.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="5" aria-label="Play sentence 5">▶</button><button class="sentence-toggle" type="button" data-sentence="5" aria-label="Pause or resume sentence 5">Ⅱ</button><span class="sentence-num">5</span><p class="en-text">These friendly dogs, which <span class="weak">were</span> first brought <span class="weak linking">from</span> Asia, <span class="weak">were</span> <span class="linking">used</span> <span class="weak">as</span> <span class="linking">watchdogs</span> <span class="linking">even</span> <span class="weak">in</span> Roman times.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðiz ˈfrɛndli dɔɡz wɪtʃ <span class="weak">wɚ</span> fɝst brɔt <span class="weak">frəm</span> ˈeɪʒə <span class="weak">wɚ</span> juzd<span class="linking">‿</span>æz ˈwɑtʃˌdɔɡz ˈivən<span class="linking">‿</span><span class="weak">ɪn</span> ˈroʊmən taɪmz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>juzd‿æz、ˈivən‿ɪn 连读；wɚ、frəm、ɪn 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>which 引导非限制性定语从句；主句被动。</p></div>
@@ -126,7 +128,7 @@
     <div class="field words"><span>词</span><p>Asia 亚洲； watchdog 看门狗； Roman times 罗马时代；</p></div>
     </article>
     <article class="sentence-card" id="sentence-6" data-start="53.39" data-end="66.32">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><span class="sentence-num">6</span><p class="en-text">Now <span class="weak linking">that</span> <span class="weak">a</span> tunnel <span class="weak">has</span> <span class="weak">been</span> built through <span class="weak">the</span> mountains, <span class="weak">the</span> <span class="linking">Pass</span> <span class="weak">is</span> less dangerous, <span class="linking">but</span> each year, <span class="weak">the</span> <span class="linking">dogs</span> <span class="weak">are</span> still <span class="linking">sent</span> <span class="linking">out</span> into <span class="weak">the</span> snow <span class="linking">whenever</span> <span class="weak">a</span> <span class="linking">traveller</span> <span class="weak linking">is</span> <span class="weak">in</span> difficulty.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="6" aria-label="Play sentence 6">▶</button><button class="sentence-toggle" type="button" data-sentence="6" aria-label="Pause or resume sentence 6">Ⅱ</button><span class="sentence-num">6</span><p class="en-text">Now <span class="weak linking">that</span> <span class="weak">a</span> tunnel <span class="weak">has</span> <span class="weak">been</span> built through <span class="weak">the</span> mountains, <span class="weak">the</span> <span class="linking">Pass</span> <span class="weak">is</span> less dangerous, <span class="linking">but</span> each year, <span class="weak">the</span> <span class="linking">dogs</span> <span class="weak">are</span> still <span class="linking">sent</span> <span class="linking">out</span> into <span class="weak">the</span> snow <span class="linking">whenever</span> <span class="weak">a</span> <span class="linking">traveller</span> <span class="weak linking">is</span> <span class="weak">in</span> difficulty.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/naʊ ðæt<span class="linking">‿</span><span class="weak">ə</span> ˈtʌnəl <span class="weak">həz</span> bɪn bɪlt θru <span class="weak">ðə</span> ˈmaʊntənz <span class="weak">ðə</span> pæs<span class="linking">‿</span><span class="weak">ɪz</span> lɛs ˈdeɪndʒɚəs bət<span class="linking">‿</span>itʃ jɪr <span class="weak">ðə</span> dɔɡz<span class="linking">‿</span><span class="weak">ɑr</span> stɪl sɛnt<span class="linking">‿</span>aʊt ˈɪntu <span class="weak">ðə</span> snoʊ wɛnˈɛvɚ<span class="linking">‿</span><span class="weak">ə</span> ˈtrævəlɚ<span class="linking">‿</span><span class="weak">ɪz</span><span class="linking">‿</span><span class="weak">ɪn</span> ˈdɪfəkəlti/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðæt‿ə、pæs‿ɪz、bət‿itʃ、dɔɡz‿ɑr、sɛnt‿aʊt 连读；ə、həz、ðə、ɪz、ɑr、ɪn 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Now that 引导原因状语从句；but 连接转折；whenever 引导时间/条件从句。</p></div>
@@ -135,7 +137,7 @@
     <div class="field words"><span>词</span><p>now that 既然； tunnel 隧道； send out 派出； in difficulty 处于困境；</p></div>
     </article>
     <article class="sentence-card" id="sentence-7" data-start="66.32" data-end="74.69">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><span class="sentence-num">7</span><p class="en-text">Despite <span class="weak">the</span> new tunnel, <span class="weak">there</span> <span class="weak">are</span> <span class="linking">still</span> <span class="weak">a</span> few people who <span class="linking">rashly</span> attempt <span class="weak">to</span> cross <span class="weak">the</span> <span class="linking">Pass</span> on foot.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="7" aria-label="Play sentence 7">▶</button><button class="sentence-toggle" type="button" data-sentence="7" aria-label="Pause or resume sentence 7">Ⅱ</button><span class="sentence-num">7</span><p class="en-text">Despite <span class="weak">the</span> new tunnel, <span class="weak">there</span> <span class="weak">are</span> <span class="linking">still</span> <span class="weak">a</span> few people who <span class="linking">rashly</span> attempt <span class="weak">to</span> cross <span class="weak">the</span> <span class="linking">Pass</span> on foot.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/dɪˈspaɪt <span class="weak">ðə</span> nu ˈtʌnəl ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> stɪl<span class="linking">‿</span><span class="weak">ə</span> fju ˈpipəl hu ˈræʃli əˈtɛmpt <span class="weak">tə</span> krɔs <span class="weak">ðə</span> pæs<span class="linking">‿</span>ɑn fʊt/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɑr、stɪl‿ə、pæs‿ɑn 连读；ðə、ɑr、ə、tə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>Despite... 作让步状语；There be 句型；who 引导定语从句。</p></div>
@@ -144,7 +146,7 @@
     <div class="field words"><span>词</span><p>despite 尽管； rashly 鲁莽地； attempt to do 试图做； on foot 徒步；</p></div>
     </article>
     <article class="sentence-card" id="sentence-8" data-start="74.69" data-end="84.01">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><span class="sentence-num">8</span><p class="en-text">During <span class="weak">the</span> summer months, <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">is</span> very busy, <span class="weak linking">for</span> <span class="weak linking">it</span> <span class="weak">is</span> visited by <span class="linking">thousands</span> <span class="weak">of</span> people who cross <span class="weak">the</span> <span class="linking">Pass</span> <span class="weak">in</span> cars.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="8" aria-label="Play sentence 8">▶</button><button class="sentence-toggle" type="button" data-sentence="8" aria-label="Pause or resume sentence 8">Ⅱ</button><span class="sentence-num">8</span><p class="en-text">During <span class="weak">the</span> summer months, <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">is</span> very busy, <span class="weak linking">for</span> <span class="weak linking">it</span> <span class="weak">is</span> visited by <span class="linking">thousands</span> <span class="weak">of</span> people who cross <span class="weak">the</span> <span class="linking">Pass</span> <span class="weak">in</span> cars.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ˈdʊrɪŋ <span class="weak">ðə</span> ˈsʌmɚ mʌnθs <span class="weak">ðə</span> ˈmɑnəˌstɛri<span class="linking">‿</span><span class="weak">ɪz</span> ˈvɛri ˈbɪzi <span class="weak">fɚ</span><span class="linking">‿</span>ɪt<span class="linking">‿</span><span class="weak">ɪz</span> ˈvɪzɪɾɪd baɪ ˈθaʊzəndz<span class="linking">‿</span><span class="weak">əv</span> ˈpipəl hu krɔs <span class="weak">ðə</span> pæs<span class="linking">‿</span><span class="weak">ɪn</span> kɑrz/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈmɑnəˌstɛri‿ɪz、fɚ‿ɪt‿ɪz、ˈθaʊzəndz‿əv、pæs‿ɪn 连读；ðə、ɪz、fɚ、əv、ɪn 弱读/弱化；ˈvɪzɪɾɪd 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>for 引导原因分句；原因分句被动；who 引导定语从句。</p></div>
@@ -153,7 +155,7 @@
     <div class="field words"><span>词</span><p>summer months 夏季月份； be visited by 被参观； thousands of 成千上万；</p></div>
     </article>
     <article class="sentence-card" id="sentence-9" data-start="84.01" data-end="90.32">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">As</span> <span class="weak">there</span> <span class="weak">are</span> so many people about, <span class="weak">the</span> dogs <span class="weak">have</span> <span class="weak">to</span> <span class="weak">be</span> <span class="linking">kept</span> <span class="weak linking">in</span> <span class="weak">a</span> <span class="linking">special</span> enclosure.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="9" aria-label="Play sentence 9">▶</button><button class="sentence-toggle" type="button" data-sentence="9" aria-label="Pause or resume sentence 9">Ⅱ</button><span class="sentence-num">9</span><p class="en-text"><span class="weak">As</span> <span class="weak">there</span> <span class="weak">are</span> so many people about, <span class="weak">the</span> dogs <span class="weak">have</span> <span class="weak">to</span> <span class="weak">be</span> <span class="linking">kept</span> <span class="weak linking">in</span> <span class="weak">a</span> <span class="linking">special</span> enclosure.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/æz ðɛr<span class="linking">‿</span><span class="weak">ɑr</span> soʊ ˈmɛni ˈpipəl<span class="linking">‿</span>əˈbaʊt <span class="weak">ðə</span> dɔɡz hæv <span class="weak">tə</span> bi kɛpt<span class="linking">‿</span><span class="weak">ɪn</span><span class="linking">‿</span><span class="weak">ə</span> ˈspɛʃəl<span class="linking">‿</span>ɪnˈkloʊʒɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðɛr‿ɑr、ˈpipəl‿əˈbaʊt、kɛpt‿ɪn‿ə、ˈspɛʃəl‿ɪnˈkloʊʒɚ 连读；ɑr、ðə、tə、ɪn、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>As 引导原因状语从句；have to be kept 为被动。</p></div>
@@ -162,7 +164,7 @@
     <div class="field words"><span>词</span><p>about 在周围； have to 不得不； enclosure 围栏；</p></div>
     </article>
     <article class="sentence-card" id="sentence-10" data-start="90.32" data-end="95.72">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> winter, however, life at <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">is</span> quite different.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="10" aria-label="Play sentence 10">▶</button><button class="sentence-toggle" type="button" data-sentence="10" aria-label="Pause or resume sentence 10">Ⅱ</button><span class="sentence-num">10</span><p class="en-text"><span class="weak">In</span> winter, however, life at <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">is</span> quite different.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ɪn</span> ˈwɪntɚ haʊˈɛvɚ laɪf<span class="linking">‿</span>æt <span class="weak">ðə</span> ˈmɑnəˌstɛri<span class="linking">‿</span><span class="weak">ɪz</span> kwaɪt ˈdɪfərənt/</p></div>
     <div class="field liaison"><span>连读分析</span><p>laɪf‿æt、ˈmɑnəˌstɛri‿ɪz 连读；ɪn、ðə、ɪz 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>however 插入转折；主系表结构。</p></div>
@@ -171,7 +173,7 @@
     <div class="field words"><span>词</span><p>quite different 截然不同；</p></div>
     </article>
     <article class="sentence-card" id="sentence-11" data-start="95.72" data-end="102.74">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> temperature drops <span class="weak">to</span> -30 <span class="linking">degrees</span>, <span class="weak">and</span> very few people attempt <span class="weak">to</span> cross <span class="weak">the</span> Pass.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="11" aria-label="Play sentence 11">▶</button><button class="sentence-toggle" type="button" data-sentence="11" aria-label="Pause or resume sentence 11">Ⅱ</button><span class="sentence-num">11</span><p class="en-text"><span class="weak">The</span> temperature drops <span class="weak">to</span> -30 <span class="linking">degrees</span>, <span class="weak">and</span> very few people attempt <span class="weak">to</span> cross <span class="weak">the</span> Pass.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> ˈtɛmprətʃɚ drɑps <span class="weak">tə</span> ˈmaɪnəs ˈθɝɾi dɪˈɡriz<span class="linking">‿</span><span class="weak">ən</span> ˈvɛri fju ˈpipəl əˈtɛmpt <span class="weak">tə</span> krɔs <span class="weak">ðə</span> pæs/</p></div>
     <div class="field liaison"><span>连读分析</span><p>dɪˈɡriz‿ən 连读；ðə、tə、ən 弱读/弱化；ˈθɝɾi 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>and 连接并列分句。</p></div>
@@ -180,7 +182,7 @@
     <div class="field words"><span>词</span><p>temperature 温度； degree 度； attempt to do 试图做；</p></div>
     </article>
     <article class="sentence-card" id="sentence-12" data-start="102.74" data-end="107.68">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> monks prefer winter <span class="weak">to</span> summer <span class="weak">for</span> they <span class="weak">have</span> more privacy.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="12" aria-label="Play sentence 12">▶</button><button class="sentence-toggle" type="button" data-sentence="12" aria-label="Pause or resume sentence 12">Ⅱ</button><span class="sentence-num">12</span><p class="en-text"><span class="weak">The</span> monks prefer winter <span class="weak">to</span> summer <span class="weak">for</span> they <span class="weak">have</span> more privacy.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> mʌŋks prɪˈfɝ ˈwɪntɚ <span class="weak">tə</span> ˈsʌmɚ <span class="weak">fɚ</span> ðeɪ <span class="weak">həv</span> mɔr ˈpraɪvəsi/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðə、tə、fɚ、həv 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>prefer A to B；for 引导原因分句。</p></div>
@@ -189,7 +191,7 @@
     <div class="field words"><span>词</span><p>monk 修士； prefer...to 比起……更喜欢； privacy 清静/隐私；</p></div>
     </article>
     <article class="sentence-card" id="sentence-13" data-start="107.68" data-end="113.92">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> dogs <span class="weak">have</span> greater freedom, too, <span class="weak">for</span> <span class="linking">they</span> <span class="weak">are</span> allowed <span class="weak">to</span> <span class="linking">wander</span> outside <span class="linking">their</span> enclosure.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="13" aria-label="Play sentence 13">▶</button><button class="sentence-toggle" type="button" data-sentence="13" aria-label="Pause or resume sentence 13">Ⅱ</button><span class="sentence-num">13</span><p class="en-text"><span class="weak">The</span> dogs <span class="weak">have</span> greater freedom, too, <span class="weak">for</span> <span class="linking">they</span> <span class="weak">are</span> allowed <span class="weak">to</span> <span class="linking">wander</span> outside <span class="linking">their</span> enclosure.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ðə</span> dɔɡz <span class="weak">həv</span> ˈɡreɪɾɚ ˈfridəm <span class="weak">tu</span> <span class="weak">fɚ</span> ðeɪ<span class="linking">‿</span><span class="weak">ɑr</span><span class="linking">‿</span>əˈlaʊd <span class="weak">tə</span> ˈwɑndɚ ˌaʊtˈsaɪd ðɛr<span class="linking">‿</span>ɪnˈkloʊʒɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ðeɪ‿ɑr‿əˈlaʊd、ðɛr‿ɪnˈkloʊʒɚ 连读；ðə、həv、tu、fɚ、ɑr、tə 弱读/弱化；ˈɡreɪɾɚ 中 /ɾ/ 为美式闪音。</p></div>
     <div class="field structure"><span>结构</span><p>for 引导原因分句；are allowed to do 为被动。</p></div>
@@ -198,7 +200,7 @@
     <div class="field words"><span>词</span><p>freedom 自由； be allowed to 被允许； wander 闲逛；</p></div>
     </article>
     <article class="sentence-card" id="sentence-14" data-start="113.92" data-end="122.36">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> only regular visitors <span class="weak">to</span> <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">in</span> <span class="linking">winter</span> <span class="weak">are</span> <span class="linking">parties</span> <span class="weak">of</span> skiers who go <span class="weak">there</span> at <span class="linking">Christmas</span> <span class="weak linking">and</span> Easter.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="14" aria-label="Play sentence 14">▶</button><button class="sentence-toggle" type="button" data-sentence="14" aria-label="Pause or resume sentence 14">Ⅱ</button><span class="sentence-num">14</span><p class="en-text"><span class="weak">The</span> only regular visitors <span class="weak">to</span> <span class="weak">the</span> <span class="linking">monastery</span> <span class="weak">in</span> <span class="linking">winter</span> <span class="weak">are</span> <span class="linking">parties</span> <span class="weak">of</span> skiers who go <span class="weak">there</span> at <span class="linking">Christmas</span> <span class="weak linking">and</span> Easter.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/<span class="weak">ði</span> ˈoʊnli ˈrɛɡjəlɚ ˈvɪzɪtɚz <span class="weak">tə</span> <span class="weak">ðə</span> ˈmɑnəˌstɛri<span class="linking">‿</span><span class="weak">ɪn</span> ˈwɪntɚ<span class="linking">‿</span><span class="weak">ɑr</span> ˈpɑrtiz<span class="linking">‿</span><span class="weak">əv</span> ˈskiɚz hu ɡoʊ ðɛr<span class="linking">‿</span>æt ˈkrɪsməs<span class="linking">‿</span><span class="weak">ən</span> ˈistɚ/</p></div>
     <div class="field liaison"><span>连读分析</span><p>ˈmɑnəˌstɛri‿ɪn、ˈwɪntɚ‿ɑr、ˈpɑrtiz‿əv、ðɛr‿æt、ˈkrɪsməs‿ən 连读；ði、tə、ðə、ɪn、ɑr、əv 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>主系表结构；who 引导定语从句。</p></div>
@@ -207,7 +209,7 @@
     <div class="field words"><span>词</span><p>regular visitor 常客； party 一队人； skier 滑雪者； Easter 复活节；</p></div>
     </article>
     <article class="sentence-card" id="sentence-15" data-start="122.36" data-end="130.1">
-    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><span class="sentence-num">15</span><p class="en-text">These young people, who love <span class="weak">the</span> peace <span class="weak">of</span> <span class="weak">the</span> <span class="linking">mountains</span>, always receive <span class="weak">a</span> warm welcome at St. Bernard's monastery.</p></div>
+    <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="15" aria-label="Play sentence 15">▶</button><button class="sentence-toggle" type="button" data-sentence="15" aria-label="Pause or resume sentence 15">Ⅱ</button><span class="sentence-num">15</span><p class="en-text">These young people, who love <span class="weak">the</span> peace <span class="weak">of</span> <span class="weak">the</span> <span class="linking">mountains</span>, always receive <span class="weak">a</span> warm welcome at St. Bernard's monastery.</p></div>
     <div class="field ipa"><span>美音发音</span><p>/ðiz jʌŋ ˈpipəl hu lʌv <span class="weak">ðə</span> pis<span class="linking">‿</span><span class="weak">əv</span> <span class="weak">ðə</span> ˈmaʊntənz ˈɔlweɪz rɪˈsiv<span class="linking">‿</span><span class="weak">ə</span> wɔrm ˈwɛlkəm<span class="linking">‿</span>æt seɪnt bɚˈnɑrdz ˈmɑnəˌstɛri/</p></div>
     <div class="field liaison"><span>连读分析</span><p>pis‿əv、rɪˈsiv‿ə、ˈwɛlkəm‿æt 连读；ðə、əv、ə 弱读/弱化。</p></div>
     <div class="field structure"><span>结构</span><p>who 引导非限制性定语从句；主谓宾结构。</p></div>
@@ -275,6 +277,7 @@
     const trackEl = document.getElementById("dock-track");
     const fillEl = document.getElementById("dock-fill");
     const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
+    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
 
     function formatTime(value) {
       if (!Number.isFinite(value)) return "0:00";
@@ -321,6 +324,41 @@
       audio.addEventListener("loadedmetadata", runOnce, { once: true });
     }
 
+    function isTimeInSentence(item) {
+      const time = audio.currentTime;
+      return item && time >= item.start && time < item.end;
+    }
+
+    function refreshSentenceToggleButtons() {
+      const current = activeSubtitle(audio.currentTime);
+      sentenceToggleButtons.forEach((button) => {
+        const isCurrent = current && Number(button.dataset.sentence) === current.index;
+        const isPause = isCurrent && !audio.paused;
+        button.textContent = isPause ? "Ⅱ" : "▶";
+        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
+      });
+    }
+
+    function toggleSentence(index) {
+      const item = subtitles.find((entry) => entry.index === index);
+      if (!item) return;
+      if (!audio.paused && isTimeInSentence(item)) {
+        audio.pause();
+        refreshSentenceToggleButtons();
+        return;
+      }
+      if (audio.paused && isTimeInSentence(item)) {
+        setActiveSentence(item);
+        audio.play().catch(() => {});
+        return;
+      }
+      setActiveSentence(item);
+      whenAudioReady(() => {
+        seekTo(item.start);
+        audio.play().catch(() => {});
+      });
+    }
+
     function playFrom(index) {
       const item = subtitles.find((entry) => entry.index === index);
       if (!item) return;
@@ -335,6 +373,10 @@
       button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
     });
 
+    sentenceToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
+    });
+
     dockPlay.addEventListener("click", () => {
       if (audio.paused) audio.play();
       else audio.pause();
@@ -342,10 +384,12 @@
 
     audio.addEventListener("play", () => {
       dockPlay.textContent = "Ⅱ";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("pause", () => {
       dockPlay.textContent = "▶";
+      refreshSentenceToggleButtons();
     });
 
     audio.addEventListener("loadedmetadata", () => {
@@ -354,6 +398,7 @@
 
     audio.addEventListener("timeupdate", () => {
       updateProgress(audio.currentTime);
+      refreshSentenceToggleButtons();
     });
 
     trackEl.addEventListener("click", (event) => {

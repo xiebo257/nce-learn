@@ -78,6 +78,15 @@
     <hr>
     <p>© 2025 <a href="https://ichochy.com">iChochy</a>.</p>
 </footer>
+<a class="back-prev" href="#top" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
 <a class="back-top" href="#top" aria-label="Back to top">Top</a>
+<script>
+function goPreviousPage(event) {
+    if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+    }
+}
+</script>
 </body>
 </html>

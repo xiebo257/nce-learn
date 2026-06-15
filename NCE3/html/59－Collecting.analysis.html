@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -348,6 +349,7 @@
     <p>意群停顿: 第 16 句藏品列表很长，要按类别分组；第 22 句按 <code>Over the years / one may... / and will... / if successful...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -367,6 +369,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.12,"end":22.96,"text":"People tend to amass possessions, sometimes without being aware of doing so."},{"index":2,"start":22.96,"end":30.68,"text":"Indeed they can have a delightful surprise when they find something useful which they did not know they owned."},{"index":3,"start":30.68,"end":38.27,"text":"Those who never have to move house become indiscriminate collectors of what can only be described as clutter."},{"index":4,"start":38.27,"end":48.4,"text":"They leave unwanted objects in drawers, cupboards and attics for years, in the belief that they may one day need just those very things."},{"index":5,"start":48.4,"end":63.55,"text":"As they grow old, people also accumulate belongings for two other reasons, lack of physical and mental energy, both of which are essential in turning out and throwing away, and sentiment."},{"index":6,"start":63.55,"end":76.11,"text":"Things owned for a long time are full of associations with the past, perhaps with relatives who are dead, and so they gradually acquire a value beyond their true worth."},{"index":7,"start":76.11,"end":81.49,"text":"Some things are collected deliberately in the home in an attempt to avoid waste."},{"index":8,"start":81.49,"end":91.45,"text":"Among these I would list string and brown paper, kept by thrifty people when a parcel has been opened, to save buying these two requisites."},{"index":9,"start":91.45,"end":95.57,"text":"Collecting small items can easily become a mania."},{"index":10,"start":95.57,"end":103.88,"text":"I know someone who always cuts sketches out from newspapers of model clothes that she would like to buy if she had the money."},{"index":11,"start":103.88,"end":117.24,"text":"As she is not rich, the chances that she will ever be able to afford such purchases are remote; but she is never sufficiently strong-minded to be able to stop the practice."},{"index":12,"start":117.24,"end":129.31,"text":"It is a harmless habit, but it litters up her desk to such an extent that every time she opens it, loose bits of paper fall out in every direction."},{"index":13,"start":129.31,"end":135.15,"text":"Collecting as a serious hobby is quite different and has many advantages."},{"index":14,"start":135.15,"end":142.72,"text":"It provides relaxation for leisure hours, as just looking at one's treasures is always a joy."},{"index":15,"start":142.72,"end":148.8,"text":"One does not have to go outside for amusement, since the collection is housed at home."},{"index":16,"start":148.8,"end":173.67,"text":"Whatever it consists of, stamps, records, first editions of books, china, glass, antique furniture, pictures, model cars, stuffed birds, toy animals, there is always something to do in connection with it, from finding the right place for the latest addition, to verifying facts in reference books."},{"index":17,"start":173.67,"end":182.06,"text":"This hobby educates one not only in the chosen subject, but also in general matters which have some bearing on it."},{"index":18,"start":182.06,"end":184.94,"text":"There are also other benefits."},{"index":19,"start":184.94,"end":194.33,"text":"One wants to meet like-minded collectors, to get advice, to compare notes, to exchange articles, to show off the latest find."},{"index":20,"start":194.33,"end":197.07,"text":"So one's circle of friends grows."},{"index":21,"start":197.07,"end":210.33,"text":"Soon the hobby leads to travel, perhaps to a meeting in another town, possibly a trip abroad in search of a rare specimen, for collectors are not confined to any one country."},{"index":22,"start":210.33,"end":224.84,"text":"Over the years, one may well become an authority on one's hobby and will very probably be asked to give informal talks to little gatherings and then, if successful, to larger audiences."},{"index":23,"start":224.84,"end":233.93,"text":"In this way self-confidence grows, first from mastering a subject, then from being able to talk about it."},{"index":24,"start":233.93,"end":240.62,"text":"Collecting, by occupying spare time so constructively, makes a person contented, with no time for boredom."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

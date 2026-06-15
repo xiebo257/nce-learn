@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ɪz‿ə、kət‿əˈkrɔs 连读；ðə、ə、ɪz 弱读/弱化； faɪn‿ˌæftərˈnun 连读；ðə 弱读/弱化； wɛnt‿ən、sæɾ‿ɔn、bæŋk‿əz 连读；ðə、ən、əz、wəz 弱读/弱化；sæɾ‿ɔn 中 /ɾ/ 为美式闪音； games‿ɔn、bæŋk‿ən、ˈroʊɪŋ‿ɔn 连读；ðə、ən、wɚ 弱读/弱化； kɪk‿ə、hɑrd‿ən‿ɪt、tɔrdz‿ə 连读；ðə、ə、ən、əv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":13.78,"end":20.02,"text":"The Wayle is a small river that cuts across the park near my home."},{"index":2,"start":20.02,"end":24.73,"text":"I like sitting by the Wayle on fine afternoons."},{"index":3,"start":24.73,"end":32.21,"text":"It was warm last Sunday, so I went and sat on the river bank as usual."},{"index":4,"start":32.21,"end":39.58,"text":"Some children were playing games on the bank and there were some people rowing on the river."},{"index":5,"start":39.58,"end":48.04,"text":"Suddenly, one of the children kicked a ball very hard and it went towards a passing boat."},{"index":6,"start":48.04,"end":55.56,"text":"Some people on the bank called out to the man in the boat, but he did not hear them."},{"index":7,"start":55.56,"end":62.52,"text":"The ball struck him so hard that he nearly fell into the water."},{"index":8,"start":62.52,"end":70.23,"text":"I turned to look at the children, but there weren't any in sight: they had all run away!"},{"index":9,"start":70.23,"end":74.83,"text":"The man laughed when he realized what had happened."},{"index":10,"start":74.83,"end":80.33,"text":"He called out to the children and threw the ball back to the bank."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

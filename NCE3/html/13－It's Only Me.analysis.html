@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -392,6 +392,7 @@
       <p>长句按时间状语、主句、原因分句分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -411,6 +412,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.42,"end":24.96,"text":"After her husband had gone to work, Mrs. Richards sent her children to school and went upstairs to her bedroom."},{"index":2,"start":24.96,"end":34.89,"text":"She was too excited to do any housework that morning, for in the evening she would be going to a fancy-dress party with her husband."},{"index":3,"start":34.89,"end":44.23,"text":"She intended to dress up as a ghost and as she had made her costume the night before, she was impatient to try it on."},{"index":4,"start":44.23,"end":49.62,"text":"Though the costume consisted only of a sheet, it was very effective."},{"index":5,"start":49.62,"end":53.93,"text":"After putting it on, Mrs. Richards went downstairs."},{"index":6,"start":53.93,"end":58.27,"text":"She wanted to find out whether it would be comfortable to wear."},{"index":7,"start":58.27,"end":64.84,"text":"Just as Mrs. Richards was entering the dining-room, there was a knock on the front door."},{"index":8,"start":64.84,"end":67.48,"text":"She knew that it must be the baker."},{"index":9,"start":67.48,"end":74.42,"text":"She had told him to come straight in if ever she failed to open the door and to leave the bread on the kitchen table."},{"index":10,"start":74.42,"end":82.13,"text":"Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."},{"index":11,"start":82.13,"end":87.05,"text":"She heard the front door open and heavy footsteps in the hall."},{"index":12,"start":87.05,"end":91.48,"text":"Suddenly the door of the storeroom was opened and a man entered."},{"index":13,"start":91.48,"end":98.78,"text":"Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the metre."},{"index":14,"start":98.78,"end":106.49,"text":"She tried to explain the situation, saying 'It's only me', but it was too late."},{"index":15,"start":106.49,"end":111.82,"text":"The man let out a cry and jumped back several paces."},{"index":16,"start":111.82,"end":116.51,"text":"When Mrs. Richards walked towards him, he fled, slamming the door behind him."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

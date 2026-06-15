@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -183,6 +184,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. Experiments have proved that children can be instructed in swimming at a very early age.； 2. At a special swimming pool in Los Angeles, children become expert at holding their breath under water even before they can walk.； 4. It is not long before they are so accustomed to swimming that they can pick up weights from the floor of the pool.； 9. Some children can cover the whole length of the pool without coming up for breath even once.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ɪnˈstrək‿ɪn、ˈswɪmɪŋ‿ət‿ə 连读；ə、ət、kən、həv 弱读/弱化； ət‿ə、pul‿ɪn、bəˈkəm‿ˈɛkˌspərt‿ət、brɛθ‿ˈəndər、ˈwɔdər‿ˈivən 连读；ə、ət、kən 弱读/弱化； mənθ‿oʊld、nɑɾ‿əˈpɪr 连读；ðə、tə、əv 弱读/弱化；nɑɾ‿əˈpɪr 中 /ɾ/ 为美式闪音； ɪt‿ɪz、pɪk‿əp、flɔr‿əv 连读；ðə、tə、kən、əv、ɑr、ɪz 弱读/弱化； ðæt‿ɪz、ˈswɪmər‿ɪz、ði‿ˌəndərˈwɔdər 连读；ði、ə、ɪz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -202,6 +204,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.63,"end":25.1,"text":"Experiments have proved that children can be instructed in swimming at a very early age."},{"index":2,"start":25.1,"end":36.5,"text":"At a special swimming pool in Los Angeles, children become expert at holding their breath under water even before they can walk."},{"index":3,"start":36.5,"end":42.95,"text":"Babies of two months old do not appear to be reluctant to enter the water."},{"index":4,"start":42.95,"end":51.71,"text":"It is not long before they are so accustomed to swimming that they can pick up weights from the floor of the pool."},{"index":5,"start":51.71,"end":59.56,"text":"A game that is very popular with these young swimmers is the underwater tricycle race."},{"index":6,"start":59.56,"end":66.26,"text":"Tricycles are lined up on the floor of the pool seven feet under water."},{"index":7,"start":66.26,"end":72.26,"text":"The children compete against each other to reach the other end of the pool."},{"index":8,"start":72.26,"end":79.68,"text":"Many pedal their tricycles but most of them prefer to push or drag them."},{"index":9,"start":79.68,"end":88.12,"text":"Some children can cover the whole length of the pool without coming up for breath even once."},{"index":10,"start":88.12,"end":94.5,"text":"Whether they will ever become future Olympic champions, only time will tell."},{"index":11,"start":94.5,"end":103.42,"text":"Meanwhile, they should encourage those among us who cannot swim five yards before they are gasping for air."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -345,6 +346,7 @@
     <p>意群停顿: 第 6 句按 <code>Newspapers exert such tremendous influence / that they can not only... / but can even...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -364,6 +366,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":20.22,"end":28.59,"text":"In democratic countries any efforts to restrict the freedom of the press are rightly condemned."},{"index":2,"start":28.59,"end":33.74,"text":"However, this freedom can easily be abused."},{"index":3,"start":33.74,"end":40.73,"text":"Stories about people often attract far more public attention than political events."},{"index":4,"start":40.73,"end":51.76,"text":"Though we may enjoy reading about the lives of others, it is extremely doubtful whether we would equally enjoy reading about ourselves."},{"index":5,"start":51.76,"end":65.83,"text":"Acting on the contention that facts are sacred, reporters can cause untold suffering to individuals by publishing details about their private lives."},{"index":6,"start":65.83,"end":79.22,"text":"Newspapers exert such tremendous influence that they can not only bring about major changes to the lives of ordinary people but can even overthrow a government."},{"index":7,"start":79.22,"end":88.3,"text":"The story of a poor family that acquired fame and fortune overnight, dramatically illustrates the power of the press."},{"index":8,"start":88.3,"end":96.02,"text":"The family lived in Aberdeen, a small town of 23,000 inhabitants in South Dakota."},{"index":9,"start":96.02,"end":102.12,"text":"As the parents had five children, life was a perpetual struggle against poverty."},{"index":10,"start":102.12,"end":109.51,"text":"They were expecting their sixth child and were faced with even more pressing economic problems."},{"index":11,"start":109.51,"end":115.53,"text":"If they had only had one more child, the fact would have passed unnoticed."},{"index":12,"start":115.53,"end":122.51,"text":"They would have continued to struggle against economic odds and would have lived in obscurity."},{"index":13,"start":122.51,"end":132.99,"text":"But they suddenly became the parents of quintuplets, four girls and a boy, an event which radically changed their lives."},{"index":14,"start":132.99,"end":142.41,"text":"The day after the birth of the five children, an aeroplane arrived in Aberdeen bringing sixty reporters and photographers."},{"index":15,"start":142.41,"end":144.75,"text":"The rise to fame was swift."},{"index":16,"start":144.75,"end":150.03,"text":"Television cameras and newspapers carried the news to everyone in the country."},{"index":17,"start":150.03,"end":158.52,"text":"Newspapers and magazines offered the family huge sums for the exclusive rights to publish stories and photographs."},{"index":18,"start":158.52,"end":168.83,"text":"Gifts poured in not only from unknown people, but from baby food and soap manufacturers who wished to advertise their products."},{"index":19,"start":168.83,"end":176.83,"text":"The old farmhouse the family lived in was to be replaced by a new $500,000 home."},{"index":20,"start":176.83,"end":186.84,"text":"Reporters kept pressing for interviews so lawyers had to be employed to act as spokesmen for the family at press conferences."},{"index":21,"start":186.84,"end":197.27,"text":"While the five babies were still quietly sleeping in oxygen tents in a hospital nursery, their parents were paying the price for fame."},{"index":22,"start":197.27,"end":202.2,"text":"It would never again be possible for them to lead normal lives."},{"index":23,"start":202.2,"end":210.25,"text":"They had become the victims of commercialization, for their names had acquired a market value."},{"index":24,"start":210.25,"end":216.17,"text":"Instead of being five new family members, these children had immediately become a commodity."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

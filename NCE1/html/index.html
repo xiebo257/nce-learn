@@ -276,7 +276,8 @@
             font-size: 13px;
         }
 
-        .back-top {
+        .back-top,
+        .back-prev {
             position: fixed;
             right: 16px;
             bottom: 16px;
@@ -296,8 +297,14 @@
             font-weight: 700;
         }
 
+        .back-prev {
+            bottom: 68px;
+        }
+
         .back-top:hover,
-        .back-top:focus-visible {
+        .back-top:focus-visible,
+        .back-prev:hover,
+        .back-prev:focus-visible {
             background: #0f766e;
             outline: 3px solid rgba(15, 118, 110, 0.24);
         }
@@ -461,9 +468,17 @@
     </footer>
 </main>
 
+<a class="back-prev" href="../../index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
 <a class="back-top" href="#top" aria-label="Back to top">Top</a>
 
 <script>
+    function goPreviousPage(event) {
+        if (window.history.length > 1) {
+            event.preventDefault();
+            window.history.back();
+        }
+    }
+
     const nce1Files = [
         "001&002－Excuse Me.analysis.html",
         "003&004－Sorry, Sir..analysis.html",

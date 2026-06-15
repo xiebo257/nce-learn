@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>3. For small pieces of weather-- and to a global forecaster, small can mean thunderstorms and blizzards-- any prediction deteriorates rapidly.； 4. Errors and uncertainties multiply, cascading upward through a chain of turbulent features, from dust devils and squalls up to continent-size eddies that only satellites can see.； 6. But suppose the earth could be covered with sensors spaced one foot apart, rising at one-foot intervals all the way to the top of the atmosphere.； 7. Suppose every sensor gives perfectly accurate readings of temperature, pressure, humidity, and any other quantity a meteorologist would want.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ˈfɔrˌkæst‿ɑr、ˈspɛkjələdɪv‿ən、sɪks‿ɔr 连读；ðə、ən、ɑr 弱读/弱化； əˈfɛk‿ɪz 连读；ðə、ɪz 弱读/弱化； pis‿əv、weather‿ən、ˈθəndərˌstɔrm‿ən、ˈblɪzərd‿ˈɛni 连读；ə、ən、tə、kən、əv、fɚ 弱读/弱化； ˈɛrər‿ən‿ˌənˈsərtnti、kæˈskeɪdɪŋ‿ˈəpwərd、tʃeɪn‿əv、ˈdɛvəl‿ən、skwɔl‿əp 连读；ə、ən、tə、kən、əv、frəm 弱读/弱化； wɪð‿ə、ɡrɪd‿əv、pɔɪnt‿əv、ði‿ˈɔrdər‿əv、maɪl‿əˈpɑrt‿ən‿ˈivən 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.46,"end":26.84,"text":"Beyond two or three days, the world's best weather forecasts are speculative, and beyond six or seven they are worthless."},{"index":2,"start":26.84,"end":30.02,"text":"The Butterfly Effect is the reason."},{"index":3,"start":30.02,"end":40.35,"text":"For small pieces of weather-- and to a global forecaster, small can mean thunderstorms and blizzards-- any prediction deteriorates rapidly."},{"index":4,"start":40.35,"end":53.91,"text":"Errors and uncertainties multiply, cascading upward through a chain of turbulent features, from dust devils and squalls up to continent-size eddies that only satellites can see."},{"index":5,"start":53.91,"end":68.69,"text":"The modern weather models work with a grid of points of the order of sixty miles apart, and even so, some starting data has to be guessed, since ground stations and satellites cannot see everywhere."},{"index":6,"start":68.69,"end":79,"text":"But suppose the earth could be covered with sensors spaced one foot apart, rising at one-foot intervals all the way to the top of the atmosphere."},{"index":7,"start":79,"end":90.61,"text":"Suppose every sensor gives perfectly accurate readings of temperature, pressure, humidity, and any other quantity a meteorologist would want."},{"index":8,"start":90.61,"end":105.38,"text":"Precisely at noon an infinitely powerful computer takes all the data and calculates what will happen at each point at 12.01, then 12.02, then 12.03..."},{"index":9,"start":105.38,"end":114.42,"text":"The computer will still be unable to predict whether Princeton, New Jersey, will have sun or rain on a day one month away."},{"index":10,"start":114.42,"end":124.37,"text":"At noon the spaces between the sensors will hide fluctuations that the computer will not know about, tiny deviations from the average."},{"index":11,"start":124.37,"end":131.94,"text":"By 12.01, those fluctuations will already have created small errors one foot away."},{"index":12,"start":131.94,"end":140.11,"text":"Soon the errors will have multiplied to the ten-foot scale, and so on up to the size of the globe."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

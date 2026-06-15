@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -243,6 +244,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>8. I could not hear the actors.； 12. In the end, I could not bear it.； 14. 'I can't hear a word!'。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>həd‿ə 连读；ə、həd 弱读/弱化； nɑɾ‿ɪnˈdʒɔɪ 连读；nɑɾ‿ɪnˈdʒɔɪ 中 /ɾ/ 为美式闪音； mæn‿ən‿ə 连读；ə、ən、wɚ 弱读/弱化； ði‿ˈæktɚz 连读；ði 弱读/弱化； lʊkt‿ət、mæn‿ən、ˈwʊmən‿ˈæŋɡrəli 连读；ðə、ən、ət 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -262,6 +264,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.91,"end":19.39,"text":"Last week I went to the theatre."},{"index":2,"start":19.39,"end":22.07,"text":"I had a very good seat."},{"index":3,"start":22.07,"end":25.1,"text":"The play was very interesting."},{"index":4,"start":25.1,"end":27.43,"text":"I did not enjoy it."},{"index":5,"start":27.43,"end":31.96,"text":"A young man and a young woman were sitting behind me."},{"index":6,"start":31.96,"end":34.59,"text":"They were talking loudly."},{"index":7,"start":34.59,"end":37.41,"text":"I got very angry."},{"index":8,"start":37.41,"end":40.64,"text":"I could not hear the actors."},{"index":9,"start":40.64,"end":42.8,"text":"I turned round."},{"index":10,"start":42.8,"end":47.27,"text":"I looked at the man and the woman angrily."},{"index":11,"start":47.27,"end":50.69,"text":"They did not pay any attention."},{"index":12,"start":50.69,"end":54.98,"text":"In the end, I could not bear it."},{"index":13,"start":54.98,"end":57.75,"text":"I turned round again."},{"index":14,"start":57.75,"end":61.2,"text":"'I can't hear a word!'"},{"index":15,"start":61.2,"end":63.45,"text":"I said angrily."},{"index":16,"start":63.45,"end":69,"text":"'It's none of your business,' the young man said rudely."},{"index":17,"start":69,"end":72,"text":"'This is a private conversation!'"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

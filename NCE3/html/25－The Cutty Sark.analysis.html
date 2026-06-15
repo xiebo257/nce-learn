@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -450,6 +450,7 @@
       <p>意群停顿: 第 15 句按 <code>This greatly reduced... / for there was a danger / that if... / this rudder...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -469,6 +470,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.14,"end":24.39,"text":"One of the most famous sailing ships of the nineteenth century, the Cutty Sark, can still be seen at Greenwich."},{"index":2,"start":24.39,"end":30.28,"text":"She stands on dry land and is visited by thousands of people each year."},{"index":3,"start":30.28,"end":36.09,"text":"She serves as an impressive reminder of the great ships of the past."},{"index":4,"start":36.09,"end":47.25,"text":"Before they were replaced by steamships, sailing vessels like the Cutty Sark were used to carry tea from China and wool from Australia."},{"index":5,"start":47.25,"end":53.22,"text":"The Cutty Sark was one of the fastest sailing ships that has ever been built."},{"index":6,"start":53.22,"end":58.15,"text":"The only other ship to match her was the Thermopylae."},{"index":7,"start":58.15,"end":67.82,"text":"Both these ships set out from Shanghai on June 18th, 1872 on an exciting race to England."},{"index":8,"start":67.82,"end":74.61,"text":"This race, which went on for exactly four months, was the last of its kind."},{"index":9,"start":74.61,"end":82.51,"text":"It marked the end of the great tradition of ships with sails and the beginning of a new era."},{"index":10,"start":82.51,"end":93.88,"text":"The first of the two ships to reach Java after the race had begun was the Thermopylae, but on the Indian Ocean, the Cutty Sark took the lead."},{"index":11,"start":93.88,"end":101.86,"text":"It seemed certain that she would be the first ship home, but during the race she had a lot of bad luck."},{"index":12,"start":101.86,"end":109.43,"text":"In August, she was struck by a very heavy storm during which her rudder was torn away."},{"index":13,"start":109.43,"end":115.93,"text":"The Cutty Sark rolled from side to side and it became impossible to steer her."},{"index":14,"start":115.93,"end":123.64,"text":"A temporary rudder was made on board from spare planks and it was fitted with great difficulty."},{"index":15,"start":123.64,"end":134.6,"text":"This greatly reduced the speed of the ship, for there was a danger that if she travelled too quickly, this rudder would be torn away as well."},{"index":16,"start":134.6,"end":138.74,"text":"Because of this, the Cutty Sark lost her lead."},{"index":17,"start":138.74,"end":150.98,"text":"After crossing the Equator, the captain called in at a port to have a new rudder fitted, but by now the Thermopylae was over five hundred miles ahead."},{"index":18,"start":150.98,"end":159.18,"text":"Though the new rudder was fitted at tremendous speed, it was impossible for the Cutty Sark to win."},{"index":19,"start":159.18,"end":163.39,"text":"She arrived in England a week after the Thermopylae."},{"index":20,"start":163.39,"end":169.29,"text":"Even this was remarkable, considering that she had had so many delays."},{"index":21,"start":169.29,"end":174.67,"text":"There is no doubt that if she had not lost her rudder she would have won the race easily."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

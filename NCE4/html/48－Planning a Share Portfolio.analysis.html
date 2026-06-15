@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -263,6 +264,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>5. Well, if you go to five reputable stock brokers and ask them what you should do with your money, you're likely to get five different answers, -- even if you give all the relevant information about your age, family, finances and what you want from your investments.； 8. However, there are undoubtedly some wrong ways, and you can be sure that none of our five advisers would have suggested sinking all (or perhaps any) of your money into Periwigs.； 9. So what should you do?； 11. You should then establish your own individual aims.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ðɛr‿ɪz、ˈʃɔrdɪdʒ‿əv、around‿ˈɔfərɪŋ、getrichquick‿ˌɑpərˈtunədi 连读；əv、ɪz 弱读/弱化； bət‿ɪf、ɑr‿ə、ˈpraɪvət‿ɪnˈvɛstər 连读；ðə、ə、tə、ɑr 弱读/弱化； ˈsɪriəs‿ɪnˈvɛstər、nid‿ə、səˈlɛkʃən‿əv‿ɪnˈvɛsmnt、wɪð‿ə、ˈstrəkʃər‿ən‿ə 连读；ðə、ə、ən、əv 弱读/弱化； bət‿ɪɡˈzækli、dəz‿ə、əˈbaʊt‿əˈtʃiv 连读；ðə、ə、tə 弱读/弱化； wɛl‿ɪf、ˈbroʊkər‿ən‿æsk、ˈdɪfrənt‿ˈænsər‿ˈivən‿ɪf、ɡɪv‿ɔl、ˈrɛləvnt‿information‿əˈbaʊt 连读；ðə、ən、tə、frəm、jɚ 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -282,6 +284,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":19.17,"end":24.88,"text":"There is no shortage of tipsters around offering 'get-rich-quick' opportunities."},{"index":2,"start":24.88,"end":32.41,"text":"But if you are a serious private investor, leave the Las Vegas mentality to those with money to fritter."},{"index":3,"start":32.41,"end":41.88,"text":"The serious investor needs a proper 'portfolio' --a well-planned selection of investments, with a definite structure and a clear aim."},{"index":4,"start":41.88,"end":48.15,"text":"But exactly how does a newcomer to the stock market go about achieving that?"},{"index":5,"start":48.15,"end":65.48,"text":"Well, if you go to five reputable stock brokers and ask them what you should do with your money, you're likely to get five different answers, -- even if you give all the relevant information about your age, family, finances and what you want from your investments."},{"index":6,"start":65.48,"end":66.06,"text":"Moral?"},{"index":7,"start":66.06,"end":70.44,"text":"There is no one 'right' way to structure a portfolio."},{"index":8,"start":70.44,"end":83.36,"text":"However, there are undoubtedly some wrong ways, and you can be sure that none of our five advisers would have suggested sinking all (or perhaps any) of your money into Periwigs."},{"index":9,"start":83.36,"end":85.21,"text":"So what should you do?"},{"index":10,"start":85.21,"end":94,"text":"We'll assume that you have sorted out the basics--like mortgages, pensions, insurance and access to sufficient cash reserves."},{"index":11,"start":94,"end":97.56,"text":"You should then establish your own individual aims."},{"index":12,"start":97.56,"end":103.67,"text":"These are partly a matter of personal circumstances, partly a matter of psychology."},{"index":13,"start":103.67,"end":113.09,"text":"For instance, if you are older you have less time to recover from any major losses, and you may well wish to boost your pension income."},{"index":14,"start":113.09,"end":119.36,"text":"So preserving your capital and generating extra income are your main priorities."},{"index":15,"start":119.36,"end":135.11,"text":"In this case, you'd probably construct a portfolio with some shares (but not high risk ones), along with gilts, cash deposits, and perhaps convertibles or the income shares of split capital investment trusts."},{"index":16,"start":135.11,"end":149.68,"text":"If you are younger, and in a solid financial position, you may decide to take an aggressive approach--but only if you're blessed with a sanguine disposition and won't suffer sleepless nights over share prices."},{"index":17,"start":149.68,"end":160.96,"text":"If you recognize yourself in this description, you might include a couple of heady growth stocks in your portfolio, alongside your more pedestrian investments."},{"index":18,"start":160.96,"end":167.65,"text":"Once you have decided on your investment aims you can then decide where to put your money."},{"index":19,"start":167.65,"end":179.69,"text":"The golden rule here is spread your risk--if you put all of your money into Periwigs International, you're setting yourself up as a hostage to fortune."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

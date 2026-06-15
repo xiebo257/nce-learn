@@ -24,6 +24,7 @@ function hasRuleValue(text, selector, property, value) {
 
 for (const [book, htmlDir] of targets) {
   const files = readdirSync(htmlDir).filter((file) => file.endsWith('.analysis.html')).sort();
+  const previousHref = book === 'NCE3' ? '../../NCE1/html/index.html#nce3-lessons' : 'index.html';
   for (const file of files) {
     const htmlPath = join(htmlDir, file);
     const html = readFileSync(htmlPath, 'utf8');
@@ -73,6 +74,18 @@ for (const [book, htmlDir] of targets) {
     }
     if (!html.includes('<div class="audio-dock"')) {
       failures.push(`${htmlPath}: missing bottom audio dock`);
+    }
+    if (!html.includes('class="back-prev"')) {
+      failures.push(`${htmlPath}: missing previous-page button`);
+    }
+    if (!html.includes(`class="back-prev" href="${previousHref}"`)) {
+      failures.push(`${htmlPath}: previous-page fallback href is not ${previousHref}`);
+    }
+    if (!html.includes('function goPreviousPage(event)')) {
+      failures.push(`${htmlPath}: missing previous-page history handler`);
+    }
+    if (!html.includes('window.history.back();')) {
+      failures.push(`${htmlPath}: previous-page button does not use browser history`);
     }
     if (cardCount === 0) {
       failures.push(`${htmlPath}: has no sentence cards`);

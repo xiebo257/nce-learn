@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -223,6 +224,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. It is fairly clear that the sleeping period must have some function, and because there is so much of it the function would seem to be important.； 3. 'Rest', in terms of muscle relaxation and so on, can be achieved by a brief period lying, or even sitting down.； 7. This might be a plausible hypothesis were it not for two factors.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ɪt‿ɪz、ˈfəŋʃən‿ən、ðɛr‿ɪz、mətʃ‿əv‿ɪt 连读；ðə、ən、tə、əv、ɪz、həv 弱读/弱化； ˌspɛkjəˈleɪʃən‿əˈbaʊt‿its、ˈɡoʊɪŋ‿ɔn、ˈθaʊzn‿əv、jɪr‿ən‿one、ˈpəzlɪŋ‿ɪz 连读；ðə、ə、ən、əz、əv、ɪz 弱读/弱化； rɛst‿ɪn、tərm‿əv、rəˌlækˈseɪʃən‿ən、ˈlaɪɪŋ‿ɔr‿ˈivən 连读；ə、ən、kən、əv 弱读/弱化； selfrepairing‿ən、mɔr‿ɔr 连读；ðə、ə、ən、tə、ɑr 弱读/弱化； fæk‿ə、ˈbeɪsɪk‿əˈmaʊnt‿əv、ˈmuvmnt‿əˈkər、wɪtʃ‿ɪz、ˈməsl‿ˌɪnækˈtɪvədi 连读；ə、əv、ɪz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -242,6 +244,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":18.37,"end":28.71,"text":"It is fairly clear that the sleeping period must have some function, and because there is so much of it the function would seem to be important."},{"index":2,"start":28.71,"end":45.36,"text":"Speculations about its nature have been going on for literally thousands of years, and one odd finding that makes the problem puzzling is that it looks very much as if sleeping is not simply a matter of giving the body a rest."},{"index":3,"start":45.36,"end":55.75,"text":"'Rest', in terms of muscle relaxation and so on, can be achieved by a brief period lying, or even sitting down."},{"index":4,"start":55.75,"end":66.27,"text":"The body's tissues are self-repairing and self-restoring to a degree, and function best when more or less continuously active."},{"index":5,"start":66.27,"end":75.66,"text":"In fact a basic amount of movement occurs during sleep which is specifically concerned with preventing muscle inactivity."},{"index":6,"start":75.66,"end":83.65,"text":"If it is not a question of resting the body, then perhaps it is the brain that needs resting?"},{"index":7,"start":83.65,"end":89.37,"text":"This might be a plausible hypothesis were it not for two factors."},{"index":8,"start":89.37,"end":111.36,"text":"First the electroencephalograph (which is simply a device for recording the electrical activity of the brain by attaching electrodes to the scalp) shows that while there is a change in the pattern of activity during sleep, there is no evidence that the total amount of activity is any less."},{"index":9,"start":111.36,"end":116,"text":"The second factor is more interesting and more fundamental."},{"index":10,"start":116,"end":126.91,"text":"Some years ago an American psychiatrist named William Dement published experiments dealing with the recording of eye-movements during sleep."},{"index":11,"start":126.91,"end":140.33,"text":"He showed that the average individual's sleep cycle is punctuated with peculiar bursts of eye-movements, some drifting and slow, others jerky and rapid."},{"index":12,"start":140.33,"end":146.91,"text":"People woken during these periods of eye-movements generally reported that they had been dreaming."},{"index":13,"start":146.91,"end":150.85,"text":"When woken at other times they reported no dreams."},{"index":14,"start":150.85,"end":174.88,"text":"If one group of people were disturbed from their eye-movement sleep for several nights on end, and another group were disturbed for an equal period of time but when they were not exhibiting eye-movements, the first group began to show some personality disorders while the others seemed more or less unaffected."},{"index":15,"start":174.88,"end":185.05,"text":"The implications of all this were that it was not the disturbance of sleep that mattered, but the disturbance of dreaming."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

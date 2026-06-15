@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -338,6 +339,7 @@
     <p>意群停顿: 第 9 句按四季活动分组；第 21 句按 <code>We realized... / for their house... / even if...</code> 分组；第 22 句按 <code>waded down... / in the hope of... / and pull...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -357,6 +359,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":13.91,"end":21.26,"text":"The river which forms the eastern boundary of our farm has always played an important part in our lives."},{"index":2,"start":21.26,"end":24.33,"text":"Without it we could not make a living."},{"index":3,"start":24.33,"end":32.59,"text":"There is only enough spring water to supply the needs of the house so we have to pump from the river for farm use."},{"index":4,"start":32.59,"end":35.36,"text":"We tell the river all our secrets."},{"index":5,"start":35.36,"end":48.62,"text":"We know instinctively, just as beekeepers with their bees, that misfortune might overtake us if the important events of our lives were not related to it."},{"index":6,"start":48.62,"end":52.63,"text":"We have special river birthday parties in the summer."},{"index":7,"start":52.63,"end":67.74,"text":"Sometimes we go upstream to a favourite backwater, sometimes we have our party at the boathouse, which a predecessor of ours at the farm built in the meadow hard by the deepest pool for swimming and diving."},{"index":8,"start":67.74,"end":74.5,"text":"In a heat wave we choose a midnight birthday party and that is the most exciting of all."},{"index":9,"start":74.5,"end":92.66,"text":"We welcome the seasons by the riverside, crowning the youngest girl with flowers in the spring, holding a summer festival on Midsummer Eve, giving thanks for the harvest in the autumn, and throwing a holly wreath into the current in the winter."},{"index":10,"start":92.66,"end":97.93,"text":"After a long period of rain the river may overflow its banks."},{"index":11,"start":97.93,"end":103.11,"text":"This is a rare occurrence as our climate seldom goes to extremes."},{"index":12,"start":103.11,"end":120.33,"text":"We are lucky in that only the lower fields, which make up a very small proportion of our farm, are affected by flooding, but other farms are less favourably sited, and flooding can sometimes spell disaster for their owners."},{"index":13,"start":120.33,"end":126.04,"text":"One bad winter we watched the river creep up the lower meadows."},{"index":14,"start":126.04,"end":131.01,"text":"All the cattle had been moved into stalls and we stood to lose little."},{"index":15,"start":131.01,"end":140.08,"text":"We were, however, worried about our nearest neighbours, whose farm was low lying and who were newcomers to the district."},{"index":16,"start":140.08,"end":146.3,"text":"As the floods had put the telephone out of order, we could not find out how they were managing."},{"index":17,"start":146.3,"end":157.8,"text":"From an attic window we could get a sweeping view of the river where their land joined ours, and at the most critical juncture we took turns in watching that point."},{"index":18,"start":157.8,"end":162.99,"text":"The first sign of disaster was a dead sheep floating down."},{"index":19,"start":162.99,"end":173.85,"text":"Next came a horse, swimming bravely, but we were afraid that the strength of the current would prevent its landing anywhere before it became exhausted."},{"index":20,"start":173.85,"end":185.9,"text":"Suddenly a raft appeared, looking rather like Noah's ark, carrying the whole family, a few hens, the dogs, a cat, and a bird in a cage."},{"index":21,"start":185.9,"end":200.42,"text":"We realized that they must have become unduly frightened by the rising flood, for their house, which had sound foundations, would have stood stoutly even if it had been almost submerged."},{"index":22,"start":200.42,"end":213.53,"text":"The men of our family waded down through our flooded meadows with boat hooks, in the hope of being able to grapple a corner of the raft and pull it out of the current towards our bank."},{"index":23,"start":213.53,"end":216.91,"text":"We still think it a miracle that they were able to do so."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

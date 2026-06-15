@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -460,6 +460,7 @@
       <p>意群停顿: 第 20 句按配料清单分组读。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -479,6 +480,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.29,"end":19.62,"text":"No one can avoid being influenced by advertisements."},{"index":2,"start":19.62,"end":30.96,"text":"Much as we may pride ourselves on our good taste, we are no longer free to choose the things we want, for advertising exerts a subtle influence on us."},{"index":3,"start":30.96,"end":43.15,"text":"In their efforts to persuade us to buy this or that product, advertisers have made a close study of human nature and have classified all our little weaknesses."},{"index":4,"start":43.15,"end":48.96,"text":"Advertisers discovered years ago that all of us love to get something for nothing."},{"index":5,"start":48.96,"end":55.87,"text":"An advertisement which begins with the magic word FREE can rarely go wrong."},{"index":6,"start":55.87,"end":66.8,"text":"These days, advertisers not only offer free samples, but free cars, free houses, and free trips round the world as well."},{"index":7,"start":66.8,"end":72.73,"text":"They devise hundreds of competitions which will enable us to win huge sums of money."},{"index":8,"start":72.73,"end":81.12,"text":"Radio and television have made it possible for advertisers to capture the attention of millions of people in this way."},{"index":9,"start":81.12,"end":91.29,"text":"During a radio programme, a company of biscuit manufacturers once asked listeners to bake biscuits and send them to their factory."},{"index":10,"start":91.29,"end":97.09,"text":"They offered to pay Top0 a pound for the biggest biscuit baked by a listener."},{"index":11,"start":97.09,"end":100.86,"text":"The response to this competition was tremendous."},{"index":12,"start":100.86,"end":107.05,"text":"Before long, biscuits of all shapes and sizes began arriving at the factory."},{"index":13,"start":107.05,"end":110.82,"text":"One lady brought a biscuit on a wheelbarrow."},{"index":14,"start":110.82,"end":113.41,"text":"It weighed nearly 500 pounds."},{"index":15,"start":113.41,"end":120.71,"text":"A little later, a man came along with a biscuit which occupied the whole boot of his car."},{"index":16,"start":120.71,"end":124.3,"text":"All the biscuits that were sent were carefully weighed."},{"index":17,"start":124.3,"end":127.2,"text":"The largest was 713 pounds."},{"index":18,"start":127.2,"end":132.33,"text":"It seemed certain that this would win the prize."},{"index":19,"start":132.33,"end":144.44,"text":"But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."},{"index":20,"start":144.44,"end":158.26,"text":"It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."},{"index":21,"start":158.26,"end":163.97,"text":"It was so heavy that a crane had to be used to remove it from the lorry."},{"index":22,"start":163.97,"end":171.66,"text":"The manufacturers had to pay more money than they had anticipated, for they bought the biscuit from the student for $24,000."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

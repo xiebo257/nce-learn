@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. Several cases have been reported in Russia recently of people who can read and detect colours with their fingers, and even see through solid doors and walls.； 2. One case concerns an 11-year-old schoolgirl Vera Petrova, who has normal vision but who can also perceive things with different parts of her skin, and through solid walls.； 10. It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>rəˈpɔrt‿ɪn、read‿ən、ˈfɪŋɡər‿ən‿ˈivən、dɔr‿ən 连读；ən、kən、əv、həv 弱读/弱化； kənˈsərn‿ən、kən‿ˈɔlsoʊ、pɑrt‿əv、skɪn‿ən 连读；ən、kən、əv、həz 弱读/弱化； ðɪs‿əˈbɪlədi 连读；wəz 弱读/弱化； keɪm‿ˈɪntu、hɪz‿ˈɔfəs‿ən、hænd‿ɔn、dɔr‿əv‿ə 连读；ðə、ə、ən、tə、əv 弱读/弱化； locked‿əˈweɪ、ðɛr‿ən‿ˈivən、dən‿əp‿ɪn 连读；ðə、ən、wɚ 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.12,"end":27.32,"text":"Several cases have been reported in Russia recently of people who can read and detect colours with their fingers, and even see through solid doors and walls."},{"index":2,"start":27.32,"end":40.7,"text":"One case concerns an 11-year-old schoolgirl Vera Petrova, who has normal vision but who can also perceive things with different parts of her skin, and through solid walls."},{"index":3,"start":40.7,"end":44.14,"text":"This ability was first noticed by her father."},{"index":4,"start":44.14,"end":50.44,"text":"One day she came into his office and happened to put her hands on the door of a locked safe."},{"index":5,"start":50.44,"end":60.32,"text":"Suddenly she asked her father why he kept so many old newspapers locked away there, and even described the way they were done up in bundles."},{"index":6,"start":60.32,"end":79.54,"text":"Vera's curious talent was brought to the notice of a scientific research institute in the town of Ulyanovsk, near where she lives, and in April she was given a series of tests by a special commission of the Ministry of Health of the Russian Federal Republic."},{"index":7,"start":79.54,"end":102.69,"text":"During these tests she was able to read a newspaper through an opaque screen and, stranger still, by moving her elbow over a child's game of Lotto she was able to describe the figures and colours printed on it; and, in another instance, wearing stockings and slippers, to make out with her foot the outlines and colours of a picture hidden under a carpet."},{"index":8,"start":102.69,"end":108.26,"text":"Other experiments showed that her knees and shoulders had a similar sensitivity."},{"index":9,"start":108.26,"end":116.86,"text":"During all these tests Vera was blindfold; and indeed, except when blindfold she lacked the ability to perceive things with her skin."},{"index":10,"start":116.86,"end":127.28,"text":"It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

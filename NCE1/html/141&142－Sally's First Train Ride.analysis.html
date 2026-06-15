@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -237,6 +238,7 @@
       <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
     </section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -256,6 +258,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.91,"end":26.47,"text":"Last week, my four-year-old daughter, Sally, was invited to a children's party."},{"index":2,"start":26.47,"end":30.67,"text":"I decided to take her by train."},{"index":3,"start":30.67,"end":39.52,"text":"Sally was very excited because she had never travelled on a train before."},{"index":4,"start":39.52,"end":48.09,"text":"She sat near the window and asked questions about everything she saw."},{"index":5,"start":48.09,"end":58.15,"text":"Suddenly, a middle-age lady got on the train and sat opposite Sally."},{"index":6,"start":58.15,"end":62.42,"text":"'Hello, little girl,' she said."},{"index":7,"start":62.42,"end":68.69,"text":"Sally did not answer, but looked at her curiously."},{"index":8,"start":68.69,"end":76.2,"text":"The lady was dressed in a blue coat and a large, funny hat."},{"index":9,"start":76.2,"end":87.12,"text":"After the train had left the station, the lady opened her handbag and took out her powder compact."},{"index":10,"start":87.12,"end":92.76,"text":"She then began to make up her face."},{"index":11,"start":92.76,"end":97.49,"text":"'Why are you doing that?' Sally asked."},{"index":12,"start":97.49,"end":103.31,"text":"'To make myself beautiful,' the lady answered."},{"index":13,"start":103.31,"end":109.49,"text":"She put away her compact and smiled kindly."},{"index":14,"start":109.49,"end":114.63,"text":"'But you are still ugly,' Sally said."},{"index":15,"start":114.63,"end":118.63,"text":"Sally was amused, but I was very embarrassed!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

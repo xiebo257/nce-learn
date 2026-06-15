@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -373,6 +373,7 @@
       <p>长句按时间状语、主句和原因分句分组朗读。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -392,6 +393,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":19.25,"end":27.22,"text":"The great ship, Titanic sailed for New York from Southampton on April 10th, 1912."},{"index":2,"start":27.22,"end":35.33,"text":"She was carrying 1,316 passengers and a crew of 891."},{"index":3,"start":35.33,"end":42.72,"text":"Even by modern standards, the 46,000 ton Titanic was a colossal ship."},{"index":4,"start":42.72,"end":55.71,"text":"At that time, however, she was not only the largest ship that had ever been built, but was regarded as unsinkable, for she had sixteen water-tight compartments."},{"index":5,"start":55.71,"end":60.83,"text":"Even if two of these were flooded, she would still be able to float."},{"index":6,"start":60.83,"end":71.82,"text":"The tragic sinking of this great liner will always be remembered, for she went down on her first voyage with heavy loss of life."},{"index":7,"start":71.82,"end":83.88,"text":"Four days after setting out, while the Titanic was sailing across the icy waters of the North Atlantic, a huge iceberg was suddenly spotted by a lookout."},{"index":8,"start":83.88,"end":91.18,"text":"After the alarm had been given, the great ship turned sharply to avoid a direct collision."},{"index":9,"start":91.18,"end":102.6,"text":"The Titanic turned just in time, narrowly missing the immense wall of ice which rose over 100 feet out of the water beside her."},{"index":10,"start":102.6,"end":111.73,"text":"Suddenly, there was a slight trembling sound from below, and the captain went down to see what had happened."},{"index":11,"start":111.73,"end":117.36,"text":"The noise had been so faint that no one thought that the ship had been damaged."},{"index":12,"start":117.36,"end":130,"text":"Below, the captain realized to his horror that the Titanic was sinking rapidly, for five of her sixteen watertight compartments had already been flooded!"},{"index":13,"start":130,"end":137.23,"text":"The order to abandon ship was given and hundreds of people plunged into the icy water."},{"index":14,"start":137.23,"end":141.69,"text":"As there were not enough life-boats for everybody, 1,500 lives were lost."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

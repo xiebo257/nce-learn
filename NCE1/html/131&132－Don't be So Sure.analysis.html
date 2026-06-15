@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -277,6 +278,7 @@
       <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
     </section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -296,6 +298,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":19.7,"end":25.84,"text":"Where are you going to spend your holidays this year, Gary?"},{"index":2,"start":25.84,"end":28.6,"text":"We may go abroad."},{"index":3,"start":28.6,"end":30.97,"text":"I'm not sure."},{"index":4,"start":30.97,"end":34.66,"text":"My wife wants to go to Egypt."},{"index":5,"start":34.66,"end":37.93,"text":"I'd like to go there, too."},{"index":6,"start":37.93,"end":41.88,"text":"We can't make up our minds."},{"index":7,"start":41.88,"end":46.03,"text":"Will you travel by sea or by air?"},{"index":8,"start":46.03,"end":49.34,"text":"We may travel by sea."},{"index":9,"start":49.34,"end":51.76,"text":"It's cheaper, isn't it?"},{"index":10,"start":51.76,"end":57.18,"text":"It may be cheaper, but it takes a long time."},{"index":11,"start":57.18,"end":60.28,"text":"I'm sure you'll enjoy yourselves."},{"index":12,"start":60.28,"end":62.35,"text":"Don't be so sure."},{"index":13,"start":62.35,"end":65.11,"text":"We might not go anywhere."},{"index":14,"start":65.11,"end":69.05,"text":"My wife always worries too much."},{"index":15,"start":69.05,"end":72.53,"text":"Who's going to look after the dog?"},{"index":16,"start":72.53,"end":76.08,"text":"Who's going to look after the house?"},{"index":17,"start":76.08,"end":79.66,"text":"Who's going to look after the garden?"},{"index":18,"start":79.66,"end":83.11,"text":"We have this problem every year."},{"index":19,"start":83.11,"end":87.11,"text":"In the end, we stay at home and look after everything!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

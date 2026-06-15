@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -253,6 +254,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. There has long been a superstition among mariners that porpoises will save drowning men by pushing them to the surface, or protect them from sharks by surrounding them in defensive formation.； 2. Marine Studio biologists have pointed out that, however intelligent they may be, it is probably a mistake to credit dolphins with any motive of life-saving.； 5. If, as has been reported, they have protected humans from sharks, it may have been because curiosity attracted them and because the scent of a possible meal attracted the sharks.； 11. Almost any day a young porpoises may be seen trying to turn a 300-pound sea turtle over by sticking his snout under the edge of his shell and pushing up for dear life.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>bɪn‿ə、ˌsupərˈstɪʃən‿əˈməŋ、ˈsərfəs‿ɔr、ðəm‿ɪn 连读；ðə、ə、tə、frəm、həz 弱读/弱化； haʊˈɛvər‿intelligent、ɪt‿ɪz、wɪð‿ˈɛni、ˈmoʊdɪv‿əv 连读；ə、tə、əv、ɪz、həv 弱读/弱化； ði‿əˈkeɪʒn、ʃɔr‿ən‿ˌənˈkɑnʃəs、dən‿ɪt、aʊt‿əv、spɔrt‿əz‿ɪn 连读；ðə、ði、ə、ən、əz、tə 弱读/弱化； pʊʃ‿əˈʃɔr‿ə 连读；ə、tə、wɚ 弱读/弱化； ɪf‿əz、ʃɑrk‿ɪt、ðəm‿ən、sɛnt‿əv‿ə、mil‿əˈtræk 连读；ðə、ə、ən、əz、əv、frəm 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -272,6 +274,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.63,"end":29.17,"text":"There has long been a superstition among mariners that porpoises will save drowning men by pushing them to the surface, or protect them from sharks by surrounding them in defensive formation."},{"index":2,"start":29.17,"end":40.59,"text":"Marine Studio biologists have pointed out that, however intelligent they may be, it is probably a mistake to credit dolphins with any motive of life-saving."},{"index":3,"start":40.59,"end":53.49,"text":"On the occasions when they have pushed to shore an unconscious human being they have much more likely done it out of curiosity or for sport, as in riding the bow waves of a ship."},{"index":4,"start":53.49,"end":61.7,"text":"In 1928 some porpoises were photographed working like beavers to push ashore a waterlogged mattress."},{"index":5,"start":61.7,"end":74.03,"text":"If, as has been reported, they have protected humans from sharks, it may have been because curiosity attracted them and because the scent of a possible meal attracted the sharks."},{"index":6,"start":74.03,"end":77.32,"text":"Porpoises and sharks are natural enemies."},{"index":7,"start":77.32,"end":84.97,"text":"It is possible that upon such an occasion a battle ensued, with the sharks being driven away or killed."},{"index":8,"start":84.97,"end":91.85,"text":"Whether it be bird, fish or beast, the porpoise is intrigued with anything that is alive."},{"index":9,"start":91.85,"end":97.78,"text":"They are constantly after the turtles, who peacefully submit to all sorts of indignities."},{"index":10,"start":97.78,"end":108.38,"text":"One young calf especially enjoyed raising a turtle to the surface with his snout, and then shoving him across the tank like an aquaplane."},{"index":11,"start":108.38,"end":120.82,"text":"Almost any day a young porpoises may be seen trying to turn a 300-pound sea turtle over by sticking his snout under the edge of his shell and pushing up for dear life."},{"index":12,"start":120.82,"end":126.35,"text":"This is not easy, and may require two porpoises working together."},{"index":13,"start":126.35,"end":136.45,"text":"In another game, as the turtle swims across the oceanarium, the first porpoise swoops down from above and butts his shell with his belly."},{"index":14,"start":136.45,"end":139.67,"text":"This knocks the turtle down several feet."},{"index":15,"start":139.67,"end":147.25,"text":"He no sooner recovers his equilibrium than the next porpoises comes along and hits him another crack."},{"index":16,"start":147.25,"end":153.07,"text":"Eventually the turtle has been butted all the way down to the floor of the tank."},{"index":17,"start":153.07,"end":161.12,"text":"He is now satisfied merely to try to stand up, but as soon as he does so a porpoise knocks him flat."},{"index":18,"start":161.12,"end":168.2,"text":"The turtle at last gives up by pulling his feet under his shell and the game is over."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

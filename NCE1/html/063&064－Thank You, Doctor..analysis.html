@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -287,6 +288,7 @@
       <p>遇到 <code>it is</code>、<code>that is</code>、<code>here is</code> 这类组合时，可以自然连起来读。</p>
     </section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -306,6 +308,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":19.22,"end":21.58,"text":"How's Jimmy today?"},{"index":2,"start":21.58,"end":22.7,"text":"Better."},{"index":3,"start":22.7,"end":25.01,"text":"Thank you, doctor."},{"index":4,"start":25.01,"end":29.28,"text":"Can I see him please, Mrs. Williams?"},{"index":5,"start":29.28,"end":31.35,"text":"Certainly, doctor."},{"index":6,"start":31.35,"end":34.17,"text":"Come upstairs."},{"index":7,"start":34.17,"end":37.09,"text":"You look very well, Jimmy."},{"index":8,"start":37.09,"end":42.6,"text":"You are better now, but you mustn't get up yet."},{"index":9,"start":42.6,"end":48.32,"text":"You must stay in bed for another two days."},{"index":10,"start":48.32,"end":53.21,"text":"The boy mustn't go to school yet, Mrs. Williams."},{"index":11,"start":53.21,"end":58.11,"text":"And he mustn't eat rich food."},{"index":12,"start":58.11,"end":62.09,"text":"Does he have a temperature, doctor?"},{"index":13,"start":62.09,"end":64.06,"text":"No, he doesn't."},{"index":14,"start":64.06,"end":67.06,"text":"Must he stay in bed?"},{"index":15,"start":67.06,"end":72.84,"text":"Yes. He must remain in bed for another two days."},{"index":16,"start":72.84,"end":83.49,"text":"He can get up for about two hours each day, but you must keep the room warm."},{"index":17,"start":83.49,"end":87.35,"text":"Where's Mr. Williams this evening?"},{"index":18,"start":87.35,"end":90.48,"text":"He's in bed, doctor."},{"index":19,"start":90.48,"end":93.24,"text":"Can you see him please?"},{"index":20,"start":93.24,"end":97.24,"text":"He has a bad cold, too!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

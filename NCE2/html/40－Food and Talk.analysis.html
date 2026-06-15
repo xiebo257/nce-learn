@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -233,6 +234,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>7. 'Will you be seeing it?'； 9. 'Will you be spending your holidays abroad this year?'； 12. 'Will you be staying in England?'； 16. 'Young man,' she answered, 'if you ate more and talked less, we would both enjoy our dinner!'。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>wik‿ət‿ə、ˈhoʊstəs‿æsk 连读；ðə、ə、ət、tə 弱读/弱化； wəz‿ə、lɑrdʒ‿ˌənˈsmaɪlɪŋ、ɪn‿ə 连读；ə、wəz 弱读/弱化； nɑɾ‿ˈivən、lʊk‿əp 连读；nɑɾ‿ˈivən 中 /ɾ/ 为美式闪音； fɪkst‿ɔn、pleɪt‿ən‿ɪn‿ə 连读；ə、ən、wəz、wɚ 弱读/弱化； ˈsiɪŋ‿ɪt 连读；jə 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -252,6 +254,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.06,"end":22.74,"text":"Last week at a dinner party, the hostess asked me to sit next to Mrs. Rumbold."},{"index":2,"start":22.74,"end":29.34,"text":"Mrs. Rumbold was a large, unsmiling lady in a tight black dress."},{"index":3,"start":29.34,"end":34.73,"text":"She did not even look up when I took my seat beside her."},{"index":4,"start":34.73,"end":42.09,"text":"Her eyes were fixed on her plate and in a short time, she was busy eating."},{"index":5,"start":42.09,"end":44.95,"text":"I tried to make conversation."},{"index":6,"start":44.95,"end":49.48,"text":"'A new play is coming to \"The Globe\" soon,' I said."},{"index":7,"start":49.48,"end":53.12,"text":"'Will you be seeing it?'"},{"index":8,"start":53.12,"end":55.95,"text":"'No,' she answered."},{"index":9,"start":55.95,"end":62.31,"text":"'Will you be spending your holidays abroad this year?'"},{"index":10,"start":62.31,"end":63.23,"text":"I asked."},{"index":11,"start":63.23,"end":65.81,"text":"'No,' she answered."},{"index":12,"start":65.81,"end":69.14,"text":"'Will you be staying in England?'"},{"index":13,"start":69.14,"end":69.92,"text":"I asked."},{"index":14,"start":69.92,"end":72.94,"text":"'No,' she answered."},{"index":15,"start":72.94,"end":78.5,"text":"In despair, I asked her whether she was enjoying her dinner."},{"index":16,"start":78.5,"end":87.2,"text":"'Young man,' she answered, 'if you ate more and talked less, we would both enjoy our dinner!'"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

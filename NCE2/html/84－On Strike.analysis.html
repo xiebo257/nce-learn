@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -203,6 +204,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>3. No one knows how long it will last.； 4. The busmen have stated that the strike will continue until general agreement is reached about pay and working conditions.； 5. Most people believe that the strike will last for at least a week.； 7. This will relieve pressure on the trains to some extent.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>straɪk‿ɪz、bəˈɡɪn‿ɔn 连读；ðə、tə、ɪz 弱读/弱化； long‿ɪt 连读； ˈdʒɛnrəl‿əˈɡrimnt‿ɪz、ritʃ‿əˈbaʊt 连读；ðə、ən、ɪz、həv 弱读/弱化； fɚ‿ət、list‿ə 连读；ðə、ə、ət、fɚ 弱读/弱化； ˈoʊnər‿əv、kɑr‿ɑr、ˈpipl‿ɔn 连读；tə、əv、ɑr 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -222,6 +224,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.18,"end":19.77,"text":"Busmen have decided to go on strike next week."},{"index":2,"start":19.77,"end":23.83,"text":"The strike is due to begin on Tuesday."},{"index":3,"start":23.83,"end":27.51,"text":"No one knows how long it will last."},{"index":4,"start":27.51,"end":38.37,"text":"The busmen have stated that the strike will continue until general agreement is reached about pay and working conditions."},{"index":5,"start":38.37,"end":44.15,"text":"Most people believe that the strike will last for at least a week."},{"index":6,"start":44.15,"end":52.07,"text":"Many owners of private cars are going to offer 'free rides' to people on their way to work."},{"index":7,"start":52.07,"end":56.81,"text":"This will relieve pressure on the trains to some extent."},{"index":8,"start":56.81,"end":65.56,"text":"Meanwhile, a number of university students have volunteered to drive buses while the strike lasts."},{"index":9,"start":65.56,"end":76.72,"text":"All the students are expert drivers, but before they drive any of the buses, they will have to pass a special test."},{"index":10,"start":76.72,"end":81.72,"text":"The students are going to take the test in two days' time."},{"index":11,"start":81.72,"end":87.43,"text":"Even so, people are going to find it difficult to get to work."},{"index":12,"start":87.43,"end":95.31,"text":"But so far, the public has expressed its gratitude to the students in lettters to the Press."},{"index":13,"start":95.31,"end":101.56,"text":"Only one or two people have objected that the students will drive too fast!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

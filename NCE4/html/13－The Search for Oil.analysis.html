@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>2. But we do not need to send man down to get the oil out, as we must with other mineral deposits.； 6. It has to be tall because it is like a giant block and tackle and we have to lower into the ground and haul out of the ground great lengths of drill pipe which are rotated by an engine at the top and are fitted with a cutting bit at the bottom.； 8. It cuts a clean cylinder of rock, from which can be seen the strata the drill has been cutting through.； 10. This pressure must be under control, and we control it by means of the mud which we circulate down the drill pipe.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>hoʊl‿əv‿ɔl‿ɑr、fɚ‿ɔɪl‿ən、mətʃ‿əz 连读；ðə、ən、əz、tə、əv、ɑr 弱读/弱化； ði‿ɔɪl、aʊt‿əz、wɪð‿ˈəðər 连读；ði、əz、tə 弱读/弱化； hoʊl‿ɑr‿ˈoʊnli、ðæn‿ə、fʊt‿ɪn 连读；ðə、ə、ɑr 弱读/弱化； pəˈtɪkjələr‿ɪkˈspɪriəns‿ɪz、ɪn‿ɔɪl‿ən、fɚ‿ɔɪl、ðæn‿ˈɛni 连读；ðə、ən、tə、ɪz、fɚ、həz 弱读/弱化； wɛn‿ɪt、pʊt‿əp‿ət、ˈsərfəs‿ən‿ɔɪl 连读；ðə、ən、ət、tə、ɑr、həz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.98,"end":26.09,"text":"The deepest holes of all are made for oil, and they go down to as much as 25, 000 feet."},{"index":2,"start":26.09,"end":34.31,"text":"But we do not need to send man down to get the oil out, as we must with other mineral deposits."},{"index":3,"start":34.31,"end":40.18,"text":"The holes are only borings, less than a foot in diameter."},{"index":4,"start":40.18,"end":52.31,"text":"My particular experience is largely in oil, and the search for oil has done more to improve deep drilling than any other mining activity."},{"index":5,"start":52.31,"end":59.84,"text":"When it has been decided where we are going to drill, we put up at the surface an oil derrick."},{"index":6,"start":59.84,"end":77.95,"text":"It has to be tall because it is like a giant block and tackle and we have to lower into the ground and haul out of the ground great lengths of drill pipe which are rotated by an engine at the top and are fitted with a cutting bit at the bottom."},{"index":7,"start":77.95,"end":88.11,"text":"The geologist needs to know what rocks the drill has reached, so every so often a sample is obtained with a coring bit."},{"index":8,"start":88.11,"end":96.45,"text":"It cuts a clean cylinder of rock, from which can be seen the strata the drill has been cutting through."},{"index":9,"start":96.45,"end":106.93,"text":"Once we get down to the oil, it usually flows to the surface because great pressure either from gas or water, is pushing it."},{"index":10,"start":106.93,"end":116.22,"text":"This pressure must be under control, and we control it by means of the mud which we circulate down the drill pipe."},{"index":11,"start":116.22,"end":124.33,"text":"We endeavour to avoid the old, romantic idea of a gusher, which wastes oil and gas."},{"index":12,"start":124.33,"end":131.08,"text":"We want it to stay down the hole until we can lead it off in a controlled manner."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

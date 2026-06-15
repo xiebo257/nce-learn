@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>10. He explained that his diet was so strict that he had to reward himself occasionally.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>həz‿ˈɔlˌweɪz、ɔn‿ə 连读；ə、tə、həz 弱读/弱化； ˈdaɪət‿ə、wik‿əˈɡoʊ 连读；ə 弱读/弱化； fərst‿əv‿ɔl、aʊt‿ə、lɪst‿əv‿ɔl 连读；ðə、ə、əv、wɚ 弱读/弱化； lɪst‿ɪnˈklud、moʊst‿əv、ˈtʃɑklət‿ən 连读；ðə、ən、əv 弱读/弱化； hɪm‿ə 连读；ə 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.33,"end":26.32,"text":"My friend, Hugh, has always been fat, but things got so bad recently that he decided to go on a diet."},{"index":2,"start":26.32,"end":29.61,"text":"He began his diet a week ago."},{"index":3,"start":29.61,"end":36.88,"text":"First of all, he wrote out a long list of all the foods which were forbidden."},{"index":4,"start":36.88,"end":48.64,"text":"The list included most of the things Hugh loves: butter, potatoes, rice, beer, milk, chocolate, and sweets."},{"index":5,"start":48.64,"end":51.97,"text":"Yesterday I paid him a visit."},{"index":6,"start":51.97,"end":59.28,"text":"I rang the bell and was not surprised to see that Hugh was still as fat as ever."},{"index":7,"start":59.28,"end":65.8,"text":"He led me into his room and hurriedly hid a large parcel under his desk."},{"index":8,"start":65.8,"end":70.03,"text":"It was obvious that he was very embarrassed."},{"index":9,"start":70.03,"end":77.78,"text":"When I asked him what he was doing, he smiled guiltily and then put the parcel on the desk."},{"index":10,"start":77.78,"end":85.59,"text":"He explained that his diet was so strict that he had to reward himself occasionally."},{"index":11,"start":85.59,"end":89.35,"text":"Then he showed me the contents of the parcel."},{"index":12,"start":89.35,"end":94.93,"text":"It contained five large bars of chocolate and three bags of sweets!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

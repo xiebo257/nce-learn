@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -413,6 +413,7 @@
       <p>第 10 句较长，可按定语从句和主句分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -432,6 +433,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.62,"end":19.58,"text":"Modern sculpture rarely surprises us any more."},{"index":2,"start":19.58,"end":25.6,"text":"The idea that modern art can only be seen in museums is mistaken."},{"index":3,"start":25.6,"end":35.42,"text":"Even people who take no interest in art cannot have failed to notice examples of modern sculpture on display in public places."},{"index":4,"start":35.42,"end":40.66,"text":"Strange forms stand in gardens, and outside buildings and shops."},{"index":5,"start":40.66,"end":43.55,"text":"We have got quite used to them."},{"index":6,"start":43.55,"end":49.9,"text":"Some so-called 'modern' pieces have been on display for nearly eighty years."},{"index":7,"start":49.9,"end":58.69,"text":"In spite of this, some people--including myself--were surprised by a recent exhibition of modern sculpture."},{"index":8,"start":58.69,"end":69.44,"text":"The first thing I saw when I entered the art gallery was a notice which said: 'Do not touch the exhibits, some of them are dangerous!'"},{"index":9,"start":69.44,"end":74.16,"text":"The objects on display were pieces of moving sculpture."},{"index":10,"start":74.16,"end":84,"text":"Oddly shaped forms that are suspended from the ceiling and move in response to a gust of wind are quite familiar to everybody."},{"index":11,"start":84,"end":87.91,"text":"These objects, however, were different."},{"index":12,"start":87.91,"end":94.17,"text":"Lined up against the wall, there were long thin wires attached to metal spheres."},{"index":13,"start":94.17,"end":101.01,"text":"The spheres had been magnetized and attracted or repelled each other all the time."},{"index":14,"start":101.01,"end":107.68,"text":"In the centre of the hall, there were a number of tall structures which contained coloured lights."},{"index":15,"start":107.68,"end":113.94,"text":"These lights flickered continuously like traffic lights which have gone mad."},{"index":16,"start":113.94,"end":121.2,"text":"Sparks were emitted from small black boxes and red lamps flashed on and off angrily."},{"index":17,"start":121.2,"end":126.94,"text":"It was rather like an exhibition of prehistoric electronic equipment."},{"index":18,"start":126.94,"end":134.32,"text":"These peculiar forms not only seemed designed to shock people emotionally, but to give them electric shocks as well!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

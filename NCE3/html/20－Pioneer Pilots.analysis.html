@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -409,6 +409,7 @@
       <p>意群停顿: 第 4 句按 <code>He had travelled only seven miles / when his engine failed / and he was forced...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -428,6 +429,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.81,"end":26.78,"text":"In 1908 Lord Northcliffe offered a prize of £1,000 to the first man who would fly across the English Channel."},{"index":2,"start":26.78,"end":31.28,"text":"Over a year passed before the first attempt was made."},{"index":3,"start":31.28,"end":43.14,"text":"On July 19th, 1909, in the early morning, Hubert Latham took off from the French coast in his plane the 'Antoinette IV.'"},{"index":4,"start":43.14,"end":52.26,"text":"He had travelled only seven miles across the Channel when his engine failed and he was forced to land on the sea."},{"index":5,"start":52.26,"end":59.22,"text":"The 'Antoinette' floated on the water until Latham was picked up by a ship."},{"index":6,"start":59.22,"end":67.16,"text":"Two days later, Louis Bleriot arrived near Calais with a plane called 'No.XI'."},{"index":7,"start":67.16,"end":74.33,"text":"Bleriot had been making planes since 1905 and this was his latest model."},{"index":8,"start":74.33,"end":82.54,"text":"A week before, he had completed a successful overland flight during which he covered twenty-six miles."},{"index":9,"start":82.54,"end":85.76,"text":"Latham, however, did not give up easily."},{"index":10,"start":85.76,"end":92.2,"text":"He, too, arrived near Calais on the same day with a new 'Antoinette'."},{"index":11,"start":92.2,"end":97.19,"text":"It looked as if there would be an exciting race across the Channel."},{"index":12,"start":97.19,"end":105.05,"text":"Both planes were going to take off on July 25th, but Latham failed to get up early enough."},{"index":13,"start":105.05,"end":113.1,"text":"After making a short test flight at 4.15 a.m., Bleriot set off half an hour later."},{"index":14,"start":113.1,"end":116.9,"text":"His great flight lasted thirty-seven minutes."},{"index":15,"start":116.9,"end":123.67,"text":"When he landed near Dover, the first person to greet him was a local policeman."},{"index":16,"start":123.67,"end":131.85,"text":"Latham made another attempt a week later and got within half a mile of Dover, but he was unlucky again."},{"index":17,"start":131.85,"end":135.7,"text":"His engine failed and he landed on the sea for the second time."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

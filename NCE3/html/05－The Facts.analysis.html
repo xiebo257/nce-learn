@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -229,6 +230,7 @@
       <p>最后一句较长，按定语从句和时间状语分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -248,6 +250,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.65,"end":25.01,"text":"Editors of newspapers and magazines often go to extremes to provide their readers with unimportant facts and statistics."},{"index":2,"start":25.01,"end":35.09,"text":"Last year a journalist had been instructed by a well-known magazine to write an article on the president's palace in a new African republic."},{"index":3,"start":35.09,"end":42.43,"text":"When the article arrived, the editor read the first sentence and then refused to publish it."},{"index":4,"start":42.43,"end":50.24,"text":"The article began: 'Hundreds of steps lead to the high wall which surrounds the president's palace.'"},{"index":5,"start":50.24,"end":61.28,"text":"The editor at once sent the journalist a fax instructing him to find out the exact number of steps and the height of the wall."},{"index":6,"start":61.28,"end":68.66,"text":"The journalist immediately set out to obtain these important facts, but he took a long time to send them."},{"index":7,"start":68.66,"end":74.24,"text":"Meanwhile, the editor was getting impatient, for the magazine would soon go to press."},{"index":8,"start":74.24,"end":79.44,"text":"He sent the journalist two more faxes, but received no reply."},{"index":9,"start":79.44,"end":86.81,"text":"He sent yet another fax informing the journalist that if he did not reply soon he would be fired."},{"index":10,"start":86.81,"end":95.61,"text":"When the journalist again failed to reply, the editor reluctantly published the article as it had originally been written."},{"index":11,"start":95.61,"end":100.98,"text":"A week later, the editor at last received a fax from the journalist."},{"index":12,"start":100.98,"end":107.19,"text":"Not only had the poor man been arrested, but he had been sent to prison as well."},{"index":13,"start":107.19,"end":122.22,"text":"However, he had at last been allowed to send a fax in which he informed the editor that he had been arrested while counting the 1,084 steps leading to the 15-foot wall which surrounded the president's palace."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

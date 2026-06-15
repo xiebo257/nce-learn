@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -203,6 +204,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>4. Ever since, people have had difficulty in deciding whether the craft should be ranged among ships, planes, or land vehicles--for it is something in between a boat and an aircraft.； 13. The hovercraft is particularly useful in large areas with poor communications such as Africa or Australia; it can become a 'flying fruit-bowl', carrying bananas from the plantations to the ports; giant hovercraft liners could span the Atlantic; and the railway of the future may well be the 'hovertrain', riding on its air cushion over a single rail, which it never touches, at speeds, up to 300 m.p.h.--the possibilities appear unlimited.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>minz‿əv、dəˈvɛləpt‿ɪn、streɪndʒ‿əv 连读；ðə、əv、həv 弱读/弱化； ɪn‿ə、ˈfɔrmər‿əˌlɛkˈtrɑnɪks‿ˌɛndʒəˈnɪr‿ɪn、boatbuilding‿ɔn、səˈdʒɛst‿ən、ˈɡəvərmənt‿ən‿ɪnˈdəstriəl 连读；ðə、ə、ən、tə、fɚ、həd 弱读/弱化； supporting‿ə、kræft‿ɔn‿ə、pæd‿ɔr、ˈkʊʃən‿əv、wɪð‿ə 连读；ðə、ə、əv、wəz 弱读/弱化； reɪndʒ‿əˈməŋ、pleɪn‿ɔr、vehiclesfor‿ɪt‿ɪz、ˈsəmˌθɪŋ‿ɪn、bəˈtwin‿ə 连读；ðə、ə、ən、ɪz、həd、həv 弱读/弱化； əz‿ə、find‿ə、ˈprɑbləm‿əv、weɪst‿ə、dil‿əv‿ə 连读；ðə、ə、ən、əz、tə、əv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -222,6 +224,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.55,"end":27.29,"text":"Many strange new means of transport have been developed in our century, the strangest of them being perhaps the hovercraft."},{"index":2,"start":27.29,"end":48.13,"text":"In 1953, a former electronics engineer in his fifties, Christopher Cockerell, who had turned to boat-building on the Norfolk Broads, suggested an idea on which he had been working for many years to the British Government and industrial circles."},{"index":3,"start":48.13,"end":60.2,"text":"It was the idea of supporting a craft on a 'pad', or cushion, of low-pressure air, ringed with a curtain of higher pressure air."},{"index":4,"start":60.2,"end":77.57,"text":"Ever since, people have had difficulty in deciding whether the craft should be ranged among ships, planes, or land vehicles--for it is something in between a boat and an aircraft."},{"index":5,"start":77.57,"end":91.54,"text":"As a shipbuilder, Cockerell was trying to find a solution to the problem of the wave resistance which wastes a good deal of a surface ship's power and limits its speed."},{"index":6,"start":91.54,"end":102.6,"text":"His answer was to lift the vessel out of the water by making it ride on a cushion of air, no more than one or two feet thick."},{"index":7,"start":102.6,"end":109.6,"text":"This is done by a great number of ring-shaped air jets on the bottom of the craft."},{"index":8,"start":109.6,"end":122.29,"text":"It 'flies', therefore, but it cannot fly higher--its action depends on the surface, water or ground, over which it rides."},{"index":9,"start":122.29,"end":128.57,"text":"The first tests on the Solent in 1959 caused a sensation."},{"index":10,"start":128.57,"end":139.57,"text":"The hovercraft travelled first over the water, then mounted the beach, climbed up the dunes, and sat down on a road."},{"index":11,"start":139.57,"end":148.89,"text":"Later it crossed the Channel, riding smoothly over the waves, which presented no problem."},{"index":12,"start":148.89,"end":156.31,"text":"Since that time, various types of hovercraft have appeared and taken up regular service."},{"index":13,"start":156.31,"end":191.16,"text":"The hovercraft is particularly useful in large areas with poor communications such as Africa or Australia; it can become a 'flying fruit-bowl', carrying bananas from the plantations to the ports; giant hovercraft liners could span the Atlantic; and the railway of the future may well be the 'hovertrain', riding on its air cushion over a single rail, which it never touches, at speeds, up to 300 m.p.h.--the possibilities appear unlimited."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

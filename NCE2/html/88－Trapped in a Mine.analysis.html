@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>2. If they are not brought to the surface soon they may lose their lives.； 4. If explosives are used, vibrations will cause the roof of the mine to collapse.； 7. If there had not been a hard layer of rock beneath the soil, they would have completed the job in a few hours.； 10. Though they are running out of food and drink, the men are cheerful and confident that they will get out soon.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>træp‿ɪn‿ə 连读；ə、fɚ、həv 弱读/弱化； ˌɑpəˈreɪʃən‿ɑr 连读；ɑr 弱读/弱化； ɪf‿ɪkˈsploʊsɪv‿ɑr、ruf‿əv 连读；ðə、tə、əv、ɑr 弱读/弱化； ˈwərkər‿ɑr、ˈdrɪlɪŋ‿ə、hoʊl‿ɔn 连读；ðə、ə、əv、ɑr 弱读/弱化； men‿əp‿ɪn‿ə 连读；ðə、ə、tə 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.18,"end":21.12,"text":"Six men have been trapped in a mine for seventeen hours."},{"index":2,"start":21.12,"end":26.79,"text":"If they are not brought to the surface soon they may lose their lives."},{"index":3,"start":26.79,"end":31.65,"text":"However, rescue operations are proving difficult."},{"index":4,"start":31.65,"end":38.73,"text":"If explosives are used, vibrations will cause the roof of the mine to collapse."},{"index":5,"start":38.73,"end":45.14,"text":"Rescue workers are therefore drilling a hole on the north side of the mine."},{"index":6,"start":45.14,"end":50.09,"text":"They intend to bring the men up in a special capsule."},{"index":7,"start":50.09,"end":59.64,"text":"If there had not been a hard layer of rock beneath the soil, they would have completed the job in a few hours."},{"index":8,"start":59.64,"end":68.62,"text":"As it is, they have been drilling for 16 hours and they still have a long way to go."},{"index":9,"start":68.62,"end":80.74,"text":"Meanwhile, a microphone, which was lowered into the mine two hours ago, has enabled the men to keep in touch with their closest relatives."},{"index":10,"start":80.74,"end":89.9,"text":"Though they are running out of food and drink, the men are cheerful and confident that they will get out soon."},{"index":11,"start":89.9,"end":95.41,"text":"They have been told that rescue operations are progressing smoothly."},{"index":12,"start":95.41,"end":102.74,"text":"If they knew how difficult it was to drill through the hard rock, they would lose heart."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

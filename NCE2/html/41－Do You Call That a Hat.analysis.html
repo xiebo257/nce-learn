@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -213,6 +214,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>11. 'A man can never have too many ties.'； 12. 'And a woman can't have too many hats,' she answered.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ðæt‿ə 连读；ə、jə 弱读/弱化； rud‿əˈbaʊt‿ɪt、waɪf‿ˈænsər‿əz、lʊkt‿ət、hərˈsɛlf‿ɪn 连读；ðə、əz、ət 弱读/弱化； daʊn‿ɔn‿one、hoʊl‿ɪn‿ɪt‿ən 连读；ən、əv 弱读/弱化； bɪn‿ɪn、hæf‿ən、ˈaʊr‿ən、stɪl‿ɪn、frənt‿əv 连读；ðə、ən、əv、wəz、fɚ、həd 弱读/弱化； ˈseɪɪŋ‿ɪt‿ˈɔlmoʊst‿ət 连读；ət 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -232,6 +234,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.83,"end":20.88,"text":"'Do you call that a hat?'"},{"index":2,"start":20.88,"end":22.99,"text":"I said to my wife."},{"index":3,"start":22.99,"end":31.68,"text":"'You needn't be so rude about it,' my wife answered as she looked at herself in the mirror."},{"index":4,"start":31.68,"end":37.94,"text":"I sat down on one of those modern chairs with holes in it and waited."},{"index":5,"start":37.94,"end":45.5,"text":"We had been in the hat shop for half an hour and my wife was still in front of the mirror."},{"index":6,"start":45.5,"end":51.39,"text":"'We mustn't buy things we don't need,' I remarked suddenly."},{"index":7,"start":51.39,"end":55.47,"text":"I regretted saying it almost at once."},{"index":8,"start":55.47,"end":59.98,"text":"'You needn't have said that,' my wife answered."},{"index":9,"start":59.98,"end":65.85,"text":"'I needn't remind you of that terrible tie you bought yesterday.'"},{"index":10,"start":65.85,"end":69.29,"text":"'I find it beautiful,' I said."},{"index":11,"start":69.29,"end":73.4,"text":"'A man can never have too many ties.'"},{"index":12,"start":73.4,"end":79.07,"text":"'And a woman can't have too many hats,' she answered."},{"index":13,"start":79.07,"end":83.84,"text":"Ten minutes later we walked out of the shop together."},{"index":14,"start":83.84,"end":88.51,"text":"My wife was wearing a hat that looked like a lighthouse!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

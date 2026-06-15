@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -393,6 +393,7 @@
       <p>叙事句中连续动作用短停顿分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -412,6 +413,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.65,"end":20.6,"text":"Children always appreciate small gifts of money."},{"index":2,"start":20.6,"end":30.99,"text":"Mum or dad, of course, provides a regular supply of pocket money, but uncles and aunts are always a source of extra income."},{"index":3,"start":30.99,"end":35.17,"text":"With some children, small sums go a long way."},{"index":4,"start":35.17,"end":43.16,"text":"If fifty pence pieces are not exchanged for sweets, they rattle for months inside money boxes."},{"index":5,"start":43.16,"end":48.59,"text":"Only very thrifty children manage to fill up a money box."},{"index":6,"start":48.59,"end":56.95,"text":"For most of them, fifty pence is a small price to pay for a nice big bar of chocolate."},{"index":7,"start":56.95,"end":62.34,"text":"My nephew, George, has a money box but it is always empty."},{"index":8,"start":62.34,"end":70.05,"text":"Very few of the fifty pence pieces and pound coins I have given him have found their way there."},{"index":9,"start":70.05,"end":74.63,"text":"I gave him fifty pence yesterday and advised him to save it."},{"index":10,"start":74.63,"end":79.56,"text":"Instead, he bought himself fifty pence worth of trouble."},{"index":11,"start":79.56,"end":89.81,"text":"On his way to the sweet shop, he dropped his fifty pence and it bounced along the pavement and then disappeared down a drain."},{"index":12,"start":89.81,"end":97.54,"text":"George took off his jacket, rolled up his sleeves and pushed his right arm through the drain cover."},{"index":13,"start":97.54,"end":105.86,"text":"He could not find his 50 pence piece anywhere, and what is more, he could not get his arm out."},{"index":14,"start":105.86,"end":115.35,"text":"A crowd of people gathered round him and a lady rubbed his arm with soap and butter, but George was firmly stuck."},{"index":15,"start":115.35,"end":122.73,"text":"The fire brigade was called and two fire fighters freed George using a special type of grease."},{"index":16,"start":122.73,"end":132.58,"text":"George was not too upset by his experience because the lady who owns the sweet shop heard about his troubles and rewarded him with a large box of chocolates."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -413,6 +413,7 @@
       <p>第 11 句长，可按 <code>At first... / but fearing... / she changed...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -432,6 +433,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.88,"end":26.36,"text":"Kidnappers are rarely interested in animals, but they recently took considerable interest in Mrs. Eleanor Ramsay's cat."},{"index":2,"start":26.36,"end":36.36,"text":"Mrs. Eleanor Ramsay, a very wealthy old lady, has shared a flat with her cat, Rastus, for a great many years."},{"index":3,"start":36.36,"end":38.82,"text":"Rastus leads an orderly life."},{"index":4,"start":38.82,"end":45.58,"text":"He usually takes a short walk in the evenings and is always home by seven o'clock."},{"index":5,"start":45.58,"end":49.8,"text":"One evening, however he failed to arrive."},{"index":6,"start":49.8,"end":52.41,"text":"Mrs. Ramsay got very worried."},{"index":7,"start":52.41,"end":57.2,"text":"She looked everywhere for him but could not find him."},{"index":8,"start":57.2,"end":64.34,"text":"Three days after Rastus' disappearance, Mrs. Ramsay received an anonymous letter."},{"index":9,"start":64.34,"end":75.73,"text":"The writer stated that Rastus was in safe hands and would be returned immediately if Mrs. Ramsay paid a ransom of £1,000."},{"index":10,"start":75.73,"end":82.62,"text":"Mrs. Ramsay was instructed to place the money in a cardboard box and to leave it outside her door."},{"index":11,"start":82.62,"end":96.31,"text":"At first, she decided to go to the police, but fearing that she would never see Rastus again--the letter had made that quite clear--she changed her mind."},{"index":12,"start":96.31,"end":101.97,"text":"She withdrew £1000 from her bank and followed the kidnapper's instructions."},{"index":13,"start":101.97,"end":110.27,"text":"The next morning, the box had disappeared but Mrs. Ramsay was sure that the kidnapper would keep his word."},{"index":14,"start":110.27,"end":116.58,"text":"Sure enough, Rastus arrived punctually at seven o'clock that evening."},{"index":15,"start":116.58,"end":124.04,"text":"He looked very well, though he was rather thirsty, for he drank half a bottle of milk."},{"index":16,"start":124.04,"end":129.64,"text":"The police were astounded when Mrs. Ramsay told them what she had done."},{"index":17,"start":129.64,"end":133.38,"text":"She explained that Rastus was very dear to her."},{"index":18,"start":133.38,"end":137.46,"text":"Considering the amount she paid, he was dear in more ways than one!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

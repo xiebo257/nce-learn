@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -470,6 +470,7 @@
       <p>意群停顿: 第 19、23 句较长，可按时间状语、主句、从句分组，避免一口气读到底。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -489,6 +490,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.46,"end":21.14,"text":"Whether we find a joke funny or not largely depends on where we have been brought up."},{"index":2,"start":21.14,"end":27.58,"text":"The sense of humour is mysteriously bound up with national characteristics."},{"index":3,"start":27.58,"end":33.15,"text":"A Frenchman, for instance, might find it hard to laugh at a Russian joke."},{"index":4,"start":33.15,"end":43.08,"text":"In the same way, a Russian might fail to see anything amusing in a joke which would make an Englishman laugh to tears."},{"index":5,"start":43.08,"end":47.99,"text":"Most funny stories are based on comic situations."},{"index":6,"start":47.99,"end":54.56,"text":"In spite of national differences, certain funny situations have a universal appeal."},{"index":7,"start":54.56,"end":63.16,"text":"No matter where you live, you would find it difficult not to laugh at, say, Charlie Chaplin's early films."},{"index":8,"start":63.16,"end":71.51,"text":"However, a new type of humour, which stems largely from the U.S., has recently come into fashion."},{"index":9,"start":71.51,"end":73.86,"text":"It is called 'sick humour'."},{"index":10,"start":73.86,"end":82.68,"text":"Comedians base their jokes on tragic situations like violent death or serious accidents."},{"index":11,"start":82.68,"end":87.3,"text":"Many people find this sort of joke distasteful."},{"index":12,"start":87.3,"end":93.87,"text":"The following example of 'sick humour' will enable you to judge for yourself."},{"index":13,"start":93.87,"end":100.55,"text":"A man who had broken his right leg was taken to hospital a few weeks before Christmas."},{"index":14,"start":100.55,"end":108.84,"text":"From the moment he arrived there, he kept on pestering his doctor to tell him when he would be able to go home."},{"index":15,"start":108.84,"end":112.72,"text":"He dreaded having to spend Christmas in hospital."},{"index":16,"start":112.72,"end":117.98,"text":"Though the doctor did his best, the patient's recovery was slow."},{"index":17,"start":117.98,"end":123.68,"text":"On Christmas day, the man still had his right leg in plaster."},{"index":18,"start":123.68,"end":129.44,"text":"He spent a miserable day in bed thinking of all the fun he was missing."},{"index":19,"start":129.44,"end":141.56,"text":"The following day, however, the doctor consoled him by telling him that his chances of being able to leave hospital in time for New Year celebrations were good."},{"index":20,"start":141.56,"end":149.68,"text":"The man took heart and sure enough, on New Year's Eve he was able to hobble along to a party."},{"index":21,"start":149.68,"end":158.28,"text":"To compensate for his unpleasant experiences in hospital, the man drank a little more than was good for him."},{"index":22,"start":158.28,"end":167.15,"text":"In the process, he enjoyed himself thoroughly and kept telling everybody how much he hated hospitals."},{"index":23,"start":167.15,"end":175.07,"text":"He was still mumbling something about hospitals at the end of the party when he slipped on a piece of ice and broke his left leg."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

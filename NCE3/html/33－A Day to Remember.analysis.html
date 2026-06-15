@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -352,6 +353,7 @@
     <p>意群停顿: 第 18 句按 <code>Seeing a cake flying through the air / a lorry driver... / pulled up...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -371,6 +373,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.47,"end":19.83,"text":"We have all experienced days when everything goes wrong."},{"index":2,"start":19.83,"end":25.98,"text":"A day may begin well enough, but suddenly everything seems to get out of control."},{"index":3,"start":25.98,"end":33.97,"text":"What invariably happens is that a great number of things choose to go wrong at precisely the same moment."},{"index":4,"start":33.97,"end":39.93,"text":"It is as if a single unimportant event set up a chain of reactions."},{"index":5,"start":39.93,"end":47.23,"text":"Let us suppose that you are preparing a meal and keeping an eye on the baby at the same time."},{"index":6,"start":47.23,"end":55.44,"text":"The telephone rings and this marks the prelude to an unforeseen series of catastrophes."},{"index":7,"start":55.44,"end":66.49,"text":"While you are on the phone, the baby pulls the tablecloth off the table, smashing half your best crockery and cutting himself in the process."},{"index":8,"start":66.49,"end":71.9,"text":"You hang up hurriedly and attend to baby, crockery, etc."},{"index":9,"start":71.9,"end":74.62,"text":"Meanwhile, the meal gets burnt."},{"index":10,"start":74.62,"end":84.51,"text":"As if this were not enough to reduce you to tears, your husband arrives, unexpectedly bringing three guests to dinner."},{"index":11,"start":84.51,"end":93.52,"text":"Things can go wrong on a big scale as a number of people recently discovered in Parramatta, a suburb of Sydney."},{"index":12,"start":93.52,"end":101.09,"text":"During the rush hour one evening two cars collided and both drivers began to argue."},{"index":13,"start":101.09,"end":106.3,"text":"The woman immediately behind the two cars happened to be a learner."},{"index":14,"start":106.3,"end":110.97,"text":"She suddenly got into a panic and stopped her car."},{"index":15,"start":110.97,"end":114.8,"text":"This made the driver following her brake hard."},{"index":16,"start":114.8,"end":119.08,"text":"His wife was sitting beside him holding a large cake."},{"index":17,"start":119.08,"end":126.53,"text":"As she was thrown forward, the cake went right through the windscreen and landed on the road."},{"index":18,"start":126.53,"end":136.17,"text":"Seeing a cake flying through the air, a lorry driver who was drawing up alongside the car, pulled up all of a sudden."},{"index":19,"start":136.17,"end":145.47,"text":"The lorry was loaded with empty beer bottles and hundreds of them slid off the back of the vehicle and on to the road."},{"index":20,"start":145.47,"end":149.47,"text":"This led to yet another angry argument."},{"index":21,"start":149.47,"end":153.46,"text":"Meanwhile, the traffic piled up behind."},{"index":22,"start":153.46,"end":158.96,"text":"It took the police nearly an hour to get the traffic on the move again."},{"index":23,"start":158.96,"end":165.57,"text":"In the meantime, the lorry driver had to sweep up hundreds of broken bottles."},{"index":24,"start":165.57,"end":174.22,"text":"Only two stray dogs benefited from all this confusion, for they greedily devoured what was left of the cake."},{"index":25,"start":174.22,"end":176.72,"text":"It was just one of those days!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

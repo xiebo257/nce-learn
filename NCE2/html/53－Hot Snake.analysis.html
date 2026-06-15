@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>aʊt‿ə、ˈfaɪr‿ɪn 连读；ə、ət、həv 弱读/弱化； ˈfaɪr‿ɑr‿ˈɔfn、ɡlæs‿ɔr、ˌsɪɡəˈrɛt‿ɛnd 连读；ɑr 弱读/弱化； ˈfaɪrmən‿ɪɡˈzæmən、find‿ˈɛni 连读；ðə、tə、wɚ 弱读/弱化； wɚ‿ˈɔlsoʊ、ðæt‿ə、ˌsɪɡəˈrɛt‿ɛnd 连读；ðə、ə、wɚ 弱读/弱化； haʊˈɛvər‿ə、ˈfaɪrmən‿ˌæksəˈdɛnəli 连读；ðə、ə 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.44,"end":21.11,"text":"At last firemen have put out a big forest fire in California."},{"index":2,"start":21.11,"end":27.63,"text":"Since then, they have been trying to find out how the fire began."},{"index":3,"start":27.63,"end":37.96,"text":"Forest fires are often caused by broken glass or by cigarette ends which people carelessly throw away."},{"index":4,"start":37.96,"end":46.8,"text":"Yesterday the firemen examined the ground carefully, but were not able to find any broken glass."},{"index":5,"start":46.8,"end":53.01,"text":"They were also quite sure that a cigarette end did not start the fire."},{"index":6,"start":53.01,"end":59.38,"text":"This morning, however, a firemen accidentally discovered the cause."},{"index":7,"start":59.38,"end":69.98,"text":"He noticed the remains of a snake which was wound round the electric wires of a 16, 000-volt power line."},{"index":8,"start":69.98,"end":74.65,"text":"In this way, he was able to solve the mystery."},{"index":9,"start":74.65,"end":80.03,"text":"The explanation was simple but very unusual."},{"index":10,"start":80.03,"end":87.83,"text":"A bird had snatched up the snake from the ground and then dropped it on to the wires."},{"index":11,"start":87.83,"end":91.74,"text":"The snake then wound itself round the wires."},{"index":12,"start":91.74,"end":98.99,"text":"When it did so, it sent sparks down to the ground and these immediately started a fire."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

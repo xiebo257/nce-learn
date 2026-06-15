@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -307,6 +308,7 @@
     <p>意群停顿: 第 4 句很长，可按 <code>She was thinking... / when she remembered... / and she knew...</code> 分组；第 16 句按 <code>inspector began... / while constable checked... / thereby proving...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -326,6 +328,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.73,"end":20.86,"text":"The old lady was glad to be back at the block of flats where she lived."},{"index":2,"start":20.86,"end":28.27,"text":"Her shopping had tired her and her basket had grown heavier with every step of the way home."},{"index":3,"start":28.27,"end":42.07,"text":"In the lift her thoughts were on lunch and a good rest; but when she got out at her own floor, both were forgotten in her sudden discovery that her front door was open."},{"index":4,"start":42.07,"end":60.63,"text":"She was thinking that she must reprimand her home help the next morning for such a monstrous piece of negligence, when she remembered that she had gone shopping after the home help had left and she knew that she had turned both keys in their locks."},{"index":5,"start":60.63,"end":72.69,"text":"She walked slowly into the hall and at once noticed that all the room doors were open, yet following her regular practice she had shut them before going out."},{"index":6,"start":72.69,"end":79.28,"text":"Looking into the drawing room, she saw a scene of confusion over by her writing desk."},{"index":7,"start":79.28,"end":85.89,"text":"It was as clear as daylight then that burglars had forced an entry during her absence."},{"index":8,"start":85.89,"end":101.71,"text":"Her first impulse was to go round all the rooms looking for the thieves, but then she decided that at her age it might be more prudent to have someone with her, so she went to fetch the porter from his basement."},{"index":9,"start":101.71,"end":112.27,"text":"By this time her legs were beginning to tremble, so she sat down and accepted a cup of very strong tea, while he telephoned the police."},{"index":10,"start":112.27,"end":124.54,"text":"Then, her composure regained, she was ready to set off with the porter's assistance to search for any intruders who might still be lurking in her flat."},{"index":11,"start":124.54,"end":133.88,"text":"They went through the rooms, being careful to touch nothing, as they did not want to hinder the police in their search for fingerprints."},{"index":12,"start":133.88,"end":137.27,"text":"The chaos was inconceivable."},{"index":13,"start":137.27,"end":151.08,"text":"She had lived in the flat for thirty years and was a veritable magpie at hoarding: and it seemed as though everything she possessed had been tossed out and turned over and over."},{"index":14,"start":151.08,"end":158.73,"text":"At least sorting out the things she should have discarded years ago was now being made easier for her."},{"index":15,"start":158.73,"end":167.15,"text":"Then a police inspector arrived with a constable and she told them of her discovery of the ransacked flat."},{"index":16,"start":167.15,"end":182.03,"text":"The inspector began to look for fingerprints, while the constable checked that the front door locks had not been forced, thereby proving that the burglars had either used skeleton keys or entered over the balcony."},{"index":17,"start":182.03,"end":193.07,"text":"There was no trace of fingerprints, but the inspector found a dirty red bundle that contained jewellery which the old lady said was not hers."},{"index":18,"start":193.07,"end":201.84,"text":"So their entry into this flat was apparently not the burglars' first job that day and they must have been disturbed."},{"index":19,"start":201.84,"end":212.11,"text":"The inspector then asked the old lady to try to check what was missing by the next day, and advised her not to stay alone in the flat for a few nights."},{"index":20,"start":212.11,"end":224.7,"text":"The old lady thought he was a fussy creature, but since the porter agreed with him, she rang up her daughter and asked for her help in what she described as a little spot of bother."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -303,6 +304,7 @@
     <p>意群停顿: 第 20 句按 <code>Assuming that... / Hans settled down... / where he had remained...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -322,6 +324,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":13.45,"end":17.13,"text":"We are less credulous than we used to be."},{"index":2,"start":17.13,"end":30.29,"text":"In the nineteenth century, a novelist would bring his story to a conclusion by presenting his readers with a series of coincidences--most of them wildly improbable."},{"index":3,"start":30.29,"end":37.78,"text":"Readers happily accepted the fact that an obscure maidservant was really the hero's mother."},{"index":4,"start":37.78,"end":49.25,"text":"A long-lost brother, who was presumed dead, was really alive all the time and wickedly plotting to bring about the hero's downfall."},{"index":5,"start":49.25,"end":50.02,"text":"And so on."},{"index":6,"start":50.02,"end":56.13,"text":"Modern readers would find such naive solutions totally unacceptable."},{"index":7,"start":56.13,"end":69.39,"text":"Yet, in real life, circumstances do sometimes conspire to bring about coincidences which anyone but a nineteenth century novelist would find incredible."},{"index":8,"start":69.39,"end":81.39,"text":"When I was a boy, my grandfather told me how a German taxi driver, Franz Bussman, found a brother who was thought to have been killed twenty years before."},{"index":9,"start":81.39,"end":87.1,"text":"While on a walking tour with his wife, he stopped to talk to a workman."},{"index":10,"start":87.1,"end":98.71,"text":"After they had gone on, Mrs. Bussman commented on the workman's close resemblance to her husband and even suggested that he might be his brother."},{"index":11,"start":98.71,"end":107.35,"text":"Franz poured scorn on the idea, pointing out that his brother had been killed in action during the war."},{"index":12,"start":107.35,"end":117.09,"text":"Though Mrs. Bussman was fully acquainted with this story, she thought that there was a chance in a million that she might be right."},{"index":13,"start":117.09,"end":125.01,"text":"A few days later, she sent a boy to the workman to ask him if his name was Hans Bussman."},{"index":14,"start":125.01,"end":133.94,"text":"Needless to say, the man's name was Hans Bussman and he really was Franz's long-lost brother."},{"index":15,"start":133.94,"end":140.36,"text":"When the brothers were reunited, Hans explained how it was that he was still alive."},{"index":16,"start":140.36,"end":149.84,"text":"After having been wounded towards the end of the war, he had been sent to hospital and was separated from his unit."},{"index":17,"start":149.84,"end":157.64,"text":"The hospital had been bombed and Hans had made his way back into Western Germany on foot."},{"index":18,"start":157.64,"end":163.74,"text":"Meanwhile, his unit was lost and all records of him had been destroyed."},{"index":19,"start":163.74,"end":173.03,"text":"Hans returned to his family home, but the house had been bombed and no one in the neighbourhood knew what had become of the inhabitants."},{"index":20,"start":173.03,"end":182.08,"text":"Assuming that his family had been killed during an air raid, Hans settled down in a village fifty miles away where he had remained ever since."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

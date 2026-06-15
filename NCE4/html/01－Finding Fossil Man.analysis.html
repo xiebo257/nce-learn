@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -183,6 +184,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. We can read of things that happened 5, 000 years ago in the Near East, where people first learned to write.； 3. The only way that they can preserve their history is to recount it as sagas legends handed down from one generation of storytellers to another.； 4. These legends are useful because they can tell us something about migrations of people who lived long ago, but none could write down what they did.； 10. They may also have used wood and skins, but these have rotted away.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>read‿əv、jɪr‿əˈɡoʊ、nɪr‿ist 连读；ðə、tə、kən、əv 弱读/弱化； ðɛr‿ɑr、pɑrt‿əv、wɛr‿ˈivən 连读；ðə、əv、ɑr 弱读/弱化； ði‿ˈoʊnli、riˈkaʊnt‿ɪt‿əz、frəm‿one、ˌdʒɛnəˈreɪʃən‿əv 连读；ði、əz、tə、kən、əv、ɪz 弱读/弱化； ˈlɛdʒənd‿ɑr、tɛl‿əs、ˈsəmˌθɪŋ‿əˈbaʊt、migrations‿əv、long‿əˈɡoʊ 连读；kən、əv、ɑr 弱读/弱化； ˈænˌsɛstər‿əv、living‿ɪn、pəˈsɪfɪk‿islandscame 连读；ðə、əv、frəm 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -202,6 +204,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.43,"end":26.92,"text":"We can read of things that happened 5, 000 years ago in the Near East, where people first learned to write."},{"index":2,"start":26.92,"end":33.4,"text":"But there are some parts of the world where even now people cannot write."},{"index":3,"start":33.4,"end":46.15,"text":"The only way that they can preserve their history is to recount it as sagas legends handed down from one generation of storytellers to another."},{"index":4,"start":46.15,"end":57.67,"text":"These legends are useful because they can tell us something about migrations of people who lived long ago, but none could write down what they did."},{"index":5,"start":57.67,"end":66.91,"text":"Anthropologists wondered where the remote ancestors of the Polynesian peoples now living in the Pacific Islandscame from."},{"index":6,"start":66.91,"end":75.26,"text":"The sagas of these people explain that some of them came from Indonesia about 2, 000 years ago."},{"index":7,"start":75.26,"end":85.71,"text":"But the first people who were like ourselves lived so long ago that even their sagas, if they had any, are forgotten."},{"index":8,"start":85.71,"end":94.84,"text":"So archaeologists have neither history nor legends to help them to find out where the first 'modern men' came from."},{"index":9,"start":94.84,"end":105.74,"text":"Fortunately, however, ancient men made tools of stone, especially flint, because this is easier to shape than other kinds."},{"index":10,"start":105.74,"end":112.16,"text":"They may also have used wood and skins, but these have rotted away."},{"index":11,"start":112.16,"end":123.91,"text":"Stone does not decay, and so the tools of long ago have remained when even the bones of the men who made them have disappeared without trace."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

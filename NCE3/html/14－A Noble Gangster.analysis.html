@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -342,6 +342,7 @@
       <p>长句可按时间状语、主句、定语从句分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -361,6 +362,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.2,"end":26.33,"text":"There was a time when the owners of shops and businesses in Chicago had to pay large sums of money to gangsters in return for 'protection'."},{"index":2,"start":26.33,"end":35.46,"text":"If the money was not paid promptly, the gangsters would quickly put a man out of business by destroying his shop."},{"index":3,"start":35.46,"end":39.67,"text":"Obtaining 'protection money' is not a modern crime."},{"index":4,"start":39.67,"end":56.51,"text":"As long ago as the fourteenth century, an Englishman, Sir John Hawkwood, made the remarkable discovery that people would rather pay large sums of money than have their life work destroyed by gangsters."},{"index":5,"start":56.51,"end":65.36,"text":"Six hundred years ago, Sir John Hawkwood arrived in Italy with a band of soldiers and settled near Florence."},{"index":6,"start":65.36,"end":73.45,"text":"He soon made a name for himself and came to be known to the Italians as Giovanni Acuto."},{"index":7,"start":73.45,"end":85.4,"text":"Whenever the Italian city-states were at war with each other, Hawkwood used to hire his soldiers to princes who were willing to pay the high price he demanded."},{"index":8,"start":85.4,"end":100.29,"text":"In times of peace, when business was bad, Hawkwood and his men would march into a city-state, and after burning down a few farms, would offer to go away if protection money was paid to them."},{"index":9,"start":100.29,"end":104.35,"text":"Hawkwood made large sums of money in this way."},{"index":10,"start":104.35,"end":109.86,"text":"In spite of this, the Italians regarded him as a sort of hero."},{"index":11,"start":109.86,"end":123.24,"text":"When he died at the age of eighty, the Florentines gave him a state funeral and had a picture painted which was dedicated to the memory of 'the most valiant soldier and most notable leader, Signor Giovanni Haukodue'."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

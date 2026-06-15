@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -289,6 +290,7 @@
       <p>比较级结构第 15 句可按 <code>the further... / the less...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -308,6 +310,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.34,"end":21.77,"text":"Cats never fail to fascinate human beings."},{"index":2,"start":21.77,"end":29.47,"text":"They can be friendly and affectionate towards humans, but they lead mysterious lives of their own as well."},{"index":3,"start":29.47,"end":33.63,"text":"They never become submissive like dogs and horses."},{"index":4,"start":33.63,"end":39.36,"text":"As a result, humans have learned to respect feline independence."},{"index":5,"start":39.36,"end":43.91,"text":"Most cats remain suspicious of humans all their lives."},{"index":6,"start":43.91,"end":51.86,"text":"One of the things that fascinates us most about cats is the popular belief that they have nine lives."},{"index":7,"start":51.86,"end":57.69,"text":"Apparently, there is a good deal of truth in this idea."},{"index":8,"start":57.69,"end":63.18,"text":"A cat's ability to survive falls is based on fact."},{"index":9,"start":63.18,"end":73,"text":"Recently the New York Animal Medical Centre made a study of 132 cats over a period of five months."},{"index":10,"start":73,"end":84.07,"text":"All these cats had one experience in common: they had fallen off high buildings, yet only eight of them died from shock or injuries."},{"index":11,"start":84.07,"end":93.79,"text":"Of course, New York is the ideal place for such an interesting study, because there is no shortage of tall buildings."},{"index":12,"start":93.79,"end":98.48,"text":"There are plenty of high-rise windowsills to fall from!"},{"index":13,"start":98.48,"end":106.89,"text":"One cat, Sabrina, fell 32 storeys, yet only suffered from a broken tooth."},{"index":14,"start":106.89,"end":112.15,"text":"'Cats behave like well-trained paratroopers,' a doctor said."},{"index":15,"start":112.15,"end":119.16,"text":"It seems that the further cats fall, the less they are likely to injure themselves."},{"index":16,"start":119.16,"end":125.01,"text":"In a long drop, they reach speeds of 60 miles an hour and more."},{"index":17,"start":125.01,"end":129.23,"text":"At high speeds, falling cats have time to relax."},{"index":18,"start":129.23,"end":133.69,"text":"They stretch out their legs like flying squirrels."},{"index":19,"start":133.69,"end":139.61,"text":"This increases their air-resistance and reduces the shock of impact when they hit the ground."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

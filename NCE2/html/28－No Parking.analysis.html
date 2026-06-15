@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>9. Jasper hopes that she will turn cars and their owners to stone.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>waɪɾ‿ɪz‿one、bəˈliv‿ɪn 连读；əv、ɪz 弱读/弱化；waɪɾ‿ɪz‿one 中 /ɾ/ 为美式闪音； bɔt‿ə、haʊs‿ɪn、bət‿ˈɛvər、moved‿ɪn、kɑr‿ən 连读；ðə、ə、ən、həd、həz 弱读/弱化； pɑrk‿ə 连读；ə、ət、həz 弱读/弱化； bəˈkəz‿əv、hɪz‿oʊn、kɑr‿ˈɪntu、ɡəˈrɑʒ‿ˈivən 连读；tə、əv、həz 弱读/弱化； pʊt‿əp、həd‿ˈɛni 连读；həd、həz、həv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.22,"end":21.12,"text":"Jasper White is one of those rare people who believes in ancient myths."},{"index":2,"start":21.12,"end":31.96,"text":"He has just bought a new house in the city, but ever since he moved in, he has had trouble with cars and their owners."},{"index":3,"start":31.96,"end":40.56,"text":"When he returns home at night, he always finds that someone has parked a car outside his gate."},{"index":4,"start":40.56,"end":49.02,"text":"Because of this, he has not been able to get his own car into his garage even once."},{"index":5,"start":49.02,"end":58.94,"text":"Jasper has put up 'No Parking' signs outside his gate, but these have not had any effect."},{"index":6,"start":58.94,"end":64.19,"text":"Now he has put an ugly stone head over the gate."},{"index":7,"start":64.19,"end":69.51,"text":"It is one of the ugliest faces I have ever seen."},{"index":8,"start":69.51,"end":76.75,"text":"I asked him what it was and he told me that it was Medusa, the Gorgon."},{"index":9,"start":76.75,"end":82.58,"text":"Jasper hopes that she will turn cars and their owners to stone."},{"index":10,"start":82.58,"end":86.41,"text":"But none of them has been turned to stone yet!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

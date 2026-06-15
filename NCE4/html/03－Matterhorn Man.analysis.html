@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. Modern alpinists try to climb mountains by a route which will give them good sport, and the more difficult it is, the more highly it is regarded.； 4. It is true that during their explorations they often faced difficulties and dangers of the most perilous nature, equipped in a manner which would make a modern climber shudder at the thought, but they did not go out of their way to court such excitement.； 10. Often a valley boasted no inn at all, and climbers found shelter wherever they could -- sometimes with the local priest (who was usually as poor as his parishioners), sometimes with shepherds or cheese-makers.； 12. For men accustomed to eating seven-course dinners and sleeping between fine linen sheets at home, the change to the Alps must have been very hard indeed.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>spɔrt‿ən、ˈdɪfəkəlt‿ɪt‿ɪz、ɪt‿ɪz 连读；ðə、ə、ən、tə、ɪz 弱读/弱化； keɪs‿ət‿ɔl 连读；ðə、ət、wəz 弱读/弱化； ði‿ˈərli、ði‿ˈizi、sɔt‿əsˈpɛʃəli、ɪf‿ɪt、bɪn‿əˈteɪn 连读；ðə、ði、tə、wəz、wɚ、fɚ 弱读/弱化； ɪt‿ɪz、ðɛr‿ˌɛkspləˈreɪʃən、ˈdeɪndʒər‿əv、ˈneɪtʃər‿əˈkwɪp‿ɪn‿ə、ˈʃədər‿ət 连读；ðə、ə、ən、ət、tə、əv 弱读/弱化； həd‿ə、eɪm‿ə 连读；ðə、ə、həd 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.3,"end":27.38,"text":"Modern alpinists try to climb mountains by a route which will give them good sport, and the more difficult it is, the more highly it is regarded."},{"index":2,"start":27.38,"end":33.65,"text":"In the pioneering days however, this was not the case at all."},{"index":3,"start":33.65,"end":46.25,"text":"The early climbers were looking for the easiest way to the top because the summit was the prize they sought, especially if it had never been attained before."},{"index":4,"start":46.25,"end":65.87,"text":"It is true that during their explorations they often faced difficulties and dangers of the most perilous nature, equipped in a manner which would make a modern climber shudder at the thought, but they did not go out of their way to court such excitement."},{"index":5,"start":65.87,"end":72.55,"text":"They had a single aim, a solitary goal -- the top!"},{"index":6,"start":72.55,"end":79.21,"text":"It is hard for us to realize nowadays how difficult it was for the pioneers."},{"index":7,"start":79.21,"end":87.74,"text":"Except for one or two places such as Zermatt and Chamonix, which had rapidly become popular."},{"index":8,"start":87.74,"end":96.4,"text":"Alpine villages tended to be impoverished settlements cut off from civilization by the high mountains."},{"index":9,"start":96.4,"end":111.85,"text":"Such inns as there were were generally dirty and flea-ridden; the food simply local cheese accompanied by bread often twelve months old, all washed down with coarse wine."},{"index":10,"start":111.85,"end":128.72,"text":"Often a valley boasted no inn at all, and climbers found shelter wherever they could -- sometimes with the local priest (who was usually as poor as his parishioners), sometimes with shepherds or cheese-makers."},{"index":11,"start":128.72,"end":137.08,"text":"Invariably the background was the same:dirt and poverty, and very uncomfortable."},{"index":12,"start":137.08,"end":149.24,"text":"For men accustomed to eating seven-course dinners and sleeping between fine linen sheets at home, the change to the Alps must have been very hard indeed."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

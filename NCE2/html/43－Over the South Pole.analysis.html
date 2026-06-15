@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>5. At one point, it seemed certain that their plane would crash.； 6. It could only get over the mountains if it rose to 10, 000 feet.； 9. Byrd now knew that he would be able to reach the South Pole which was 300 miles away, for there were no more mountains in sight.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>jɪr‿ˈæftər、flaɪt‿ˈoʊvər、ði‿əˈmɛrkn‿ɪkˈsplɔrər‿ɑr 连读；ðə、ði、ɑr 弱读/弱化； byrd‿ən、teɪk‿ə、ˈfoʊdəˌɡræf‿əv、ran‿ˈɪntu 连读；ðə、ə、ən、ət、tə、əv 弱读/弱化； ət‿one、pɔɪnt‿ɪt 连读；ət 弱读/弱化； kəd‿ˈoʊnli、ɡɛt‿ˈoʊvər、mountains‿ɪf‿ɪt 连读；ðə、tə 弱读/弱化； byrd‿ət、wəns‿ˈɔrdərd 连读；ət、tə 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.88,"end":26.01,"text":"In 1929, three years after his flight over the North Pole, the American explorer, R."},{"index":2,"start":26.01,"end":26.51,"text":"E."},{"index":3,"start":26.39,"end":32.03,"text":"Byrd, successfully flew over the South Pole for the first time."},{"index":4,"start":32.03,"end":46.01,"text":"Though, at first, Byrd and his men were able to take a great many photographs of the mountains that lay below, they soon ran into serious trouble."},{"index":5,"start":46.01,"end":51.39,"text":"At one point, it seemed certain that their plane would crash."},{"index":6,"start":51.39,"end":57.71,"text":"It could only get over the mountains if it rose to 10, 000 feet."},{"index":7,"start":57.71,"end":64.15,"text":"Byrd at once ordered his men to throw out two heavy food sacks."},{"index":8,"start":64.15,"end":71.03,"text":"The plane was then able to rise and it cleared the mountains by 400 feet."},{"index":9,"start":71.03,"end":82.53,"text":"Byrd now knew that he would be able to reach the South Pole which was 300 miles away, for there were no more mountains in sight."},{"index":10,"start":82.53,"end":89.03,"text":"The aircraft was able to fly over the endless white plains without difficulty."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -163,6 +164,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>4. It is said that if anyone touches the tree, he will have bad luck; if he picks a leaf, he will die.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ˈvɪlɪdʒ‿əv、pəˈzɛs‿ə 连读；ðə、ə、tə、əv、ɪz 弱读/弱化； ˈmɛnʃn‿ɪn‿ə、ˈnəmbər‿əv 连读；ðə、ə、tə、əv、wəz、həz 弱读/弱化； jɪr‿əˈɡoʊ、bət‿ɪt‿ɪz‿ˈoʊnli、ðæt‿ɪt、ɡeɪn‿ən‿ˈivl 连读；ðə、ən、ɪz、wəz、həz 弱读/弱化； ɪt‿ɪz、ðæt‿ɪf‿ˈɛniˌwən、lək‿ɪf、pɪk‿ə 连读；ðə、ə、ɪz、həv 弱读/弱化； həz‿ˌɔlˈrɛdi、kleɪm‿ə、ˈnəmbər‿əv 连读；ðə、ə、əv、həz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -182,6 +184,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.94,"end":22.89,"text":"The tiny village of Frinley is said to possess a 'cursed tree'."},{"index":2,"start":22.89,"end":31.71,"text":"Because the tree was mentioned in a newspaper, the number of visitors to Frinley has now increased."},{"index":3,"start":31.71,"end":43.07,"text":"The tree was planted near the church fifty years ago, but it is only in recent years that it has gained an evil reputation."},{"index":4,"start":43.07,"end":52.89,"text":"It is said that if anyone touches the tree, he will have bad luck; if he picks a leaf, he will die."},{"index":5,"start":52.89,"end":59.95,"text":"Many villagers believe that the tree has already claimed a number of victims."},{"index":6,"start":59.95,"end":68.52,"text":"The vicar has been asked to have the tree cut down, but so far he has refused."},{"index":7,"start":68.52,"end":80.04,"text":"He has pointed out that the tree is a useful source of income, as tourists have been coming from all parts of the country to see it."},{"index":8,"start":80.04,"end":89.1,"text":"In spite of all that has been said, the tourists have been picking leaves and cutting their names on the tree-trunk."},{"index":9,"start":89.1,"end":94.18,"text":"So far, not one of them has been struck down by sudden death!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

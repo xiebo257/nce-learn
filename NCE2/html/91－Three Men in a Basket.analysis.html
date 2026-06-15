@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>3. The officer in the control tower was very angry when he heard the news, because balloons can be a great danger to aircraft.； 4. He said that someone might be spying on the station and the pilot was ordered to keep track of the strange object.； 6. He could make out three men in a basket under it and one of them was holding a pair of binoculars.； 9. The police were called in, but they could not arrest anyone, for the basket contained two Members of Parliament and the Commanding Officer of the station!。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ˈnoʊdəs‿ə、fɚ‿ə 连读；ə、tə、fɚ 弱读/弱化； ˈsteɪʃən‿ət 连读；ðə、ət、tə、wəz 弱读/弱化； ði‿ˈɔfəsər‿ɪn 连读；ðə、ði、ə、tə、kən、wəz 弱读/弱化； ˈspaɪɪŋ‿ɔn、ˈsteɪʃən‿ən、wəz‿ˈɔrdərd、track‿əv、streɪndʒ‿object 连读；ðə、ən、tə、əv、wəz 弱读/弱化； men‿ɪn‿ə、ˈbæskət‿ˈəndər‿ɪt‿ən‿one、ˈhoʊldɪŋ‿ə、pɛr‿əv 连读；ə、ən、əv、wəz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.33,"end":24.07,"text":"A pilot noticed a balloon which seemed to be making for a Royal Air Force station nearby."},{"index":2,"start":24.07,"end":31.75,"text":"He informed the station at once, but no one there was able to explain the mystery."},{"index":3,"start":31.75,"end":42.83,"text":"The officer in the control tower was very angry when he heard the news, because balloons can be a great danger to aircraft."},{"index":4,"start":42.83,"end":52.04,"text":"He said that someone might be spying on the station and the pilot was ordered to keep track of the strange object."},{"index":5,"start":52.04,"end":56.94,"text":"The pilot managed to circle the balloon for some time."},{"index":6,"start":56.94,"end":64.92,"text":"He could make out three men in a basket under it and one of them was holding a pair of binoculars."},{"index":7,"start":64.92,"end":72.18,"text":"When the balloon was over the station, the pilot saw one of the men taking photographs."},{"index":8,"start":72.18,"end":79.25,"text":"Soon afterwards, the balloon began to descend and it landed near an airfield."},{"index":9,"start":79.25,"end":91.62,"text":"The police were called in, but they could not arrest anyone, for the basket contained two Members of Parliament and the Commanding Officer of the station!"},{"index":10,"start":91.62,"end":100.79,"text":"As the Commanding Officer explained later, one half of the station did not know what the other half was doing!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

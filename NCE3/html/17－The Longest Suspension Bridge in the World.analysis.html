@@ -185,7 +185,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -392,6 +392,7 @@
       <p>数字较多，读时可单独成意群。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -411,6 +412,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.67,"end":28.43,"text":"Verrazano, an Italian about whom little is known, sailed into New York Harbour in 1524 and named it Angouleme."},{"index":2,"start":28.43,"end":39.43,"text":"He described it as 'a very agreeable situation located within two small hills in the midst of which flowed a great river.'"},{"index":3,"start":39.43,"end":59.32,"text":"Though Verrazano is by no means considered to be a great explorer, his name will probably remain immortal, for on November 21st, 1964, the longest suspension bridge in the world was named after him."},{"index":4,"start":59.32,"end":67.72,"text":"The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."},{"index":5,"start":67.72,"end":72.52,"text":"It has a span of 4,260 feet."},{"index":6,"start":72.52,"end":79.92,"text":"The bridge is so long that the shape of the earth had to be taken into account by its designer."},{"index":7,"start":79.92,"end":85.53,"text":"Two great towers support four huge cables."},{"index":8,"start":85.53,"end":92.28,"text":"The towers are built on immense underwater platforms made of steel and concrete."},{"index":9,"start":92.28,"end":97.65,"text":"The platforms extend to a depth of over 100 feet under the sea."},{"index":10,"start":97.65,"end":101.48,"text":"These alone took sixteen months to build."},{"index":11,"start":101.48,"end":108.25,"text":"Above the surface of the water, the towers rise to a height of nearly 700 feet."},{"index":12,"start":108.25,"end":112.62,"text":"They support the cables from which the bridge has been suspended."},{"index":13,"start":112.62,"end":119.62,"text":"Each of the four cables contains 26,108 lengths of wire."},{"index":14,"start":119.62,"end":129.73,"text":"It has been estimated that if the bridge were packed with cars, it would still only be carrying a third of its total capacity."},{"index":15,"start":129.73,"end":135.93,"text":"However, size and strength are not the only important things about this bridge."},{"index":16,"start":135.93,"end":147.18,"text":"Despite its immensity, it is both simple and elegant, fulfilling its designer's dream to create 'an enormous object drawn as faintly as possible'."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

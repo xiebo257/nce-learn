@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -311,6 +312,7 @@
     <p>意群停顿: 第 20 句按 <code>This exhibition received... / for though... / they had in fact...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -330,6 +332,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.37,"end":22.11,"text":"True eccentrics never deliberately set out to draw attention to themselves."},{"index":2,"start":22.11,"end":29.72,"text":"They disregard social conventions without being conscious that they are doing anything extraordinary."},{"index":3,"start":29.72,"end":40.57,"text":"This invariably wins them the love and respect of others, for they add colour to the dull routine of everyday life."},{"index":4,"start":40.57,"end":47.86,"text":"Up to the time of his death, Richard Colson was one of the most notable figures in our town."},{"index":5,"start":47.86,"end":57.14,"text":"He was a shrewd and wealthy businessman, but most people in the town hardly knew anything about this side of his life."},{"index":6,"start":57.14,"end":65.8,"text":"He was known to us all as Dickie and his eccentricity had become legendary long before he died."},{"index":7,"start":65.8,"end":68.92,"text":"Dickie disliked snobs intensely."},{"index":8,"start":68.92,"end":75.83,"text":"Though he owned a large car, he hardly ever used it, preferring always to go on foot."},{"index":9,"start":75.83,"end":81.11,"text":"Even when it was raining heavily, he refused to carry an umbrella."},{"index":10,"start":81.11,"end":89.15,"text":"One day, he walked into an expensive shop after having been caught in a particularly heavy shower."},{"index":11,"start":89.15,"end":100.84,"text":"He wanted to buy a £300 watch for his wife, but he was in such a bedraggled condition that an assistant refused to serve him."},{"index":12,"start":100.84,"end":107.2,"text":"Dickie left the shop without a word and returned carrying a large cloth bag."},{"index":13,"start":107.2,"end":111.79,"text":"As it was extremely heavy, he dumped it on the counter."},{"index":14,"start":111.79,"end":120.08,"text":"The assistant asked him to leave, but Dickie paid no attention to him and requested to see the manager."},{"index":15,"start":120.08,"end":129.63,"text":"Recognizing who the customer was, the manager was most apologetic and reprimanded the assistant severely."},{"index":16,"start":129.63,"end":135.59,"text":"When Dickie was given the watch, he presented the assistant with the cloth bag."},{"index":17,"start":135.59,"end":140.43,"text":"It contained £300 in pennies."},{"index":18,"start":140.43,"end":148.76,"text":"He insisted on the assistant's counting the money before he left--30,000 pennies in all!"},{"index":19,"start":148.76,"end":157.2,"text":"On another occasion, he invited a number of important critics to see his private collection of modern paintings."},{"index":20,"start":157.2,"end":170.63,"text":"This exhibition received a great deal of attention in the press, for though the pictures were supposed to be the work of famous artists, they had in fact been painted by Dickie."},{"index":21,"start":170.63,"end":178.63,"text":"It took him four years to stage this elaborate joke simply to prove that critics do not always know what they are talking about."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

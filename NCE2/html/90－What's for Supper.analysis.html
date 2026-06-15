@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -153,6 +154,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>3. Oil rigs have to be repaired frequently and divers, who often have to work in darkness a hundred feet under water, have been frightened out of their wits by giant fish bumping into them as they work.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>fɪʃ‿ən、həz‿ˈɔlˌweɪz、bɪn‿ə、dɪʃ‿ɪn、bət‿əz 连读；ði、ə、ən、əz、həz、həv 弱读/弱化； kəm‿əz‿ə、fɪʃ‿ɑr、ˈdaɪvər‿ɔn 连读；ðə、ə、əz、tə、ɑr 弱读/弱化； wərk‿ɪn、ˈdɑrknəs‿ə、fit‿ˈəndər、aʊt‿əv、bəmp‿ˈɪntu 连读；ə、ən、əz、tə、əv、həv 弱读/弱化； fɪʃ‿ɑr、ʃɑrk‿ɔr、ˈfeɪvrət‿ˈidɪŋ、kɑd‿ən、ˈsəmˌtaɪmz‿əz 连读；ðə、ən、əz、tə、ɑr 弱读/弱化； hɑt‿ɔɪl、paɪp‿ˈəndər、θroʊn‿ˈoʊvərˌbɔrd、ˈtoʊdl‿ˈæbsəns‿əv、ði‿ɔɪl 连读；ðə、ði、tə、əv、həv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -172,6 +174,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.64,"end":27.29,"text":"Fish and chips has always been a favourite dish in Britain, but as the oceans have been overfished, fish has become more and more expensive."},{"index":2,"start":27.29,"end":37.3,"text":"So it comes as a surprise to learn that giant fish are terrifying the divers on North Sea oil rigs."},{"index":3,"start":37.3,"end":54.83,"text":"Oil rigs have to be repaired frequently and divers, who often have to work in darkness a hundred feet under water, have been frightened out of their wits by giant fish bumping into them as they work."},{"index":4,"start":54.83,"end":61.06,"text":"Now they have had special cages made to protect them from these monsters."},{"index":5,"start":61.06,"end":77.85,"text":"The fish are not sharks or killer whales, but favourite eating varieties like cod and skate which grow to unnatural sizes, sometimes as much as twelve feet in length."},{"index":6,"start":77.85,"end":99.95,"text":"Three factors have caused these fish to grow so large: the warm water round the hot oil pipes under the sea; the plentiful supply of food thrown overboard by the crews on the rigs; the total absence of fishing boats around the oil rigs."},{"index":7,"start":99.95,"end":109.24,"text":"As a result, the fish just eat and eat and grow and grow in the lovely warm water."},{"index":8,"start":109.24,"end":112.24,"text":"Who eats who?"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

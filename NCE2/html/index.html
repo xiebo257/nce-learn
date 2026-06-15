@@ -20,11 +20,12 @@
     .lesson-no { color: #7c93ff; font-size: 13px; font-weight: 700; }
     strong { font-size: 17px; line-height: 1.28; }
     .lesson-card span:last-child { color: #86efac; font-size: 13px; }
-      .back-top { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 12px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; color: #fff; background: rgba(17,24,39,.94); box-shadow: 0 10px 28px rgba(0,0,0,.32); font-size: 13px; font-weight: 700; }
-    .back-top:hover, .back-top:focus-visible { background: #0f766e; outline: 3px solid rgba(15,118,110,.24); }
+      .back-top, .back-prev { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 12px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; color: #fff; background: rgba(17,24,39,.94); box-shadow: 0 10px 28px rgba(0,0,0,.32); font-size: 13px; font-weight: 700; }
+    .back-prev { bottom: 68px; }
+    .back-top:hover, .back-top:focus-visible, .back-prev:hover, .back-prev:focus-visible { background: #0f766e; outline: 3px solid rgba(15,118,110,.24); }
   </style>
 </head>
-<body>
+<body id="top">
   <main class="shell">
     <div class="topbar">
       <div>
@@ -516,6 +517,15 @@
       </a>
     </div>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top" aria-label="Back to top">Top</a>
+  <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+  </script>
 </body>
 </html>

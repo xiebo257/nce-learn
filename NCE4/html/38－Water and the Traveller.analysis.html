@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -263,6 +264,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>3. Intermittent tap-water supplies should be regarded as particularly suspect.； 4. Travellers on short trips to areas with water supplies of uncertain quality should avoid drinking tap-water, or untreated water from any other source.； 9. Some hotels supply boiled water on request and this can be used for drinking, or for brushing teeth.； 10. Portable boiling elements that can boil small quantities of water are useful when the right voltage of electricity is available.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>kənˌtæməˈneɪʃən‿əv、dəˈspoʊzl‿ˈɪntu、ˈlikɪdʒ‿əv、ˈsuɪdʒ‿ˈɪntu、systems‿ɔr 连读；ðə、tə、əv、ɪz 弱读/弱化； ˈivən‿ɪf‿ə、ət‿its、sɔrs‿ɪt‿ɪz、nɑɾ‿ˈɔlˌweɪz 连读；ðə、ə、ət、ɪz 弱读/弱化；nɑɾ‿ˈɔlˌweɪz 中 /ɾ/ 为美式闪音； rəˈɡɑrd‿əz 连读；əz 弱读/弱化； ˈtrævlər‿ɔn、əv‿ˌənˈsərtn、ʃʊd‿əˈvɔɪd、ˈtæpˌwɑdər‿ɔr‿ˌənˈtridəd、frəm‿ˈɛni 连读；tə、əv、frəm 弱读/弱化； ɪt‿ɪz、ˈbɑdl‿ɔr、drɪŋk‿əv、ˈstændərd‿əv、ˈtritmənt‿ɑr 连读；ət、tə、əv、ɑr、ɪz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -282,6 +284,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":13.5,"end":32.17,"text":"Contamination of water supplies is usually due to poor sanitation close to water sources, sewage disposal into the sources themselves, leakage of sewage into distribution systems or contamination with industrial or farm waste."},{"index":2,"start":32.17,"end":39.72,"text":"Even if a piped water supply is safe at its source, it is not always safe by the time it reaches the tap."},{"index":3,"start":39.72,"end":45.76,"text":"Intermittent tap-water supplies should be regarded as particularly suspect."},{"index":4,"start":45.76,"end":56.95,"text":"Travellers on short trips to areas with water supplies of uncertain quality should avoid drinking tap-water, or untreated water from any other source."},{"index":5,"start":56.95,"end":68.27,"text":"It is best to keep to hot drinks, bottled or canned drinks of well-known brand names-international standard of water treatment are usually followed at bottling plants."},{"index":6,"start":68.27,"end":72.24,"text":"Carbonated drinks are acidic, and slightly safer."},{"index":7,"start":72.24,"end":79.14,"text":"Make sure that all bottles are opened in your presence, and that their rims are clean and dry."},{"index":8,"start":79.14,"end":82.36,"text":"Boiling is always a good way of treating water."},{"index":9,"start":82.36,"end":89.49,"text":"Some hotels supply boiled water on request and this can be used for drinking, or for brushing teeth."},{"index":10,"start":89.49,"end":97.86,"text":"Portable boiling elements that can boil small quantities of water are useful when the right voltage of electricity is available."},{"index":11,"start":97.86,"end":103.22,"text":"Refuse politely any cold drink from an unknown source."},{"index":12,"start":103.22,"end":111.8,"text":"Ice is only as safe as the water from which it is made, and should not be put in drinks unless it is known to be safe."},{"index":13,"start":111.8,"end":118.17,"text":"Drinks can be cooled by placing them on ice rather than adding ice to them."},{"index":14,"start":118.17,"end":125.57,"text":"Alcohol may be a medical disinfectant, but should not be relied upon to sterilize water."},{"index":15,"start":125.57,"end":135.91,"text":"Ethanol is more effective at a concentration of 50-70 percent; below 20 per cent, its bactericidal action is negligible."},{"index":16,"start":135.91,"end":142.63,"text":"Spirits labelled 95 proof contain only about 47 per cent alcohol."},{"index":17,"start":142.63,"end":150.71,"text":"Beware of methylated alcohol, which is very poisonous and should never be added to drinking water."},{"index":18,"start":150.71,"end":161.5,"text":"If no other safe water supply can be obtained, tap water that is too hot to touch can be left to cool and is generally safe to drink."},{"index":19,"start":161.5,"end":175.04,"text":"Those planning a trip to remote areas, or intending to live in countries where drinking water is not readily available, should know about the various possible methods for making water safe."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

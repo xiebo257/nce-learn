@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -468,6 +468,7 @@
       <p>意群停顿: 第 7 句按 <code>Though he was... / Mendoza did much... / for he brought...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -487,6 +488,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":18.59,"end":23.52,"text":"Boxing matches were very popular in England two hundred years ago."},{"index":2,"start":23.52,"end":28.93,"text":"In those days, boxers fought with bare fists for prize money."},{"index":3,"start":28.93,"end":33.27,"text":"Because of this, they were known as 'prizefighters'."},{"index":4,"start":33.27,"end":44.94,"text":"However, boxing was very crude, for there were no rules and a prizefighter could be seriously injured or even killed during a match."},{"index":5,"start":44.94,"end":53.56,"text":"One of the most colourful figures in boxing history was Daniel Mendoza, who was born in 1764."},{"index":6,"start":53.56,"end":62.63,"text":"The use of gloves was not introduced until 1860, when the Marquis of Queensberry drew up the first set of rules."},{"index":7,"start":62.63,"end":73.71,"text":"Though he was technically a prizefighter, Mendoza did much to change crude prizefighting into a sport, for he brought science to the game."},{"index":8,"start":73.71,"end":78.41,"text":"In his day, Mendoza enjoyed tremendous popularity."},{"index":9,"start":78.41,"end":81.94,"text":"He was adored by rich and poor alike."},{"index":10,"start":81.94,"end":88.42,"text":"Mendoza rose to fame swiftly after a boxing match when he was only fourteen years old."},{"index":11,"start":88.42,"end":95.87,"text":"This attracted the attention of Richard Humphries who was then the most eminent boxer in England."},{"index":12,"start":95.87,"end":100.98,"text":"He offered to train Mendoza and his young pupil was quick to learn."},{"index":13,"start":100.98,"end":108.01,"text":"In fact, Mendoza soon became so successful that Humphries turned against him."},{"index":14,"start":108.01,"end":116.5,"text":"The two men quarrelled bitterly and it was clear that the argument could only be settled by a fight."},{"index":15,"start":116.5,"end":121.6,"text":"A match was held at Stilton, where both men fought for an hour."},{"index":16,"start":121.6,"end":127.22,"text":"The public bet a great deal of money on Mendoza, but he was defeated."},{"index":17,"start":127.22,"end":133.97,"text":"Mendoza met Humphries in the ring on a later occasion and he lost for a second time."},{"index":18,"start":133.97,"end":143.5,"text":"It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."},{"index":19,"start":143.5,"end":151.59,"text":"Meanwhile, he founded a highly successful Academy and even Lord Byron became one of his pupils."},{"index":20,"start":151.59,"end":159.85,"text":"He earned enormous sums of money and was paid as much as £100 for a single appearance."},{"index":21,"start":159.85,"end":165.91,"text":"Despite this, he was so extravagant that he was always in debt."},{"index":22,"start":165.91,"end":172.53,"text":"After he was defeated by a boxer called Gentleman Jackson, he was quickly forgotten."},{"index":23,"start":172.53,"end":177.3,"text":"He was sent to prison for failing to pay his debts and died in poverty in 1836."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

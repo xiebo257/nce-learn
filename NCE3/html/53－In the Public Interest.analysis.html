@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -358,6 +359,7 @@
     <p>意群停顿: 第 4 句按公职人员列表分组；第 20 句按 <code>It was impossible... / but when... / he immediately sent...</code> 分组；第 24 句按 <code>was reprimanded / and was informed / that if...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -377,6 +379,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.8,"end":23.38,"text":"The Scandinavian countries are much admired all over the world for their enlightened social policies."},{"index":2,"start":23.38,"end":33.22,"text":"Sweden has evolved an excellent system for protecting the individual citizen from high-handed or incompetent public officers."},{"index":3,"start":33.22,"end":40.21,"text":"The system has worked so well, that it has been adopted in other countries too."},{"index":4,"start":40.21,"end":56.76,"text":"The Swedes were the first to recognize that public officials like civil servants, police officers, health inspectors or tax-collectors can make mistakes or act over-zealously in the belief that they are serving the public."},{"index":5,"start":56.76,"end":66.75,"text":"As long ago as 1809, the Swedish Parliament introduced a scheme to safeguard the interest of the individual."},{"index":6,"start":66.75,"end":78.63,"text":"A parliamentary committee representing all political parties appoints a person who is suitably qualified to investigate private grievances against the State."},{"index":7,"start":78.63,"end":89.51,"text":"The official title of the person is 'Justiteombudsman', but the Swedes commonly refer to him as the 'J.O.' or 'Ombudsman'."},{"index":8,"start":89.51,"end":93.72,"text":"The Ombudsman is not subject to political pressure."},{"index":9,"start":93.72,"end":100.31,"text":"He investigates complaints large and small that come to him from all levels of society."},{"index":10,"start":100.31,"end":108.78,"text":"As complaints must be made in writing, the Ombudsman receives an average of 1,200 letters a year."},{"index":11,"start":108.78,"end":116.26,"text":"He has eight lawyer assistants to help him and he examines every single letter in detail."},{"index":12,"start":116.26,"end":124.5,"text":"There is nothing secretive about the Ombudsman's work, for his correspondence is open to public inspection."},{"index":13,"start":124.5,"end":131.26,"text":"If a citizen's complaint is justified the Ombudsman will act on his behalf."},{"index":14,"start":131.26,"end":136,"text":"The action he takes varies according to the nature of the complaint."},{"index":15,"start":136,"end":143.23,"text":"He may gently reprimand an official or even suggest to parliament that a law be altered."},{"index":16,"start":143.23,"end":149.28,"text":"The following case is a typical example of the Ombudsman's work."},{"index":17,"start":149.28,"end":160.42,"text":"A foreigner living in a Swedish village wrote to the Ombudsman complaining that he had been ill-treated by the police, simply because he was a foreigner."},{"index":18,"start":160.42,"end":169.38,"text":"The Ombudsman immediately wrote to the Chief of Police in the district asking him to send a record of the case."},{"index":19,"start":169.38,"end":180.56,"text":"There was nothing in the record to show that the foreigner's complaint was justified and the Chief of Police strongly denied the accusation."},{"index":20,"start":180.56,"end":195.03,"text":"It was impossible for the Ombudsman to take action, but when he received a similar complaint from another foreigner in the same village, he immediately sent one of his lawyers to investigate the matter."},{"index":21,"start":195.03,"end":203.18,"text":"The lawyer ascertained that a policeman had indeed dealt roughly with foreigners on several occasions."},{"index":22,"start":203.18,"end":210.55,"text":"The fact that the policeman was prejudiced against foreigners could not be recorded in the official files."},{"index":23,"start":210.55,"end":220.24,"text":"It was only possible for the Ombudsman to find this out by sending one of his representatives to check the facts."},{"index":24,"start":220.24,"end":231.78,"text":"The policeman in question was severely reprimanded and was informed that if any further complaints were lodged against him, he would be prosecuted."},{"index":25,"start":231.78,"end":238.55,"text":"The Ombudsman's prompt action at once put an end to an unpleasant practice which might have gone unnoticed."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

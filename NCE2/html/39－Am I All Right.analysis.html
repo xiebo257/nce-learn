@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -153,6 +154,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>6. He then asked when Mr. Gilbert would be allowed to go home and the doctor told him that he would have to stay in hosptial for another two weeks.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>wəz‿ɪn、hɪz‿ˌɑpəˈreɪʃən 连读；ðə、tə、wəz、həd 弱读/弱化； ˈpeɪʃənt‿æsk、fɚ‿ə 连读；ðə、ə、fɚ 弱读/弱化； wəz‿əˈloʊn、ən‿æsk 连读；ðə、ən、wəz、fɚ 弱读/弱化； ˈdɑktər‿ˈænsər、wəz‿ɪnˈkwaɪrɪŋ‿əˈbaʊt‿ə、ˈpeɪʃənt‿ə 连读；ðə、ə、wəz 弱读/弱化； æsk‿ɪf、gilberts‿ˌɑpəˈreɪʃən、səkˈsɛsfl‿ən、ðæt‿ɪt 连读；ðə、ən、həd 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -172,6 +174,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.42,"end":30.06,"text":"While John Gilbert was in hospital, he asked his doctor to tell him whether his operation had been successful, but the doctor refused to do so."},{"index":2,"start":30.06,"end":35.85,"text":"The following day, the patient asked for a bedside telephone."},{"index":3,"start":35.85,"end":44.42,"text":"When he was alone, he telephoned the hospital exchange and asked for Doctor Millington."},{"index":4,"start":44.42,"end":55.41,"text":"When the doctor answered the phone, Mr. Gilbert said he was inquiring about a certain patient, a Mr. John Gilbert."},{"index":5,"start":55.41,"end":64.88,"text":"He asked if Mr. Gilbert's operation had been successful and the doctor told him that it had been."},{"index":6,"start":64.88,"end":76.95,"text":"He then asked when Mr. Gilbert would be allowed to go home and the doctor told him that he would have to stay in hosptial for another two weeks."},{"index":7,"start":76.95,"end":83.6,"text":"Then Dr. Millington asked the caller if he was a relative of the patient."},{"index":8,"start":83.6,"end":89.57,"text":"'No,' the patient answered, 'I am Mr. John Gilbert.'"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

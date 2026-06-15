@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -183,6 +184,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>本课情态表达不多，重点放在叙事时态和从句关系。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>həz‿ə、ˈsərkl‿əv、frɛnd‿ən‿ɪz、ˈpɑpjələr‿ət 连读；ə、ən、ət、əv、ɪz、həz 弱读/弱化； sɛns‿əv、ðæt‿ɪz‿ɪkˈsɛpt 连读；əv、ɪz、fɚ 弱读/弱化； frɛnd‿æsk、speech‿ət‿ə 连读；ə、ət、tə、əv 弱读/弱化； ðɪs‿ɪz、sɔrt‿əv 连读；ðə、əv、ɪz 弱读/弱化； həd‿ɪnˈklud‿ə、ˈnəmbər‿əv、speech‿ən‿əv、kɔrs‿ɪt、wəz‿ə 连读；ðə、ə、ən、əv、wəz、həd 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -202,6 +204,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.8,"end":24.2,"text":"Jeremy Hampden has a large circle of friends and is very popular at parties."},{"index":2,"start":24.2,"end":34.85,"text":"Everybody admires him for his great sense of humour--everybody, that is, except his six-year-old daughter, Jenny."},{"index":3,"start":34.85,"end":43.1,"text":"Recently, one of Jeremy's closest friends asked him to make a speech at a wedding reception."},{"index":4,"start":43.1,"end":47.35,"text":"This is the sort of thing that Jeremy loves."},{"index":5,"start":47.35,"end":52.84,"text":"He prepared the speech carefully and went to the wedding with Jenny."},{"index":6,"start":52.84,"end":61.52,"text":"He had included a large number of funny stories in the speech and, of course, it was a great success."},{"index":7,"start":61.52,"end":68.38,"text":"As soon as he had finished Jenny told him she wanted to go home."},{"index":8,"start":68.38,"end":74.98,"text":"Jeremy was a little disappointed by this but he did as his daughter asked."},{"index":9,"start":74.98,"end":81.03,"text":"On the way home, he asked Jenny if she had enjoyed the speech."},{"index":10,"start":81.03,"end":85.1,"text":"To his surprise she said she hadn't."},{"index":11,"start":85.1,"end":94.27,"text":"Jeremy asked her why this was so and she told him that she did not like to see so many people laughing at him!"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

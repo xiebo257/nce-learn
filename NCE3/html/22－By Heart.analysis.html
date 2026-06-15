@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -440,6 +440,7 @@
       <p>意群停顿: 第 8 句按 <code>One night / the gaoler decided... / to find out if...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -459,6 +460,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.32,"end":22.41,"text":"Some plays are so successful that they run for years on end."},{"index":2,"start":22.41,"end":32.97,"text":"In many ways, this is unfortunate for the poor actors who are required to go on repeating the same lines night after night."},{"index":3,"start":32.97,"end":39.12,"text":"One would expect them to know their parts by heart and never have cause to falter."},{"index":4,"start":39.12,"end":42.81,"text":"Yet this is not always the case."},{"index":5,"start":42.81,"end":54.25,"text":"A famous actor in a highly successful play was once cast in the role of an aristocrat who had been imprisoned in the Bastille for twenty years."},{"index":6,"start":54.25,"end":63.38,"text":"In the last act, a gaoler would always come on to the stage with a letter which he would hand to the prisoner."},{"index":7,"start":63.38,"end":72.81,"text":"Even though the noble was expected to read the letter at each performance, he always insisted that it should be written out in full."},{"index":8,"start":72.81,"end":85.45,"text":"One night, the gaoler decided to play a joke on his colleague to find out if, after so many performances, he had managed to learn the contents of the letter by heart."},{"index":9,"start":85.45,"end":95.16,"text":"The curtain went up on the final act of the play and revealed the aristocrat sitting alone behind bars in his dark cell."},{"index":10,"start":95.16,"end":100.55,"text":"Just then, the gaoler appeared with the precious letter in his hands."},{"index":11,"start":100.55,"end":105.36,"text":"He entered the cell and presented the letter to the aristocrat."},{"index":12,"start":105.36,"end":110.5,"text":"But the copy he gave him had not been written out in full as usual."},{"index":13,"start":110.5,"end":114.14,"text":"It was simply a blank sheet of paper."},{"index":14,"start":114.14,"end":122.23,"text":"The gaoler looked on eagerly, anxious to see if his fellow actor had at last learnt his lines."},{"index":15,"start":122.23,"end":127.45,"text":"The noble stared at the blank sheet of paper for a few seconds."},{"index":16,"start":127.45,"end":136.04,"text":"Then, squinting his eyes, he said: 'The light is dim. Read the letter to me.'"},{"index":17,"start":136.04,"end":140.49,"text":"And he promptly handed the sheet of paper to the gaoler."},{"index":18,"start":140.49,"end":152.56,"text":"Finding that he could not remember a word of the letter either, the gaoler replied: 'The light is indeed dim, sire. I must get my glasses.'"},{"index":19,"start":152.56,"end":156.38,"text":"With this, he hurried off the stage."},{"index":20,"start":156.38,"end":167.45,"text":"Much to the aristocrat's amusement, the gaoler returned a few moments later with a pair of glasses and the usual copy of the letter which he proceeded to read to the prisoner."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

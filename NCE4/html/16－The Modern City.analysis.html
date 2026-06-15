@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -173,6 +174,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>2. Modern industry is based on the conception of the maximum production at lowest cost, in order that an individual or a group of individuals may earn as much money as possible.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ði‿organization‿əv‿ɪnˈdəstriəl、ði‿ˈɪnflʊəns‿əv、ˌfɪziəˈlɑdʒəkl‿ən、steɪt‿əv 连读；ðə、ði、ən、əv、həz 弱读/弱化； ˈmɑdərn‿ˈɪndəstri、beɪst‿ɔn、kənˈsɛpʃən‿əv、prəˈdəkʃən‿ət、kɔst‿ɪn‿ˈɔrdər 连读；ðə、ə、ən、əz、ət、əv 弱读/弱化； həz‿ɪkˈspændəd、wəˈðaʊt‿ˈɛni、ˈneɪtʃər‿əv、machines‿ən、ɡɪv‿ˈɛni 连读；ðə、ði、ən、tə、əv、həz 弱读/弱化； fɚ‿əs 连读；ðə、fɚ、həv 弱读/弱化； ʃeɪp‿ən、dəˈmɛnʃən‿əv、dəˈpɛnd‿ənˈtaɪrli、əv‿əbˈteɪn、ˈmæksəməm‿ˈɪnˌkəm 连读；ðə、ən、tə、əv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -192,6 +194,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.45,"end":26.73,"text":"In the organization of industrial life the influence of the factory upon the physiological and mental state of the workers has been completely neglected."},{"index":2,"start":26.73,"end":40.09,"text":"Modern industry is based on the conception of the maximum production at lowest cost, in order that an individual or a group of individuals may earn as much money as possible."},{"index":3,"start":40.09,"end":58.63,"text":"It has expanded without any idea of the true nature of the human beings who run the machines, and without giving any consideration to the effects produced on the individuals and on their descendants by the artificial mode of existence imposed by the factory."},{"index":4,"start":58.63,"end":62.65,"text":"The great cities have been built with no regard for us."},{"index":5,"start":62.65,"end":76.53,"text":"The shape and dimensions of the skyscrapers depend entirely on the necessity of obtaining the maximum income per square foot of ground, and of offering to the tenants offices and apartments that please them."},{"index":6,"start":76.53,"end":84.66,"text":"This caused the construction of gigantic buildings where too large masses of human beings are crowded together."},{"index":7,"start":84.66,"end":87.97,"text":"Civilized men like such a way of living."},{"index":8,"start":87.97,"end":97.06,"text":"While they enjoy the comfort and banal luxury of their dwelling, they do not realize that they are deprived of the necessities of life."},{"index":9,"start":97.06,"end":114.58,"text":"The modern city consists of monstrous edifices and of dark, narrow streets full of petrol fumes and toxic gases, torn by the noise of the taxicabs, lorries and buses, and thronged ceaselessly by great crowds."},{"index":10,"start":114.58,"end":120.16,"text":"Obviously, it has not been planned for the good of its inhabitants."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

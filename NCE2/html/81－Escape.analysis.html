@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -203,6 +204,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>4. He could hear shouting in the camp itself.； 11. The prisoner felt sorry for him, but there was nothing else he could do.； 13. Then, jumping into the car, he drove off as quickly as he could.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ˈprɪznər‿əv、hɪm‿ˈɪntu 连读；ðə、əv、həd 弱读/弱化； tʃeɪndʒd‿ˈɪntu 连读；ðə 弱读/弱化； drɛs‿ɪn‿ə、ˈjunəˌfɔrm‿ən、wɪð‿ə、ˈraɪfl‿ˈoʊvər、əp‿ən 连读；ðə、ə、ən、əv 弱读/弱化； ʃaʊtɪŋ‿ɪn、kæmp‿itself 连读；ðə 弱读/弱化； ˈbleɪzɪŋ‿ən、hɪr‿ən、ðæt‿ə、həd‿əˈskeɪp 连读；ə、ən、wɚ、həd 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -222,6 +224,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":14.72,"end":22.17,"text":"When he had killed the guard, the prisoner of war quickly dragged him into the bushes."},{"index":2,"start":22.17,"end":29.11,"text":"Working rapidly in the darkness, he soon changed into the dead man's clothes."},{"index":3,"start":29.11,"end":40.97,"text":"Now, dressed in a blue uniform and with a rifle over his shoulder, the prisoner marched boldly up and down in front of the camp."},{"index":4,"start":40.97,"end":44.53,"text":"He could hear shouting in the camp itself."},{"index":5,"start":44.53,"end":54.19,"text":"Lights were blazing and men were running here and there: they had just discovered that a prisoner had escaped."},{"index":6,"start":54.19,"end":63.8,"text":"At that moment, a large black car with four officers inside it, stopped at the camp gates."},{"index":7,"start":63.8,"end":71.43,"text":"The officers got out and the prisoner stood to attention and saluted as they passed."},{"index":8,"start":71.43,"end":76.65,"text":"When they had gone the driver of the car came towards him."},{"index":9,"start":76.65,"end":80.28,"text":"The man obviously wanted to talk."},{"index":10,"start":80.28,"end":85.9,"text":"He was rather elderly with grey hair and clear blue eyes."},{"index":11,"start":85.9,"end":92.48,"text":"The prisoner felt sorry for him, but there was nothing else he could do."},{"index":12,"start":92.48,"end":99.66,"text":"As the man came near the prisoner knocked him to the ground with a sharp blow."},{"index":13,"start":99.66,"end":104.99,"text":"Then, jumping into the car, he drove off as quickly as he could."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

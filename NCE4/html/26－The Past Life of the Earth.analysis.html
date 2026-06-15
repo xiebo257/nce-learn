@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -213,6 +214,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. It is animals and plants which lived in or near water whose remains are most likely to be preserved, for one of the necessary conditions of preservation is quick burial, and it is only in the seas and rivers, and sometimes lakes, where mud and silt have been continuously deposited, that bodies and the like can be rapidly covered over and preserved.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ɪt‿ɪz‿ˈænəml‿ən、lived‿ɪn‿ɔr、rəˈmeɪnz‿ɑr、fɚ‿one、kənˈdɪʃən‿əv 连读；ðə、ən、tə、kən、əv、ɑr 弱读/弱化； bət‿ˈivən‿ɪn、ˈsərkəmˌstæns‿ˈoʊnli、ˈfrækʃən‿əv、prəˈzərv‿ɪn、sɛt‿ɪn‿ɔr‿ˈivən 连读；ðə、ə、əv、ɑr 弱读/弱化； ˈæftər‿ɔl‿ɔl、fid‿ɔn、ˈsəmˌθɪŋ‿ɛls、ˈwɛðər‿ɪt、plænt‿ɔr‿ˈænəml 连读；ə、ən、ɪz 弱读/弱化；feɪɾ‿ɪz‿əˈvɔɪd 中 /ɾ/ 为美式闪音； rəˈmeɪnz‿əv、plænt‿ən‿ˈænəml、lived‿ɔn、lænd‿ɑr、ðɛr‿ɪz 连读；ðə、ən、tə、əv、ɑr、ɪz 弱读/弱化； θɪŋk‿əv、ði‿ɪˈnumrəbl、ðæt‿one、ˈflaɪɪŋ‿əˈbaʊt、ði‿ˈikwəli 连读；ðə、ði、ə、ən、tə、əv 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -232,6 +234,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.59,"end":44.25,"text":"It is animals and plants which lived in or near water whose remains are most likely to be preserved, for one of the necessary conditions of preservation is quick burial, and it is only in the seas and rivers, and sometimes lakes, where mud and silt have been continuously deposited, that bodies and the like can be rapidly covered over and preserved."},{"index":2,"start":44.25,"end":59.09,"text":"But even in the most favourable circumstances only a small fraction of the creatures that die are preserved in this way before decay sets in or, even more likely, before scavengers eat them."},{"index":3,"start":59.09,"end":71.65,"text":"After all, all living creatures live by feeding on something else, whether it be plant or animal, dead or alive, and it is only by chance that such a fate is avoided."},{"index":4,"start":71.65,"end":80.71,"text":"The remains of plants and animals that lived on land are much more rarely preserved, for there is seldom anything to cover them over."},{"index":5,"start":80.71,"end":99.14,"text":"When you think of the innumerable birds that one sees flying about, not to mention the equally numerous small animals like field mice and voles which you do not see, it is very rarely that one comes across a dead body, except, of course, on the roads."},{"index":6,"start":99.14,"end":106.22,"text":"They decompose and are quickly destroyed by the weather or eaten by some other creature."},{"index":7,"start":106.22,"end":126.58,"text":"It is almost always due to some very special circumstances that traces of land animals survive, as by falling into inaccessible caves, or into an ice crevasse, like the Siberian mammoths, when the whole animal is sometimes preserved, as in a refrigerator."},{"index":8,"start":126.58,"end":133.76,"text":"This is what happened to the famous Beresovka mammoth which was found preserved and in good condition."},{"index":9,"start":133.76,"end":143.19,"text":"In his mouth were the remains of fir trees--the last meal that he had before he fell into the crevasse and broke his back."},{"index":10,"start":143.19,"end":149.6,"text":"The mammoth has now been restored in the Palaeontological Museum in St.Petersburg."},{"index":11,"start":149.6,"end":163.22,"text":"Other animals were trapped in tar pits, like the elephants, sabre-toothed cats, and numerous other creatures that are found at Rancho la Brea, which is now just a suburb of Los Angeles."},{"index":12,"start":163.22,"end":178.49,"text":"Apparently what happened was that water collected on these tar pits and the bigger animals like the elephants ventured out on to the apparently firm surface to drink, and were promptly bogged in the tar."},{"index":13,"start":178.49,"end":190.68,"text":"And then, when they were dead, the carnivores, like the sabretoothed cats and the giant wolves, came out to feed and suffered exactly the same fate."},{"index":14,"start":190.68,"end":195.6,"text":"There are also endless numbers of birds in the tar as well."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

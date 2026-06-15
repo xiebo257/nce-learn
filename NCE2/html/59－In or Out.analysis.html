@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -183,6 +184,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>2. Every time he wanted to come into the garden he would bark until someone opened the gate.； 6. This time he was barking so that someone would let him out!。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ɡeɪt‿ən 连读；ən、tə 弱读/弱化； kəm‿ˈɪntu、bɑrk‿ˌənˈtɪl、ˈsəmˌwən‿ˈoʊpn 连读；ðə、tə 弱读/弱化； kəmˈpleɪn‿əv、hɪmˈsɛlf‿ɪn 连读；ðə、əz、tə、əv 弱读/弱化； bəˈkeɪm‿ən‿ˈɛkˌspərt‿ət‿ˈoʊpnɪŋ 连读；ðə、ən、ət 弱读/弱化； hɪm‿ɪn 连读；ðə、wəz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -202,6 +204,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":15.52,"end":22.54,"text":"Our dog, Rex, used to sit outside our front gate and bark."},{"index":2,"start":22.54,"end":30.39,"text":"Every time he wanted to come into the garden he would bark until someone opened the gate."},{"index":3,"start":30.39,"end":41.56,"text":"As the neighbours complained of the noise, my husband spent weeks training him to press his paw on the latch to let himself in."},{"index":4,"start":41.56,"end":46.22,"text":"Rex soon became an expert at opening the gate."},{"index":5,"start":46.22,"end":54.81,"text":"However, when I was going out shopping last week, I noticed him in the garden near the gate."},{"index":6,"start":54.81,"end":60.09,"text":"This time he was barking so that someone would let him out!"},{"index":7,"start":60.09,"end":65.1,"text":"Since then, he has developed another bad habit."},{"index":8,"start":65.1,"end":74.07,"text":"As soon as he opens the gate from the outside, he comes into the garden and waits until the gate shuts."},{"index":9,"start":74.07,"end":78.58,"text":"Then he sits and barks until someone lets him out."},{"index":10,"start":78.58,"end":86.28,"text":"After this he immediately lets himself in and begins barking again."},{"index":11,"start":86.28,"end":93.61,"text":"Yesterday my husband removed the gate and Rex got so annoyed we have not seen him since."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

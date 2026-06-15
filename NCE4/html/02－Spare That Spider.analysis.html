@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -183,6 +184,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>2. Insects would make it impossible for us to live in the world; they would devour all our crops and kill our flocks and herds, if it were not for the protection we get from insect eating animals.； 6. One can tell the difference almost at a glance, for a spider always has eight legs and an insect never more than six.； 11. It has been estimated that the weight of all the insects destroyed by spiders in Britain in one year would be greater than the total weight of all the human beings in the country.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>ˈɪnˌsɛk‿ən‿ˈɪnˌsɛk‿ɪnˈklud、səm‿əv、ɡreɪt‿ˈɛnəmi 连读；ðə、ən、əv 弱读/弱化； ɪt‿ɪmˈpɑsəbl、fɚ‿əs、dəˈvaʊr‿ɔl、krɑp‿ən、flɑk‿ən 连读；ðə、ən、tə、wɚ、fɚ、frəm 弱读/弱化； bərd‿ən、it‿ˈɪnˌsɛk、bət‿ɔl‿əv、kɪl‿ˈoʊnli、ˈfrækʃən‿əv 连读；ðə、ə、ən、tə、əv 弱读/弱化； mɔˈroʊvər‿ˌənˈlaɪk、səm‿əv、ði‿ˈəðər‿ˈɪnˌsɛk‿ˈidər、əs‿ɔr 连读；ðə、ði、tə、əv 弱读/弱化； ˈspaɪdər‿ɑr、nɑɾ‿ˈɪnˌsɛk‿əz、nɔr‿ˈivən 连读；əz、tə、ɑr 弱读/弱化；nɑɾ‿ˈɪnˌsɛk‿əz 中 /ɾ/ 为美式闪音。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -202,6 +204,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":19.15,"end":26.74,"text":"Because they destroy so many insects, and insects include some of the greatest enemies of the human race."},{"index":2,"start":26.74,"end":39.77,"text":"Insects would make it impossible for us to live in the world; they would devour all our crops and kill our flocks and herds, if it were not for the protection we get from insect eating animals."},{"index":3,"start":39.77,"end":49.79,"text":"We owe a lot to the birds and beasts who eat insects but all of them put together kill only a fraction of the number destroyed by spiders."},{"index":4,"start":49.79,"end":58.72,"text":"Moreover, unlike some of the other insect eaters, spiders never do the least harm to us or our belongings."},{"index":5,"start":58.72,"end":65.22,"text":"Spiders are not insects, as many people think, nor even nearly related to them."},{"index":6,"start":65.22,"end":74.93,"text":"One can tell the difference almost at a glance, for a spider always has eight legs and an insect never more than six."},{"index":7,"start":74.93,"end":79.25,"text":"How many spiders are engaged in this work on our behalf?"},{"index":8,"start":79.25,"end":99.86,"text":"One authority on spiders made a census of the spiders in a grass field in the south of England, and he estimated that there were more than 2, 250, 000 in one acre; that is something like 6, 000, 000 spiders of different kinds on a football pitch."},{"index":9,"start":99.86,"end":104.98,"text":"Spiders are busy for at least half the year in killing insects."},{"index":10,"start":104.98,"end":115.88,"text":"It is impossible to make more than the wildest guess at how many they kill, but they are hungry creatures, not content with only three meals a day."},{"index":11,"start":115.88,"end":130.8,"text":"It has been estimated that the weight of all the insects destroyed by spiders in Britain in one year would be greater than the total weight of all the human beings in the country."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

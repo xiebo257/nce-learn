@@ -189,7 +189,7 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }
+      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
     }
   </style>
 </head>
@@ -418,6 +418,7 @@
       <p>意群停顿: 第 18 句较长，可按 <code>We often speak... / but how many of us... / that we have not felt...</code> 分组。</p>
     </section>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -437,6 +438,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":16.99,"end":21.3,"text":"It has been said that everyone lives by selling something."},{"index":2,"start":21.3,"end":31.97,"text":"In the light of this statement, teachers live by selling knowledge, philosophers by selling wisdom and priests by selling spiritual comfort."},{"index":3,"start":31.97,"end":46.57,"text":"Though it may be possible to measure the value of material goods in terms of money, it is extremely difficult to estimate the true value of the services which people perform for us."},{"index":4,"start":46.57,"end":60.36,"text":"There are times when we would willingly give everything we possess to save our lives, yet we might grudge paying a surgeon a high fee for offering us precisely this service."},{"index":5,"start":60.36,"end":68.79,"text":"The conditions of society are such that skills have to be paid for in the same way that goods are paid for at a shop."},{"index":6,"start":68.79,"end":72.01,"text":"Everyone has something to sell."},{"index":7,"start":72.01,"end":76.71,"text":"Tramps seem to be the only exception to this general rule."},{"index":8,"start":76.71,"end":83.13,"text":"Beggars almost sell themselves as human beings to arouse the pity of passers-by."},{"index":9,"start":83.13,"end":85.62,"text":"But real tramps are not beggars."},{"index":10,"start":85.62,"end":90.15,"text":"They have nothing to sell and require nothing from others."},{"index":11,"start":90.15,"end":95.55,"text":"In seeking independence, they do not sacrifice their human dignity."},{"index":12,"start":95.55,"end":101.54,"text":"A tramp may ask you for money, but he will never ask you to feel sorry for him."},{"index":13,"start":101.54,"end":109.15,"text":"He has deliberately chosen to lead the life he leads and is fully aware of the consequences."},{"index":14,"start":109.15,"end":119.99,"text":"He may never be sure where the next meal is coming from, but he is free from the thousands of anxieties which afflict other people."},{"index":15,"start":119.99,"end":127.89,"text":"His few material possessions make it possible for him to move from place to place with ease."},{"index":16,"start":127.89,"end":136.18,"text":"By having to sleep in the open, he gets far closer to the world of nature than most of us ever do."},{"index":17,"start":136.18,"end":150.07,"text":"He may hunt, beg, or steal occasionally to keep himself alive; he may even, in times of real need, do a little work; but he will never sacrifice his freedom."},{"index":18,"start":150.07,"end":164.15,"text":"We often speak of tramps with contempt and put them in the same class as beggars, but how many of us can honestly say that we have not felt a little envious of their simple way of life and their freedom from care?"}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

@@ -178,7 +178,8 @@ function addPlayerCss(html) {
   if (!next.includes('.audio-dock {')) {
     next = next.replace(
       '    .back-top { position: fixed; right: 16px; bottom: 16px; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n',
-      '    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n'
+      '    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }\n'
+        + '    .back-prev { bottom: 178px; }\n'
         + '    .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }\n'
         + '    .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }\n'
         + '    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }\n'
@@ -194,11 +195,21 @@ function addPlayerCss(html) {
   }
   next = next.replace(
     '.back-top { position: fixed; right: 16px; bottom: 16px;',
-    '.back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30;',
+    '.back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30;',
   );
   next = next.replace(
+    '.back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30;',
+    '.back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30;',
+  );
+  if (!next.includes('.back-prev { bottom: 178px; }')) {
+    next = next.replace(
+      /(\.back-top, \.back-prev \{[^\n]*\}\n)/,
+      '$1    .back-prev { bottom: 178px; }\n',
+    );
+  }
+  next = next.replace(
     /@media \(max-width: 640px\) \{ \.page-header \.inner, main \{ width: min\(100% - 20px, 1080px\); \} \.sentence-card, \.summary-section \{ padding: 14px; \} \.sentence-head \{ grid-template-columns: 32px 1fr; gap: 10px; \} \.sentence-num \{ width: 30px; height: 30px; \} \.en-text \{ font-size: 16px; \} \.field \{ grid-template-columns: 1fr; gap: 2px; \} \.back-top \{ display: none; \} \}/,
-    '@media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }',
+    '@media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }',
   );
   next = next.replace(
     '.sentence-head { grid-template-columns: 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-num { width: 30px; height: 30px; }',
@@ -206,7 +217,11 @@ function addPlayerCss(html) {
   );
   next = next.replace(
     '.back-top { display: none; }',
+    '.back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }',
+  );
+  next = next.replace(
     '.back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }',
+    '.back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }',
   );
   return next;
 }
@@ -250,6 +265,13 @@ function playerMarkup(title, audioSrc, subtitles) {
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = ${JSON.stringify(subtitles)};
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");
@@ -430,7 +452,7 @@ for (const file of files) {
   next = addSentenceButtons(next, subtitles);
   next = next.replace(
     /  <a class="back-top" href="#top">([\s\S]*?)<\/a>\n<\/body>/,
-    `  <a class="back-top" href="#top">$1</a>\n${playerMarkup(title, `../${baseName}.mp3`, subtitles)}\n</body>`,
+    `  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>\n  <a class="back-top" href="#top">$1</a>\n${playerMarkup(title, `../${baseName}.mp3`, subtitles)}\n</body>`,
   );
 
   if (next !== html) {

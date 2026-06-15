@@ -40,7 +40,8 @@
     .summary-section h2 { margin: 0 0 10px; color: #111827; font-size: 21px; line-height: 1.3; }
     .summary-section p { margin: 8px 0; color: #374151; }
     code { color: #0f766e; background: #ecfdf5; border: 1px solid #ccfbf1; border-radius: 4px; padding: 1px 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
-    .back-top { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-top, .back-prev { position: fixed; right: 16px; bottom: 132px; z-index: 30; color: #fff; background: #111827; text-decoration: none; border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2); }
+    .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
     .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
@@ -52,7 +53,7 @@
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -193,6 +194,7 @@
     <section class="summary-section"><h2>情态/语气总结</h2><p>1. No two sorts of birds practise quite the same sort of flight; the varieties are infinite; but two classes may be roughly seen.； 2. Any ship that crosses the Pacific is accompanied for many days by the smaller albatross, which may keep company with the vessel for an hour without visible or more than occasional movement of wing.； 4. The albatross is the king of the gliders, the class of fliers which harness the air to their purpose, but must yield to its opposition.； 7. Duck, and like them the pigeons, are endowed with steel-like muscles, that are a good part of the weight of the bird, and these will ply the short wings with such irresistible power that they can bore for long distances through an opposing gale before exhaustion follows.。</p></section>
     <section class="summary-section"><h2>本课连读注意点</h2><p>sɔrt‿əv、sɔrt‿əv、ɑr‿ˈɪnfənət 连读；ðə、əv、ɑr 弱读/弱化； pəˈsɪfɪk‿ɪz‿əˈkəmpni、smɔl‿ˈælbəˌtrɔs、fɚ‿ən、ˈvɪzəbl‿ɔr、ðæn‿əˈkeɪʒənl 连读；ðə、ən、əv、ɪz、fɚ 弱读/弱化； ˈkərənt‿əv、wɔl‿əv、dəˈrɛk‿ˈəpwərdz‿əz、wɛl‿əz‿ɪn、laɪn‿əv‿its 连读；ðə、ən、əz、tə、əv、ɑr 弱读/弱化； ði‿ˈælbəˌtrɔs‿ɪz、kɪŋ‿əv、klæs‿əv、its‿ˌɑpəˈzɪʃən 连读；ðə、ði、tə、əv、ɪz 弱读/弱化； dək‿ɪz 连读；ðə、ɪz 弱读/弱化。</p></section>
   </main>
+  <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
@@ -212,6 +214,13 @@
     </div>
   </div>
   <script>
+    function goPreviousPage(event) {
+      if (window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
     const subtitles = [{"index":1,"start":17.99,"end":29.45,"text":"No two sorts of birds practise quite the same sort of flight; the varieties are infinite; but two classes may be roughly seen."},{"index":2,"start":29.45,"end":45.71,"text":"Any ship that crosses the Pacific is accompanied for many days by the smaller albatross, which may keep company with the vessel for an hour without visible or more than occasional movement of wing."},{"index":3,"start":45.71,"end":60.84,"text":"The currents of air that the walls of the ship direct upwards, as well as in the line of its course, are enough to give the great bird with its immense wings sufficient sustenance and progress."},{"index":4,"start":60.84,"end":71.61,"text":"The albatross is the king of the gliders, the class of fliers which harness the air to their purpose, but must yield to its opposition."},{"index":5,"start":71.61,"end":76.22,"text":"In the contrary school, the duck is supreme."},{"index":6,"start":76.22,"end":82.79,"text":"It comes nearer to the engines with which man has 'conquered' the air, as he boasts."},{"index":7,"start":82.79,"end":105.74,"text":"Duck, and like them the pigeons, are endowed with steel-like muscles, that are a good part of the weight of the bird, and these will ply the short wings with such irresistible power that they can bore for long distances through an opposing gale before exhaustion follows."},{"index":8,"start":105.74,"end":114.3,"text":"Their humbler followers, such as partridges, have a like power of strong propulsion, but soon tire."},{"index":9,"start":114.3,"end":121.78,"text":"You may pick them up in utter exhaustion, if wind over the sea has driven them to a long journey."},{"index":10,"start":121.78,"end":126.53,"text":"The swallow shares the virtues of both schools in highest measure."},{"index":11,"start":126.53,"end":148.78,"text":"It tires not, nor does it boast of its power; but belongs to the air travelling it may be six thousand miles to and from its northern nesting home, feeding its flown young as it flies, and slipping through a medium that seems to help its passage even when the wind is adverse."},{"index":12,"start":148.78,"end":165.54,"text":"Such birds do us good, though we no longer take omens from their flight on this side and that; and even the most superstitious villagers no longer take off their hats to the magpie and wish it good-morning."}];
     const audio = document.getElementById("lesson-audio");
     const dockPlay = document.getElementById("dock-play");

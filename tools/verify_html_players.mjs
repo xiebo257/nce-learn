@@ -84,8 +84,17 @@ for (const [book, htmlDir] of targets) {
     if (!html.includes('function goPreviousPage(event)')) {
       failures.push(`${htmlPath}: missing previous-page history handler`);
     }
-    if (!html.includes('window.history.back();')) {
-      failures.push(`${htmlPath}: previous-page button does not use browser history`);
+    if (!html.includes('const RETURN_KEY = "nceReturnTarget";')) {
+      failures.push(`${htmlPath}: previous-page button does not read stored return target`);
+    }
+    if (!html.includes('const target = safeSessionGet(RETURN_KEY);')) {
+      failures.push(`${htmlPath}: previous-page button does not prefer stored return target`);
+    }
+    if (!html.includes('window.location.href = target;')) {
+      failures.push(`${htmlPath}: previous-page button does not navigate to the stored return URL`);
+    }
+    if (html.includes('window.history.length > 1')) {
+      failures.push(`${htmlPath}: previous-page button still uses broad history.length detection`);
     }
     if (cardCount === 0) {
       failures.push(`${htmlPath}: has no sentence cards`);

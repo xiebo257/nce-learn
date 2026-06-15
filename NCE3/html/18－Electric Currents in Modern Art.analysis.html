@@ -433,8 +433,31 @@
     </div>
   </div>
   <script>
+    const RETURN_KEY = "nceReturnTarget";
+
+    function safeSessionGet(key) {
+      try {
+        return window.sessionStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    }
+
+    function safeSessionRemove(key) {
+      try {
+        window.sessionStorage.removeItem(key);
+      } catch {}
+    }
+
     function goPreviousPage(event) {
-      if (window.history.length > 1) {
+      const target = safeSessionGet(RETURN_KEY);
+      if (target) {
+        event.preventDefault();
+        safeSessionRemove(RETURN_KEY);
+        window.location.href = target;
+        return;
+      }
+      if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
         event.preventDefault();
         window.history.back();
       }

@@ -877,8 +877,31 @@ ${cards}
     </div>
   </div>
   <script>
+    const RETURN_KEY = "nceReturnTarget";
+
+    function safeSessionGet(key) {
+      try {
+        return window.sessionStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    }
+
+    function safeSessionRemove(key) {
+      try {
+        window.sessionStorage.removeItem(key);
+      } catch {}
+    }
+
     function goPreviousPage(event) {
-      if (window.history.length > 1) {
+      const target = safeSessionGet(RETURN_KEY);
+      if (target) {
+        event.preventDefault();
+        safeSessionRemove(RETURN_KEY);
+        window.location.href = target;
+        return;
+      }
+      if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
         event.preventDefault();
         window.history.back();
       }
@@ -989,6 +1012,89 @@ function renderIndex(lessons = generatedLessons()) {
 ${items}
     </div>
   </main>
+  <a class="back-prev" href="../../NCE1/html/index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-top" href="#top" aria-label="Back to top">Top</a>
+  <script>
+    function goPreviousPage(event) {
+      if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
+        event.preventDefault();
+        window.history.back();
+      }
+    }
+
+    const RETURN_KEY = "nceReturnTarget";
+    const RETURN_LINK_KEY = "nceReturnLink";
+    const RETURN_HASH_KEY = "nceReturnHash";
+
+    function safeSessionSet(key, value) {
+      try {
+        window.sessionStorage.setItem(key, value);
+      } catch {}
+    }
+
+    function safeSessionGet(key) {
+      try {
+        return window.sessionStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    }
+
+    function safeSessionRemove(key) {
+      try {
+        window.sessionStorage.removeItem(key);
+      } catch {}
+    }
+
+    function rememberLessonReturnTarget(link) {
+      const returnUrl = new URL(window.location.href);
+      const hash = returnUrl.hash;
+      returnUrl.hash = "";
+      safeSessionSet(RETURN_KEY, returnUrl.href);
+      safeSessionSet(RETURN_LINK_KEY, link.href);
+      if (hash) safeSessionSet(RETURN_HASH_KEY, hash);
+    }
+
+    function restoreReturnPosition() {
+      const href = safeSessionGet(RETURN_LINK_KEY);
+      if (!href) return;
+      const hash = safeSessionGet(RETURN_HASH_KEY);
+      if (hash && window.location.hash !== hash) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search + hash);
+      }
+      const match = Array.from(document.querySelectorAll('a.lesson-card[href$=".html"]')).find((link) => link.href === href);
+      if (!match) return;
+      const restore = () => {
+        const top = match.offsetTop - Math.max(0, (window.innerHeight - match.offsetHeight) / 2);
+        const root = document.documentElement;
+        const previousBehavior = root.style.scrollBehavior;
+        root.style.scrollBehavior = "auto";
+        window.scrollTo({ top, behavior: "auto" });
+        root.style.scrollBehavior = previousBehavior;
+      };
+      let runs = 0;
+      const repeatRestore = () => {
+        restore();
+        runs += 1;
+        if (runs < 8) {
+          window.setTimeout(repeatRestore, 80);
+        } else {
+          safeSessionRemove(RETURN_LINK_KEY);
+          safeSessionRemove(RETURN_HASH_KEY);
+        }
+      };
+      window.requestAnimationFrame(repeatRestore);
+    }
+
+    window.addEventListener("pageshow", restoreReturnPosition);
+
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest('a.lesson-card[href$=".html"]');
+      if (link) rememberLessonReturnTarget(link);
+    });
+
+    restoreReturnPosition();
+  </script>
 </body>
 </html>
 `);

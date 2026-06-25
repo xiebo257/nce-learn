@@ -745,6 +745,13 @@ function tokenize(line) {
     .filter(Boolean);
 }
 
+function lexicalWords(line) {
+  return Array.from(
+    line.replace(/[’]/g, "'").matchAll(/[A-Za-z]+(?:[-'][A-Za-z]+)*/g),
+    (match) => match[0],
+  );
+}
+
 function wordKey(word) {
   return word.toLowerCase().replace(/[^a-z']/g, '');
 }
@@ -753,6 +760,7 @@ const dictCache = new Map();
 
 function dictionaryIpa(key) {
   if (!key || key.includes("'")) return null;
+  if (process.env.NCE1_LOOKUP_DICTIONARY !== '1') return null;
   if (dictCache.has(key)) return dictCache.get(key);
   let value = null;
   try {
@@ -945,7 +953,72 @@ function liaisonFor(line, ipa) {
   return `${points.join('；')}。`;
 }
 
-function structureFor(line) {
+const linkingVerbForms = new Set([
+  'am', 'are', 'is', 'was', 'were', 'be', 'been', "'m", "'re", "'s",
+  "i'm", "you're", "he's", "she's", "it's", "that's", "there's", "here's", "what's", "where's", "who's",
+]);
+
+const imperativeStarts = new Set([
+  'be', 'bring', 'catch', 'climb', 'come', 'do', 'drink', 'drop', 'empty', 'find',
+  'excuse', 'give', 'go', 'have', 'help', 'hurry', 'jump', 'let', 'listen', 'look', 'make',
+  'open', 'paint', 'put', 'read', 'send', 'show', 'shut', 'sit', 'take', 'tell',
+  'thank', 'turn', 'type', 'wait', 'walk', 'wash',
+]);
+
+const transitiveVerbs = new Set([
+  'answer', 'answers', 'buy', 'bought', 'call', 'called', 'can', 'catch', 'clean',
+  'count', 'counted',
+  'cook', 'cut', 'do', 'does', 'drink', 'drinks', 'drop', 'eat', 'eats', 'empty',
+  'excuse', 'find', 'found', 'get', 'give', 'guess', 'have', 'has', 'hear', 'help', 'keep',
+  'know', 'like', 'likes', 'look', 'love', 'make', 'makes', 'meet', 'need', 'open',
+  'made', 'paint', 'put', 'read', 'recognize', 'remember', 'saw', 'see', 'send', 'show', 'take',
+  'tell', 'thank', 'think', 'throw', 'type', 'want', 'wants', 'wash', 'watch',
+]);
+
+const intransitiveVerbs = new Set([
+  'arrive', 'arrives', 'came', 'come', 'comes', 'cry', 'die', 'do', 'does', 'fall', 'falls',
+  'go', 'goes', 'happen', 'happened', 'live', 'lives', 'rain', 'rains', 'rise',
+  'rises', 'run', 'runs', 'shine', 'shines', 'sit', 'sits', 'sleep', 'snows',
+  'stand', 'stay', 'stays', 'swim', 'walk', 'went', 'work', 'works',
+]);
+
+const objectComplementPatterns = [
+  /\b(?:make|makes|made)\s+(?:it|them|him|her|me|you)\s+\w+/i,
+  /\bfind(?:s)?\s+(?:it|them|him|her|me|you)\s+\w+/i,
+  /\bkeep(?:s)?\s+(?:it|them|him|her|me|you)\s+\w+/i,
+];
+
+const doubleObjectPatterns = [
+  /\bgive\s+(?:me|him|her|us|them|you)\s+/i,
+  /\bsend\s+(?:me|him|her|us|them|you)\s+/i,
+  /\bshow\s+(?:me|him|her|us|them|you)\s+/i,
+  /\btell\s+(?:me|him|her|us|them|you)\s+/i,
+];
+
+function compactClause(value) {
+  return value
+    .replace(/\b(please|sir|madam|mum|mom|dad)\b/gi, '')
+    .replace(/\s+([?!.,])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/[?!.,]+$/g, '');
+}
+
+function firstVerbIndex(words) {
+  return words.findIndex((word) => {
+    const key = wordKey(word);
+    return linkingVerbForms.has(key) || transitiveVerbs.has(key) || intransitiveVerbs.has(key)
+      || /(?:ing|ed)$/.test(key);
+  });
+}
+
+function splitLeadingAdverbial(clean) {
+  const commaMatch = clean.match(/^([^,]+),\s*(.+)$/);
+  if (commaMatch) return { adverbial: compactClause(commaMatch[1]), main: compactClause(commaMatch[2]) };
+  return { adverbial: '', main: clean };
+}
+
+function sentenceKind(line) {
   const clean = normalizeLine(line);
   if (/\b(must|may|might|can|can't|could|will|would|should|have to|has to|had to)\b/i.test(clean)) return '情态动词结构；情态动词后接动词原形，表达推测、能力、义务或将来。';
   if (/\b(who|which|that)\b.+\b(is|are|was|were|bought|served|met|told|offered|leaves)\b/i.test(clean)) return '含定语从句；who/which/that 引导从句修饰前面的名词。';
@@ -958,6 +1031,241 @@ function structureFor(line) {
   if (/^(this|that|these|those|here|there)\b/i.test(clean)) return '指示/存在句；this/that/these/those/here/there 引出人或物。';
   if (/\b(am|is|are|isn't|aren't|'m|'s|'re)\b/i.test(clean)) return '主系表结构；be 动词连接主语和身份、状态或性质。';
   return '简单句；适合按意群直接理解。';
+}
+
+function beQuestionAnalysis(clean) {
+  let match = clean.match(/^(is|are|am|was|were)\s+(.+?)\s+(.+)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。疑问句把系动词提前。',
+      components: `系=${match[1]}；主=${compactClause(match[2])}；表=${compactClause(match[3])}`,
+    };
+  }
+
+  match = clean.match(/^(what|whose|which)\s+(.+?)\s+(is|are|am|was|were)\s+(.+)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。特殊疑问词提到句首。',
+      components: `表=${compactClause(`${match[1]} ${match[2]}`)}；系=${match[3]}；主=${compactClause(match[4])}`,
+    };
+  }
+
+  match = clean.match(/^how\s+(is|are|am|was|were)\s+(.+)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。how 作表语，询问状态。',
+      components: `表=how；系=${match[1]}；主=${compactClause(match[2])}`,
+    };
+  }
+
+  return null;
+}
+
+function linkingAnalysis(clean) {
+  let match = clean.match(/^(?:yes|no)\s+(.+?)\s+(am|are|is|was|were)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。短答保留主语和系动词，表语承接上文省略。',
+      components: `主=${compactClause(match[1])}；系=${match[2]}；表=(承接上文省略)`,
+    };
+  }
+
+  match = clean.match(/^(.+?)\s+(am|are|is|was|were)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。表语承接上文省略。',
+      components: `主=${compactClause(match[1])}；系=${match[2]}；表=(承接上文省略)`,
+    };
+  }
+
+  match = clean.match(/^(.+?)\s+(am|are|is|was|were)\s+(.+)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。',
+      components: `主=${compactClause(match[1])}；系=${match[2]}；表=${compactClause(match[3])}`,
+    };
+  }
+
+  match = clean.match(/^(.+?)('m|'re|'s)\s+(.+)$/i);
+  if (match) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。缩写中含系动词 be。',
+      components: `主=${compactClause(match[1])}；系=${match[2]} (= be)；表=${compactClause(match[3])}`,
+    };
+  }
+
+  return null;
+}
+
+function questionActionAnalysis(clean) {
+  let match = clean.match(/^(do|does|did)\s+(.+?)\s+([a-z']+)\s*(.*)$/i);
+  if (match) {
+    const object = compactClause(match[4]);
+    return {
+      pattern: object ? '五大句型之一: 主谓宾(SVO)。一般疑问句把助动词提前。' : '五大句型之一: 主谓(SV)。一般疑问句把助动词提前。',
+      components: `助=${match[1]}；主=${compactClause(match[2])}；谓=${match[3]}${object ? `；宾=${object}` : ''}`,
+    };
+  }
+
+  match = clean.match(/^(can|could|will|would|may|must|should)\s+(.+?)\s+([a-z']+)\s*(.*)$/i);
+  if (match) {
+    const object = compactClause(match[4]);
+    return {
+      pattern: object ? '五大句型之一: 主谓宾(SVO)。情态疑问句把情态动词提前。' : '五大句型之一: 主谓(SV)。情态疑问句把情态动词提前。',
+      components: `情态=${match[1]}；主=${compactClause(match[2])}；谓=${match[3]}${object ? `；宾=${object}` : ''}`,
+    };
+  }
+
+  return null;
+}
+
+function imperativeAnalysis(clean) {
+  const words = lexicalWords(clean);
+  const first = wordKey(words[0] ?? '');
+  if (!imperativeStarts.has(first)) return null;
+
+  const rest = compactClause(clean.replace(new RegExp(`^${words[0]}\\b`, 'i'), ''));
+  if (doubleObjectPatterns.some((pattern) => pattern.test(clean))) {
+    const parts = rest.split(/\s+/);
+    return {
+      pattern: '五大句型之一: 主谓双宾(SVOO)。祈使句省略主语 you。',
+      components: `主=(you 省略)；谓=${words[0]}；间宾=${parts[0] ?? ''}；直宾=${parts.slice(1).join(' ')}`,
+    };
+  }
+  return {
+    pattern: rest ? '五大句型之一: 主谓宾(SVO)。祈使句省略主语 you。' : '五大句型之一: 主谓(SV)。祈使句省略主语 you。',
+    components: `主=(you 省略)；谓=${words[0]}${rest ? `；宾=${rest}` : ''}`,
+  };
+}
+
+function actionAnalysis(clean) {
+  const { adverbial, main } = splitLeadingAdverbial(clean);
+  const words = lexicalWords(main);
+  const verbIndex = firstVerbIndex(words);
+  if (verbIndex < 0) {
+    const first = words[0] ?? clean;
+    return {
+      pattern: '五大句型参考: 省略句/交际短句；结合上下文还原主谓结构。',
+      components: `主/谓省略；核心词=${first}`,
+    };
+  }
+
+  const subject = compactClause(words.slice(0, verbIndex).join(' '));
+  const verb = words[verbIndex];
+  const rest = compactClause(words.slice(verbIndex + 1).join(' '));
+  const lower = main.toLowerCase();
+
+  const passiveMatch = main.match(/^(.+?)\s+((?:has|have|had|is|are|was|were)\s+been\s+\w+ed)\s*(.*)$/i)
+    ?? main.match(/^(.+?)\s+((?:is|are|was|were)\s+\w+ed)\s*(.*)$/i);
+  if (passiveMatch) {
+    return {
+      pattern: '五大句型之一: 主谓(SV)的被动结构；过去分词构成谓语核心。',
+      components: `${adverbial ? `状=${adverbial}；` : ''}主=${compactClause(passiveMatch[1])}；谓=${compactClause(passiveMatch[2])}${passiveMatch[3] ? `；补/状=${compactClause(passiveMatch[3])}` : ''}`,
+    };
+  }
+
+  if (objectComplementPatterns.some((pattern) => pattern.test(clean))) {
+    const parts = rest.split(/\s+/);
+    return {
+      pattern: '五大句型之一: 主谓宾补(SVOC)。',
+      components: `${adverbial ? `状=${adverbial}；` : ''}主=${subject || '(省略)'}；谓=${verb}；宾=${parts[0] ?? ''}；宾补=${parts.slice(1).join(' ')}`,
+    };
+  }
+
+  if (doubleObjectPatterns.some((pattern) => pattern.test(clean))) {
+    const parts = rest.split(/\s+/);
+    return {
+      pattern: '五大句型之一: 主谓双宾(SVOO)。',
+      components: `${adverbial ? `状=${adverbial}；` : ''}主=${subject || '(省略)'}；谓=${verb}；间宾=${parts[0] ?? ''}；直宾=${parts.slice(1).join(' ')}`,
+    };
+  }
+
+  if (linkingVerbForms.has(wordKey(verb))) {
+    return {
+      pattern: '五大句型之一: 主系表(SVC)。',
+      components: `${adverbial ? `状=${adverbial}；` : ''}主=${subject || '(省略)'}；系=${verb}；表=${rest || '(省略)'}`,
+    };
+  }
+
+  const hasObject = transitiveVerbs.has(wordKey(verb)) && rest && !/^(to|from|at|in|on|under|over|behind|beside|across|along|upstairs|downstairs|away|back|home)\b/i.test(rest);
+  if (hasObject || /\b(have|has|want|wants|like|likes|see|sees|read|reads|make|makes|take|takes|put|puts|buy|bought)\b/i.test(lower)) {
+    return {
+      pattern: '五大句型之一: 主谓宾(SVO)。',
+      components: `${adverbial ? `状=${adverbial}；` : ''}主=${subject || '(省略)'}；谓=${verb}；宾=${rest || '(省略)'}`,
+    };
+  }
+
+  return {
+    pattern: '五大句型之一: 主谓(SV)。后续信息多作宾语、补语或状语，按动词性质判断。',
+    components: `${adverbial ? `状=${adverbial}；` : ''}主=${subject || '(省略)'}；谓=${verb}${rest ? `；状=${rest}` : ''}`,
+  };
+}
+
+function nominalSubjectComplementAnalysis(clean) {
+  const match = clean.match(/^(what\s+.+?)\s+(made|make|makes)\s+(me|him|her|us|them|you|it)\s+(.+)$/i);
+  if (!match) return null;
+  return {
+    pattern: '五大句型之一: 主谓宾补(SVOC)。what 引导的名词性从句作主语。',
+    components: `主=${compactClause(match[1])}；谓=${match[2]}；宾=${match[3]}；宾补=${compactClause(match[4])}`,
+  };
+}
+
+function grammarAnalysisFor(line) {
+  const clean = compactClause(normalizeLine(line));
+  const lower = clean.toLowerCase();
+
+  let base = null;
+  const butParts = clean.split(/\s*,?\s+but\s+/i);
+  if (butParts.length === 2 && butParts.every(Boolean)) {
+    const first = grammarAnalysisFor(butParts[0]);
+    const second = grammarAnalysisFor(butParts[1]);
+    base = {
+      pattern: `五大句型组合: 并列句；前句${first.pattern}；后句${second.pattern}`,
+      components: `前句(${first.components})；连词=but；后句(${second.components})`,
+    };
+  } else if (/^there(?:'s| is| are| was| were)\b/i.test(clean)) {
+    base = {
+      pattern: '五大句型参考: there be 存现句；可看作主系表(SVC)的特殊变体。',
+      components: clean.replace(/^there(?:'s| is| are| was| were)\s*/i, (match) => `引导词=there；系=${match.trim().replace(/^there/i, '').trim() || "'s"}；主=`),
+    };
+  } else if (/^(is|are|am|was|were|what|whose|which|how)\b/i.test(clean)) {
+    base = beQuestionAnalysis(clean);
+  } else if (/^(do|does|did|can|could|will|would|may|must|should)\b/i.test(clean)) {
+    base = questionActionAnalysis(clean);
+  } else if (imperativeStarts.has(wordKey(lexicalWords(clean)[0] ?? ''))) {
+    base = imperativeAnalysis(clean);
+  } else if (/\b(am|are|is|was|were|'m|'re|'s)\b/i.test(clean) || /\w+'(?:m|re|s)\b/i.test(clean)) {
+    base = linkingAnalysis(clean);
+  } else {
+    base = nominalSubjectComplementAnalysis(clean);
+  }
+
+  if (!base) base = actionAnalysis(clean);
+
+  const extras = [];
+  if (/\b(who|which|that)\b/i.test(lower)) extras.push('含从句/关系词，需看其修饰或连接的对象');
+  if (/\b(and|but|or)\b/i.test(lower)) extras.push('含并列连接，连接并列词、短语或分句');
+  if (/\b(not|n't)\b/i.test(lower)) extras.push('含否定成分');
+  if (/\?$/.test(normalizeLine(line))) extras.push('疑问语序/疑问语气');
+  if (/!$/.test(normalizeLine(line))) extras.push('强调或交际语气');
+
+  return {
+    pattern: base.pattern,
+    components: base.components,
+    structure: `句型: ${base.pattern} 成分: ${base.components}${extras.length ? `；补充: ${extras.join('；')}` : ''}。`,
+  };
+}
+
+function patternFor(line) {
+  return grammarAnalysisFor(line).pattern;
+}
+
+function componentsFor(line) {
+  return grammarAnalysisFor(line).components;
+}
+
+function structureFor(line) {
+  return grammarAnalysisFor(line).structure;
 }
 
 function tenseFor(line) {
@@ -974,28 +1282,221 @@ function tenseFor(line) {
 }
 
 function wordsFor(line) {
-  const seen = new Set();
   const items = [];
+  const phraseItems = [];
   const lower = cleanForRules(line).toLowerCase();
   for (const [phrase, cn] of [...phraseCn, ...extraPhraseCn]) {
-    if (lower.includes(phrase) && !seen.has(phrase)) {
-      seen.add(phrase);
-      items.push(`${phrase} ${cn}`);
+    if (lower.includes(phrase) && !phraseItems.some((item) => item.startsWith(`${phrase} `))) {
+      phraseItems.push(`${phrase} ${cn}`);
     }
   }
-  for (const token of tokenize(line)) {
-    const key = wordKey(token);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    if (vocabCn.has(key)) items.push(`${token.replace(/[?!.,]/g, '')} ${vocabCn.get(key)}`);
-    else if (adjectiveCn.has(key)) items.push(`${token.replace(/[?!.,]/g, '')} ${adjectiveCn.get(key)}`);
-    else if (extraWordCn.has(key)) items.push(`${token.replace(/[?!.,]/g, '')} ${extraWordCn.get(key)}`);
+  for (const token of lexicalWords(line)) {
+    items.push(`${token} ${wordMeaning(token)}`);
   }
   if (items.length === 0) {
     const pattern = patternNoteFor(line);
     return `${pattern}；`;
   }
-  return `${items.slice(0, 8).join('； ')}；`;
+  return `${items.join('； ')}；${phraseItems.length ? ` 短语: ${phraseItems.join('； ')}；` : ''}`;
+}
+
+const commonWordCn = new Map(Object.entries({
+  a: '一个/一，用于单数可数名词前',
+  about: '关于/大约',
+  after: '在之后',
+  afraid: '害怕的/担心的',
+  ago: '以前',
+  again: '再一次',
+  all: '全部/都',
+  am: '是，be 动词第一人称单数',
+  an: '一个/一，用于元音音素前',
+  and: '和/并且',
+  any: '任何/一些',
+  are: '是，be 动词复数/第二人称',
+  at: '在/向',
+  back: '回来/后面',
+  bad: '坏的/严重的',
+  be: '是/成为',
+  been: 'be 的过去分词',
+  but: '但是',
+  by: '通过/乘/在旁边',
+  buy: '买',
+  can: '能够/可以',
+  car: '汽车',
+  come: '来',
+  course: '课程/过程；of course 当然',
+  could: '能够/可以，can 的过去式或委婉说法',
+  day: '一天/白天',
+  did: 'do 的过去式/助动词',
+  "didn't": 'did not 的缩写，没有/不',
+  do: '做/助动词',
+  does: 'do 的第三人称单数/助动词',
+  doctor: '医生',
+  down: '向下',
+  every: '每一个',
+  for: '为了/给/持续',
+  from: '从/来自',
+  get: '得到/变得/到达',
+  go: '去',
+  got: 'get 的过去式/过去分词，得到/变得',
+  ground: '地面',
+  had: 'have 的过去式',
+  has: '有/助动词，第三人称单数',
+  have: '有/助动词',
+  he: '他',
+  her: '她/她的',
+  here: '这里',
+  him: '他，宾格',
+  his: '他的',
+  home: '家/在家',
+  house: '房子',
+  how: '怎样/多么',
+  i: '我',
+  if: '如果/是否',
+  in: '在里面/在某时',
+  into: '进入',
+  is: '是，be 动词第三人称单数',
+  it: '它/这',
+  just: '刚刚/只是',
+  know: '知道',
+  last: '上一个/最后的',
+  let: '让',
+  little: '小的',
+  look: '看',
+  made: 'make 的过去式，使/让',
+  make: '做/制作/使',
+  man: '男人',
+  may: '可以/可能',
+  me: '我，宾格',
+  meet: '遇见/见面',
+  money: '钱',
+  more: '更多',
+  much: '许多/非常',
+  my: '我的',
+  near: '在附近',
+  new: '新的',
+  next: '下一个/接下来的',
+  no: '不/没有',
+  not: '不',
+  now: '现在',
+  of: '的/属于',
+  on: '在上面/在某天',
+  one: '一/一个',
+  or: '或者',
+  our: '我们的',
+  out: '出去/在外',
+  people: '人们',
+  please: '请',
+  put: '放/放置',
+  right: '对的/右边',
+  saw: 'see 的过去式，看见',
+  said: 'say 的过去式，说',
+  see: '看见/明白',
+  she: '她',
+  sir: '先生',
+  so: '如此/所以',
+  some: '一些',
+  sorry: '抱歉的',
+  still: '仍然',
+  sure: '确信的',
+  tell: '告诉',
+  than: '比',
+  thank: '感谢',
+  that: '那/那个',
+  the: '这个/那个，定冠词',
+  their: '他们的/它们的',
+  them: '他们/它们，宾格',
+  then: '然后/那时',
+  there: '那里/there be 引导词',
+  these: '这些',
+  they: '他们/它们',
+  think: '想/认为',
+  this: '这/这个',
+  those: '那些',
+  through: '穿过/通过',
+  time: '时间/次数',
+  to: '到/向/不定式标记',
+  today: '今天',
+  town: '城镇',
+  too: '也/太',
+  up: '向上',
+  very: '非常',
+  walk: '散步/走',
+  want: '想要',
+  was: '是，be 动词过去式单数',
+  we: '我们',
+  week: '周/星期',
+  well: '好/健康的',
+  went: 'go 的过去式，去了',
+  were: '是，be 动词过去式复数',
+  what: '什么',
+  when: '什么时候/当时',
+  where: '哪里',
+  which: '哪一个/哪个',
+  who: '谁',
+  whose: '谁的',
+  why: '为什么',
+  will: '将要/愿意',
+  with: '和/带有',
+  wife: '妻子',
+  would: '将会/愿意，委婉或过去将来',
+  year: '年',
+  yet: '还/已经，用于疑问或否定',
+  yes: '是的',
+  you: '你/你们',
+  your: '你的/你们的',
+}));
+
+const contractionCn = new Map(Object.entries({
+  "aren't": 'are not 的缩写，不是',
+  "can't": 'cannot 的缩写，不能/不可能',
+  "doesn't": 'does not 的缩写，不',
+  "don't": 'do not 的缩写，不',
+  "hadn't": 'had not 的缩写，没有',
+  "hasn't": 'has not 的缩写，没有',
+  "haven't": 'have not 的缩写，没有',
+  "he's": 'he is/has 的缩写，他是/他已经',
+  "here's": 'here is 的缩写，这是/这里有',
+  "how's": 'how is 的缩写，怎么样',
+  "i'm": 'I am 的缩写，我是',
+  "isn't": 'is not 的缩写，不是',
+  "it's": 'it is/has 的缩写，它是/这就是',
+  "let's": 'let us 的缩写，让我们',
+  "she's": 'she is/has 的缩写，她是/她已经',
+  "that's": 'that is 的缩写，那是/就是说',
+  "there's": 'there is 的缩写，有',
+  "they're": 'they are 的缩写，他们/它们是',
+  "we're": 'we are 的缩写，我们是',
+  "what's": 'what is 的缩写，是什么',
+  "where's": 'where is 的缩写，在哪里',
+  "who's": 'who is 的缩写，谁是',
+  "won't": 'will not 的缩写，将不',
+  "you're": 'you are 的缩写，你/你们是',
+}));
+
+function possessiveBase(key) {
+  if (!key.endsWith("'s")) return null;
+  return key.slice(0, -2);
+}
+
+function wordMeaning(token) {
+  const key = wordKey(token);
+  const lowerToken = token.toLowerCase();
+  const maps = [commonWordCn, contractionCn, vocabCn, adjectiveCn, extraWordCn, phraseCn];
+  for (const map of maps) {
+    if (map.has(key)) return map.get(key);
+    if (map.has(lowerToken)) return map.get(lowerToken);
+  }
+  const base = possessiveBase(key);
+  if (base) {
+    const baseMeaning = wordMeaning(base);
+    return `${baseMeaning}的/所有格`;
+  }
+  if (/ing$/.test(key)) return '动词 -ing 形式/现在分词或动名词';
+  if (/ed$/.test(key)) return '动词过去式/过去分词';
+  if (/s$/.test(key)) return '名词复数或动词第三人称单数';
+  if (/^[A-Z]/.test(token)) return '专有名词/人名或地名';
+  return '本句词汇';
 }
 
 const phraseCn = new Map(Object.entries({
@@ -1751,6 +2252,8 @@ function renderHtml(lesson) {
       <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="${index + 1}" aria-label="Play sentence ${index + 1}">▶</button><button class="sentence-toggle" type="button" data-sentence="${index + 1}" aria-label="Pause or resume sentence ${index + 1}">Ⅱ</button><span class="sentence-num">${index + 1}</span><p class="en-text">${highlightEnglish(line)}</p></div>
       <div class="field ipa"><span>美音发音</span><p>${highlightIpa(ipa)}</p></div>
       <div class="field liaison"><span>连读分析</span><p>${escapeHtml(liaisonFor(line, ipa)).replace(/`([^`]+)`/g, '<code>$1</code>')}</p></div>
+      <div class="field pattern"><span>句型</span><p>${escapeHtml(patternFor(line))}</p></div>
+      <div class="field components"><span>成分</span><p>${escapeHtml(componentsFor(line))}</p></div>
       <div class="field structure"><span>结构</span><p>${escapeHtml(structureFor(line))}</p></div>
       <div class="field tense"><span>时态</span><p>${escapeHtml(tenseFor(line))}</p></div>
       <div class="field cn"><span>中</span><p>${escapeHtml(cn)}</p></div>
@@ -1798,6 +2301,7 @@ function renderHtml(lesson) {
     .linking { color: #15803d; font-weight: 700; }
     .weak { color: #92400e; font-weight: 700; }
     .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .pattern p, .components p, .structure p { color: #1e3a8a; }
     .cn p { color: #7c2d12; font-weight: 600; }
     .words p { color: #581c87; }
     .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
@@ -1841,8 +2345,8 @@ ${cards}
     </section>
     <section class="summary-section">
       <h2>句型总结</h2>
-      <p><code>This is...</code> 用来介绍人或物；<code>Is this your...?</code> 用来询问归属。</p>
-      <p><code>Are you...?</code> 和 <code>What are/is...?</code> 是本阶段最重要的 be 动词疑问句。</p>
+      <p>每句已标明五大句型归类：主谓(SV)、主谓宾(SVO)、主系表(SVC)、主谓双宾(SVOO)、主谓宾补(SVOC)；省略句和 there be 句单独说明。</p>
+      <p><code>This is...</code>、<code>Are you...?</code>、<code>What are/is...?</code> 是本册初段最常见的主系表句型；祈使句通常省略主语 <code>you</code>。</p>
     </section>
     <section class="summary-section">
       <h2>时态总结</h2>

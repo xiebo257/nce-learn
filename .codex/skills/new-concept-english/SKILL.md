@@ -7,7 +7,7 @@ description: Analyze New Concept English lessons sentence by sentence in the use
 
 ## Overview
 
-Analyze New Concept English lesson text one sentence at a time. Use the user's saved format exactly: each sentence must be in its own numbered newline block with `EN`, `美音发音`, `连读分析`, `句型`, `成分`, `结构`, `时态`, `中`, and `词`. The sentence number must be visible in the `EN` line itself. After the sentence blocks, add concise summary sections for words, sentence patterns, tense, modal/modal-verb usage, and connected speech.
+Analyze New Concept English lesson text one sentence at a time. Use the user's saved format exactly: each sentence must be in its own numbered newline block with `EN`, `美音发音`, `连读分析`, `结构`, `时态`, `中`, and `词`. The sentence number must be visible in the `EN` line itself. After the sentence blocks, add concise summary sections for words, sentence patterns, tense, modal/modal-verb usage, and connected speech.
 
 ## Lesson Source
 
@@ -41,8 +41,6 @@ Use this block format exactly. Give every analyzed sentence a consecutive number
 EN: 1. ...
 美音发音: /.../
 连读分析: ...
-句型: ...
-成分: ...
 结构: ...
 时态: ...
 中: ...
@@ -55,9 +53,7 @@ Field rules:
 - `美音发音`: Provide American spoken IPA for the whole sentence, not only dictionary citation forms. For content words, prefer the local macOS New Oxford American Dictionary pronunciation when available; use the helper `swift tools/macos_dictionary_pron.swift word` in this repo, or a direct DictionaryServices lookup, and choose the `AmE` form. Then apply connected-speech notation with `‿` for natural linking. Prefer weak forms in unstressed function words and prefixes, for example `and` -> `/ən/`, `of` -> `/əv/`, and unstressed `un-` before stress -> `/ənˈ.../`. Mark natural American flapped `t` as `/ɾ/` inside words and across word boundaries when appropriate, for example `water` `/ˈwɔɾɚ/`, `later` `/ˈleɪɾɚ/`, `get up` `/ɡɛɾ‿ʌp/`, `but I` `/bət‿aɪ/` or `/bəɾ‿aɪ/` when strongly connected, and `unsettling` `/ənˈsɛɾəlɪŋ/`. Keep the notation learner-readable; do not over-compress every possible reduction.
 - For HTML output, visually mark pronunciation phenomena in the English sentence and/or IPA line when possible: connected/linking parts use green (`.linking`, suggested color `#15803d`), weak/reduced parts use brown (`.weak`, suggested color `#92400e`). Do not change the plain markdown text for this; apply the highlighting only in generated HTML spans.
 - `连读分析`: Put this line immediately after `美音发音`. Briefly explain the main connected-speech points in Chinese, including linking, weak forms/reductions, and American flaps. Keep it short and practical, for example `Pumas are /z‿ɑr/ 连读；which are /tʃ‿ɑr/ 连读；in a /ɪn‿ə/ 连读，a 弱读 /ə/。`
-- `句型`: Clearly name which of the five basic sentence patterns the sentence belongs to: 主谓(SV), 主谓宾(SVO), 主系表(SVC), 主谓双宾(SVOO), or 主谓宾补(SVOC). If the sentence is an imperative, existential `there be`, inverted question, or elliptical conversational sentence, still state the closest five-pattern analysis and explain the special form, for example `五大句型之一: 主系表(SVC)。疑问句把系动词提前。`
-- `成分`: Mark the sentence elements explicitly with labels such as `主`, `谓`, `宾`, `系`, `表`, `间宾`, `直宾`, `宾补`, `状`, `定`, `补`, and `省略`. Keep it concrete and tied to the exact sentence words, for example `系=Is；主=this；表=your handbag` or `主=(you 省略)；谓=Come；状=upstairs；谓=see；宾=it`.
-- `结构`: Explain the sentence structure in concise Chinese. It must include the sentence pattern and the element labels, then mention main clause, subordinate clause, participle phrase, infinitive phrase, passive voice, relative clause, object clause, adverbial clause, and fixed patterns when useful.
+- `结构`: Explain the sentence structure in concise Chinese. It must include the five basic sentence pattern and the element labels in one line, then mention main clause, subordinate clause, participle phrase, infinitive phrase, passive voice, relative clause, object clause, adverbial clause, and fixed patterns when useful. Clearly name one of the five basic sentence patterns where possible: 主谓(SV), 主谓宾(SVO), 主系表(SVC), 主谓双宾(SVOO), or 主谓宾补(SVOC). If the sentence is an imperative, existential `there be`, inverted question, or elliptical conversational sentence, still state the closest five-pattern analysis and explain the special form. Mark elements explicitly with labels such as `主`, `谓`, `宾`, `系`, `表`, `间宾`, `直宾`, `宾补`, `状`, `定`, `补`, and `省略`, for example `结构: 句型: 五大句型之一: 主系表(SVC)。疑问句把系动词提前。成分: 系=Is；主=this；表=your handbag。`
 - `时态`: Name the tense(s) and modal/passive/future structures. Keep it practical, not overly academic.
 - `中`: Give natural Chinese translation.
 - `词`: List every word in the sentence, not only unfamiliar or high-value words. Preserve sentence order and repeat repeated words. Use the copy-friendly form `English Chinese； ` with one blank space after each Chinese semicolon. Include contractions as they appear and explain them, for example `I'm I am 的缩写，我是；`. After the word-by-word list, add useful phrases if relevant, prefixed with `短语:`.
@@ -70,7 +66,6 @@ Field rules:
 - Use Chinese labels exactly: `结构`, `时态`, `中`, `词`.
 - Include `美音发音` after every `EN` line. For HTML generated from analysis markdown, preserve the same American spoken IPA in each pronunciation card.
 - Include `连读分析` immediately after `美音发音` in every sentence block. For HTML generated from analysis markdown, render it as a separate field directly below the pronunciation field.
-- Include `句型` and `成分` immediately after `连读分析` in every sentence block. For HTML generated from analysis markdown, render them as separate fields before `结构`.
 - In generated HTML pronunciation cards, use semantic spans such as `<span class="linking">...</span>` and `<span class="weak">...</span>` for color coding. Do not place a pronunciation legend inside `.field` rows, because it creates extra blank-looking grid rows. Add one page-level pronunciation note outside sentence cards that says the IPA uses macOS Dictionary AmE word bases plus sentence-level connected speech, weak forms, and American flaps.
 - Use numbering like `1.`, `2.`, `3.` on its own line before every sentence block.
 - Repeat the same number in the `EN` field, for example `EN: 1. The sentence...`, so the English sentence itself is numbered.
@@ -111,9 +106,7 @@ Summary rules:
 EN: 30. However you decide to spend your time, one thing is certain: you will arrive at your destination fresh and uncrumpled.
 美音发音: /haʊˈɛvɚ ju dɪˈsaɪd tə spɛnd jɚ taɪm wʌn θɪŋ‿ɪz ˈsɝtən ju wɪl əˈraɪv‿æt jɚ ˌdɛstəˈneɪʃən frɛʃ‿ən ənˈkrʌmpəld/
 连读分析: thing is /ŋ‿ɪz/、arrive at /v‿æt/ 连读；and 弱读成 /ən/；uncrumpled 中 unstressed un- 弱读 /ən-/。
-句型: 主句为五大句型之一: 主系表(SVC)；冒号后分句为主谓(SV)。
-成分: 从句=However you decide to spend your time；主=one thing；系=is；表=certain；冒号后主=you；谓=will arrive；状=at your destination；主补/状态=fresh and uncrumpled。
-结构: 句型: 主句主系表(SVC)，冒号后主谓(SV)。成分: However 引导让步状语从句；one thing is certain 为主句；冒号后解释 one thing；fresh and uncrumpled 作到达时的主语补足/状态说明。
+结构: 句型: 主句为五大句型之一: 主系表(SVC)，冒号后分句为主谓(SV)。成分: 从句=However you decide to spend your time；主=one thing；系=is；表=certain；冒号后主=you；谓=will arrive；状=at your destination；主补/状态=fresh and uncrumpled。补充: However 引导让步状语从句；冒号后解释 one thing。
 时态: 从句和主句为一般现在时；冒号后为一般将来时。
 中: 不管你决定怎样打发时间，有一点是确定的：你到达目的地时会精神饱满、衣冠整洁。
 词: However 无论怎样； you 你； decide 决定； to 不定式标记； spend 花费/度过； your 你的； time 时间； one 一个； thing 事情； is 是； certain 确定的； you 你； will 将要； arrive 到达； at 在/到； your 你的； destination 目的地； fresh 精神饱满的； and 和； uncrumpled 不皱的/整洁的； 短语: decide to do 决定做； 
@@ -155,7 +148,7 @@ Minimum CSS:
 5. Output sentence blocks in the saved format, with one consecutive number for each sentence and the same number repeated in the `EN` line.
 6. Add American spoken IPA in `美音发音` for every sentence. For uncertain content-word pronunciations, query the local macOS dictionary first with `swift tools/macos_dictionary_pron.swift word` and use the `AmE` pronunciation as the base form before adding sentence-level linking, weak forms, and American flaps `/ɾ/`. Keep the transcription readable for learners.
 7. Add `连读分析` immediately below `美音发音`, summarizing the sentence's main linking, weak forms, reductions, and flaps.
-8. Add `句型` and `成分` immediately below `连读分析`. `句型` must name one of the five basic sentence patterns or explain the closest pattern for elliptical/special sentences. `成分` must explicitly mark `主`, `谓`, `宾`, `系`, `表`, etc.
+8. In `结构`, include both the five-pattern classification and explicit element labels such as `主`, `谓`, `宾`, `系`, and `表`; do not create separate `句型` or `成分` fields.
 9. In `词`, list every word in the sentence in order, including function words, repeated words, names, contractions, and inflected forms. Then add useful phrases if relevant.
-10. When generating HTML, color-code pronunciation cues with green `.linking` for connected speech and brown `.weak` for weak/reduced parts. Do not insert per-card pronunciation legends inside `.field` rows. Add one page-level pronunciation note near the top of `<main>` explaining that the word bases come from macOS Dictionary AmE and sentence pronunciation preserves connected speech. Render `连读分析`, `句型`, and `成分` as separate fields directly below `美音发音`.
+10. When generating HTML, color-code pronunciation cues with green `.linking` for connected speech and brown `.weak` for weak/reduced parts. Do not insert per-card pronunciation legends inside `.field` rows. Add one page-level pronunciation note near the top of `<main>` explaining that the word bases come from macOS Dictionary AmE and sentence pronunciation preserves connected speech. Render `连读分析` as a separate field directly below `美音发音`, followed by a single `结构` field that includes pattern and components.
 11. Add `词汇总结`, `句型总结`, `时态总结`, `情态/语气总结`, and when relevant `本课连读注意点` after the sentence blocks, unless the user asks for sentence analysis only.

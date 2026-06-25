@@ -13,7 +13,7 @@ This repository is a static New Concept English learning site. Lesson assets are
 ## Commands
 
 - `node tools/generate_nce1_1_20_html.mjs 1 144` regenerates all NCE1 analysis HTML pages.
-- `node tools/verify_nce1_analysis_fields.mjs` checks that NCE1 sentence cards include `句型`, `成分`, `结构`, and per-sentence word coverage.
+- `node tools/verify_nce1_analysis_fields.mjs` checks that NCE1 sentence cards include `结构` with sentence-pattern/component details and per-sentence word coverage.
 - `node tools/verify_nce1_player.mjs` validates NCE1 HTML audio-player wiring.
 - `node tools/generate_nce2_html.mjs`, `node tools/generate_nce4_html.mjs`, and related scripts regenerate other book pages.
 
@@ -23,14 +23,12 @@ Use the project-local skill at `.codex/skills/new-concept-english/SKILL.md` for 
 
 - `美音发音`
 - `连读分析`
-- `句型`
-- `成分`
 - `结构`
 - `时态`
 - `中`
 - `词`
 
-`句型` must identify the relevant five basic sentence pattern where possible: `主谓(SV)`, `主谓宾(SVO)`, `主系表(SVC)`, `主谓双宾(SVOO)`, or `主谓宾补(SVOC)`. `成分` must explicitly mark sentence elements such as `主`, `谓`, `宾`, `系`, `表`, `间宾`, `直宾`, `宾补`, `状`, and `省略`. `词` must list every word in sentence order, not only high-value words.
+`结构` must identify the relevant five basic sentence pattern where possible: `主谓(SV)`, `主谓宾(SVO)`, `主系表(SVC)`, `主谓双宾(SVOO)`, or `主谓宾补(SVOC)`. It must also explicitly mark sentence elements such as `主`, `谓`, `宾`, `系`, `表`, `间宾`, `直宾`, `宾补`, `状`, and `省略`. Do not render separate `句型` or `成分` fields; keep that content inside `结构`. `词` must list every word in sentence order, not only high-value words.
 
 ## Generated Files
 

@@ -48,12 +48,11 @@ for (const file of files) {
     const en = stripTags(card.match(/<p class="en-text">([\s\S]*?)<\/p>/)?.[1] ?? '');
     const words = stripTags(card.match(/<div class="field words">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
     const structure = stripTags(card.match(/<div class="field structure">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
-    const pattern = stripTags(card.match(/<div class="field pattern">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
-    const components = stripTags(card.match(/<div class="field components">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
-
-    if (!pattern.includes('五大句型')) failures.push(`${label}: missing 五大句型 in 句型`);
-    if (!/[主谓宾系表]/.test(components)) failures.push(`${label}: missing grammar component labels`);
+    if (/class="field pattern"/.test(card)) failures.push(`${label}: 句型 field should be merged into 结构`);
+    if (/class="field components"/.test(card)) failures.push(`${label}: 成分 field should be merged into 结构`);
     if (!structure.includes('句型:') || !structure.includes('成分:')) failures.push(`${label}: structure must summarize 句型 and 成分`);
+    if (!structure.includes('五大句型')) failures.push(`${label}: structure missing 五大句型`);
+    if (!/[主谓宾系表]/.test(structure)) failures.push(`${label}: structure missing grammar component labels`);
 
     for (const key of wordKeys(en)) {
       if (!words.toLowerCase().includes(key)) {

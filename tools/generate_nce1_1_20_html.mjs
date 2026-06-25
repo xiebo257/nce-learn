@@ -1256,14 +1256,6 @@ function grammarAnalysisFor(line) {
   };
 }
 
-function patternFor(line) {
-  return grammarAnalysisFor(line).pattern;
-}
-
-function componentsFor(line) {
-  return grammarAnalysisFor(line).components;
-}
-
 function structureFor(line) {
   return grammarAnalysisFor(line).structure;
 }
@@ -2252,8 +2244,6 @@ function renderHtml(lesson) {
       <div class="sentence-head"><button class="sentence-play" type="button" data-sentence="${index + 1}" aria-label="Play sentence ${index + 1}">▶</button><button class="sentence-toggle" type="button" data-sentence="${index + 1}" aria-label="Pause or resume sentence ${index + 1}">Ⅱ</button><span class="sentence-num">${index + 1}</span><p class="en-text">${highlightEnglish(line)}</p></div>
       <div class="field ipa"><span>美音发音</span><p>${highlightIpa(ipa)}</p></div>
       <div class="field liaison"><span>连读分析</span><p>${escapeHtml(liaisonFor(line, ipa)).replace(/`([^`]+)`/g, '<code>$1</code>')}</p></div>
-      <div class="field pattern"><span>句型</span><p>${escapeHtml(patternFor(line))}</p></div>
-      <div class="field components"><span>成分</span><p>${escapeHtml(componentsFor(line))}</p></div>
       <div class="field structure"><span>结构</span><p>${escapeHtml(structureFor(line))}</p></div>
       <div class="field tense"><span>时态</span><p>${escapeHtml(tenseFor(line))}</p></div>
       <div class="field cn"><span>中</span><p>${escapeHtml(cn)}</p></div>
@@ -2301,7 +2291,7 @@ function renderHtml(lesson) {
     .linking { color: #15803d; font-weight: 700; }
     .weak { color: #92400e; font-weight: 700; }
     .weak.linking { color: #92400e; text-decoration: underline; text-decoration-color: #15803d; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-    .pattern p, .components p, .structure p { color: #1e3a8a; }
+    .structure p { color: #1e3a8a; }
     .cn p { color: #7c2d12; font-weight: 600; }
     .words p { color: #581c87; }
     .summary-section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; margin: 16px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }

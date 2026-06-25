@@ -1278,7 +1278,7 @@ function wordsFor(line) {
   const phraseItems = [];
   const lower = cleanForRules(line).toLowerCase();
   for (const [phrase, cn] of [...phraseCn, ...extraPhraseCn]) {
-    if (lower.includes(phrase) && !phraseItems.some((item) => item.startsWith(`${phrase} `))) {
+    if (isPhraseEntry(phrase) && phraseMatchesLine(lower, phrase) && !phraseItems.some((item) => item.startsWith(`${phrase} `))) {
       phraseItems.push(`${phrase} ${cn}`);
     }
   }
@@ -1290,6 +1290,19 @@ function wordsFor(line) {
     return `${pattern}；`;
   }
   return `${items.join('； ')}；${phraseItems.length ? ` 短语: ${phraseItems.join('； ')}；` : ''}`;
+}
+
+function isPhraseEntry(phrase) {
+  return phrase.trim().split(/\s+/).length > 1;
+}
+
+function phraseMatchesLine(lowerLine, phrase) {
+  const pattern = phrase
+    .trim()
+    .split(/\s+/)
+    .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('\\s+');
+  return new RegExp(`(^|[^a-z'])${pattern}([^a-z']|$)`, 'i').test(lowerLine);
 }
 
 const commonWordCn = new Map(Object.entries({
@@ -1474,7 +1487,7 @@ function possessiveBase(key) {
 function wordMeaning(token) {
   const key = wordKey(token);
   const lowerToken = token.toLowerCase();
-  const maps = [commonWordCn, contractionCn, vocabCn, adjectiveCn, extraWordCn, phraseCn];
+  const maps = [commonWordCn, contractionCn, vocabCn, adjectiveCn, extraWordCn, nce1WordCn, phraseCn];
   for (const map of maps) {
     if (map.has(key)) return map.get(key);
     if (map.has(lowerToken)) return map.get(lowerToken);
@@ -1484,11 +1497,55 @@ function wordMeaning(token) {
     const baseMeaning = wordMeaning(base);
     return `${baseMeaning}的/所有格`;
   }
+  const inflectedMeaning = meaningForInflectedWord(key);
+  if (inflectedMeaning) return inflectedMeaning;
+  if (/^[A-Z]/.test(token)) return '专有名词/人名或地名';
+  throw new Error(`Missing concrete word meaning for "${token}"`);
+}
+
+function lookupBaseMeaning(key) {
+  const maps = [commonWordCn, contractionCn, vocabCn, adjectiveCn, extraWordCn, nce1WordCn, phraseCn];
+  for (const map of maps) {
+    if (map.has(key)) return map.get(key);
+  }
+  return null;
+}
+
+function meaningForInflectedWord(key) {
+  const candidates = [];
+  if (/ies$/.test(key)) candidates.push([key.replace(/ies$/, 'y'), '复数/第三人称单数']);
+  if (/ing$/.test(key)) {
+    candidates.push([key.replace(/ing$/, ''), '-ing 形式']);
+    candidates.push([key.replace(/ing$/, 'e'), '-ing 形式']);
+    if (/([a-z])\1ing$/.test(key)) candidates.push([key.replace(/([a-z])\1ing$/, '$1'), '-ing 形式']);
+  }
+  if (/ied$/.test(key)) candidates.push([key.replace(/ied$/, 'y'), '过去式/过去分词']);
+  if (/ed$/.test(key)) {
+    candidates.push([key.replace(/ed$/, ''), '过去式/过去分词']);
+    candidates.push([key.replace(/d$/, ''), '过去式/过去分词']);
+    if (/([a-z])\1ed$/.test(key)) candidates.push([key.replace(/([a-z])\1ed$/, '$1'), '过去式/过去分词']);
+  }
+  if (/er$/.test(key)) {
+    candidates.push([key.replace(/er$/, ''), '比较级']);
+    candidates.push([key.replace(/r$/, ''), '比较级']);
+  }
+  if (/est$/.test(key)) {
+    candidates.push([key.replace(/est$/, ''), '最高级']);
+    candidates.push([key.replace(/st$/, ''), '最高级']);
+  }
+  if (/s$/.test(key)) {
+    candidates.push([key.replace(/s$/, ''), '复数/第三人称单数']);
+    candidates.push([key.replace(/es$/, ''), '复数/第三人称单数']);
+  }
+  for (const [base, form] of candidates) {
+    if (!base) continue;
+    const meaning = lookupBaseMeaning(base);
+    if (meaning) return `${base} 的${form}，${meaning}`;
+  }
   if (/ing$/.test(key)) return '动词 -ing 形式/现在分词或动名词';
   if (/ed$/.test(key)) return '动词过去式/过去分词';
   if (/s$/.test(key)) return '名词复数或动词第三人称单数';
-  if (/^[A-Z]/.test(token)) return '专有名词/人名或地名';
-  return '本句词汇';
+  return null;
 }
 
 const phraseCn = new Map(Object.entries({
@@ -1693,6 +1750,418 @@ const extraWordCn = new Map(Object.entries({
   waving: '挥手',
   woods: '树林',
   world: '世界',
+}));
+
+const nce1WordCn = new Map(Object.entries({
+  absent: '缺席的/不在的',
+  afternoon: '下午',
+  air: '空气/空中',
+  along: '沿着',
+  another: '另一个/再一个',
+  answer: '回答/答案',
+  answered: '回答了',
+  anywhere: '任何地方',
+  appointment: '约会/预约',
+  arrive: '到达',
+  ask: '问/请求',
+  autumn: '秋天',
+  away: '离开/在远处',
+  awful: '糟糕的/可怕的',
+  baby: '婴儿',
+  badly: '严重地/糟糕地',
+  bag: '包/袋子',
+  bath: '洗澡/浴缸',
+  beauty: '美人/美丽',
+  because: '因为',
+  before: '在之前',
+  beg: '请求/乞求',
+  began: 'begin 的过去式，开始',
+  belong: '属于',
+  best: '最好的',
+  between: '在两者之间',
+  biscuit: '饼干',
+  book: '书',
+  both: '两者都',
+  boy: '男孩',
+  breakfast: '早餐',
+  brought: 'bring 的过去式，带来',
+  brown: '棕色的',
+  busy: '忙的',
+  "butcher's": '肉店',
+  call: '打电话/叫',
+  came: 'come 的过去式，来了',
+  card: '卡片/明信片',
+  case: '箱子/情况',
+  cat: '猫',
+  catch: '接住/赶上',
+  chair: '椅子',
+  cheaper: '更便宜的',
+  cheer: '欢呼/振作',
+  chocolate: '巧克力',
+  cigarette: '香烟',
+  cinema: '电影院',
+  "clock's": 'clock is 的缩写，钟表是',
+  conversation: '谈话',
+  cost: '花费/价钱为',
+  "couldn't": 'could not 的缩写，不能/不会',
+  country: '国家/乡下',
+  crash: '碰撞/撞车',
+  crowd: '人群',
+  cup: '杯子',
+  dark: '黑暗的',
+  dear: '亲爱的/昂贵的',
+  decide: '决定',
+  dentist: '牙医',
+  describe: '描述',
+  dictionary: '词典',
+  difficult: '困难的',
+  dinner: '晚餐',
+  dinnner: '晚餐',
+  dog: '狗',
+  door: '门',
+  dream: '梦/做梦',
+  drink: '喝/饮料',
+  drive: '驾驶/开车',
+  drop: '掉下/落下',
+  drove: 'drive 的过去式，驾驶',
+  each: '每个',
+  early: '早的/早地',
+  easy: '容易的',
+  eat: '吃',
+  eh: '啊/嗯，表示疑问或确认',
+  eight: '八',
+  eighteen: '十八',
+  eighty: '八十',
+  either: '也，用于否定句/二者之一',
+  electric: '电的',
+  eleven: '十一',
+  else: '别的/其他的',
+  end: '结尾/结束',
+  enjoy: '享受/喜欢',
+  enough: '足够的/足够地',
+  ever: '曾经',
+  "everyone's": 'everyone is 的缩写，大家都',
+  exam: '考试',
+  extra: '额外的',
+  face: '脸/面对',
+  family: '家庭',
+  fashion: '时尚/流行',
+  father: '父亲',
+  favourite: '最喜欢的',
+  feel: '感觉',
+  fell: 'fall 的过去式，落下/摔倒',
+  felt: 'feel 的过去式，感觉',
+  few: '少数几个',
+  fifteen: '十五',
+  fifty: '五十',
+  find: '找到',
+  finish: '完成/结束',
+  first: '第一的/首先',
+  five: '五',
+  flew: 'fly 的过去式，飞',
+  floor: '地板/楼层',
+  fly: '飞',
+  food: '食物',
+  foot: '脚/英尺',
+  forgot: 'forget 的过去式，忘记',
+  forty: '四十',
+  'forty-one': '四十一',
+  found: 'find 的过去式，找到',
+  four: '四',
+  'four-year-old': '四岁的',
+  fourteen: '十四',
+  friend: '朋友',
+  front: '前面',
+  full: '满的/饱的',
+  funny: '滑稽的/有趣的',
+  garage: '车库/修车厂',
+  "george's": 'George 的所有格，乔治的',
+  girl: '女孩',
+  give: '给',
+  given: 'give 的过去分词，给了',
+  gone: 'go 的过去分词，去了/离开了',
+  green: '绿色的',
+  "greengroce's": '蔬菜水果店',
+  "greengrocer's": '蔬菜水果店',
+  grew: 'grow 的过去式，生长/变得',
+  "grocer's": '杂货店',
+  guy: '家伙/人',
+  half: '一半',
+  hand: '手',
+  handle: '把手/处理',
+  hard: '努力的/困难的/硬的',
+  hat: '帽子',
+  "hat's": 'hat is 的缩写，帽子是',
+  hate: '讨厌',
+  "he'll": 'he will 的缩写，他将会',
+  hear: '听见',
+  heard: 'hear 的过去式，听见',
+  help: '帮助',
+  herself: '她自己',
+  holiday: '假期',
+  hope: '希望',
+  hour: '小时',
+  hurt: '受伤/弄疼',
+  idea: '主意/想法',
+  ill: '生病的',
+  impossible: '不可能的',
+  instead: '代替/反而',
+  intelligent: '聪明的',
+  introduce: '介绍',
+  "it'll": 'it will 的缩写，它将会',
+  jam: '果酱/堵塞',
+  "jill's": 'Jill 的所有格，吉尔的',
+  "jimmy's": 'Jimmy 的所有格，吉米的',
+  job: '工作/职业',
+  keep: '保持/保留',
+  key: '钥匙/关键',
+  kindly: '和蔼地/友好地',
+  knock: '敲',
+  label: '标签',
+  lady: '女士',
+  'lamp-post': '路灯柱',
+  larger: '更大的',
+  largest: '最大的',
+  latest: '最新的/最晚的',
+  least: '最少的',
+  leave: '离开/留下',
+  lemonade: '柠檬水',
+  light: '灯/光/轻的',
+  like: '喜欢/像',
+  limit: '限制/限度',
+  line: '线路/线',
+  list: '清单',
+  live: '住/生活',
+  loaf: '一条面包',
+  lost: 'lose 的过去式/过去分词，丢失',
+  lot: '许多/大量',
+  low: '低的',
+  lucky: '幸运的',
+  m: '米/字母 m',
+  madam: '夫人/女士',
+  many: '许多',
+  mark: '分数/标记',
+  meat: '肉',
+  member: '成员',
+  met: 'meet 的过去式，遇见',
+  middle: '中间',
+  'middle-age': '中年的',
+  might: '可能/也许',
+  mind: '介意/头脑',
+  mine: '我的',
+  minute: '分钟/片刻',
+  model: '型号/模型',
+  "model's": 'model is 的缩写，型号是',
+  moment: '片刻',
+  month: '月',
+  most: '最/大多数',
+  mother: '母亲',
+  "mother's": 'mother 的所有格，母亲的',
+  mouth: '嘴',
+  move: '移动/搬家',
+  must: '必须/一定',
+  "mustn't": 'must not 的缩写，不许',
+  myself: '我自己',
+  name: '名字',
+  "name's": 'name is 的缩写，名字是',
+  nearly: '几乎/差不多',
+  neighbour: '邻居',
+  never: '从不',
+  'next-door': '隔壁的',
+  night: '夜晚',
+  nine: '九',
+  nineteen: '十九',
+  noise: '噪音',
+  none: '没有一个',
+  noon: '中午',
+  note: '便条/笔记',
+  number: '号码/数字',
+  nurse: '护士',
+  "o'clock": '点钟',
+  off: '离开/脱离',
+  office: '办公室',
+  often: '经常',
+  old: '老的/旧的',
+  once: '一次/曾经',
+  only: '只/仅仅',
+  other: '其他的',
+  over: '在上方/越过/结束',
+  overtook: 'overtake 的过去式，超过',
+  p: '便士/字母 p',
+  pair: '一双/一对',
+  paper: '纸',
+  party: '聚会/一行人',
+  past: '过了/过去的',
+  "pauline's": 'Pauline 的所有格，波琳的',
+  pay: '支付',
+  pence: '便士，penny 的复数',
+  penny: '便士/彭妮',
+  person: '人',
+  phone: '打电话/电话',
+  phrase: '短语',
+  phrasebook: '常用语手册',
+  piece: '一片/一块',
+  pilot: '飞行员',
+  pity: '遗憾/可惜',
+  platform: '站台/平台',
+  pleasantly: '愉快地',
+  plenty: '大量/充足',
+  pocket: '口袋',
+  poor: '可怜的/贫穷的',
+  pound: '英镑/磅',
+  powder: '粉',
+  present: '礼物/现在的/出席的',
+  prettier: '更漂亮的',
+  price: '价格',
+  problem: '问题',
+  quarter: '四分之一',
+  quickly: '迅速地',
+  quiet: '安静的',
+  ran: 'run 的过去式，跑',
+  read: '读',
+  ready: '准备好的',
+  really: '真正地/确实',
+  remain: '保持/留下',
+  remember: '记得',
+  repair: '修理',
+  report: '报告/报道',
+  rest: '休息/其余部分',
+  restaurant: '餐馆',
+  retire: '退休',
+  return: '返回/归还',
+  rich: '富有的',
+  roast: '烤的/烤',
+  room: '房间',
+  "room's": 'room is 的缩写，房间是',
+  round: '圆的/绕着',
+  rusty: '生锈的',
+  sad: '伤心的',
+  sale: '出售/销售',
+  "sam's": 'Sam 的所有格，萨姆的',
+  same: '相同的',
+  sat: 'sit 的过去式，坐',
+  say: '说',
+  sea: '海',
+  seen: 'see 的过去分词，看见',
+  sell: '卖',
+  serve: '服务/接待',
+  seven: '七',
+  seventy: '七十',
+  shave: '刮脸/剃',
+  ship: '船',
+  shop: '商店',
+  show: '展示/给……看',
+  since: '自从/既然',
+  sister: '姐妹',
+  six: '六',
+  sixteen: '十六',
+  sixth: '第六',
+  size: '尺码/大小',
+  sky: '天空',
+  sleep: '睡觉',
+  slow: '慢的',
+  smaller: '更小的',
+  "smith's": 'Smith 的所有格，史密斯的',
+  smoke: '抽烟/烟',
+  soap: '肥皂',
+  sold: 'sell 的过去式/过去分词，卖了',
+  someone: '某人',
+  soon: '很快',
+  speak: '说话/讲',
+  spell: '拼写',
+  spend: '花费/度过',
+  spoke: 'speak 的过去式，说',
+  spot: '斑点/地点',
+  stand: '站立',
+  stay: '停留/待',
+  steak: '牛排',
+  stop: '停止/车站',
+  story: '故事',
+  subject: '科目/主题',
+  suit: '适合',
+  suitcase: '手提箱',
+  summer: '夏天',
+  sun: '太阳',
+  sweep: '扫',
+  take: '拿/带走/乘坐',
+  telephone: '电话',
+  temperature: '温度',
+  ten: '十',
+  'ten-pound': '十英镑的',
+  terribly: '非常/糟糕地',
+  th: '序数词后缀',
+  "they'll": 'they will 的缩写，他们/它们将会',
+  third: '第三',
+  thirty: '三十',
+  thought: 'think 的过去式，想/认为',
+  three: '三',
+  throw: '扔',
+  tidy: '整洁的/整理',
+  till: '直到',
+  "tim's": 'Tim 的所有格，蒂姆的',
+  tin: '罐头/罐',
+  together: '一起',
+  toilet: '厕所',
+  told: 'tell 的过去式，告诉',
+  "tommy's": 'Tommy 的所有格，汤米的',
+  tomorrow: '明天',
+  tongue: '舌头',
+  tonight: '今晚',
+  took: 'take 的过去式，拿/带走',
+  toothache: '牙痛',
+  top: '顶部',
+  tourist: '游客',
+  track: '跑道/轨道',
+  train: '火车',
+  travel: '旅行',
+  tree: '树',
+  trip: '旅行',
+  true: '真实的/正确的',
+  truth: '事实/真相',
+  try: '尝试',
+  twelve: '十二',
+  twenty: '二十',
+  'twenty-nine': '二十九',
+  two: '二',
+  type: '打字/类型',
+  uncomfortable: '不舒服的',
+  under: '在下面',
+  understand: '理解',
+  urgent: '紧急的',
+  usually: '通常',
+  valley: '山谷',
+  voice: '嗓音/声音',
+  wait: '等待',
+  wall: '墙',
+  "wasn't": 'was not 的缩写，不是/没有',
+  watch: '看/手表',
+  water: '水/浇水',
+  way: '路/方式',
+  "we'll": 'we will 的缩写，我们将会',
+  "we've": 'we have 的缩写，我们已经/我们有',
+  wear: '穿/戴',
+  weekend: '周末',
+  "weren't": 'were not 的缩写，不是/没有',
+  whisky: '威士忌',
+  win: '赢',
+  wine: '葡萄酒',
+  winner: '获胜者',
+  winter: '冬天',
+  woman: '女人',
+  women: '女人们',
+  wonder: '想知道/感到惊讶',
+  word: '单词',
+  worth: '值……钱/值得',
+  write: '写',
+  wrong: '错误的',
+  wrote: 'write 的过去式，写',
+  yesterday: '昨天',
+  "you'd": 'you would/had 的缩写，你会/你已经',
+  "you'll": 'you will 的缩写，你将会',
+  "you've": 'you have 的缩写，你已经/你有',
+  young: '年轻的',
+  yourself: '你自己',
+  zip: '拉链',
 }));
 
 const extraPhraseCn = new Map(Object.entries({

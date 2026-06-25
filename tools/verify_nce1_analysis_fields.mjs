@@ -36,6 +36,17 @@ function wordKeys(value) {
   }).flat();
 }
 
+function phraseKeys(value) {
+  const phraseText = value.split('短语:')[1];
+  if (!phraseText) return [];
+  return phraseText
+    .split('；')
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => item.match(/^[A-Za-z]+(?:[-'][A-Za-z]+)*(?:\s+[A-Za-z]+(?:[-'][A-Za-z]+)*)*/)?.[0] ?? '')
+    .filter(Boolean);
+}
+
 const failures = [];
 
 for (const file of files) {
@@ -48,11 +59,19 @@ for (const file of files) {
     const en = stripTags(card.match(/<p class="en-text">([\s\S]*?)<\/p>/)?.[1] ?? '');
     const words = stripTags(card.match(/<div class="field words">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
     const structure = stripTags(card.match(/<div class="field structure">[\s\S]*?<p>([\s\S]*?)<\/p>/)?.[1] ?? '');
+    if (/本句词汇|本课词汇|结合课文语境理解/.test(words)) {
+      failures.push(`${label}: word list contains placeholder meaning`);
+    }
     if (/class="field pattern"/.test(card)) failures.push(`${label}: 句型 field should be merged into 结构`);
     if (/class="field components"/.test(card)) failures.push(`${label}: 成分 field should be merged into 结构`);
     if (!structure.includes('句型:') || !structure.includes('成分:')) failures.push(`${label}: structure must summarize 句型 and 成分`);
     if (!structure.includes('五大句型')) failures.push(`${label}: structure missing 五大句型`);
     if (!/[主谓宾系表]/.test(structure)) failures.push(`${label}: structure missing grammar component labels`);
+    for (const phrase of phraseKeys(words)) {
+      if (wordKeys(phrase).length < 2) {
+        failures.push(`${label}: 短语 should not repeat single word "${phrase}"`);
+      }
+    }
 
     for (const key of wordKeys(en)) {
       if (!words.toLowerCase().includes(key)) {

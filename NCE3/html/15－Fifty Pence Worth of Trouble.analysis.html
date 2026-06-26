@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -394,11 +395,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -406,6 +410,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 15 - Fifty Pence Worth of Trouble</div>
       </div>
@@ -443,146 +452,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.65,"end":20.6,"text":"Children always appreciate small gifts of money."},{"index":2,"start":20.6,"end":30.99,"text":"Mum or dad, of course, provides a regular supply of pocket money, but uncles and aunts are always a source of extra income."},{"index":3,"start":30.99,"end":35.17,"text":"With some children, small sums go a long way."},{"index":4,"start":35.17,"end":43.16,"text":"If fifty pence pieces are not exchanged for sweets, they rattle for months inside money boxes."},{"index":5,"start":43.16,"end":48.59,"text":"Only very thrifty children manage to fill up a money box."},{"index":6,"start":48.59,"end":56.95,"text":"For most of them, fifty pence is a small price to pay for a nice big bar of chocolate."},{"index":7,"start":56.95,"end":62.34,"text":"My nephew, George, has a money box but it is always empty."},{"index":8,"start":62.34,"end":70.05,"text":"Very few of the fifty pence pieces and pound coins I have given him have found their way there."},{"index":9,"start":70.05,"end":74.63,"text":"I gave him fifty pence yesterday and advised him to save it."},{"index":10,"start":74.63,"end":79.56,"text":"Instead, he bought himself fifty pence worth of trouble."},{"index":11,"start":79.56,"end":89.81,"text":"On his way to the sweet shop, he dropped his fifty pence and it bounced along the pavement and then disappeared down a drain."},{"index":12,"start":89.81,"end":97.54,"text":"George took off his jacket, rolled up his sleeves and pushed his right arm through the drain cover."},{"index":13,"start":97.54,"end":105.86,"text":"He could not find his 50 pence piece anywhere, and what is more, he could not get his arm out."},{"index":14,"start":105.86,"end":115.35,"text":"A crowd of people gathered round him and a lady rubbed his arm with soap and butter, but George was firmly stuck."},{"index":15,"start":115.35,"end":122.73,"text":"The fire brigade was called and two fire fighters freed George using a special type of grease."},{"index":16,"start":122.73,"end":132.58,"text":"George was not too upset by his experience because the lady who owns the sweet shop heard about his troubles and rewarded him with a large box of chocolates."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.65,"end":20.6,"text":"Children always appreciate small gifts of money."},{"index":2,"start":20.6,"end":30.99,"text":"Mum or dad, of course, provides a regular supply of pocket money, but uncles and aunts are always a source of extra income."},{"index":3,"start":30.99,"end":35.17,"text":"With some children, small sums go a long way."},{"index":4,"start":35.17,"end":43.16,"text":"If fifty pence pieces are not exchanged for sweets, they rattle for months inside money boxes."},{"index":5,"start":43.16,"end":48.59,"text":"Only very thrifty children manage to fill up a money box."},{"index":6,"start":48.59,"end":56.95,"text":"For most of them, fifty pence is a small price to pay for a nice big bar of chocolate."},{"index":7,"start":56.95,"end":62.34,"text":"My nephew, George, has a money box but it is always empty."},{"index":8,"start":62.34,"end":70.05,"text":"Very few of the fifty pence pieces and pound coins I have given him have found their way there."},{"index":9,"start":70.05,"end":74.63,"text":"I gave him fifty pence yesterday and advised him to save it."},{"index":10,"start":74.63,"end":79.56,"text":"Instead, he bought himself fifty pence worth of trouble."},{"index":11,"start":79.56,"end":89.81,"text":"On his way to the sweet shop, he dropped his fifty pence and it bounced along the pavement and then disappeared down a drain."},{"index":12,"start":89.81,"end":97.54,"text":"George took off his jacket, rolled up his sleeves and pushed his right arm through the drain cover."},{"index":13,"start":97.54,"end":105.86,"text":"He could not find his 50 pence piece anywhere, and what is more, he could not get his arm out."},{"index":14,"start":105.86,"end":115.35,"text":"A crowd of people gathered round him and a lady rubbed his arm with soap and butter, but George was firmly stuck."},{"index":15,"start":115.35,"end":122.73,"text":"The fire brigade was called and two fire fighters freed George using a special type of grease."},{"index":16,"start":122.73,"end":132.58,"text":"George was not too upset by his experience because the lady who owns the sweet shop heard about his troubles and rewarded him with a large box of chocolates."}],
+      previousHref: "14－A Noble Gangster.analysis.html",
+      nextHref: "16－Mary Had a Little Lamb.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

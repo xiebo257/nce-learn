@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -461,11 +462,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -473,6 +477,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 26 - Wanted: a Large Biscuit Tin</div>
       </div>
@@ -510,146 +519,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":15.29,"end":19.62,"text":"No one can avoid being influenced by advertisements."},{"index":2,"start":19.62,"end":30.96,"text":"Much as we may pride ourselves on our good taste, we are no longer free to choose the things we want, for advertising exerts a subtle influence on us."},{"index":3,"start":30.96,"end":43.15,"text":"In their efforts to persuade us to buy this or that product, advertisers have made a close study of human nature and have classified all our little weaknesses."},{"index":4,"start":43.15,"end":48.96,"text":"Advertisers discovered years ago that all of us love to get something for nothing."},{"index":5,"start":48.96,"end":55.87,"text":"An advertisement which begins with the magic word FREE can rarely go wrong."},{"index":6,"start":55.87,"end":66.8,"text":"These days, advertisers not only offer free samples, but free cars, free houses, and free trips round the world as well."},{"index":7,"start":66.8,"end":72.73,"text":"They devise hundreds of competitions which will enable us to win huge sums of money."},{"index":8,"start":72.73,"end":81.12,"text":"Radio and television have made it possible for advertisers to capture the attention of millions of people in this way."},{"index":9,"start":81.12,"end":91.29,"text":"During a radio programme, a company of biscuit manufacturers once asked listeners to bake biscuits and send them to their factory."},{"index":10,"start":91.29,"end":97.09,"text":"They offered to pay Top0 a pound for the biggest biscuit baked by a listener."},{"index":11,"start":97.09,"end":100.86,"text":"The response to this competition was tremendous."},{"index":12,"start":100.86,"end":107.05,"text":"Before long, biscuits of all shapes and sizes began arriving at the factory."},{"index":13,"start":107.05,"end":110.82,"text":"One lady brought a biscuit on a wheelbarrow."},{"index":14,"start":110.82,"end":113.41,"text":"It weighed nearly 500 pounds."},{"index":15,"start":113.41,"end":120.71,"text":"A little later, a man came along with a biscuit which occupied the whole boot of his car."},{"index":16,"start":120.71,"end":124.3,"text":"All the biscuits that were sent were carefully weighed."},{"index":17,"start":124.3,"end":127.2,"text":"The largest was 713 pounds."},{"index":18,"start":127.2,"end":132.33,"text":"It seemed certain that this would win the prize."},{"index":19,"start":132.33,"end":144.44,"text":"But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."},{"index":20,"start":144.44,"end":158.26,"text":"It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."},{"index":21,"start":158.26,"end":163.97,"text":"It was so heavy that a crane had to be used to remove it from the lorry."},{"index":22,"start":163.97,"end":171.66,"text":"The manufacturers had to pay more money than they had anticipated, for they bought the biscuit from the student for $24,000."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":15.29,"end":19.62,"text":"No one can avoid being influenced by advertisements."},{"index":2,"start":19.62,"end":30.96,"text":"Much as we may pride ourselves on our good taste, we are no longer free to choose the things we want, for advertising exerts a subtle influence on us."},{"index":3,"start":30.96,"end":43.15,"text":"In their efforts to persuade us to buy this or that product, advertisers have made a close study of human nature and have classified all our little weaknesses."},{"index":4,"start":43.15,"end":48.96,"text":"Advertisers discovered years ago that all of us love to get something for nothing."},{"index":5,"start":48.96,"end":55.87,"text":"An advertisement which begins with the magic word FREE can rarely go wrong."},{"index":6,"start":55.87,"end":66.8,"text":"These days, advertisers not only offer free samples, but free cars, free houses, and free trips round the world as well."},{"index":7,"start":66.8,"end":72.73,"text":"They devise hundreds of competitions which will enable us to win huge sums of money."},{"index":8,"start":72.73,"end":81.12,"text":"Radio and television have made it possible for advertisers to capture the attention of millions of people in this way."},{"index":9,"start":81.12,"end":91.29,"text":"During a radio programme, a company of biscuit manufacturers once asked listeners to bake biscuits and send them to their factory."},{"index":10,"start":91.29,"end":97.09,"text":"They offered to pay Top0 a pound for the biggest biscuit baked by a listener."},{"index":11,"start":97.09,"end":100.86,"text":"The response to this competition was tremendous."},{"index":12,"start":100.86,"end":107.05,"text":"Before long, biscuits of all shapes and sizes began arriving at the factory."},{"index":13,"start":107.05,"end":110.82,"text":"One lady brought a biscuit on a wheelbarrow."},{"index":14,"start":110.82,"end":113.41,"text":"It weighed nearly 500 pounds."},{"index":15,"start":113.41,"end":120.71,"text":"A little later, a man came along with a biscuit which occupied the whole boot of his car."},{"index":16,"start":120.71,"end":124.3,"text":"All the biscuits that were sent were carefully weighed."},{"index":17,"start":124.3,"end":127.2,"text":"The largest was 713 pounds."},{"index":18,"start":127.2,"end":132.33,"text":"It seemed certain that this would win the prize."},{"index":19,"start":132.33,"end":144.44,"text":"But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."},{"index":20,"start":144.44,"end":158.26,"text":"It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."},{"index":21,"start":158.26,"end":163.97,"text":"It was so heavy that a crane had to be used to remove it from the lorry."},{"index":22,"start":163.97,"end":171.66,"text":"The manufacturers had to pay more money than they had anticipated, for they bought the biscuit from the student for $24,000."}],
+      previousHref: "25－The Cutty Sark.analysis.html",
+      nextHref: "27－Nothing to Sell and Nothing to Buy.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -469,11 +470,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -481,6 +485,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 21 - Daniel Mendoza</div>
       </div>
@@ -518,146 +527,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":18.59,"end":23.52,"text":"Boxing matches were very popular in England two hundred years ago."},{"index":2,"start":23.52,"end":28.93,"text":"In those days, boxers fought with bare fists for prize money."},{"index":3,"start":28.93,"end":33.27,"text":"Because of this, they were known as 'prizefighters'."},{"index":4,"start":33.27,"end":44.94,"text":"However, boxing was very crude, for there were no rules and a prizefighter could be seriously injured or even killed during a match."},{"index":5,"start":44.94,"end":53.56,"text":"One of the most colourful figures in boxing history was Daniel Mendoza, who was born in 1764."},{"index":6,"start":53.56,"end":62.63,"text":"The use of gloves was not introduced until 1860, when the Marquis of Queensberry drew up the first set of rules."},{"index":7,"start":62.63,"end":73.71,"text":"Though he was technically a prizefighter, Mendoza did much to change crude prizefighting into a sport, for he brought science to the game."},{"index":8,"start":73.71,"end":78.41,"text":"In his day, Mendoza enjoyed tremendous popularity."},{"index":9,"start":78.41,"end":81.94,"text":"He was adored by rich and poor alike."},{"index":10,"start":81.94,"end":88.42,"text":"Mendoza rose to fame swiftly after a boxing match when he was only fourteen years old."},{"index":11,"start":88.42,"end":95.87,"text":"This attracted the attention of Richard Humphries who was then the most eminent boxer in England."},{"index":12,"start":95.87,"end":100.98,"text":"He offered to train Mendoza and his young pupil was quick to learn."},{"index":13,"start":100.98,"end":108.01,"text":"In fact, Mendoza soon became so successful that Humphries turned against him."},{"index":14,"start":108.01,"end":116.5,"text":"The two men quarrelled bitterly and it was clear that the argument could only be settled by a fight."},{"index":15,"start":116.5,"end":121.6,"text":"A match was held at Stilton, where both men fought for an hour."},{"index":16,"start":121.6,"end":127.22,"text":"The public bet a great deal of money on Mendoza, but he was defeated."},{"index":17,"start":127.22,"end":133.97,"text":"Mendoza met Humphries in the ring on a later occasion and he lost for a second time."},{"index":18,"start":133.97,"end":143.5,"text":"It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."},{"index":19,"start":143.5,"end":151.59,"text":"Meanwhile, he founded a highly successful Academy and even Lord Byron became one of his pupils."},{"index":20,"start":151.59,"end":159.85,"text":"He earned enormous sums of money and was paid as much as £100 for a single appearance."},{"index":21,"start":159.85,"end":165.91,"text":"Despite this, he was so extravagant that he was always in debt."},{"index":22,"start":165.91,"end":172.53,"text":"After he was defeated by a boxer called Gentleman Jackson, he was quickly forgotten."},{"index":23,"start":172.53,"end":177.3,"text":"He was sent to prison for failing to pay his debts and died in poverty in 1836."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":18.59,"end":23.52,"text":"Boxing matches were very popular in England two hundred years ago."},{"index":2,"start":23.52,"end":28.93,"text":"In those days, boxers fought with bare fists for prize money."},{"index":3,"start":28.93,"end":33.27,"text":"Because of this, they were known as 'prizefighters'."},{"index":4,"start":33.27,"end":44.94,"text":"However, boxing was very crude, for there were no rules and a prizefighter could be seriously injured or even killed during a match."},{"index":5,"start":44.94,"end":53.56,"text":"One of the most colourful figures in boxing history was Daniel Mendoza, who was born in 1764."},{"index":6,"start":53.56,"end":62.63,"text":"The use of gloves was not introduced until 1860, when the Marquis of Queensberry drew up the first set of rules."},{"index":7,"start":62.63,"end":73.71,"text":"Though he was technically a prizefighter, Mendoza did much to change crude prizefighting into a sport, for he brought science to the game."},{"index":8,"start":73.71,"end":78.41,"text":"In his day, Mendoza enjoyed tremendous popularity."},{"index":9,"start":78.41,"end":81.94,"text":"He was adored by rich and poor alike."},{"index":10,"start":81.94,"end":88.42,"text":"Mendoza rose to fame swiftly after a boxing match when he was only fourteen years old."},{"index":11,"start":88.42,"end":95.87,"text":"This attracted the attention of Richard Humphries who was then the most eminent boxer in England."},{"index":12,"start":95.87,"end":100.98,"text":"He offered to train Mendoza and his young pupil was quick to learn."},{"index":13,"start":100.98,"end":108.01,"text":"In fact, Mendoza soon became so successful that Humphries turned against him."},{"index":14,"start":108.01,"end":116.5,"text":"The two men quarrelled bitterly and it was clear that the argument could only be settled by a fight."},{"index":15,"start":116.5,"end":121.6,"text":"A match was held at Stilton, where both men fought for an hour."},{"index":16,"start":121.6,"end":127.22,"text":"The public bet a great deal of money on Mendoza, but he was defeated."},{"index":17,"start":127.22,"end":133.97,"text":"Mendoza met Humphries in the ring on a later occasion and he lost for a second time."},{"index":18,"start":133.97,"end":143.5,"text":"It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."},{"index":19,"start":143.5,"end":151.59,"text":"Meanwhile, he founded a highly successful Academy and even Lord Byron became one of his pupils."},{"index":20,"start":151.59,"end":159.85,"text":"He earned enormous sums of money and was paid as much as £100 for a single appearance."},{"index":21,"start":159.85,"end":165.91,"text":"Despite this, he was so extravagant that he was always in debt."},{"index":22,"start":165.91,"end":172.53,"text":"After he was defeated by a boxer called Gentleman Jackson, he was quickly forgotten."},{"index":23,"start":172.53,"end":177.3,"text":"He was sent to prison for failing to pay his debts and died in poverty in 1836."}],
+      previousHref: "20－Pioneer Pilots.analysis.html",
+      nextHref: "22－By Heart.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

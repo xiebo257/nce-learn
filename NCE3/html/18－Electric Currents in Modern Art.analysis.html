@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -414,11 +415,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -426,6 +430,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 18 - Electric Currents in Modern Art</div>
       </div>
@@ -463,146 +472,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":15.62,"end":19.58,"text":"Modern sculpture rarely surprises us any more."},{"index":2,"start":19.58,"end":25.6,"text":"The idea that modern art can only be seen in museums is mistaken."},{"index":3,"start":25.6,"end":35.42,"text":"Even people who take no interest in art cannot have failed to notice examples of modern sculpture on display in public places."},{"index":4,"start":35.42,"end":40.66,"text":"Strange forms stand in gardens, and outside buildings and shops."},{"index":5,"start":40.66,"end":43.55,"text":"We have got quite used to them."},{"index":6,"start":43.55,"end":49.9,"text":"Some so-called 'modern' pieces have been on display for nearly eighty years."},{"index":7,"start":49.9,"end":58.69,"text":"In spite of this, some people--including myself--were surprised by a recent exhibition of modern sculpture."},{"index":8,"start":58.69,"end":69.44,"text":"The first thing I saw when I entered the art gallery was a notice which said: 'Do not touch the exhibits, some of them are dangerous!'"},{"index":9,"start":69.44,"end":74.16,"text":"The objects on display were pieces of moving sculpture."},{"index":10,"start":74.16,"end":84,"text":"Oddly shaped forms that are suspended from the ceiling and move in response to a gust of wind are quite familiar to everybody."},{"index":11,"start":84,"end":87.91,"text":"These objects, however, were different."},{"index":12,"start":87.91,"end":94.17,"text":"Lined up against the wall, there were long thin wires attached to metal spheres."},{"index":13,"start":94.17,"end":101.01,"text":"The spheres had been magnetized and attracted or repelled each other all the time."},{"index":14,"start":101.01,"end":107.68,"text":"In the centre of the hall, there were a number of tall structures which contained coloured lights."},{"index":15,"start":107.68,"end":113.94,"text":"These lights flickered continuously like traffic lights which have gone mad."},{"index":16,"start":113.94,"end":121.2,"text":"Sparks were emitted from small black boxes and red lamps flashed on and off angrily."},{"index":17,"start":121.2,"end":126.94,"text":"It was rather like an exhibition of prehistoric electronic equipment."},{"index":18,"start":126.94,"end":134.32,"text":"These peculiar forms not only seemed designed to shock people emotionally, but to give them electric shocks as well!"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":15.62,"end":19.58,"text":"Modern sculpture rarely surprises us any more."},{"index":2,"start":19.58,"end":25.6,"text":"The idea that modern art can only be seen in museums is mistaken."},{"index":3,"start":25.6,"end":35.42,"text":"Even people who take no interest in art cannot have failed to notice examples of modern sculpture on display in public places."},{"index":4,"start":35.42,"end":40.66,"text":"Strange forms stand in gardens, and outside buildings and shops."},{"index":5,"start":40.66,"end":43.55,"text":"We have got quite used to them."},{"index":6,"start":43.55,"end":49.9,"text":"Some so-called 'modern' pieces have been on display for nearly eighty years."},{"index":7,"start":49.9,"end":58.69,"text":"In spite of this, some people--including myself--were surprised by a recent exhibition of modern sculpture."},{"index":8,"start":58.69,"end":69.44,"text":"The first thing I saw when I entered the art gallery was a notice which said: 'Do not touch the exhibits, some of them are dangerous!'"},{"index":9,"start":69.44,"end":74.16,"text":"The objects on display were pieces of moving sculpture."},{"index":10,"start":74.16,"end":84,"text":"Oddly shaped forms that are suspended from the ceiling and move in response to a gust of wind are quite familiar to everybody."},{"index":11,"start":84,"end":87.91,"text":"These objects, however, were different."},{"index":12,"start":87.91,"end":94.17,"text":"Lined up against the wall, there were long thin wires attached to metal spheres."},{"index":13,"start":94.17,"end":101.01,"text":"The spheres had been magnetized and attracted or repelled each other all the time."},{"index":14,"start":101.01,"end":107.68,"text":"In the centre of the hall, there were a number of tall structures which contained coloured lights."},{"index":15,"start":107.68,"end":113.94,"text":"These lights flickered continuously like traffic lights which have gone mad."},{"index":16,"start":113.94,"end":121.2,"text":"Sparks were emitted from small black boxes and red lamps flashed on and off angrily."},{"index":17,"start":121.2,"end":126.94,"text":"It was rather like an exhibition of prehistoric electronic equipment."},{"index":18,"start":126.94,"end":134.32,"text":"These peculiar forms not only seemed designed to shock people emotionally, but to give them electric shocks as well!"}],
+      previousHref: "17－The Longest Suspension Bridge in the World.analysis.html",
+      nextHref: "19－A Very Dear Cat.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

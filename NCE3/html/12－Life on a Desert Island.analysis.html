@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -404,11 +405,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -416,6 +420,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 12 - Life on a Desert Island</div>
       </div>
@@ -453,146 +462,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.24,"end":22.19,"text":"Most of us have formed an unrealistic picture of life on a desert island."},{"index":2,"start":22.19,"end":29.85,"text":"We sometimes imagine a desert island to be a sort of paradise where the sun always shines."},{"index":3,"start":29.85,"end":32.44,"text":"Life there is simple and good."},{"index":4,"start":32.44,"end":37.52,"text":"Ripe fruit falls from the trees and you never have to work."},{"index":5,"start":37.52,"end":41.16,"text":"The other side of the picture is quite the opposite."},{"index":6,"start":41.16,"end":43.94,"text":"Life on a desert island is wretched."},{"index":7,"start":43.94,"end":52.49,"text":"You either starve to death or live like Robinson Crusoe, waiting for a boat which never comes."},{"index":8,"start":52.49,"end":60.81,"text":"Perhaps there is an element of truth in both these pictures, but few of us have had the opportunity to find out."},{"index":9,"start":60.81,"end":69.25,"text":"Two men who recently spent five days on a coral island wished they had stayed there longer."},{"index":10,"start":69.25,"end":75.85,"text":"They were taking a badly damaged boat from the Virgin Islands to Miami to have it repaired."},{"index":11,"start":75.85,"end":80.15,"text":"During the journey, their boat began to sink."},{"index":12,"start":80.15,"end":93.63,"text":"They quickly loaded a small rubber dinghy with food, matches, and cans of beer and rowed for a few miles across the Caribbean until they arrived at a tiny coral island."},{"index":13,"start":93.63,"end":101.52,"text":"There were hardly any trees on the island and there was no water, but this did not prove to be a problem."},{"index":14,"start":101.52,"end":105.28,"text":"The men collected rainwater in the rubber dinghy."},{"index":15,"start":105.28,"end":109.56,"text":"As they had brought a spear gun with them, they had plenty to eat."},{"index":16,"start":109.56,"end":117.2,"text":"They caught lobster and fish every day, and as one of them put it 'ate like kings'."},{"index":17,"start":117.2,"end":123.74,"text":"When a passing tanker rescued them five days later, both men were genuinely sorry that they had to leave."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.24,"end":22.19,"text":"Most of us have formed an unrealistic picture of life on a desert island."},{"index":2,"start":22.19,"end":29.85,"text":"We sometimes imagine a desert island to be a sort of paradise where the sun always shines."},{"index":3,"start":29.85,"end":32.44,"text":"Life there is simple and good."},{"index":4,"start":32.44,"end":37.52,"text":"Ripe fruit falls from the trees and you never have to work."},{"index":5,"start":37.52,"end":41.16,"text":"The other side of the picture is quite the opposite."},{"index":6,"start":41.16,"end":43.94,"text":"Life on a desert island is wretched."},{"index":7,"start":43.94,"end":52.49,"text":"You either starve to death or live like Robinson Crusoe, waiting for a boat which never comes."},{"index":8,"start":52.49,"end":60.81,"text":"Perhaps there is an element of truth in both these pictures, but few of us have had the opportunity to find out."},{"index":9,"start":60.81,"end":69.25,"text":"Two men who recently spent five days on a coral island wished they had stayed there longer."},{"index":10,"start":69.25,"end":75.85,"text":"They were taking a badly damaged boat from the Virgin Islands to Miami to have it repaired."},{"index":11,"start":75.85,"end":80.15,"text":"During the journey, their boat began to sink."},{"index":12,"start":80.15,"end":93.63,"text":"They quickly loaded a small rubber dinghy with food, matches, and cans of beer and rowed for a few miles across the Caribbean until they arrived at a tiny coral island."},{"index":13,"start":93.63,"end":101.52,"text":"There were hardly any trees on the island and there was no water, but this did not prove to be a problem."},{"index":14,"start":101.52,"end":105.28,"text":"The men collected rainwater in the rubber dinghy."},{"index":15,"start":105.28,"end":109.56,"text":"As they had brought a spear gun with them, they had plenty to eat."},{"index":16,"start":109.56,"end":117.2,"text":"They caught lobster and fish every day, and as one of them put it 'ate like kings'."},{"index":17,"start":117.2,"end":123.74,"text":"When a passing tanker rescued them five days later, both men were genuinely sorry that they had to leave."}],
+      previousHref: "11－Not Guilty.analysis.html",
+      nextHref: "13－It's Only Me.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

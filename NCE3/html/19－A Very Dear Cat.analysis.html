@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -414,11 +415,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -426,6 +430,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 19 - A Very Dear Cat</div>
       </div>
@@ -463,146 +472,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.88,"end":26.36,"text":"Kidnappers are rarely interested in animals, but they recently took considerable interest in Mrs. Eleanor Ramsay's cat."},{"index":2,"start":26.36,"end":36.36,"text":"Mrs. Eleanor Ramsay, a very wealthy old lady, has shared a flat with her cat, Rastus, for a great many years."},{"index":3,"start":36.36,"end":38.82,"text":"Rastus leads an orderly life."},{"index":4,"start":38.82,"end":45.58,"text":"He usually takes a short walk in the evenings and is always home by seven o'clock."},{"index":5,"start":45.58,"end":49.8,"text":"One evening, however he failed to arrive."},{"index":6,"start":49.8,"end":52.41,"text":"Mrs. Ramsay got very worried."},{"index":7,"start":52.41,"end":57.2,"text":"She looked everywhere for him but could not find him."},{"index":8,"start":57.2,"end":64.34,"text":"Three days after Rastus' disappearance, Mrs. Ramsay received an anonymous letter."},{"index":9,"start":64.34,"end":75.73,"text":"The writer stated that Rastus was in safe hands and would be returned immediately if Mrs. Ramsay paid a ransom of £1,000."},{"index":10,"start":75.73,"end":82.62,"text":"Mrs. Ramsay was instructed to place the money in a cardboard box and to leave it outside her door."},{"index":11,"start":82.62,"end":96.31,"text":"At first, she decided to go to the police, but fearing that she would never see Rastus again--the letter had made that quite clear--she changed her mind."},{"index":12,"start":96.31,"end":101.97,"text":"She withdrew £1000 from her bank and followed the kidnapper's instructions."},{"index":13,"start":101.97,"end":110.27,"text":"The next morning, the box had disappeared but Mrs. Ramsay was sure that the kidnapper would keep his word."},{"index":14,"start":110.27,"end":116.58,"text":"Sure enough, Rastus arrived punctually at seven o'clock that evening."},{"index":15,"start":116.58,"end":124.04,"text":"He looked very well, though he was rather thirsty, for he drank half a bottle of milk."},{"index":16,"start":124.04,"end":129.64,"text":"The police were astounded when Mrs. Ramsay told them what she had done."},{"index":17,"start":129.64,"end":133.38,"text":"She explained that Rastus was very dear to her."},{"index":18,"start":133.38,"end":137.46,"text":"Considering the amount she paid, he was dear in more ways than one!"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.88,"end":26.36,"text":"Kidnappers are rarely interested in animals, but they recently took considerable interest in Mrs. Eleanor Ramsay's cat."},{"index":2,"start":26.36,"end":36.36,"text":"Mrs. Eleanor Ramsay, a very wealthy old lady, has shared a flat with her cat, Rastus, for a great many years."},{"index":3,"start":36.36,"end":38.82,"text":"Rastus leads an orderly life."},{"index":4,"start":38.82,"end":45.58,"text":"He usually takes a short walk in the evenings and is always home by seven o'clock."},{"index":5,"start":45.58,"end":49.8,"text":"One evening, however he failed to arrive."},{"index":6,"start":49.8,"end":52.41,"text":"Mrs. Ramsay got very worried."},{"index":7,"start":52.41,"end":57.2,"text":"She looked everywhere for him but could not find him."},{"index":8,"start":57.2,"end":64.34,"text":"Three days after Rastus' disappearance, Mrs. Ramsay received an anonymous letter."},{"index":9,"start":64.34,"end":75.73,"text":"The writer stated that Rastus was in safe hands and would be returned immediately if Mrs. Ramsay paid a ransom of £1,000."},{"index":10,"start":75.73,"end":82.62,"text":"Mrs. Ramsay was instructed to place the money in a cardboard box and to leave it outside her door."},{"index":11,"start":82.62,"end":96.31,"text":"At first, she decided to go to the police, but fearing that she would never see Rastus again--the letter had made that quite clear--she changed her mind."},{"index":12,"start":96.31,"end":101.97,"text":"She withdrew £1000 from her bank and followed the kidnapper's instructions."},{"index":13,"start":101.97,"end":110.27,"text":"The next morning, the box had disappeared but Mrs. Ramsay was sure that the kidnapper would keep his word."},{"index":14,"start":110.27,"end":116.58,"text":"Sure enough, Rastus arrived punctually at seven o'clock that evening."},{"index":15,"start":116.58,"end":124.04,"text":"He looked very well, though he was rather thirsty, for he drank half a bottle of milk."},{"index":16,"start":124.04,"end":129.64,"text":"The police were astounded when Mrs. Ramsay told them what she had done."},{"index":17,"start":129.64,"end":133.38,"text":"She explained that Rastus was very dear to her."},{"index":18,"start":133.38,"end":137.46,"text":"Considering the amount she paid, he was dear in more ways than one!"}],
+      previousHref: "18－Electric Currents in Modern Art.analysis.html",
+      nextHref: "20－Pioneer Pilots.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

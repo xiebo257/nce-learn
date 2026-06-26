@@ -7,7 +7,7 @@
   <style>
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; padding-bottom: 116px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
+    body { margin: 0; padding-bottom: 156px; font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; color: #1f2937; background: #f3f4f6; line-height: 1.65; }
     .page-header { background: #111827; color: #fff; padding: 28px 18px 24px; border-bottom: 4px solid #2563eb; }
     .page-header .inner, main { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
     .eyebrow { margin: 0 0 6px; color: #93c5fd; font-size: 13px; letter-spacing: 0; text-transform: uppercase; font-weight: 700; }
@@ -20,6 +20,11 @@
     .toc a { color: #1d4ed8; text-decoration: none; font-size: 13px; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 6px; background: #eff6ff; }
     .sentence-card { background: #fff; border: 1px solid #e5e7eb; border-left: 5px solid #2563eb; border-radius: 8px; padding: 16px 18px; margin: 14px 0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08); }
     .sentence-head { display: grid; grid-template-columns: 34px 34px 38px 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
+    .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
+    .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
+    .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
+    .sentence-toggle:hover, .sentence-toggle:focus-visible { background: #1d4ed8; outline: 3px solid rgba(37, 99, 235, 0.2); }
+    .sentence-card.is-active { border-left-color: #0f766e; background: #f0fdfa; }
     .sentence-play, .sentence-toggle { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #fff; background: #0f766e; font-weight: 800; font-size: 13px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28); }
     .sentence-play:hover, .sentence-play:focus-visible { background: #115e59; outline: 3px solid rgba(15, 118, 110, 0.2); }
     .sentence-toggle { background: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.24); }
@@ -44,16 +49,20 @@
     .back-prev { bottom: 178px; }
     .audio-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid #1f2937; background: rgba(17, 24, 39, 0.96); color: #fff; box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.25); backdrop-filter: blur(10px); }
     .audio-dock .inner { width: min(1080px, calc(100% - 24px)); margin: 0 auto; padding: 10px 0 12px; }
-    .player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+    .player-row { display: grid; grid-template-columns: auto auto auto minmax(160px, 1fr) auto auto; gap: 10px; align-items: center; }
     .player-btn { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border: 0; border-radius: 50%; color: #111827; background: #93c5fd; font-size: 15px; font-weight: 800; cursor: pointer; }
     .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }
+    .player-btn:disabled { opacity: 0.42; cursor: not-allowed; }
+    .player-options { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; color: #e5e7eb; font-size: 12px; }
+    .player-options label { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .player-options select { border: 1px solid #475569; border-radius: 6px; background: #111827; color: #fff; padding: 3px 6px; }
     .progress-wrap { display: grid; gap: 5px; min-width: 0; }
     .subtitle-line { min-height: 22px; color: #f8fafc; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .progress-line { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; color: #cbd5e1; font-size: 12px; }
     .progress-track { position: relative; height: 8px; overflow: hidden; border-radius: 999px; background: #334155; cursor: pointer; }
     .progress-fill { position: absolute; inset: 0 auto 0 0; width: 0%; border-radius: inherit; background: #22c55e; }
     .dock-title { color: #cbd5e1; font-size: 12px; white-space: nowrap; }
-    @media (max-width: 640px) { body { padding-bottom: 132px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; } .player-row { grid-template-columns: auto 1fr; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
+    @media (max-width: 760px) { body { padding-bottom: 176px; } .page-header .inner, main { width: min(100% - 20px, 1080px); } .sentence-card, .summary-section { padding: 14px; } .sentence-head { grid-template-columns: 30px 30px 30px 1fr; gap: 8px; } .sentence-play, .sentence-toggle, .sentence-num { width: 30px; height: 30px; } .en-text { font-size: 16px; } .field { grid-template-columns: 1fr; gap: 2px; } .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; } .player-row { grid-template-columns: auto auto auto 1fr; } .player-options { grid-column: 1 / -1; } .dock-title { display: none; } .subtitle-line { white-space: normal; line-height: 1.3; } }
   </style>
 </head>
 <body id="top">
@@ -346,11 +355,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -358,6 +370,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 37 - The Westhaven Express</div>
       </div>
@@ -395,146 +412,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":14.04,"end":18.46,"text":"We have learnt to expect that trains will be punctual."},{"index":2,"start":18.46,"end":26.14,"text":"After years of conditioning, most of us have developed an unshakable faith in railway timetables."},{"index":3,"start":26.14,"end":35.9,"text":"Ships may be delayed by storms; flights may be cancelled because of bad weather; but trains must be on time."},{"index":4,"start":35.9,"end":43.33,"text":"Only an exceptionally heavy snow fall might temporarily dislocate railway services."},{"index":5,"start":43.33,"end":49.57,"text":"It is all too easy to blame the railway authorities when something does go wrong."},{"index":6,"start":49.57,"end":56.76,"text":"The truth is that when mistakes occur, they are more likely to be ours than theirs."},{"index":7,"start":56.76,"end":66,"text":"After consulting my railway timetable, I noted with satisfaction that there was an express train to Westhaven."},{"index":8,"start":66,"end":73.55,"text":"It went direct from my local station and the journey lasted a mere hour and seventeen minutes."},{"index":9,"start":73.55,"end":81.11,"text":"When I boarded the train, I could not help noticing that a great many local people got on as well."},{"index":10,"start":81.11,"end":84.97,"text":"At the time, this did not strike me as odd."},{"index":11,"start":84.97,"end":93.31,"text":"I reflected that there must be a great many people besides myself who wished to take advantage of this excellent service."},{"index":12,"start":93.31,"end":101.74,"text":"Neither was I surprised when the train stopped at Widley, a tiny station a few miles along the line."},{"index":13,"start":101.74,"end":105.94,"text":"Even a mighty express train can be held up by signals."},{"index":14,"start":105.94,"end":112.11,"text":"But when the train dawdled at station after station, I began to wonder."},{"index":15,"start":112.11,"end":122.9,"text":"It suddenly dawned on me that this express was not roaring down the line at ninety miles an hour, but barely chugging along at thirty."},{"index":16,"start":122.9,"end":129.85,"text":"One hour and seventeen minutes passed and we had not even covered half the distance."},{"index":17,"start":129.85,"end":136.56,"text":"I asked a passenger if this was the Westhaven Express, but he had not even heard of it."},{"index":18,"start":136.56,"end":141.06,"text":"I determined to lodge a complaint as soon as we arrived."},{"index":19,"start":141.06,"end":147.3,"text":"Two hours later, I was talking angrily to the station master at Westhaven."},{"index":20,"start":147.3,"end":153.44,"text":"When he denied the train's existence, I borrowed his copy of the timetable."},{"index":21,"start":153.44,"end":160.49,"text":"There was a note of triumph in my voice when I told him that it was there in black and white."},{"index":22,"start":160.49,"end":165.15,"text":"Glancing at it briefly, he told me to look again."},{"index":23,"start":165.15,"end":170.96,"text":"A tiny asterisk conducted me to a footnote at the bottom of the page."},{"index":24,"start":170.96,"end":173.5,"text":"It said: 'This service has been suspended.'"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":14.04,"end":18.46,"text":"We have learnt to expect that trains will be punctual."},{"index":2,"start":18.46,"end":26.14,"text":"After years of conditioning, most of us have developed an unshakable faith in railway timetables."},{"index":3,"start":26.14,"end":35.9,"text":"Ships may be delayed by storms; flights may be cancelled because of bad weather; but trains must be on time."},{"index":4,"start":35.9,"end":43.33,"text":"Only an exceptionally heavy snow fall might temporarily dislocate railway services."},{"index":5,"start":43.33,"end":49.57,"text":"It is all too easy to blame the railway authorities when something does go wrong."},{"index":6,"start":49.57,"end":56.76,"text":"The truth is that when mistakes occur, they are more likely to be ours than theirs."},{"index":7,"start":56.76,"end":66,"text":"After consulting my railway timetable, I noted with satisfaction that there was an express train to Westhaven."},{"index":8,"start":66,"end":73.55,"text":"It went direct from my local station and the journey lasted a mere hour and seventeen minutes."},{"index":9,"start":73.55,"end":81.11,"text":"When I boarded the train, I could not help noticing that a great many local people got on as well."},{"index":10,"start":81.11,"end":84.97,"text":"At the time, this did not strike me as odd."},{"index":11,"start":84.97,"end":93.31,"text":"I reflected that there must be a great many people besides myself who wished to take advantage of this excellent service."},{"index":12,"start":93.31,"end":101.74,"text":"Neither was I surprised when the train stopped at Widley, a tiny station a few miles along the line."},{"index":13,"start":101.74,"end":105.94,"text":"Even a mighty express train can be held up by signals."},{"index":14,"start":105.94,"end":112.11,"text":"But when the train dawdled at station after station, I began to wonder."},{"index":15,"start":112.11,"end":122.9,"text":"It suddenly dawned on me that this express was not roaring down the line at ninety miles an hour, but barely chugging along at thirty."},{"index":16,"start":122.9,"end":129.85,"text":"One hour and seventeen minutes passed and we had not even covered half the distance."},{"index":17,"start":129.85,"end":136.56,"text":"I asked a passenger if this was the Westhaven Express, but he had not even heard of it."},{"index":18,"start":136.56,"end":141.06,"text":"I determined to lodge a complaint as soon as we arrived."},{"index":19,"start":141.06,"end":147.3,"text":"Two hours later, I was talking angrily to the station master at Westhaven."},{"index":20,"start":147.3,"end":153.44,"text":"When he denied the train's existence, I borrowed his copy of the timetable."},{"index":21,"start":153.44,"end":160.49,"text":"There was a note of triumph in my voice when I told him that it was there in black and white."},{"index":22,"start":160.49,"end":165.15,"text":"Glancing at it briefly, he told me to look again."},{"index":23,"start":165.15,"end":170.96,"text":"A tiny asterisk conducted me to a footnote at the bottom of the page."},{"index":24,"start":170.96,"end":173.5,"text":"It said: 'This service has been suspended.'"}],
+      previousHref: "36－A Chance in a Million.analysis.html",
+      nextHref: "38－The First Calendar.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

@@ -22,6 +22,10 @@ function hasRuleValue(text, selector, property, value) {
   return rulePattern.test(text);
 }
 
+function expectedLessonHref(files, index) {
+  return index >= 0 && index < files.length ? files[index] : null;
+}
+
 for (const [book, htmlDir] of targets) {
   const files = readdirSync(htmlDir).filter((file) => file.endsWith('.analysis.html')).sort();
   const previousHref = book === 'NCE3' ? '../../NCE1/html/index.html#nce3-lessons' : 'index.html';
@@ -32,7 +36,9 @@ for (const [book, htmlDir] of targets) {
     const buttonCount = countMatches(html, /class="sentence-play"/g);
     const toggleCount = countMatches(html, /class="sentence-toggle"/g);
     const subtitleMatch = html.match(/const subtitles = (\[[\s\S]*?\]);/);
+    const playerConfigMatch = html.match(/window\.NCE_LESSON_PLAYER\s*=\s*(\{[\s\S]*?\});/);
     let subtitleCount = 0;
+    let playerConfig = null;
 
     if (subtitleMatch) {
       try {
@@ -42,23 +48,60 @@ for (const [book, htmlDir] of targets) {
       }
     }
 
+    if (!playerConfigMatch) {
+      failures.push(`${htmlPath}: missing window.NCE_LESSON_PLAYER config`);
+    } else {
+      try {
+        playerConfig = Function(`"use strict"; return (${playerConfigMatch[1]});`)();
+        subtitleCount = Array.isArray(playerConfig.subtitles) ? playerConfig.subtitles.length : subtitleCount;
+      } catch {
+        failures.push(`${htmlPath}: window.NCE_LESSON_PLAYER config is not valid JavaScript`);
+      }
+    }
+
     if (/\baudio\.load\(\)/.test(html)) {
       failures.push(`${htmlPath}: contains audio.load(), which can reset playback state`);
     }
-    if (!html.includes('function whenAudioReady(callback)')) {
+    if (!html.includes('function whenAudioReady(callback)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: missing whenAudioReady callback guard`);
     }
-    if (!html.includes('whenAudioReady(() => {')) {
+    if (!html.includes('whenAudioReady(() => {') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: playFrom does not wait for audio readiness before seeking`);
     }
-    if (!html.includes('seekTo(item.start);')) {
+    if (!html.includes('seekTo(item.start);') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: playFrom does not seek to the sentence start`);
     }
-    if (!html.includes('audio.play().catch(() => {});')) {
+    if (!html.includes('audio.play().catch(() => {});') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: playFrom does not start existing audio after seeking`);
     }
-    if (!html.includes('function toggleSentence(index)')) {
+    if (!html.includes('function toggleSentence(index)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: missing per-sentence pause/resume toggle`);
+    }
+    if (!html.includes('<script src="../../static/lesson-player.js"></script>')) {
+      failures.push(`${htmlPath}: missing shared lesson player script`);
+    }
+    for (const required of [
+      'id="dock-prev-lesson"',
+      'id="dock-next-lesson"',
+      'id="dock-continuous"',
+      'id="dock-loop"',
+      'id="dock-speed"',
+    ]) {
+      if (!html.includes(required)) failures.push(`${htmlPath}: missing player control ${required}`);
+    }
+    if (playerConfig && !Array.isArray(playerConfig.subtitles)) {
+      failures.push(`${htmlPath}: player config subtitles is not an array`);
+    }
+    if (playerConfig) {
+      const fileIndex = files.indexOf(file);
+      const expectedPrevious = expectedLessonHref(files, fileIndex - 1);
+      const expectedNext = expectedLessonHref(files, fileIndex + 1);
+      if ((playerConfig.previousHref ?? null) !== expectedPrevious) {
+        failures.push(`${htmlPath}: previousHref ${playerConfig.previousHref ?? null} != ${expectedPrevious}`);
+      }
+      if ((playerConfig.nextHref ?? null) !== expectedNext) {
+        failures.push(`${htmlPath}: nextHref ${playerConfig.nextHref ?? null} != ${expectedNext}`);
+      }
     }
     if (!hasRuleValue(html, '.sentence-head', 'grid-template-columns', '34px 34px 38px 1fr')) {
       failures.push(`${htmlPath}: desktop sentence header grid does not fit play, pause/resume, number, and text`);
@@ -66,10 +109,10 @@ for (const [book, htmlDir] of targets) {
     if (!hasRuleValue(html, '.sentence-head', 'grid-template-columns', '30px 30px 30px 1fr')) {
       failures.push(`${htmlPath}: mobile sentence header grid does not fit play, pause/resume, number, and text`);
     }
-    if (!html.includes('audio.pause();')) {
+    if (!html.includes('audio.pause();') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: pause/resume toggle does not pause existing playback`);
     }
-    if (!html.includes('isTimeInSentence(item)')) {
+    if (!html.includes('isTimeInSentence(item)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
       failures.push(`${htmlPath}: pause/resume toggle does not check the current sentence before resuming`);
     }
     if (!html.includes('<div class="audio-dock"')) {

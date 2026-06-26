@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -393,11 +394,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -405,6 +409,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 17 - The Longest Suspension Bridge in the World</div>
       </div>
@@ -442,146 +451,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.67,"end":28.43,"text":"Verrazano, an Italian about whom little is known, sailed into New York Harbour in 1524 and named it Angouleme."},{"index":2,"start":28.43,"end":39.43,"text":"He described it as 'a very agreeable situation located within two small hills in the midst of which flowed a great river.'"},{"index":3,"start":39.43,"end":59.32,"text":"Though Verrazano is by no means considered to be a great explorer, his name will probably remain immortal, for on November 21st, 1964, the longest suspension bridge in the world was named after him."},{"index":4,"start":59.32,"end":67.72,"text":"The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."},{"index":5,"start":67.72,"end":72.52,"text":"It has a span of 4,260 feet."},{"index":6,"start":72.52,"end":79.92,"text":"The bridge is so long that the shape of the earth had to be taken into account by its designer."},{"index":7,"start":79.92,"end":85.53,"text":"Two great towers support four huge cables."},{"index":8,"start":85.53,"end":92.28,"text":"The towers are built on immense underwater platforms made of steel and concrete."},{"index":9,"start":92.28,"end":97.65,"text":"The platforms extend to a depth of over 100 feet under the sea."},{"index":10,"start":97.65,"end":101.48,"text":"These alone took sixteen months to build."},{"index":11,"start":101.48,"end":108.25,"text":"Above the surface of the water, the towers rise to a height of nearly 700 feet."},{"index":12,"start":108.25,"end":112.62,"text":"They support the cables from which the bridge has been suspended."},{"index":13,"start":112.62,"end":119.62,"text":"Each of the four cables contains 26,108 lengths of wire."},{"index":14,"start":119.62,"end":129.73,"text":"It has been estimated that if the bridge were packed with cars, it would still only be carrying a third of its total capacity."},{"index":15,"start":129.73,"end":135.93,"text":"However, size and strength are not the only important things about this bridge."},{"index":16,"start":135.93,"end":147.18,"text":"Despite its immensity, it is both simple and elegant, fulfilling its designer's dream to create 'an enormous object drawn as faintly as possible'."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.67,"end":28.43,"text":"Verrazano, an Italian about whom little is known, sailed into New York Harbour in 1524 and named it Angouleme."},{"index":2,"start":28.43,"end":39.43,"text":"He described it as 'a very agreeable situation located within two small hills in the midst of which flowed a great river.'"},{"index":3,"start":39.43,"end":59.32,"text":"Though Verrazano is by no means considered to be a great explorer, his name will probably remain immortal, for on November 21st, 1964, the longest suspension bridge in the world was named after him."},{"index":4,"start":59.32,"end":67.72,"text":"The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."},{"index":5,"start":67.72,"end":72.52,"text":"It has a span of 4,260 feet."},{"index":6,"start":72.52,"end":79.92,"text":"The bridge is so long that the shape of the earth had to be taken into account by its designer."},{"index":7,"start":79.92,"end":85.53,"text":"Two great towers support four huge cables."},{"index":8,"start":85.53,"end":92.28,"text":"The towers are built on immense underwater platforms made of steel and concrete."},{"index":9,"start":92.28,"end":97.65,"text":"The platforms extend to a depth of over 100 feet under the sea."},{"index":10,"start":97.65,"end":101.48,"text":"These alone took sixteen months to build."},{"index":11,"start":101.48,"end":108.25,"text":"Above the surface of the water, the towers rise to a height of nearly 700 feet."},{"index":12,"start":108.25,"end":112.62,"text":"They support the cables from which the bridge has been suspended."},{"index":13,"start":112.62,"end":119.62,"text":"Each of the four cables contains 26,108 lengths of wire."},{"index":14,"start":119.62,"end":129.73,"text":"It has been estimated that if the bridge were packed with cars, it would still only be carrying a third of its total capacity."},{"index":15,"start":129.73,"end":135.93,"text":"However, size and strength are not the only important things about this bridge."},{"index":16,"start":135.93,"end":147.18,"text":"Despite its immensity, it is both simple and elegant, fulfilling its designer's dream to create 'an enormous object drawn as faintly as possible'."}],
+      previousHref: "16－Mary Had a Little Lamb.analysis.html",
+      nextHref: "18－Electric Currents in Modern Art.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

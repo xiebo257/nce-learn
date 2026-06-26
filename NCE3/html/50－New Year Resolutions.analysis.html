@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -534,11 +535,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Back to top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -546,6 +550,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 50 - New Year Resolutions</div>
       </div>
@@ -583,146 +592,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.81,"end":19.91,"text":"The New Year is a time for resolutions."},{"index":2,"start":19.91,"end":27.54,"text":"Mentally, at least, most of us could compile formidable lists of 'dos' and 'don'ts'."},{"index":3,"start":27.54,"end":34.27,"text":"The same old favourites recur year in year out with monotonous regularity."},{"index":4,"start":34.27,"end":51.73,"text":"We resolve to get up earlier each morning, eat less, find more time to play with the children, do a thousand and one jobs about the house, be nice to people we don't like, drive carefully, and take the dog for a walk every day."},{"index":5,"start":51.73,"end":57.86,"text":"Past experience has taught us that certain accomplishments are beyond attainment."},{"index":6,"start":57.86,"end":67.83,"text":"If we remain inveterate smokers, it is only because we have so often experienced the frustration that results from failure."},{"index":7,"start":67.83,"end":77.37,"text":"Most of us fail in our efforts at self-improvement because our schemes are too ambitious and we never have time to carry them out."},{"index":8,"start":77.37,"end":89.2,"text":"We also make the fundamental error of announcing our resolutions to everybody so that we look even more foolish when we slip back into our bad old ways."},{"index":9,"start":89.2,"end":96.21,"text":"Aware of these pitfalls, this year I attempted to keep my resolutions to myself."},{"index":10,"start":96.21,"end":106.61,"text":"I limited myself to two modest ambitions: to do physical exercises every morning and to read more of an evening."},{"index":11,"start":106.61,"end":123.67,"text":"An all-night party on New Year's Eve provided me with a good excuse for not carrying out either of these new resolutions on the first day of the year, but on the second, I applied myself assiduously to the task."},{"index":12,"start":123.67,"end":133.4,"text":"The daily exercises lasted only eleven minutes and I proposed to do them early in the morning before anyone had got up."},{"index":13,"start":133.4,"end":141.74,"text":"The self-discipline required to drag myself out of bed 11 minutes earlier than usual was considerable."},{"index":14,"start":141.74,"end":151.03,"text":"Nevertheless, I managed to creep down into the living room for two days before anyone found me out."},{"index":15,"start":151.03,"end":162.89,"text":"After jumping about on the carpet and twisting the human frame into uncomfortable positions, I sat down at the breakfast table in an exhausted condition."},{"index":16,"start":162.89,"end":165.78,"text":"It was this that betrayed me."},{"index":17,"start":165.78,"end":170.51,"text":"The next morning the whole family trooped in to watch the performance."},{"index":18,"start":170.51,"end":180.4,"text":"That was really unsettling but I fended off the taunts and jibes of the family good-humouredly and soon everybody got used to the idea."},{"index":19,"start":180.4,"end":183.85,"text":"However, my enthusiasm waned."},{"index":20,"start":183.85,"end":187.67,"text":"The time I spent at exercises gradually diminished."},{"index":21,"start":187.67,"end":192.29,"text":"Little by little the eleven minutes fell to zero."},{"index":22,"start":192.29,"end":197.33,"text":"By January 10th, I was back to where I had started from."},{"index":23,"start":197.33,"end":208.32,"text":"I argued that if I spent less time exhausting myself at exercises in the morning, I would keep my mind fresh for reading when I got home from work."},{"index":24,"start":208.32,"end":217.18,"text":"Resisting the hypnotizing effect of television, I sat in my room for a few evenings with my eyes glued to a book."},{"index":25,"start":217.18,"end":227.05,"text":"One night, however, feeling cold and lonely, I went downstairs and sat in front of the television pretending to read."},{"index":26,"start":227.05,"end":237.32,"text":"That proved to be my undoing, for I soon got back to my old bad habit of dozing off in front of the screen."},{"index":27,"start":237.32,"end":241.22,"text":"I still haven't given up my resolution to do more reading."},{"index":28,"start":241.22,"end":248.7,"text":"In fact, I have just bought a book entitled How to Read a Thousand Words a Minute."},{"index":29,"start":248.7,"end":253.01,"text":"Perhaps it will solve my problem, but I just haven't had time to read it!"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.81,"end":19.91,"text":"The New Year is a time for resolutions."},{"index":2,"start":19.91,"end":27.54,"text":"Mentally, at least, most of us could compile formidable lists of 'dos' and 'don'ts'."},{"index":3,"start":27.54,"end":34.27,"text":"The same old favourites recur year in year out with monotonous regularity."},{"index":4,"start":34.27,"end":51.73,"text":"We resolve to get up earlier each morning, eat less, find more time to play with the children, do a thousand and one jobs about the house, be nice to people we don't like, drive carefully, and take the dog for a walk every day."},{"index":5,"start":51.73,"end":57.86,"text":"Past experience has taught us that certain accomplishments are beyond attainment."},{"index":6,"start":57.86,"end":67.83,"text":"If we remain inveterate smokers, it is only because we have so often experienced the frustration that results from failure."},{"index":7,"start":67.83,"end":77.37,"text":"Most of us fail in our efforts at self-improvement because our schemes are too ambitious and we never have time to carry them out."},{"index":8,"start":77.37,"end":89.2,"text":"We also make the fundamental error of announcing our resolutions to everybody so that we look even more foolish when we slip back into our bad old ways."},{"index":9,"start":89.2,"end":96.21,"text":"Aware of these pitfalls, this year I attempted to keep my resolutions to myself."},{"index":10,"start":96.21,"end":106.61,"text":"I limited myself to two modest ambitions: to do physical exercises every morning and to read more of an evening."},{"index":11,"start":106.61,"end":123.67,"text":"An all-night party on New Year's Eve provided me with a good excuse for not carrying out either of these new resolutions on the first day of the year, but on the second, I applied myself assiduously to the task."},{"index":12,"start":123.67,"end":133.4,"text":"The daily exercises lasted only eleven minutes and I proposed to do them early in the morning before anyone had got up."},{"index":13,"start":133.4,"end":141.74,"text":"The self-discipline required to drag myself out of bed 11 minutes earlier than usual was considerable."},{"index":14,"start":141.74,"end":151.03,"text":"Nevertheless, I managed to creep down into the living room for two days before anyone found me out."},{"index":15,"start":151.03,"end":162.89,"text":"After jumping about on the carpet and twisting the human frame into uncomfortable positions, I sat down at the breakfast table in an exhausted condition."},{"index":16,"start":162.89,"end":165.78,"text":"It was this that betrayed me."},{"index":17,"start":165.78,"end":170.51,"text":"The next morning the whole family trooped in to watch the performance."},{"index":18,"start":170.51,"end":180.4,"text":"That was really unsettling but I fended off the taunts and jibes of the family good-humouredly and soon everybody got used to the idea."},{"index":19,"start":180.4,"end":183.85,"text":"However, my enthusiasm waned."},{"index":20,"start":183.85,"end":187.67,"text":"The time I spent at exercises gradually diminished."},{"index":21,"start":187.67,"end":192.29,"text":"Little by little the eleven minutes fell to zero."},{"index":22,"start":192.29,"end":197.33,"text":"By January 10th, I was back to where I had started from."},{"index":23,"start":197.33,"end":208.32,"text":"I argued that if I spent less time exhausting myself at exercises in the morning, I would keep my mind fresh for reading when I got home from work."},{"index":24,"start":208.32,"end":217.18,"text":"Resisting the hypnotizing effect of television, I sat in my room for a few evenings with my eyes glued to a book."},{"index":25,"start":217.18,"end":227.05,"text":"One night, however, feeling cold and lonely, I went downstairs and sat in front of the television pretending to read."},{"index":26,"start":227.05,"end":237.32,"text":"That proved to be my undoing, for I soon got back to my old bad habit of dozing off in front of the screen."},{"index":27,"start":237.32,"end":241.22,"text":"I still haven't given up my resolution to do more reading."},{"index":28,"start":241.22,"end":248.7,"text":"In fact, I have just bought a book entitled How to Read a Thousand Words a Minute."},{"index":29,"start":248.7,"end":253.01,"text":"Perhaps it will solve my problem, but I just haven't had time to read it!"}],
+      previousHref: "49－The Ideal Servant.analysis.html",
+      nextHref: "51－Predicting the Future.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

@@ -223,6 +223,37 @@ function addPlayerCss(html) {
     '.back-top { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; }',
     '.back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }',
   );
+  next = next.replace(
+    'body { margin: 0; padding-bottom: 116px;',
+    'body { margin: 0; padding-bottom: 156px;',
+  );
+  next = next.replace(
+    '.player-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }',
+    '.player-row { display: grid; grid-template-columns: auto auto auto minmax(160px, 1fr) auto auto; gap: 10px; align-items: center; }',
+  );
+  if (!next.includes('.player-options {')) {
+    next = next.replace(
+      '    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }\n',
+      '    .player-btn:hover, .player-btn:focus-visible { background: #bfdbfe; outline: 3px solid rgba(147, 197, 253, 0.28); }\n'
+        + '    .player-btn:disabled { opacity: 0.42; cursor: not-allowed; }\n'
+        + '    .player-options { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; color: #e5e7eb; font-size: 12px; }\n'
+        + '    .player-options label { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }\n'
+        + '    .player-options select { border: 1px solid #475569; border-radius: 6px; background: #111827; color: #fff; padding: 3px 6px; }\n',
+    );
+  }
+  next = next.replace(
+    '@media (max-width: 640px) { body { padding-bottom: 132px; }',
+    '@media (max-width: 760px) { body { padding-bottom: 176px; }',
+  );
+  next = next.replace(
+    '.back-top, .back-prev { right: 10px; bottom: 140px;',
+    '.back-top, .back-prev { right: 10px; bottom: 184px;',
+  );
+  next = next.replace('.back-prev { bottom: 186px; }', '.back-prev { bottom: 230px; }');
+  next = next.replace(
+    '.player-row { grid-template-columns: auto 1fr; }',
+    '.player-row { grid-template-columns: auto auto auto 1fr; } .player-options { grid-column: 1 / -1; }',
+  );
   return next;
 }
 
@@ -246,11 +277,13 @@ function addSentenceButtons(html, subtitles) {
   return next;
 }
 
-function playerMarkup(title, audioSrc, subtitles) {
+function playerMarkup(title, audioSrc, subtitles, previousHref, nextHref) {
   return `  <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -258,6 +291,11 @@ function playerMarkup(title, audioSrc, subtitles) {
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">${escapeHtml(title)}</div>
       </div>
@@ -295,147 +333,13 @@ function playerMarkup(title, audioSrc, subtitles) {
       }
     }
 
-    const subtitles = ${JSON.stringify(subtitles)};
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
-  </script>`;
+    window.NCE_LESSON_PLAYER = {
+      subtitles: ${JSON.stringify(subtitles)},
+      previousHref: ${JSON.stringify(previousHref)},
+      nextHref: ${JSON.stringify(nextHref)}
+    };
+  </script>
+  <script src="../../static/lesson-player.js"></script>`;
 }
 
 function removeExistingPlayer(html) {
@@ -470,12 +374,15 @@ for (const file of files) {
   }
 
   const title = stripTags(html.match(/<h1>([\s\S]*?)<\/h1>/)?.[1] ?? baseName);
+  const fileIndex = files.indexOf(file);
+  const previousHref = files[fileIndex - 1] ?? null;
+  const nextHref = files[fileIndex + 1] ?? null;
   let next = removeExistingPlayer(html);
   next = addPlayerCss(next);
   next = addSentenceButtons(next, subtitles);
   next = next.replace(
     /  <a class="back-top" href="#top">([\s\S]*?)<\/a>\n<\/body>/,
-    `  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>\n  <a class="back-top" href="#top">$1</a>\n${playerMarkup(title, `../${baseName}.mp3`, subtitles)}\n</body>`,
+    `  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>\n  <a class="back-top" href="#top">$1</a>\n${playerMarkup(title, `../${baseName}.mp3`, subtitles, previousHref, nextHref)}\n</body>`,
   );
 
   if (next !== html) {

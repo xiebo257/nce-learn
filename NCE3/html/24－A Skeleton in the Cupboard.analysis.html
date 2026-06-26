@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -461,11 +462,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -473,6 +477,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 24 - A Skeleton in the Cupboard</div>
       </div>
@@ -510,146 +519,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":11.87,"end":24.73,"text":"We often read in novels how a seemingly respectable person or family has some terrible secret which has been concealed from strangers for years."},{"index":2,"start":24.73,"end":30.61,"text":"The English language possesses a vivid saying to describe this sort of situation."},{"index":3,"start":30.61,"end":35.69,"text":"The terrible secret is called 'a skeleton in the cupboard'."},{"index":4,"start":35.69,"end":43.08,"text":"At some dramatic moment in the story, the terrible secret becomes known and a reputation is ruined."},{"index":5,"start":43.08,"end":59.79,"text":"The reader's hair stands on end when he reads in the final pages of the novel that the heroine, a dear old lady who had always been so kind to everybody, had, in her youth, poisoned every one of her five husbands."},{"index":6,"start":59.79,"end":64.47,"text":"It is all very well for such things to occur in fiction."},{"index":7,"start":64.47,"end":75.5,"text":"To varying degrees, we all have secrets which we do not want even our closest friends to learn, but few of us have skeletons in the cupboard."},{"index":8,"start":75.5,"end":83.87,"text":"The only person I know who has a skeleton in the cupboard is George Carlton, and he is very proud of the fact."},{"index":9,"start":83.87,"end":86.67,"text":"George studied medicine in his youth."},{"index":10,"start":86.67,"end":93.77,"text":"Instead of becoming a doctor, however, he became a successful writer of detective stories."},{"index":11,"start":93.77,"end":99.38,"text":"I once spent an uncomfortable weekend which I shall never forget at his house."},{"index":12,"start":99.38,"end":104.02,"text":"George showed me to the guestroom which, he said, was rarely used."},{"index":13,"start":104.02,"end":108.33,"text":"He told me to unpack my things and then come down to dinner."},{"index":14,"start":108.33,"end":118.38,"text":"After I had stacked my shirts and underclothes in two empty drawers, I decided to hang one of the two suits I had brought with me in the cupboard."},{"index":15,"start":118.38,"end":123.32,"text":"I opened the cupboard door and then stood in front of it petrified."},{"index":16,"start":123.32,"end":127.06,"text":"A skeleton was dangling before my eyes."},{"index":17,"start":127.06,"end":135.32,"text":"The sudden movement of the door made it sway slightly and it gave me the impression that it was about to leap out at me."},{"index":18,"start":135.32,"end":140.4,"text":"Dropping my suit, I dashed downstairs to tell George."},{"index":19,"start":140.4,"end":145.85,"text":"This was worse than 'a terrible secret'; this was a real skeleton!"},{"index":20,"start":145.85,"end":148.42,"text":"But George was unsympathetic."},{"index":21,"start":148.42,"end":154.56,"text":"'Oh, that,' he said with a smile as if he were talking about an old friend."},{"index":22,"start":154.56,"end":159.1,"text":"'That's Sebastian. You forget that I was a medical student once upon a time.'"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":11.87,"end":24.73,"text":"We often read in novels how a seemingly respectable person or family has some terrible secret which has been concealed from strangers for years."},{"index":2,"start":24.73,"end":30.61,"text":"The English language possesses a vivid saying to describe this sort of situation."},{"index":3,"start":30.61,"end":35.69,"text":"The terrible secret is called 'a skeleton in the cupboard'."},{"index":4,"start":35.69,"end":43.08,"text":"At some dramatic moment in the story, the terrible secret becomes known and a reputation is ruined."},{"index":5,"start":43.08,"end":59.79,"text":"The reader's hair stands on end when he reads in the final pages of the novel that the heroine, a dear old lady who had always been so kind to everybody, had, in her youth, poisoned every one of her five husbands."},{"index":6,"start":59.79,"end":64.47,"text":"It is all very well for such things to occur in fiction."},{"index":7,"start":64.47,"end":75.5,"text":"To varying degrees, we all have secrets which we do not want even our closest friends to learn, but few of us have skeletons in the cupboard."},{"index":8,"start":75.5,"end":83.87,"text":"The only person I know who has a skeleton in the cupboard is George Carlton, and he is very proud of the fact."},{"index":9,"start":83.87,"end":86.67,"text":"George studied medicine in his youth."},{"index":10,"start":86.67,"end":93.77,"text":"Instead of becoming a doctor, however, he became a successful writer of detective stories."},{"index":11,"start":93.77,"end":99.38,"text":"I once spent an uncomfortable weekend which I shall never forget at his house."},{"index":12,"start":99.38,"end":104.02,"text":"George showed me to the guestroom which, he said, was rarely used."},{"index":13,"start":104.02,"end":108.33,"text":"He told me to unpack my things and then come down to dinner."},{"index":14,"start":108.33,"end":118.38,"text":"After I had stacked my shirts and underclothes in two empty drawers, I decided to hang one of the two suits I had brought with me in the cupboard."},{"index":15,"start":118.38,"end":123.32,"text":"I opened the cupboard door and then stood in front of it petrified."},{"index":16,"start":123.32,"end":127.06,"text":"A skeleton was dangling before my eyes."},{"index":17,"start":127.06,"end":135.32,"text":"The sudden movement of the door made it sway slightly and it gave me the impression that it was about to leap out at me."},{"index":18,"start":135.32,"end":140.4,"text":"Dropping my suit, I dashed downstairs to tell George."},{"index":19,"start":140.4,"end":145.85,"text":"This was worse than 'a terrible secret'; this was a real skeleton!"},{"index":20,"start":145.85,"end":148.42,"text":"But George was unsympathetic."},{"index":21,"start":148.42,"end":154.56,"text":"'Oh, that,' he said with a smile as if he were talking about an old friend."},{"index":22,"start":154.56,"end":159.1,"text":"'That's Sebastian. You forget that I was a medical student once upon a time.'"}],
+      previousHref: "23－One Man's Meat is Another Man's Poison.analysis.html",
+      nextHref: "25－The Cutty Sark.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

@@ -185,7 +185,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -393,11 +394,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -405,6 +409,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 13 - It's Only Me</div>
       </div>
@@ -442,146 +451,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.42,"end":24.96,"text":"After her husband had gone to work, Mrs. Richards sent her children to school and went upstairs to her bedroom."},{"index":2,"start":24.96,"end":34.89,"text":"She was too excited to do any housework that morning, for in the evening she would be going to a fancy-dress party with her husband."},{"index":3,"start":34.89,"end":44.23,"text":"She intended to dress up as a ghost and as she had made her costume the night before, she was impatient to try it on."},{"index":4,"start":44.23,"end":49.62,"text":"Though the costume consisted only of a sheet, it was very effective."},{"index":5,"start":49.62,"end":53.93,"text":"After putting it on, Mrs. Richards went downstairs."},{"index":6,"start":53.93,"end":58.27,"text":"She wanted to find out whether it would be comfortable to wear."},{"index":7,"start":58.27,"end":64.84,"text":"Just as Mrs. Richards was entering the dining-room, there was a knock on the front door."},{"index":8,"start":64.84,"end":67.48,"text":"She knew that it must be the baker."},{"index":9,"start":67.48,"end":74.42,"text":"She had told him to come straight in if ever she failed to open the door and to leave the bread on the kitchen table."},{"index":10,"start":74.42,"end":82.13,"text":"Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."},{"index":11,"start":82.13,"end":87.05,"text":"She heard the front door open and heavy footsteps in the hall."},{"index":12,"start":87.05,"end":91.48,"text":"Suddenly the door of the storeroom was opened and a man entered."},{"index":13,"start":91.48,"end":98.78,"text":"Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the metre."},{"index":14,"start":98.78,"end":106.49,"text":"She tried to explain the situation, saying 'It's only me', but it was too late."},{"index":15,"start":106.49,"end":111.82,"text":"The man let out a cry and jumped back several paces."},{"index":16,"start":111.82,"end":116.51,"text":"When Mrs. Richards walked towards him, he fled, slamming the door behind him."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.42,"end":24.96,"text":"After her husband had gone to work, Mrs. Richards sent her children to school and went upstairs to her bedroom."},{"index":2,"start":24.96,"end":34.89,"text":"She was too excited to do any housework that morning, for in the evening she would be going to a fancy-dress party with her husband."},{"index":3,"start":34.89,"end":44.23,"text":"She intended to dress up as a ghost and as she had made her costume the night before, she was impatient to try it on."},{"index":4,"start":44.23,"end":49.62,"text":"Though the costume consisted only of a sheet, it was very effective."},{"index":5,"start":49.62,"end":53.93,"text":"After putting it on, Mrs. Richards went downstairs."},{"index":6,"start":53.93,"end":58.27,"text":"She wanted to find out whether it would be comfortable to wear."},{"index":7,"start":58.27,"end":64.84,"text":"Just as Mrs. Richards was entering the dining-room, there was a knock on the front door."},{"index":8,"start":64.84,"end":67.48,"text":"She knew that it must be the baker."},{"index":9,"start":67.48,"end":74.42,"text":"She had told him to come straight in if ever she failed to open the door and to leave the bread on the kitchen table."},{"index":10,"start":74.42,"end":82.13,"text":"Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."},{"index":11,"start":82.13,"end":87.05,"text":"She heard the front door open and heavy footsteps in the hall."},{"index":12,"start":87.05,"end":91.48,"text":"Suddenly the door of the storeroom was opened and a man entered."},{"index":13,"start":91.48,"end":98.78,"text":"Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the metre."},{"index":14,"start":98.78,"end":106.49,"text":"She tried to explain the situation, saying 'It's only me', but it was too late."},{"index":15,"start":106.49,"end":111.82,"text":"The man let out a cry and jumped back several paces."},{"index":16,"start":111.82,"end":116.51,"text":"When Mrs. Richards walked towards him, he fled, slamming the door behind him."}],
+      previousHref: "12－Life on a Desert Island.analysis.html",
+      nextHref: "14－A Noble Gangster.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

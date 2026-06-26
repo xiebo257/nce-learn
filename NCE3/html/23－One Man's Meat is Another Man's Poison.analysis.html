@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -441,11 +442,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -453,6 +457,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 23 - One Man's Meat is Another Man's Poison</div>
       </div>
@@ -490,146 +499,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":20.29,"end":28.51,"text":"People become quite illogical when they try to decide what can be eaten and what cannot be eaten."},{"index":2,"start":28.51,"end":35.92,"text":"If you lived in the Mediterranean, for instance, you would consider octopus a great delicacy."},{"index":3,"start":35.92,"end":41.78,"text":"You would not be able to understand why some people find it repulsive."},{"index":4,"start":41.78,"end":53.91,"text":"On the other hand, your stomach would turn at the idea of frying potatoes in animal fat--the normally accepted practice in many northern countries."},{"index":5,"start":53.91,"end":63.19,"text":"The sad truth is that most of us have been brought up to eat certain foods and we stick to them all our lives."},{"index":6,"start":63.19,"end":69.56,"text":"No creature has received more praise and abuse than the common garden snail."},{"index":7,"start":69.56,"end":75.43,"text":"Cooked in wine, snails are a great luxury in various parts of the world."},{"index":8,"start":75.43,"end":84.2,"text":"There are countless people who, ever since their early years, have learned to associate snails with food."},{"index":9,"start":84.2,"end":90.31,"text":"My friend, Robert, lives in a country where snails are despised."},{"index":10,"start":90.31,"end":95.31,"text":"As his flat is in a large town, he has no garden of his own."},{"index":11,"start":95.31,"end":102.46,"text":"For years he has been asking me to collect snails from my garden and take them to him."},{"index":12,"start":102.46,"end":118.55,"text":"The idea never appealed to me very much, but one day, after a heavy shower, I happened to be walking in my garden when I noticed a huge number of snails taking a stroll on some of my prize plants."},{"index":13,"start":118.55,"end":127.01,"text":"Acting on a sudden impulse, I collected several dozen, put them in a paper bag, and took them to Robert."},{"index":14,"start":127.01,"end":133.03,"text":"Robert was delighted to see me and equally pleased with my little gift."},{"index":15,"start":133.03,"end":140.56,"text":"I left the bag in the hall and Robert and I went into the living room where we talked for a couple of hours."},{"index":16,"start":140.56,"end":147.73,"text":"I had forgotten all about the snails when Robert suddenly said that I must stay to dinner."},{"index":17,"start":147.73,"end":151.79,"text":"Snails would, of course, be the main dish."},{"index":18,"start":151.79,"end":157.9,"text":"I did not fancy the idea and I reluctantly followed Robert out of the room."},{"index":19,"start":157.9,"end":168.32,"text":"To our dismay, we saw that there were snails everywhere: they had escaped from the paper bag and had taken complete possession of the hall!"},{"index":20,"start":168.32,"end":171.32,"text":"I have never been able to look at a snail since then."}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":20.29,"end":28.51,"text":"People become quite illogical when they try to decide what can be eaten and what cannot be eaten."},{"index":2,"start":28.51,"end":35.92,"text":"If you lived in the Mediterranean, for instance, you would consider octopus a great delicacy."},{"index":3,"start":35.92,"end":41.78,"text":"You would not be able to understand why some people find it repulsive."},{"index":4,"start":41.78,"end":53.91,"text":"On the other hand, your stomach would turn at the idea of frying potatoes in animal fat--the normally accepted practice in many northern countries."},{"index":5,"start":53.91,"end":63.19,"text":"The sad truth is that most of us have been brought up to eat certain foods and we stick to them all our lives."},{"index":6,"start":63.19,"end":69.56,"text":"No creature has received more praise and abuse than the common garden snail."},{"index":7,"start":69.56,"end":75.43,"text":"Cooked in wine, snails are a great luxury in various parts of the world."},{"index":8,"start":75.43,"end":84.2,"text":"There are countless people who, ever since their early years, have learned to associate snails with food."},{"index":9,"start":84.2,"end":90.31,"text":"My friend, Robert, lives in a country where snails are despised."},{"index":10,"start":90.31,"end":95.31,"text":"As his flat is in a large town, he has no garden of his own."},{"index":11,"start":95.31,"end":102.46,"text":"For years he has been asking me to collect snails from my garden and take them to him."},{"index":12,"start":102.46,"end":118.55,"text":"The idea never appealed to me very much, but one day, after a heavy shower, I happened to be walking in my garden when I noticed a huge number of snails taking a stroll on some of my prize plants."},{"index":13,"start":118.55,"end":127.01,"text":"Acting on a sudden impulse, I collected several dozen, put them in a paper bag, and took them to Robert."},{"index":14,"start":127.01,"end":133.03,"text":"Robert was delighted to see me and equally pleased with my little gift."},{"index":15,"start":133.03,"end":140.56,"text":"I left the bag in the hall and Robert and I went into the living room where we talked for a couple of hours."},{"index":16,"start":140.56,"end":147.73,"text":"I had forgotten all about the snails when Robert suddenly said that I must stay to dinner."},{"index":17,"start":147.73,"end":151.79,"text":"Snails would, of course, be the main dish."},{"index":18,"start":151.79,"end":157.9,"text":"I did not fancy the idea and I reluctantly followed Robert out of the room."},{"index":19,"start":157.9,"end":168.32,"text":"To our dismay, we saw that there were snails everywhere: they had escaped from the paper bag and had taken complete possession of the hall!"},{"index":20,"start":168.32,"end":171.32,"text":"I have never been able to look at a snail since then."}],
+      previousHref: "22－By Heart.analysis.html",
+      nextHref: "24－A Skeleton in the Cupboard.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

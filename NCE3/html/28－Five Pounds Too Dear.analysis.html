@@ -189,7 +189,8 @@
       .sentence-num { width: 30px; height: 30px; }
       .en-text { font-size: 16px; }
       .field { grid-template-columns: 1fr; gap: 2px; }
-      .back-top, .back-prev { right: 10px; bottom: 140px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 186px; }
+      .back-top, .back-prev { right: 10px; bottom: 184px; min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 8px; } .back-prev { bottom: 230px; }
+    .back-prev { bottom: 178px; }
     }
   </style>
 </head>
@@ -451,11 +452,14 @@
     </section>
   </main>
   <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
+  <a class="back-prev" href="../../NCE1/html/index.html#nce3-lessons" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
   <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
+        <button class="player-btn" type="button" id="dock-prev-lesson" aria-label="Previous lesson">‹</button>
         <button class="player-btn" type="button" id="dock-play" aria-label="Play or pause">▶</button>
+        <button class="player-btn" type="button" id="dock-next-lesson" aria-label="Next lesson">›</button>
         <div class="progress-wrap">
           <div class="subtitle-line" id="dock-subtitle">点击句子开头的播放按钮，从当前句开始播放。</div>
           <div class="progress-line">
@@ -463,6 +467,11 @@
             <div class="progress-track" id="dock-track"><div class="progress-fill" id="dock-fill"></div></div>
             <span id="dock-duration">0:00</span>
           </div>
+        </div>
+        <div class="player-options" aria-label="Playback options">
+          <label><input type="checkbox" id="dock-continuous"> 连续播放</label>
+          <label><input type="checkbox" id="dock-loop"> 循环播放</label>
+          <label>倍速 <select id="dock-speed"><option value="0.75">0.75x</option><option value="1">1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
         </div>
         <div class="dock-title">NCE3 Lesson 28 - Five Pounds Too Dear</div>
       </div>
@@ -500,146 +509,12 @@
       }
     }
 
-    const subtitles = [{"index":1,"start":16.88,"end":23.63,"text":"Small boats loaded with wares sped to the great liner as she was entering the harbour."},{"index":2,"start":23.63,"end":40.08,"text":"Before she had anchored, the men from the boats had climbed on board and the decks were soon covered with colourful rugs from Persia, silks from India, copper coffee pots, and beautiful handmade silverware."},{"index":3,"start":40.08,"end":43.3,"text":"It was difficult not to be tempted."},{"index":4,"start":43.3,"end":53.56,"text":"Many of the tourists on board had begun bargaining with the tradesmen, but I decided not to buy anything until I had disembarked."},{"index":5,"start":53.56,"end":62.16,"text":"I had no sooner got off the ship than I was assailed by a man who wanted to sell me a diamond ring."},{"index":6,"start":62.16,"end":71.44,"text":"I had no intention of buying one, but I could not conceal the fact that I was impressed by the size of the diamonds."},{"index":7,"start":71.44,"end":74.63,"text":"Some of them were as big as marbles."},{"index":8,"start":74.63,"end":79.9,"text":"The man went to great lengths to prove that the diamonds were real."},{"index":9,"start":79.9,"end":88.9,"text":"As we were walking past a shop, he held a diamond firmly against the window and made a deep impression in the glass."},{"index":10,"start":88.9,"end":92.93,"text":"It took me over half an hour to get rid of him."},{"index":11,"start":92.93,"end":98.1,"text":"The next man to approach me was selling expensive pens and watches."},{"index":12,"start":98.1,"end":101.16,"text":"I examined one of the pens closely."},{"index":13,"start":101.16,"end":103.79,"text":"It certainly looked genuine."},{"index":14,"start":103.79,"end":112.31,"text":"At the base of the gold cap, the words 'made in the U.S.A.' had been neatly inscribed."},{"index":15,"start":112.31,"end":122.21,"text":"The man said that the pen was worth £50, but as a special favour, he would let me have it for £30."},{"index":16,"start":122.21,"end":130.51,"text":"I shook my head and held up five fingers indicating that I was willing to pay £5."},{"index":17,"start":130.51,"end":142.62,"text":"Gesticulating wildly, the man acted as if he found my offer outrageous, but he eventually reduced the price to 10 pounds."},{"index":18,"start":142.62,"end":153.35,"text":"Shrugging my shoulders I began to walk away when, a moment later, he ran after me and thrust the pen into my hands."},{"index":19,"start":153.35,"end":160.57,"text":"Though he kept throwing up his arms in despair, he readily accepted the £5 I gave him."},{"index":20,"start":160.57,"end":167.77,"text":"I felt especially pleased with my wonderful bargain--until I got back to the ship."},{"index":21,"start":167.77,"end":177.04,"text":"No matter how hard I tried, it was impossible to fill this beautiful pen with ink and to this day it has never written a single word!"}];
-    const audio = document.getElementById("lesson-audio");
-    const dockPlay = document.getElementById("dock-play");
-    const subtitleEl = document.getElementById("dock-subtitle");
-    const currentEl = document.getElementById("dock-current");
-    const durationEl = document.getElementById("dock-duration");
-    const trackEl = document.getElementById("dock-track");
-    const fillEl = document.getElementById("dock-fill");
-    const sentenceCards = Array.from(document.querySelectorAll(".sentence-card"));
-    const sentenceToggleButtons = Array.from(document.querySelectorAll(".sentence-toggle"));
-
-    function formatTime(value) {
-      if (!Number.isFinite(value)) return "0:00";
-      const minutes = Math.floor(value / 60);
-      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-      return minutes + ":" + seconds;
-    }
-
-    function activeSubtitle(time) {
-      return subtitles.find((item) => time >= item.start && time < item.end) ?? subtitles[subtitles.length - 1];
-    }
-
-    function setActiveSentence(item) {
-      sentenceCards.forEach((card) => card.classList.toggle("is-active", card.id === "sentence-" + item?.index));
-      if (item) subtitleEl.textContent = item.text;
-    }
-
-    function updateProgress(time) {
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      currentEl.textContent = formatTime(time);
-      durationEl.textContent = formatTime(duration);
-      fillEl.style.width = duration ? Math.min(100, (time / duration) * 100) + "%" : "0%";
-      const item = activeSubtitle(time);
-      if (item) setActiveSentence(item);
-    }
-
-    function seekTo(time) {
-      audio.currentTime = time;
-      updateProgress(time);
-    }
-
-    function whenAudioReady(callback) {
-      if (audio.readyState >= 2) {
-        callback();
-        return;
-      }
-      let done = false;
-      const runOnce = () => {
-        if (done) return;
-        done = true;
-        callback();
-      };
-      audio.addEventListener("canplay", runOnce, { once: true });
-      audio.addEventListener("loadedmetadata", runOnce, { once: true });
-    }
-
-    function isTimeInSentence(item) {
-      const time = audio.currentTime;
-      return item && time >= item.start && time < item.end;
-    }
-
-    function refreshSentenceToggleButtons() {
-      const current = activeSubtitle(audio.currentTime);
-      sentenceToggleButtons.forEach((button) => {
-        const isCurrent = current && Number(button.dataset.sentence) === current.index;
-        const isPause = isCurrent && !audio.paused;
-        button.textContent = isPause ? "Ⅱ" : "▶";
-        button.setAttribute("aria-label", (isPause ? "Pause" : "Resume") + " sentence " + button.dataset.sentence);
-      });
-    }
-
-    function toggleSentence(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      if (!audio.paused && isTimeInSentence(item)) {
-        audio.pause();
-        refreshSentenceToggleButtons();
-        return;
-      }
-      if (audio.paused && isTimeInSentence(item)) {
-        setActiveSentence(item);
-        audio.play().catch(() => {});
-        return;
-      }
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    function playFrom(index) {
-      const item = subtitles.find((entry) => entry.index === index);
-      if (!item) return;
-      setActiveSentence(item);
-      whenAudioReady(() => {
-        seekTo(item.start);
-        audio.play().catch(() => {});
-      });
-    }
-
-    document.querySelectorAll(".sentence-play").forEach((button) => {
-      button.addEventListener("click", () => playFrom(Number(button.dataset.sentence)));
-    });
-
-    sentenceToggleButtons.forEach((button) => {
-      button.addEventListener("click", () => toggleSentence(Number(button.dataset.sentence)));
-    });
-
-    dockPlay.addEventListener("click", () => {
-      if (audio.paused) audio.play();
-      else audio.pause();
-    });
-
-    audio.addEventListener("play", () => {
-      dockPlay.textContent = "Ⅱ";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("pause", () => {
-      dockPlay.textContent = "▶";
-      refreshSentenceToggleButtons();
-    });
-
-    audio.addEventListener("loadedmetadata", () => {
-      durationEl.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener("timeupdate", () => {
-      updateProgress(audio.currentTime);
-      refreshSentenceToggleButtons();
-    });
-
-    trackEl.addEventListener("click", (event) => {
-      const rect = trackEl.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
-      const duration = audio.duration || subtitles[subtitles.length - 1]?.end || 0;
-      audio.currentTime = ratio * duration;
-      updateProgress(audio.currentTime);
-    });
+    window.NCE_LESSON_PLAYER = {
+      subtitles: [{"index":1,"start":16.88,"end":23.63,"text":"Small boats loaded with wares sped to the great liner as she was entering the harbour."},{"index":2,"start":23.63,"end":40.08,"text":"Before she had anchored, the men from the boats had climbed on board and the decks were soon covered with colourful rugs from Persia, silks from India, copper coffee pots, and beautiful handmade silverware."},{"index":3,"start":40.08,"end":43.3,"text":"It was difficult not to be tempted."},{"index":4,"start":43.3,"end":53.56,"text":"Many of the tourists on board had begun bargaining with the tradesmen, but I decided not to buy anything until I had disembarked."},{"index":5,"start":53.56,"end":62.16,"text":"I had no sooner got off the ship than I was assailed by a man who wanted to sell me a diamond ring."},{"index":6,"start":62.16,"end":71.44,"text":"I had no intention of buying one, but I could not conceal the fact that I was impressed by the size of the diamonds."},{"index":7,"start":71.44,"end":74.63,"text":"Some of them were as big as marbles."},{"index":8,"start":74.63,"end":79.9,"text":"The man went to great lengths to prove that the diamonds were real."},{"index":9,"start":79.9,"end":88.9,"text":"As we were walking past a shop, he held a diamond firmly against the window and made a deep impression in the glass."},{"index":10,"start":88.9,"end":92.93,"text":"It took me over half an hour to get rid of him."},{"index":11,"start":92.93,"end":98.1,"text":"The next man to approach me was selling expensive pens and watches."},{"index":12,"start":98.1,"end":101.16,"text":"I examined one of the pens closely."},{"index":13,"start":101.16,"end":103.79,"text":"It certainly looked genuine."},{"index":14,"start":103.79,"end":112.31,"text":"At the base of the gold cap, the words 'made in the U.S.A.' had been neatly inscribed."},{"index":15,"start":112.31,"end":122.21,"text":"The man said that the pen was worth £50, but as a special favour, he would let me have it for £30."},{"index":16,"start":122.21,"end":130.51,"text":"I shook my head and held up five fingers indicating that I was willing to pay £5."},{"index":17,"start":130.51,"end":142.62,"text":"Gesticulating wildly, the man acted as if he found my offer outrageous, but he eventually reduced the price to 10 pounds."},{"index":18,"start":142.62,"end":153.35,"text":"Shrugging my shoulders I began to walk away when, a moment later, he ran after me and thrust the pen into my hands."},{"index":19,"start":153.35,"end":160.57,"text":"Though he kept throwing up his arms in despair, he readily accepted the £5 I gave him."},{"index":20,"start":160.57,"end":167.77,"text":"I felt especially pleased with my wonderful bargain--until I got back to the ship."},{"index":21,"start":167.77,"end":177.04,"text":"No matter how hard I tried, it was impossible to fill this beautiful pen with ink and to this day it has never written a single word!"}],
+      previousHref: "27－Nothing to Sell and Nothing to Buy.analysis.html",
+      nextHref: "29－Funny or Not.analysis.html"
+    };
   </script>
+  <script src="../../static/lesson-player.js"></script>
 </body>
 </html>

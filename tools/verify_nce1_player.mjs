@@ -7,11 +7,12 @@ const files = readdirSync(htmlDir).filter((file) => file.endsWith('.analysis.htm
 const failures = [];
 const sharedPlayerPath = join('static', 'lesson-player.js');
 const sharedPlayer = existsSync(sharedPlayerPath) ? readFileSync(sharedPlayerPath, 'utf8') : '';
+const sharedPlayerPattern = /<script src="\.\.\/\.\.\/static\/lesson-player\.js\?v=[^"]+"><\/script>/;
 
 for (const file of files) {
   const path = join(htmlDir, file);
   const html = readFileSync(path, 'utf8');
-  const usesSharedPlayer = html.includes('<script src="../../static/lesson-player.js"></script>');
+  const usesSharedPlayer = sharedPlayerPattern.test(html);
   const playerSource = usesSharedPlayer ? sharedPlayer : html;
   if (/\baudio\.load\(\)/.test(html)) {
     failures.push(`${path}: contains audio.load(), which can reset playback state`);

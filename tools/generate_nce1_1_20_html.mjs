@@ -2736,7 +2736,14 @@ function renderPlayerDock(lessonTitle, audioSrc, subtitles, previousHref, nextHr
       nextHref: ${JSON.stringify(nextHref)}
     };
   </script>
-  <script src="../../static/lesson-player.js"></script>`;
+  <script src="../../static/lesson-player.js?v=34d9be4"></script>
+  <script>
+    if (!window.NCELessonPlayer) {
+      const script = document.createElement("script");
+      script.src = "https://xiebo257.github.io/nce-learn/static/lesson-player.js?v=34d9be4";
+      document.head.appendChild(script);
+    }
+  </script>`;
 }
 
 function renderHtml(lesson, previousHref = null, nextHref = null) {

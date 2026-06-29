@@ -13,6 +13,8 @@ const failures = [];
 let checked = 0;
 const sharedPlayerPath = join('static', 'lesson-player.js');
 const sharedPlayer = existsSync(sharedPlayerPath) ? readFileSync(sharedPlayerPath, 'utf8') : '';
+const sharedPlayerScriptPattern = /<script src="\.\.\/\.\.\/static\/lesson-player\.js\?v=[^"]+"><\/script>/;
+const sharedPlayerFallback = 'https://xiebo257.github.io/nce-learn/static/lesson-player.js';
 
 function countMatches(text, pattern) {
   return [...text.matchAll(pattern)].length;
@@ -26,6 +28,10 @@ function hasRuleValue(text, selector, property, value) {
 
 function expectedLessonHref(files, index) {
   return index >= 0 && index < files.length ? files[index] : null;
+}
+
+function hasSharedPlayerScript(html) {
+  return sharedPlayerScriptPattern.test(html);
 }
 
 if (!sharedPlayer) {
@@ -81,23 +87,26 @@ for (const [book, htmlDir] of targets) {
     if (/\baudio\.load\(\)/.test(html)) {
       failures.push(`${htmlPath}: contains audio.load(), which can reset playback state`);
     }
-    if (!html.includes('function whenAudioReady(callback)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('function whenAudioReady(callback)') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: missing whenAudioReady callback guard`);
     }
-    if (!html.includes('whenAudioReady(() => {') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('whenAudioReady(() => {') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: playFrom does not wait for audio readiness before seeking`);
     }
-    if (!html.includes('seekTo(item.start);') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('seekTo(item.start);') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: playFrom does not seek to the sentence start`);
     }
-    if (!html.includes('audio.play().catch(() => {});') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('audio.play().catch(() => {});') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: playFrom does not start existing audio after seeking`);
     }
-    if (!html.includes('function toggleSentence(index)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('function toggleSentence(index)') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: missing per-sentence pause/resume toggle`);
     }
-    if (!html.includes('<script src="../../static/lesson-player.js"></script>')) {
-      failures.push(`${htmlPath}: missing shared lesson player script`);
+    if (!hasSharedPlayerScript(html)) {
+      failures.push(`${htmlPath}: missing cache-busted shared lesson player script`);
+    }
+    if (!html.includes(sharedPlayerFallback) || !html.includes('if (!window.NCELessonPlayer)')) {
+      failures.push(`${htmlPath}: missing shared lesson player fallback`);
     }
     for (const required of [
       'id="dock-prev-lesson"',
@@ -128,10 +137,10 @@ for (const [book, htmlDir] of targets) {
     if (!hasRuleValue(html, '.sentence-head', 'grid-template-columns', '30px 30px 30px 1fr')) {
       failures.push(`${htmlPath}: mobile sentence header grid does not fit play, pause/resume, number, and text`);
     }
-    if (!html.includes('audio.pause();') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('audio.pause();') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: pause/resume toggle does not pause existing playback`);
     }
-    if (!html.includes('isTimeInSentence(item)') && !html.includes('<script src="../../static/lesson-player.js"></script>')) {
+    if (!html.includes('isTimeInSentence(item)') && !hasSharedPlayerScript(html)) {
       failures.push(`${htmlPath}: pause/resume toggle does not check the current sentence before resuming`);
     }
     if (!html.includes('<div class="audio-dock"')) {

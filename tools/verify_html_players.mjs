@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const targets = [
@@ -11,6 +11,8 @@ const targets = [
 
 const failures = [];
 let checked = 0;
+const sharedPlayerPath = join('static', 'lesson-player.js');
+const sharedPlayer = existsSync(sharedPlayerPath) ? readFileSync(sharedPlayerPath, 'utf8') : '';
 
 function countMatches(text, pattern) {
   return [...text.matchAll(pattern)].length;
@@ -24,6 +26,23 @@ function hasRuleValue(text, selector, property, value) {
 
 function expectedLessonHref(files, index) {
   return index >= 0 && index < files.length ? files[index] : null;
+}
+
+if (!sharedPlayer) {
+  failures.push(`${sharedPlayerPath}: missing shared player script`);
+} else {
+  const requiredSharedPlayerSnippets = [
+    'function setContinuousChecked(checked)',
+    'function setLoopChecked(checked)',
+    'if (checked) setLoopChecked(false);',
+    'if (checked) setContinuousChecked(false);',
+    'setContinuousChecked(false);',
+  ];
+  for (const snippet of requiredSharedPlayerSnippets) {
+    if (!sharedPlayer.includes(snippet)) {
+      failures.push(`${sharedPlayerPath}: missing mutually exclusive playback mode logic: ${snippet}`);
+    }
+  }
 }
 
 for (const [book, htmlDir] of targets) {

@@ -162,9 +162,22 @@
     safeLocalSet(STORAGE.speed, normalized);
   }
 
+  function setContinuousChecked(checked) {
+    if (continuousInput) continuousInput.checked = checked;
+    safeLocalSet(STORAGE.continuous, checked ? "1" : "0");
+  }
+
+  function setLoopChecked(checked) {
+    if (loopInput) loopInput.checked = checked;
+    safeLocalSet(STORAGE.loop, checked ? "1" : "0");
+  }
+
   function initializeStoredControls() {
-    if (continuousInput) continuousInput.checked = safeLocalGet(STORAGE.continuous) === "1";
-    if (loopInput) loopInput.checked = safeLocalGet(STORAGE.loop) === "1";
+    const loopEnabled = safeLocalGet(STORAGE.loop) === "1";
+    const continuousEnabled = safeLocalGet(STORAGE.continuous) === "1" && !loopEnabled;
+    setLoopChecked(loopEnabled);
+    setContinuousChecked(continuousEnabled);
+    if (loopEnabled && safeLocalGet(STORAGE.continuous) === "1") setContinuousChecked(false);
     applySpeed(safeLocalGet(STORAGE.speed) || "1");
   }
 
@@ -204,8 +217,16 @@
     else audio.pause();
   });
 
-  continuousInput?.addEventListener("change", () => safeLocalSet(STORAGE.continuous, continuousInput.checked ? "1" : "0"));
-  loopInput?.addEventListener("change", () => safeLocalSet(STORAGE.loop, loopInput.checked ? "1" : "0"));
+  continuousInput?.addEventListener("change", () => {
+    const checked = continuousInput.checked;
+    if (checked) setLoopChecked(false);
+    setContinuousChecked(checked);
+  });
+  loopInput?.addEventListener("change", () => {
+    const checked = loopInput.checked;
+    if (checked) setContinuousChecked(false);
+    setLoopChecked(checked);
+  });
   speedSelect?.addEventListener("change", () => applySpeed(speedSelect.value));
   previousButton?.setAttribute("aria-label", "Previous lesson");
   nextButton?.setAttribute("aria-label", "Next lesson");

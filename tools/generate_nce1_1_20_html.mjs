@@ -2704,7 +2704,10 @@ function parseLrc(file) {
   };
 }
 
-function renderPlayerDock(lessonTitle, audioSrc, subtitles, previousHref, nextHref) {
+function renderPlayerDock(lessonTitle, audioSrc, subtitles, previousHref, nextHref, fallbackAudioSrc = null) {
+  const fallbackAttribute = fallbackAudioSrc
+    ? ` data-fallback-src="${escapeHtml(fallbackAudioSrc)}"`
+    : '';
   return `  <div class="audio-dock" role="region" aria-label="Lesson audio player">
     <div class="inner">
       <div class="player-row">
@@ -2726,7 +2729,7 @@ function renderPlayerDock(lessonTitle, audioSrc, subtitles, previousHref, nextHr
         </div>
         <div class="dock-title">${escapeHtml(lessonTitle)}</div>
       </div>
-      <audio id="lesson-audio" preload="auto" src="${escapeHtml(audioSrc)}"></audio>
+      <audio id="lesson-audio" preload="auto" src="${escapeHtml(audioSrc)}"${fallbackAttribute}></audio>
     </div>
   </div>
   <script>
@@ -2763,7 +2766,8 @@ function renderHtml(lesson, previousHref = null, nextHref = null) {
   }).join('\n');
 
   const toc = lesson.lines.map((_, index) => `      <a href="#sentence-${index + 1}">${index + 1}</a>`).join('\n');
-  const audioSrc = `../${lesson.audioFile}`;
+  const audioSrc = `../american-audio/${lesson.audioFile}`;
+  const fallbackAudioSrc = `../${lesson.audioFile}`;
 
   return `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -2864,7 +2868,7 @@ ${cards}
   </main>
   <a class="back-prev" href="index.html" onclick="goPreviousPage(event)" aria-label="Return to previous page">Back</a>
   <a class="back-top" href="#top">Top</a>
-${renderPlayerDock(lesson.title, audioSrc, lesson.subtitles, previousHref, nextHref)}
+${renderPlayerDock(lesson.title, audioSrc, lesson.subtitles, previousHref, nextHref, fallbackAudioSrc)}
   <script>
     const RETURN_KEY = "nceReturnTarget";
 

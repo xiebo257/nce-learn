@@ -29,6 +29,24 @@ for (const file of files) {
   if (!playerSource.includes('seekTo(item.start);')) {
     failures.push(`${path}: playFrom does not seek to the sentence start`);
   }
+  const audioMatch = html.match(/<audio id="lesson-audio"[^>]*src="([^"]+)"[^>]*data-fallback-src="([^"]+)"/);
+  if (!audioMatch) {
+    failures.push(`${path}: missing American-pronunciation audio source with fallback`);
+  } else {
+    const [, audioSrc, fallbackSrc] = audioMatch;
+    if (!audioSrc.startsWith('../american-audio/')) {
+      failures.push(`${path}: audio source ${audioSrc} does not prefer American pronunciation audio`);
+    }
+    if (!fallbackSrc.startsWith('../') || fallbackSrc.startsWith('../american-audio/')) {
+      failures.push(`${path}: fallback audio source ${fallbackSrc} does not use the original local audio`);
+    }
+    if (audioSrc.replace('../american-audio/', '') !== fallbackSrc.replace('../', '')) {
+      failures.push(`${path}: American audio and fallback audio filenames do not match`);
+    }
+  }
+  if (!playerSource.includes('fallbackSrc') || !playerSource.includes('audio.addEventListener("error"')) {
+    failures.push(`${path}: shared player does not fall back when American audio is unavailable`);
+  }
 }
 
 if (failures.length) {

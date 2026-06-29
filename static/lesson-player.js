@@ -22,6 +22,7 @@
     autoplay: "ncePlayerAutoplayNext",
   };
   const SPEEDS = new Set(["0.75", "1", "1.25", "1.5", "2"]);
+  let didFallbackAudio = false;
 
   if (!audio || !dockPlay) return;
 
@@ -251,6 +252,20 @@
   });
 
   audio.addEventListener("ended", handleEnded);
+
+  audio.addEventListener("error", () => {
+    const fallbackSrc = audio.dataset.fallbackSrc;
+    if (didFallbackAudio || !fallbackSrc || audio.currentSrc.endsWith(fallbackSrc)) return;
+    didFallbackAudio = true;
+    const wasPlaying = !audio.paused;
+    const resumeAt = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+    audio.src = fallbackSrc;
+    audio.load();
+    whenAudioReady(() => {
+      if (resumeAt > 0) seekTo(resumeAt);
+      if (wasPlaying) audio.play().catch(() => {});
+    });
+  });
 
   trackEl?.addEventListener("click", (event) => {
     const rect = trackEl.getBoundingClientRect();
